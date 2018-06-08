@@ -1,2 +1,2 @@
-# WeThinkCode_ / 42
+# WeThinkCode_
 Project Storage
