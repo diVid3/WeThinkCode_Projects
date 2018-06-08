@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 13:28:36 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/07 14:02:35 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/08 10:46:10 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 # define GET_NEXT_LINE_H
 
 # include "libft/libft.h"
-# define BUFF_SIZE 1
+# define BUFF_SIZE 8
 
 #endif
