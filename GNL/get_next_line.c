@@ -25,7 +25,7 @@ static	char	*ft_build_file(int fd)
 	if (!arr_final)
 		return (NULL);
 	read_bytes = read(fd, arr_final, BUFF_SIZE);
-	while (read_bytes > 0)
+	while (read_bytes > 0 && !(read_bytes < BUFF_SIZE))
 	{
 		free_me = arr_final;
 		arr_tmp = ft_memalloc(sizeof(char) * BUFF_SIZE + 1);
@@ -37,6 +37,17 @@ static	char	*ft_build_file(int fd)
 	return (arr_final);
 }
 
+/*
+static	char	**ft_split_file(char *str)
+{
+	char		**ar;
+
+	ar = ft_strsplit(str, '\n');
+	if (!ar)
+		return (NULL);
+}
+*/
+
 int				get_next_line(const int fd, char **line)
 {
 	char		*str;
@@ -45,16 +56,15 @@ int				get_next_line(const int fd, char **line)
 	if (fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	str = ft_build_file(fd);
-	printf("%s\n", str);
+	printf("%s", str);
 	return (1);
 }
 
 int	main(int ac, char **av)
 {
 	(void)ac;
-	(void)av;
 	char		**line = NULL;
-	int ans = get_next_line(open("Makefile", O_RDONLY), line);
+	int ans = get_next_line(open(av[1], O_RDONLY), line);
 	(void)ans;
 	return (0);
 }
