@@ -24,7 +24,8 @@ FILES =	ft_atoi ft_bzero ft_isalnum ft_isalpha ft_isascii\
 		ft_striteri ft_strmap ft_strmapi ft_strequ ft_strnequ\
 		ft_strsub ft_strjoin ft_strtrim ft_strclen ft_strsplit\
 		ft_itoa ft_putstr ft_putendl ft_putnbr ft_putchar_fd\
-		ft_putstr_fd ft_putendl_fd ft_putnbr_fd\
+		ft_putstr_fd ft_putendl_fd ft_putnbr_fd ft_lstnew\
+		ft_lstadd ft_lstdelone ft_lstdel\
 
 CFILES = $(FILES:=.c)
 
@@ -45,3 +46,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
