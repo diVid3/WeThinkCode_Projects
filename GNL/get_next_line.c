@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/12 06:46:04 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/12 18:16:27 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,43 @@ static	char	*ft_file_to_arr(int fd)
 	return (arr_final);
 }
 
-/*
-static	char	**ft_split_file(char *str)
-{
-	char		**ar;
-
-	ar = ft_strsplit(str, '\n');
-	if (!ar)
-		return (NULL);
-}
-*/
-
-int				get_next_line(const int fd, char **line)
+static	int		ft_prep_file(int fd, t_mem *mem)
 {
 	char		*str;
 
-	(void)line;
-	if (fd < 0 || BUFF_SIZE <= 0)
-		return (-1);
-	str = ft_file_to_arr(fd);
-	printf("%s", str);
+	if (!mem->build_mem)
+	{
+		str = ft_file_to_arr(fd);
+		if (!str)
+			return (-1);
+		mem->build_mem = 1;
+	}
+	if (!mem->split_mem && str)
+	{
+		mem->arr = ft_strsplit(str);
+		ft_memdel((void **)(&str));
+		if (!mem->arr)
+			return (-1);
+		mem->split_mem = 1;
+	}
 	return (1);
 }
 
+int				get_next_line(const int fd, char **line)
+{
+	int				f_prep;
+	char			*str;
+	static t_mem	mem = {NULL, 0, 0, 0};
+
+	if (fd < 3 || BUFF_SIZE <= 0)
+		return (-1);
+	if ((f_prep = ft_prep_file(fd, &mem)) == -1)
+		return (-1);
+	
+	return (1);
+}
+
+/*
 int	main(int ac, char **av)
 {
 	(void)ac;
@@ -70,3 +84,4 @@ int	main(int ac, char **av)
 	(void)ans;
 	return (0);
 }
+*/
