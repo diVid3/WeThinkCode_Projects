@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/12 18:16:27 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/12 18:41:17 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,18 @@ int				get_next_line(const int fd, char **line)
 	char			*str;
 	static t_mem	mem = {NULL, 0, 0, 0};
 
-	if (fd < 3 || BUFF_SIZE <= 0)
+	if (fd < 3 || !line || BUFF_SIZE <= 0)
 		return (-1);
 	if ((f_prep = ft_prep_file(fd, &mem)) == -1)
 		return (-1);
-	
+	*line = *(mem->arr) + mem->line_cntr;
+	if (!(*line))
+	{
+		ft_matrix_del(mem->arr);
+		return (0);
+	}
+	printf("%s", *line);
+	++(mem->line_cntr);
 	return (1);
 }
 
