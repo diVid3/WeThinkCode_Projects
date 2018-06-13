@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/12 18:41:17 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/13 14:29:08 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,32 @@ static	char	*ft_file_to_arr(int fd)
 		arr_final = ft_strjoin(arr_final, arr_tmp);
 		ft_memdel((void **)(&free_me));
 		ft_memdel((void **)(&arr_tmp));
-		multiplier *= 2;
+		multiplier *= 1;
 	}
 	return (arr_final);
 }
 
-static	int		ft_prep_file(int fd, t_mem *mem)
+/*
+static	int		ft_split_arr(int fd, t_mem *mem)
+{
+	char		*str;
+
+	if (!prep_mem)
+	{
+		str = ft_file_to_arr(fd);
+		if (!str)
+			return (-1);
+		mem->arr = ft_strsplit(str, '\n');
+		ft_memdel((void **)(&str));
+		if (!mem->arr)
+			return (-1);
+		mem->prep_mem = 1;
+	}
+	return (1);
+}
+
+
+static	int		ft_split_arr(int fd, t_mem *mem)
 {
 	char		*str;
 
@@ -61,15 +81,15 @@ static	int		ft_prep_file(int fd, t_mem *mem)
 	return (1);
 }
 
+
 int				get_next_line(const int fd, char **line)
 {
-	int				f_prep;
-	char			*str;
-	static t_mem	mem = {NULL, 0, 0, 0};
+	static t_mem	mem = {NULL, 0, 0};
+	int				arr_split;
 
 	if (fd < 3 || !line || BUFF_SIZE <= 0)
 		return (-1);
-	if ((f_prep = ft_prep_file(fd, &mem)) == -1)
+	if ((arr_split = ft_split_arr(fd, &mem)) == -1)
 		return (-1);
 	*line = *(mem->arr) + mem->line_cntr;
 	if (!(*line))
@@ -81,14 +101,14 @@ int				get_next_line(const int fd, char **line)
 	++(mem->line_cntr);
 	return (1);
 }
+*/
 
-/*
 int	main(int ac, char **av)
 {
 	(void)ac;
 	char		**line = NULL;
-	int ans = get_next_line(open(av[1], O_RDONLY), line);
-	(void)ans;
+	(void)line;
+	int fd = open(av[1], O_RDONLY);
+	printf("%s", ft_file_to_arr(fd));
 	return (0);
 }
-*/
