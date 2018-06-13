@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/13 14:29:08 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/13 17:26:45 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,26 @@ static	char	*ft_file_to_arr(int fd)
 	char		*arr_tmp;
 	char		*arr_final;
 	char		*free_me;
-	size_t		multiplier;
 	ssize_t		read_bytes;
+	t_accel		ac = {1, 0};
 
-	multiplier = BUFF_SIZE;
-	if (!(arr_final = ft_memalloc(sizeof(char) * multiplier + 1)))
+	if (!(arr_final = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
 			return (NULL);
-	read_bytes = read(fd, arr_final, multiplier);
+	read_bytes = read(fd, arr_final, BUFF_SIZE);
 	while (read_bytes > 0 && !(read_bytes < BUFF_SIZE))
 	{
 		free_me = arr_final;
-		arr_tmp = ft_memalloc(sizeof(char) * multiplier + 1);
-		read_bytes = read(fd, arr_tmp, multiplier);
+		arr_tmp = ft_memalloc(sizeof(char) * (BUFF_SIZE * ac.spd) + 1);
+		ac.cntr = 0;
+		while (ac.cntr < ac.spd)
+		{
+			read_bytes = read(fd, arr_tmp + (read_bytes * ac.cntr), BUFF_SIZE);
+			++ac.cntr;
+		}
 		arr_final = ft_strjoin(arr_final, arr_tmp);
 		ft_memdel((void **)(&free_me));
 		ft_memdel((void **)(&arr_tmp));
-		multiplier *= 1;
+		ac.spd *= 2;
 	}
 	return (arr_final);
 }
