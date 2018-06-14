@@ -87,7 +87,6 @@ size_t				ft_strclen(const char *s, const char c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstiter(t_list *list, void (*f)(t_list *elem));
