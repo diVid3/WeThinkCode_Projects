@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/13 17:26:45 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/14 08:43:52 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static	char	*ft_file_to_arr(int fd)
 	char		*arr_final;
 	char		*free_me;
 	ssize_t		read_bytes;
-	t_accel		ac = {1, 0};
+	t_accel		ac = {2, 0};
 
 	if (!(arr_final = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
 			return (NULL);
@@ -38,7 +38,7 @@ static	char	*ft_file_to_arr(int fd)
 		arr_final = ft_strjoin(arr_final, arr_tmp);
 		ft_memdel((void **)(&free_me));
 		ft_memdel((void **)(&arr_tmp));
-		ac.spd *= 2;
+		ac.spd *= ac.spd;
 	}
 	return (arr_final);
 }
@@ -48,7 +48,7 @@ static	int		ft_split_arr(int fd, t_mem *mem)
 {
 	char		*str;
 
-	if (!prep_mem)
+	if (mem->prep_mem == 0)
 	{
 		str = ft_file_to_arr(fd);
 		if (!str)
@@ -61,7 +61,6 @@ static	int		ft_split_arr(int fd, t_mem *mem)
 	}
 	return (1);
 }
-
 
 static	int		ft_split_arr(int fd, t_mem *mem)
 {
@@ -85,34 +84,35 @@ static	int		ft_split_arr(int fd, t_mem *mem)
 	return (1);
 }
 
-
 int				get_next_line(const int fd, char **line)
 {
 	static t_mem	mem = {NULL, 0, 0};
 	int				arr_split;
 
-	if (fd < 3 || !line || BUFF_SIZE <= 0)
+	if (fd < 0 || !line || BUFF_SIZE <= 0)
 		return (-1);
 	if ((arr_split = ft_split_arr(fd, &mem)) == -1)
 		return (-1);
-	*line = *(mem->arr) + mem->line_cntr;
-	if (!(*line))
-	{
-		ft_matrix_del(mem->arr);
-		return (0);
-	}
-	printf("%s", *line);
-	++(mem->line_cntr);
+	//if (mem.line_cntr > 0)
+	//	free((*mem.arr) + mem.line_cntr - 1);
+	*line = *(mem.arr) + mem.line_cntr;
+	//if (!(*line))
+	//{
+	//	free(mem.arr);
+	//	mem.arr = NULL;
+	//	return (0);
+	//}
+	++(mem.line_cntr);
 	return (1);
 }
 */
 
 int	main(int ac, char **av)
 {
+	int			fd;
+
 	(void)ac;
-	char		**line = NULL;
-	(void)line;
-	int fd = open(av[1], O_RDONLY);
+	fd = open(av[1], O_RDONLY);
 	printf("%s", ft_file_to_arr(fd));
 	return (0);
 }
