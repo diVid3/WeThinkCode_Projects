@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 10:26:11 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/14 12:17:06 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/14 13:03:04 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 	while (ptr)
 	{
 		tmp = (*f)(ptr);
-		ft_lstadd_back(&new, ft_lstnew(tmp->content, tmp->content_size));
+
 		ptr = ptr->next;
 	}
 	return (new);
