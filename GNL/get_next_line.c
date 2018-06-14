@@ -44,66 +44,8 @@ static	char	*ft_file_to_arr(int fd)
 }
 
 /*
-static	int		ft_split_arr(int fd, t_mem *mem)
-{
-	char		*str;
-
-	if (mem->prep_mem == 0)
-	{
-		str = ft_file_to_arr(fd);
-		if (!str)
-			return (-1);
-		mem->arr = ft_strsplit(str, '\n');
-		ft_memdel((void **)(&str));
-		if (!mem->arr)
-			return (-1);
-		mem->prep_mem = 1;
-	}
-	return (1);
-}
-
-static	int		ft_split_arr(int fd, t_mem *mem)
-{
-	char		*str;
-
-	if (!mem->build_mem)
-	{
-		str = ft_file_to_arr(fd);
-		if (!str)
-			return (-1);
-		mem->build_mem = 1;
-	}
-	if (!mem->split_mem && str)
-	{
-		mem->arr = ft_strsplit(str);
-		ft_memdel((void **)(&str));
-		if (!mem->arr)
-			return (-1);
-		mem->split_mem = 1;
-	}
-	return (1);
-}
-
 int				get_next_line(const int fd, char **line)
 {
-	static t_mem	mem = {NULL, 0, 0};
-	int				arr_split;
-
-	if (fd < 0 || !line || BUFF_SIZE <= 0)
-		return (-1);
-	if ((arr_split = ft_split_arr(fd, &mem)) == -1)
-		return (-1);
-	//if (mem.line_cntr > 0)
-	//	free((*mem.arr) + mem.line_cntr - 1);
-	*line = *(mem.arr) + mem.line_cntr;
-	//if (!(*line))
-	//{
-	//	free(mem.arr);
-	//	mem.arr = NULL;
-	//	return (0);
-	//}
-	++(mem.line_cntr);
-	return (1);
 }
 */
 
