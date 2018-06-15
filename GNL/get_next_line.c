@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/14 08:43:52 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/15 14:28:52 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,16 @@ static	char	*ft_file_to_arr(int fd)
 	return (arr_final);
 }
 
-/*
+
+
 int				get_next_line(const int fd, char **line)
 {
+	char		*arr;
+
+	(void)line;
+	arr = ft_file_to_arr(fd);
+	return (1);
 }
-*/
 
 int	main(int ac, char **av)
 {
