@@ -6,7 +6,7 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/19 12:38:07 by egenis            #+#    #+#              #
-#    Updated: 2018/06/14 12:15:37 by egenis           ###   ########.fr        #
+#    Updated: 2018/06/15 06:58:16 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,4 +47,10 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+norm:
+	norminette libft.h
+	norminette $(wordlist 1, 20, $(CFILES))
+	norminette $(wordlist 21, 40, $(CFILES))
+	norminette $(wordlist 41, 59, $(CFILES))
+
+.PHONY: all clean fclean re norm
