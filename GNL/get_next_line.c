@@ -43,14 +43,27 @@ static	char	*ft_file_to_arr(int fd)
 	return (arr_final);
 }
 
+static	char	*ft_arr_to_line(char *arr_final, size_t offset)
+{
+	size_t		cntr;
+	size_t		line_len;
+	char		*line;
 
+	
+}
 
 int				get_next_line(const int fd, char **line)
 {
+	size_t		cntr;
 	char		*arr;
 
 	(void)line;
+	cntr = 0;
 	arr = ft_file_to_arr(fd);
+	while (arr[cntr])
+	{
+
+	}
 	return (1);
 }
 
