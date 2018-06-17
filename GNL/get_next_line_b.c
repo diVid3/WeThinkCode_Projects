@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_b.h"
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -40,73 +40,49 @@ static	char	*ft_file_to_arr(int fd)
 		ft_memdel((void **)(&arr_tmp));
 		ac.spd *= ac.spd;
 	}
-	printf("This only ran once!\n");
+	printf("This only got run once!\n");
 	return (arr_final);
 }
 
 /*
-static	char	*ft_set_line(t_mem *mem)
+static	char	*ft_get_line(char *arr_f, size_t offset)
 {
+	size_t				line_len;
+	char				*line;
+
+	line_len = ft_strclen(arr_f + cntr, '\n');
+	*line = ft_strsub(arr_f + cntr, 0, line_len);
 }
 */
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_mem	mem = {NULL, NULL, 0, 0};
-	size_t			line_len;
+	static char			*arr_f = NULL;
+	static char			*prev_line = NULL;
+	static size_t		arr_f_len = 0;
+	static size_t		offset = 0;
+	static _Bool		file_built = 0;
+	size_t				line_len;
 
-	printf("\n");
-	if (!mem.arr_built)
-		mem.arr_f = ft_file_to_arr(fd);
-	if (!mem.arr_built)
-		mem.arr_built = 1;
-	ft_memdel((void **)(&mem.prev_line));
-	if (*(mem.arr_f + mem.offset) == '\n' && mem.offset > 0)
-	{
-		if (*(mem.arr_f + mem.offset - 1) == '\n')
-		{
-			printf("Back newline activates\n");
-			*line = NULL;
-			++mem.offset;
-			printf("-------------------------------------------------------\n");
-			printf("mem.offset == %zu\n", mem.offset);
-			printf("line       == %s\n", *line);
-			printf("-------------------------------------------------------\n");
-			printf("\n");
-			mem.prev_line = *line;
-			return (1);
-		}
-		else
-			++mem.offset;
-	}
-	if (*(mem.arr_f) == '\n' && mem.offset == 0)
-	{
-		*line = NULL;
-		printf("First newline activates\n");
-		++mem.offset;
-		printf("-------------------------------------------------------\n");
-		printf("mem.offset == %zu\n", mem.offset);
-		printf("line       == %s\n", *line);
-		printf("-------------------------------------------------------\n");
-		printf("\n");
-		mem.prev_line = *line;
-		return (1);
-	}
-	if (*(mem.arr_f + mem.offset) != '\n' && *(mem.arr_f + mem.offset) != '\0')
-	{
-		printf("Normal char activates\n");
-		line_len = ft_strclen(mem.arr_f + mem.offset, '\n');
-		*line = ft_strsub(mem.arr_f + mem.offset, 0, line_len);
-		mem.offset += line_len;
-		printf("-------------------------------------------------------\n");
-		printf("mem.offset == %zu\n", mem.offset);
-		printf("line       == %s\n", *line);
-		printf("-------------------------------------------------------\n");
-		printf("\n");
-		mem.prev_line = *line;
-		return (1);
-	}
-	return (0);
+	if (!file_built)
+		arr_f = ft_file_to_arr(fd);
+	if (!file_built)
+		file_built = 1;
+	if (prev_line)
+		free(prev_line);
+	arr_f_len = ft_strlen(arr_f);
+	line_len = ft_strclen(arr_f + offset, '\n');
+	printf("line_len == %zu\n", line_len);
+	printf("offset   == %zu\n", offset);
+	*line = ft_strsub(arr_f + offset, 0, line_len);
+	printf("line     == %s\n", *line);
+	printf("---------------------------------------------------------------\n");
+	prev_line = *line;
+	if (line_len == 0 && offset < arr_f_len)
+		++offset;
+	else
+		offset += line_len;
+	return (1);
 }
 
 int	main(int ac, char **av)
@@ -127,6 +103,7 @@ int	main(int ac, char **av)
 	ans = get_next_line(fd, line);
 	ans = get_next_line(fd, line);
 	ans = get_next_line(fd, line);
-	ans = get_next_line(fd, line);
+	printf("%s\n", NULL);
+	//printf("%s", *line);
 	return (0);
 }

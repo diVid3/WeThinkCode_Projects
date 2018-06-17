@@ -10,18 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_B_H
+# define GET_NEXT_LINE_B_H
 
 # include "libft.h"
 # define BUFF_SIZE 32
 
 typedef struct	s_mem
 {
-	char		*arr_f;
-	char		*prev_line;
-	size_t		offset;
-	_Bool		arr_built;
+	char		**arr;
+	_Bool		prep_mem;
+	size_t		line_cntr;
 }				t_mem;
 
 typedef struct	s_accel
