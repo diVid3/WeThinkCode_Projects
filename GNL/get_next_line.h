@@ -20,6 +20,7 @@ typedef struct	s_mem
 {
 	char		*arr_f;
 	char		*prev_line;
+	size_t		line_len;
 	size_t		offset;
 	_Bool		arr_built;
 }				t_mem;
