@@ -40,7 +40,7 @@ static	char	*ft_file_to_arr(int fd)
 		ft_memdel((void **)(&arr_tmp));
 		ac.spd *= ac.spd;
 	}
-	printf("This only ran once!\n");
+	printf("\nThis only ran once!\n\n");
 	return (arr_final);
 }
 
@@ -55,29 +55,25 @@ int				get_next_line(const int fd, char **line)
 	static t_mem	mem = {NULL, NULL, 0, 0};
 	size_t			line_len;
 
-	printf("\n");
+	//printf("\n");
 	if (!mem.arr_built)
 		mem.arr_f = ft_file_to_arr(fd);
 	if (!mem.arr_built)
 		mem.arr_built = 1;
 	ft_memdel((void **)(&mem.prev_line));
-	if (*(mem.arr_f + mem.offset) == '\n' && mem.offset > 0)
+	if (*(mem.arr_f + mem.offset) == '\n' &&
+		*(mem.arr_f + mem.offset - 1) == '\n' && mem.offset > 0)
 	{
-		if (*(mem.arr_f + mem.offset - 1) == '\n')
-		{
-			printf("Back newline activates\n");
-			*line = NULL;
-			++mem.offset;
-			printf("-------------------------------------------------------\n");
-			printf("mem.offset == %zu\n", mem.offset);
-			printf("line       == %s\n", *line);
-			printf("-------------------------------------------------------\n");
-			printf("\n");
-			mem.prev_line = *line;
-			return (1);
-		}
-		else
-			++mem.offset;
+		printf("Back newline activates\n");
+		*line = NULL;
+		++mem.offset;
+		printf("-------------------------------------------------------\n");
+		printf("mem.offset        == %zu\n", mem.offset - 1);
+		printf("line              == %s\n", *line);
+		printf("-------------------------------------------------------\n");
+		printf("\n");
+		mem.prev_line = *line;
+		return (1);
 	}
 	if (*(mem.arr_f) == '\n' && mem.offset == 0)
 	{
@@ -85,8 +81,8 @@ int				get_next_line(const int fd, char **line)
 		printf("First newline activates\n");
 		++mem.offset;
 		printf("-------------------------------------------------------\n");
-		printf("mem.offset == %zu\n", mem.offset);
-		printf("line       == %s\n", *line);
+		printf("mem.offset        == %zu\n", mem.offset - 1);
+		printf("line              == %s\n", *line);
 		printf("-------------------------------------------------------\n");
 		printf("\n");
 		mem.prev_line = *line;
@@ -97,10 +93,11 @@ int				get_next_line(const int fd, char **line)
 		printf("Normal char activates\n");
 		line_len = ft_strclen(mem.arr_f + mem.offset, '\n');
 		*line = ft_strsub(mem.arr_f + mem.offset, 0, line_len);
-		mem.offset += line_len;
+		mem.offset += line_len + 1;
 		printf("-------------------------------------------------------\n");
-		printf("mem.offset == %zu\n", mem.offset);
-		printf("line       == %s\n", *line);
+		printf("mem.offset        == %zu\n", mem.offset - 1);
+		printf("line              == %s\n", *line);
+		printf("Current norm char == %d\n", *(mem.arr_f + mem.offset));
 		printf("-------------------------------------------------------\n");
 		printf("\n");
 		mem.prev_line = *line;
@@ -118,9 +115,6 @@ int	main(int ac, char **av)
 	(void)ac;
 	line = malloc(sizeof(void *));
 	fd = open(av[1], O_RDONLY);
-	ans = get_next_line(fd, line);
-	ans = get_next_line(fd, line);
-	ans = get_next_line(fd, line);
 	ans = get_next_line(fd, line);
 	ans = get_next_line(fd, line);
 	ans = get_next_line(fd, line);
