@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 static	char	*ft_fd_to_arr(int fd)
 {
@@ -95,60 +93,4 @@ int				get_next_line(const int fd, char **line)
 		return (0);
 	}
 	return (1);
-}
-
-void			print_test(char *line)
-{
-	if (!line)
-		printf("*line is NULL\n");
-	else if (*line == '\0')
-		printf("%s\n", NULL);
-	else
-		printf("%s\n", line);
-}
-
-int	main(int ac, char **av)
-{
-	int			fd;
-	int			ans;
-	char		**line;
-
-	(void)ac;
-	line = malloc(sizeof(void *));
-	fd = open(av[1], O_RDONLY);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("last ans == %d\n", ans);
-
-	sleep(60);
-
-	return (0);
 }
