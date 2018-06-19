@@ -6,13 +6,31 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/16 15:38:04 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/19 07:03:26 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
+
+static	char	*ft_strjoin_2nul(char const *s1, char const *s2)
+{
+	size_t		str1_len;
+	size_t		str2_len;
+	char		*newstr;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str1_len = ft_strlen(s1);
+	str2_len = ft_strlen(s2);
+	newstr = ft_memalloc(str1_len + str2_len + 2);
+	if (!newstr)
+		return (NULL);
+	ft_strcpy(newstr, s1);
+	ft_strcat(newstr, s2);
+	return (newstr);
+}
 
 static	char	*ft_fd_to_arr(int fd)
 {
@@ -35,11 +53,12 @@ static	char	*ft_fd_to_arr(int fd)
 			read_bytes = read(fd, arr_tmp + (read_bytes * ac.cntr), BUFF_SIZE);
 			++ac.cntr;
 		}
-		arr_final = ft_strjoin(arr_final, arr_tmp);
+		arr_final = ft_strjoin_2nul(arr_final, arr_tmp);
 		ft_memdel((void **)(&free_me));
 		ft_memdel((void **)(&arr_tmp));
 		ac.spd *= ac.spd;
 	}
+	printf("File has been built\n");
 	return (arr_final);
 }
 
@@ -117,38 +136,76 @@ int	main(int ac, char **av)
 	line = malloc(sizeof(void *));
 	fd = open(av[1], O_RDONLY);
 
+	printf("\n");
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
+	printf("ans == %d\n", ans);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
+	printf("------------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("last ans == %d\n", ans);
-
-	sleep(60);
+	printf("------------------------------------------------------------------\n");
+	printf("\n");
 
 	return (0);
 }
