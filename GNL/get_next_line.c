@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/19 18:41:03 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/20 13:07:30 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static	char	*ft_fd_to_line(int fd)
 	if (!(mem.arr_f = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
 		return (NULL);
 	mem.read_b = read(fd, arr_f, BUFF_SIZE);
-	while (mem.nl_found == 0 && !(mem.read_b < BUFF_SIZE))
+	while (mem.nl_found == 0 && mem.read_b == BUFF_SIZE)
 	{
 		mem.free = mem.arr_f;
 		mem.tmp = ft_memalloc(sizeof(char) * (BUFF_SIZE * mem.spd) + 1);
 		mem.cntr = 0;
 		while (mem.cntr < mem.spd)
 		{
-			mem.read_b = read(fd, tmp, BUFF_SIZE);
+			mem.read_b = read(fd, tmp + (mem.read_b * mem.cntr), BUFF_SIZE);
 			++mem.cntr;
 		}
 		mem.arr_f = ft_strjoin(mem.arr_f, mem.tmp);
@@ -46,5 +46,11 @@ int				get_next_line(const int fd, char **line)
 
 	arr_f = ft_fd_to_line(fd);
 	last_nl = ft_strrchr(arr_f, '\n');
-	store = ft_strdup(last_nl + 1);
+	if (last_nl)
+	{
+		store = ft_strdup(last_nl + 1);
+		*(last_nl + 1) = '\0';
+	}
+	else
+		store = ft_strsub(arr_f, 0, 0);
 }
