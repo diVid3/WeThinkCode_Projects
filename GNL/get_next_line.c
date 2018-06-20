@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/20 13:07:30 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/20 18:38:47 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static	char	*ft_fd_to_line(int fd)
 	return (mem.arr_f);
 }
 
-int				get_next_line(const int fd, char **line)
+int				ft_controller(int fd, char **line)
 {
 	static	char	*arr_f = NULL;
 	static	char	*last_nl = NULL;
@@ -47,10 +47,11 @@ int				get_next_line(const int fd, char **line)
 	arr_f = ft_fd_to_line(fd);
 	last_nl = ft_strrchr(arr_f, '\n');
 	if (last_nl)
-	{
-		store = ft_strdup(last_nl + 1);
-		*(last_nl + 1) = '\0';
-	}
-	else
-		store = ft_strsub(arr_f, 0, 0);
+		store = ft_strdup(arr_f + 1);
+
+}
+
+int				get_next_line(const int fd, char **line)
+{
+
 }
