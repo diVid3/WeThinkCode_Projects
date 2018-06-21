@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/21 10:18:38 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/21 18:21:09 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,89 @@ static	char	*ft_fd_to_line(int fd)
 
 static	char	*ft_prep_arr(int fd, t_c_mem *cm)
 {
+	char		*tmp;
+
 	ft_memdel((void **)(&cm->arr_l));
-	//ft_memdel((void **)(&cm->old_store));
 	if (!(cm->arr_l = ft_fd_to_line(fd)))
 		return (NULL);
+	if(!(cm->last_nl = ft_strrchr(arr_l, '\n')))
+		tmp = ft_strsub(cm->arr_l, 0, 0);
+	else
+		tmp = ft_strdup(cm->last_nl + 1);
+	if (cm->last_nl)
+		*(cm->last_nl + 1) = '\0';
 	if (!cm->read_1ce)
 	{
-		cm->last_nl = ft_strrchr(arr_l, '\n');
-		cm->store = ft_strdup(last_nl + 1);
+		cm->store = tmp;
+		cm->read_1ce = 1;
+		return (arr_l);
+	}
+	else
+	{
+		cm->arr_l = ft_strjoin(cm->store, cm->arr_l);
+		ft_memdel((void **)(&cm->store));
+		cm->store = tmp;
+		return (arr_l);
+	}
+	return (NULL);
+}
+
+static	int		ft_set_line(char **line, t_c_mem *cm)
+{
+	if (*(cm->arr_l + cm->pos) == '\n' && cm->pos > 0)
+	{
+		if (*(cm->arr_l + cm->pos - 1) == '\n')
+		{
+			*line = ft_strsub(cm->arr_l, 0, 0);
+			++cm->pos;
+			return (1);
+		}
+		++cm->pos;
+	}
+	if (*(cm->arr_l) == '\n' && cm->pos == 0)
+	{
+		*line = ft_strsub(cm->arr_l, 0, 0);
+		++cm->pos;
+		return (1);
+	}
+	if (*(cm->arr_l + cm->pos) != '\n' && *(cm->arr_l + cm->pos) != '\0')
+	{
+		cm->line_len = ft_strclen(cm->arr_l + cm->pos, '\n');
+		*line = ft_strsub(cm->arr_l + cm->pos, 0, cm->line_len);
+		cm->pos += cm->line_len;
+		return (1);
+	}
+	return (0);
+}
+
+static	int		ft_set_line(char **line, t_c_mem *cm)
+{
+	if (*(cm->arr_l + cm->pos) == '\n' &&
+			*(cm->arr_l + cm->pos - 1) == '\n' && cm->pos > 0)
+	{
+		*line = ft_strsub(cm->arr_l, 0, 0);
+		++cm->pos;
+		cm->prev_line = *line;
+		return (1);
+	}
+	if (*(cm->arr_l) == '\n' && cm->pos == 0)
+	{
+		*line = ft_strsub(cm->arr_l, 0, 0);
+		++cm->pos;
+		cm->prev_line = *line;
+		return (1);
+	}
+	if (*(cm->arr_l + cm->pos) != '\n' &&
+			*(cm->arr_l + cm->pos) != '\0')
+	{
+
 	}
 
 }
 
 int				ft_controller(int fd, char **line)
 {
-	static	t_c_mem		cm = {NULL, NULL, NULL, 0};
-
-	arr_l = ft_fd_to_line(fd);
-	last_nl = ft_strrchr(arr_l, '\n');
-	if (last_nl)
-		store = ft_strdup(arr_l + 1);
+	static	t_c_mem		cm = {NULL, NULL, NULL, NULL, 0, 0, 0};
 
 }
 

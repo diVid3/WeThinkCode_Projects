@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:17:40 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/21 08:35:47 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/21 16:36:27 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef	struct	s_c_mem
 	char		*arr_l;
 	char		*last_nl;
 	char		*store;
+	char		*prev_line;
+	size_t		pos;
+	size_t		line_len;
 	_Bool		read_1ce;
 }				t_c_mem;
 
