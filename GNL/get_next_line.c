@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/21 18:21:09 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/21 18:22:23 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,31 +93,6 @@ static	int		ft_set_line(char **line, t_c_mem *cm)
 		return (1);
 	}
 	return (0);
-}
-
-static	int		ft_set_line(char **line, t_c_mem *cm)
-{
-	if (*(cm->arr_l + cm->pos) == '\n' &&
-			*(cm->arr_l + cm->pos - 1) == '\n' && cm->pos > 0)
-	{
-		*line = ft_strsub(cm->arr_l, 0, 0);
-		++cm->pos;
-		cm->prev_line = *line;
-		return (1);
-	}
-	if (*(cm->arr_l) == '\n' && cm->pos == 0)
-	{
-		*line = ft_strsub(cm->arr_l, 0, 0);
-		++cm->pos;
-		cm->prev_line = *line;
-		return (1);
-	}
-	if (*(cm->arr_l + cm->pos) != '\n' &&
-			*(cm->arr_l + cm->pos) != '\0')
-	{
-
-	}
-
 }
 
 int				ft_controller(int fd, char **line)
