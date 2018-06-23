@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/21 18:22:23 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/23 12:24:53 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static	char	*ft_fd_to_line(int fd, t_c_mem *cm)
 			++mem.cntr;
 		}
 		mem.arr_l = ft_strjoin(mem.arr_l, mem.tmp);
-		mem.nl_found = *(ft_strchr(mem.tmp, '\n'));
+		if (mem.tmp)
+			mem.nl_found = (ft_strchr(mem.tmp, '\n') == NULL) ? 0 : 1;
 		ft_memdel((void **)(&mem.free));
 		ft_memdel((void **)(&mem.tmp));
 		mem.spd *= mem.spd;
@@ -100,19 +101,36 @@ static	int		ft_set_line(char **line, t_c_mem *cm)
 
 static	int		ft_controller(int fd, char **line)
 {
-	static	t_c_mem	cm = {NULL, NULL, NULL, NULL, 0, 0, 0, 0};
-	int				ans_pa;
-	int				ans_sl;
+	static	t_c_mem	cm = {NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0};
 
 	ft_memdel((void **)(&cm.prev_l));
+	if (!cm.ans_sl)
+	{
+		cm.pos = 0;
+		ft_memdel((void **)(&cm.arr_l));
+		cm.ans_pa = ft_prep_arr_l(fd, &cm);
+	}
+	if (cm.ans_pa == 0 || cm.ans_pa == -1)
+		ft_memdel((void **)(&cm.store));
+	if (cm.ans_pa == 0 || cm.ans_pa == -1)
+		return (cm.ans_pa);
+	cm.ans_sl = ft_set_line(line, &cm);
+	cm.prev_l = *line;
+
+	/*
+	ft_memdel((void **)(&cm.prev_l));
 	ft_memdel((void **)(&cm.arr_l));
+	//cm.pos = 0;
+	if (cm.ans_sl == 0
 	ans_pa = ft_prep_arr_l(fd, &cm);
 	if (ans_pa == 0 || ans_pa == -1)
 		ft_memdel((void **)(&cm.store));
 	if (ans_pa == 0 || ans_pa == -1)
 		return (ans_pa);
-	ans_sl = ft_set_line(line, &cm);
+	cm.ans_sl = ft_set_line(line, &cm);
 	cm.prev_l = *line;
+	*/
+
 	return (1);
 }
 
@@ -138,7 +156,7 @@ void			print_test(char *line)
 		printf("%s\n", line);
 }
 
-int	main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	int			fd;
 	int			ans;
@@ -147,7 +165,7 @@ int	main(int ac, char **av)
 	(void)ac;
 	line = malloc(sizeof(void *));
 	fd = open(av[1], O_RDONLY);
-
+	
 	printf("\n");
 	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
@@ -156,6 +174,8 @@ int	main(int ac, char **av)
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
+	/*	
+	printf("\n");
 	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
@@ -163,61 +183,22 @@ int	main(int ac, char **av)
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
+	printf("\n");
 	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
-
+	
+	printf("\n");
 	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
-
-	printf("---------------------------------------------------------------\n");
-	ans = get_next_line(fd, line);
-	print_test(*line);
-	printf("last ans == %d\n", ans);
-	printf("---------------------------------------------------------------\n");
-	printf("\n");
+	*/
 
 	return (0);
 }

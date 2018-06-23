@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 17:17:40 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/21 16:36:27 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/23 12:16:19 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include "libft.h"
-# define BUFF_SIZE 32
+# define BUFF_SIZE 8
 
 typedef	struct	s_ac_mem
 {
@@ -35,6 +35,8 @@ typedef	struct	s_c_mem
 	size_t		pos;
 	size_t		line_len;
 	ssize_t		read_b;
+	int			ans_pa;
+	int			ans_sl;
 	_Bool		read_1ce;
 }				t_c_mem;
 

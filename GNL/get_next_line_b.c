@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/07 11:21:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/19 07:03:26 by egenis           ###   ########.fr       */
+/*   Created: 2018/06/19 17:16:57 by egenis            #+#    #+#             */
+/*   Updated: 2018/06/21 18:22:23 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,105 +14,117 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-static	char	*ft_strjoin_2nul(char const *s1, char const *s2)
+static	char	*ft_fd_to_line(int fd, t_c_mem *cm)
 {
-	size_t		str1_len;
-	size_t		str2_len;
-	char		*newstr;
+	t_ac_mem		mem;
 
-	if (!s1 || !s2)
+	mem.nl_found = 0;
+	mem.spd = 2;
+	if (!(mem.arr_l = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
 		return (NULL);
-	str1_len = ft_strlen(s1);
-	str2_len = ft_strlen(s2);
-	newstr = ft_memalloc(str1_len + str2_len + 2);
-	if (!newstr)
-		return (NULL);
-	ft_strcpy(newstr, s1);
-	ft_strcat(newstr, s2);
-	return (newstr);
-}
-
-static	char	*ft_fd_to_arr(int fd)
-{
-	char		*arr_tmp;
-	char		*arr_final;
-	char		*free_me;
-	ssize_t		read_bytes;
-	t_accel		ac = {2, 0};
-
-	if (!(arr_final = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
-			return (NULL);
-	read_bytes = read(fd, arr_final, BUFF_SIZE);
-	while (read_bytes > 0 && !(read_bytes < BUFF_SIZE))
+	cm->read_b = read(fd, mem.arr_l, BUFF_SIZE);
+	while (mem.nl_found == 0 && cm->read_b == BUFF_SIZE)
 	{
-		free_me = arr_final;
-		arr_tmp = ft_memalloc(sizeof(char) * (BUFF_SIZE * ac.spd) + 1);
-		ac.cntr = 0;
-		while (ac.cntr < ac.spd)
+		mem.free = mem.arr_l;
+		mem.tmp = ft_memalloc(sizeof(char) * (BUFF_SIZE * mem.spd) + 1);
+		mem.cntr = 0;
+		while (mem.cntr < mem.spd && mem.tmp)
 		{
-			read_bytes = read(fd, arr_tmp + (read_bytes * ac.cntr), BUFF_SIZE);
-			++ac.cntr;
+			cm->read_b = read(fd, mem.tmp + (cm->read_b * mem.cntr), BUFF_SIZE);
+			++mem.cntr;
 		}
-		arr_final = ft_strjoin_2nul(arr_final, arr_tmp);
-		ft_memdel((void **)(&free_me));
-		ft_memdel((void **)(&arr_tmp));
-		ac.spd *= ac.spd;
+		mem.arr_l = ft_strjoin(mem.arr_l, mem.tmp);
+		mem.nl_found = *(ft_strchr(mem.tmp, '\n'));
+		ft_memdel((void **)(&mem.free));
+		ft_memdel((void **)(&mem.tmp));
+		mem.spd *= mem.spd;
 	}
-	printf("File has been built\n");
-	return (arr_final);
+	return (mem.arr_l);
 }
 
-static	int		ft_set_line(char **line, t_mem *mem)
+static	int		ft_prep_arr_l(int fd, t_c_mem *cm)
 {
-	if (*(mem->arr_f + mem->offset) == '\n' &&
-		*(mem->arr_f + mem->offset - 1) == '\n' && mem->offset > 0)
+	char		*old_store;
+	char		*free_me;
+
+	old_store = cm->store;
+	if (!(cm->arr_l = ft_fd_to_line(fd, cm)))
+		return (-1);
+	if (!cm->read_b)
+		ft_memdel((void **)(&cm->arr_l));
+	if (!cm->read_b)
+		return (0);
+	if(!(cm->last_nl = ft_strrchr(cm->arr_l, '\n')))
+		cm->store = ft_strsub(cm->arr_l, 0, 0);
+	else
+		cm->store = ft_strdup(cm->last_nl + 1);
+	if (cm->last_nl)
+		*(cm->last_nl + 1) = '\0';
+	if (old_store)
 	{
-		*line = ft_strsub(mem->arr_f, 0, 0);
-		++mem->offset;
-		mem->prev_line = *line;
+		free_me = cm->arr_l;
+		cm->arr_l = ft_strjoin(old_store, cm->arr_l);
+		ft_memdel((void **)(&free_me));
+		ft_memdel((void **)(&old_store));
+	}
+	return (1);
+}
+
+static	int		ft_set_line(char **line, t_c_mem *cm)
+{
+	if (*(cm->arr_l + cm->pos) == '\n' && cm->pos > 0)
+	{
+		if (*(cm->arr_l + cm->pos - 1) == '\n')
+		{
+			*line = ft_strsub(cm->arr_l, 0, 0);
+			++cm->pos;
+			return (1);
+		}
+		++cm->pos;
+	}
+	if (*(cm->arr_l) == '\n' && cm->pos == 0)
+	{
+		*line = ft_strsub(cm->arr_l, 0, 0);
+		++cm->pos;
 		return (1);
 	}
-	if (*(mem->arr_f) == '\n' && mem->offset == 0)
+	if (*(cm->arr_l + cm->pos) != '\n' && *(cm->arr_l + cm->pos) != '\0')
 	{
-		*line = ft_strsub(mem->arr_f, 0, 0);
-		++mem->offset;
-		mem->prev_line = *line;
-		return (1);
-	}
-	if (*(mem->arr_f + mem->offset) != '\n' &&
-		*(mem->arr_f + mem->offset) != '\0')
-	{
-		mem->line_len = ft_strclen(mem->arr_f + mem->offset, '\n');
-		*line = ft_strsub(mem->arr_f + mem->offset, 0, mem->line_len);
-		mem->offset += mem->line_len + 1;
-		mem->prev_line = *line;
+		cm->line_len = ft_strclen(cm->arr_l + cm->pos, '\n');
+		*line = ft_strsub(cm->arr_l + cm->pos, 0, cm->line_len);
+		cm->pos += cm->line_len;
 		return (1);
 	}
 	return (0);
 }
 
+static	int		ft_controller(int fd, char **line)
+{
+	static	t_c_mem	cm = {NULL, NULL, NULL, NULL, 0, 0, 0, 0};
+	int				ans_pa;
+	int				ans_sl;
+
+	ft_memdel((void **)(&cm.prev_l));
+	ft_memdel((void **)(&cm.arr_l));
+	ans_pa = ft_prep_arr_l(fd, &cm);
+	if (ans_pa == 0 || ans_pa == -1)
+		ft_memdel((void **)(&cm.store));
+	if (ans_pa == 0 || ans_pa == -1)
+		return (ans_pa);
+	ans_sl = ft_set_line(line, &cm);
+	cm.prev_l = *line;
+	return (1);
+}
+
 int				get_next_line(const int fd, char **line)
 {
-	static t_mem	mem = {NULL, NULL, 0, 0, 0};
-	int				ans;
+	int		ans_c;
 
 	if (fd < 0 || BUFF_SIZE < 1 || !line)
 		return (-1);
-	if (!mem.arr_built)
-		mem.arr_f = ft_fd_to_arr(fd);
-	if (!mem.arr_f)
-		return (-1);
-	if (!mem.arr_built)
-		mem.arr_built = 1;
-	*line = NULL;
-	ft_memdel((void **)(&mem.prev_line));
-	ans = ft_set_line(line, &mem);
-	if (!ans)
-	{
-		ft_memdel((void **)(line));
-		ft_memdel((void **)(&mem.arr_f));
-		return (0);
-	}
+	ans_c = ft_controller(fd, line);
+	if (ans_c == 0 || ans_c == -1)
+		return (ans_c);
 	return (1);
 }
 
@@ -137,74 +149,74 @@ int	main(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 
 	printf("\n");
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
 	print_test(*line);
 	printf("last ans == %d\n", ans);
-	printf("------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
 	printf("\n");
 
 	return (0);
