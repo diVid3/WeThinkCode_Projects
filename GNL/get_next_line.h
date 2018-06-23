@@ -16,25 +16,25 @@
 # include "libft.h"
 # define BUFF_SIZE 32
 
-typedef	struct	s_ac_mem;
+typedef	struct	s_ac_mem
 {
 	char		*arr_l;
 	char		*tmp;
 	char		*free;
-	_Bool		nl_found;
-	ssize_t		read_b;
 	size_t		spd;
 	size_t		cntr;
+	_Bool		nl_found;
 }				t_ac_mem;
 
 typedef	struct	s_c_mem
 {
 	char		*arr_l;
-	char		*last_nl;
 	char		*store;
-	char		*prev_line;
+	char		*prev_l;
+	char		*last_nl;
 	size_t		pos;
 	size_t		line_len;
+	ssize_t		read_b;
 	_Bool		read_1ce;
 }				t_c_mem;
 
