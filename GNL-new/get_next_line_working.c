@@ -43,9 +43,11 @@ static	char	*ft_fd_to_line(int fd, char *arr_l, t_gl_mem *gm)
 
 int		get_next_line(const int fd, char **line)
 {
-	static t_gl_mem		gm = {"", NULL, NULL, 0, BUFF_SIZE, 0};
+	static t_gl_mem		gm = {"", NULL, NULL, 0, BUFF_SIZE, 1, 0, 0};
 
 	ft_memdel((void **)(&gm.prev_line));
+	if (fd < 0 || BUFF_SIZE < 1 || !line)
+		return (-1);
 	gm.nl_found = (ft_strchr(gm.arr_l, '\n') == NULL) ? 0 : 1;
 	if (!gm.nl_found && gm.read_b == BUFF_SIZE)
 		gm.arr_l = ft_fd_to_line(fd, gm.arr_l, &gm);
@@ -57,7 +59,13 @@ int		get_next_line(const int fd, char **line)
 		gm.arr_l = ft_strdup(ft_strchr(gm.arr_l, '\n') + 1);
 		ft_memdel((void **)(&gm.p_arr_l));
 	}
-	return (1);
+	if (gm.arr_l && !(*gm.arr_l) && !gm.swtch)
+	{
+		gm.ret_val = 0;
+		gm.swtch = 1;
+		return (1);
+	}
+	return (gm.ret_val);
 }
 
 void			print_test(char *line)
@@ -143,6 +151,8 @@ int		main(int ac, char **av)
 	printf("ans == %d\n", ans);
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
+
+	//sleep(60);
 
 	return (0);
 }
