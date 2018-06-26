@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 07:09:30 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/26 07:29:06 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/26 09:05:00 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,20 @@ void			print_test(char *line)
 int		main(int ac, char **av)
 {
 	int			fd;
-	int			ans;
-	char		**line;
+	//int			ans;
+	char		*line;
 
 	(void)ac;
-	line = malloc(sizeof(void *));
+	//line = malloc(sizeof(void *));
 	fd = open(av[1], O_RDONLY);
 
+	while (get_next_line(fd, &line))
+	{
+		ft_putendl(line);
+		//free(line);
+	}
+
+	/*
 	printf("\n");
 	printf("---------------------------------------------------------------\n");
 	ans = get_next_line(fd, line);
@@ -157,6 +164,7 @@ int		main(int ac, char **av)
 	printf("ans == %d\n", ans);
 	printf("---------------------------------------------------------------\n");
 	printf("\n");
+	*/
 
 	return (0);
 }
