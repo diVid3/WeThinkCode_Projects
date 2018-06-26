@@ -7,9 +7,9 @@
 typedef	struct	s_gnl_mem
 {
 	char		*arr_l;
+	char		*prev_l;
 	char		*prev_arr_l;
 	ssize_t		read_b;
-	_Bool		swtch;
 }				t_gnl_mem;
 
 int	get_next_line(const int fd, char **line);
