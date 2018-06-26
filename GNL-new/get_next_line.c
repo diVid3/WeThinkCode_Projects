@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 07:09:30 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/26 16:18:13 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/26 18:30:40 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				get_next_line(const int fd, char **line)
 		m.swtch = 1;
 		return (1);
 	}
+	//*line = ft_strdup("");
 	return (0);
 }
 
@@ -76,7 +77,7 @@ int		main(int ac, char **av)
 
 	(void)ac;
 	fd = open(av[1], O_RDONLY);
-
+	//fd = 42;
 	printf("ans == %d\n*line == %s\n", get_next_line(fd, &line), line);
 
 	//while (get_next_line(fd, &line))
