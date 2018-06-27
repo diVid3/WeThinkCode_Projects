@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 07:09:30 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/26 18:30:40 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/27 08:19:27 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int				get_next_line(const int fd, char **line)
 		m.swtch = 1;
 		return (1);
 	}
-	//*line = ft_strdup("");
 	return (0);
 }
 
+/*
 void			print_test(char *line)
 {
 	if (!line)
@@ -68,17 +68,39 @@ void			print_test(char *line)
 	else
 		printf("%s\n", line);
 }
+*/
 
 int		main(int ac, char **av)
 {
 	int			fd;
 	//int			ans;
+	//int			cmpans;
 	char		*line;
 
 	(void)ac;
 	fd = open(av[1], O_RDONLY);
-	//fd = 42;
-	printf("ans == %d\n*line == %s\n", get_next_line(fd, &line), line);
+
+	/*
+	ans = get_next_line(fd, &line);
+	cmpans = strcmp(line, "aaa");
+	printf("\"aaa\" cmp == %d\n", cmpans);
+
+	ans = get_next_line(fd, &line);
+	cmpans = strcmp(line, "bbb");
+	printf("\"bbb\" cmp == %d\n", cmpans);
+
+	ans = get_next_line(fd, &line);
+	cmpans = strcmp(line, "ccc");
+	printf("\"ccc\" cmp == %d\n", cmpans);
+
+	ans = get_next_line(fd, &line);
+	cmpans = strcmp(line, "ddd");
+	printf("\"ddd\" cmp == %d\n", cmpans);
+	*/
+
+	ans = get_next_line(fd, &line);
+	cmpans = strcmp(line, "abcdefghijklmnop");
+	printf("\"abcdefghijklmnop\" cmp == %d\n", cmpans);
 
 	//while (get_next_line(fd, &line))
 	//	ft_putendl(line);
