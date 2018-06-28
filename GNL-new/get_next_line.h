@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include "libft.h"
-# define BUFF_SIZE 8
+# define BUFF_SIZE 16
 
 typedef	struct	s_mem
 {
