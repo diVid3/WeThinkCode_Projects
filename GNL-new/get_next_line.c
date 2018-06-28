@@ -1,61 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/28 06:27:40 by egenis            #+#    #+#             */
+/*   Updated: 2018/06/28 14:03:40 by egenis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
-
-static int			ft_read_buffer(int const fd, char **line)
-{
-	char	*buff;
-	int		ret;
-	char	*tmp;
-
-	if (!(buff = (char*)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-		return (-1);
-	ret = read(fd, buff, BUFF_SIZE);
-	if (ret > 0)
-	{
-		buff[ret] = 0;
-		if (!(tmp = ft_strjoin(*line, buff)))
-			return (-1);
-		free(*line);
-		*line = tmp;
-		//printf("%s\n", *line);
-		free(buff);
-	}
-	if (ret == 0)
-		free(buff);
-	return (ret);
-}
-
-int					get_next_line(int const fd, char **line)
-{
-	static char		*str;
-	char			*strn;
-	int				ret;
-
-	if ((!str && (!(str = (char*)malloc(sizeof(char) * BUFF_SIZE + 1))))
-			|| fd < 0 || BUFF_SIZE <= 0)
-		return (-1);
-	strn = ft_strchr(str, '\n');
-	while (!strn)
-	{
-		ret = ft_read_buffer(fd, &str);
-		if (ret == 0 && !ft_strlen(str))
-			return (0);
-		if (ret == 0)
-			ft_strcat(str, "\n");
-		if (ret < 0)
-			return (-1);
-		else
-			strn = ft_strchr(str, '\n');
-	}
-	if (!(*line = ft_strsub(str, 0, ft_strlen(str) - ft_strlen(strn))))
-	{
-		//printf("%s\n", *line);
-		return (-1);
-	}
-	ft_strcpy(str, strn + 1);
-	return (1);
-}
 
 void			print_test(char *line)
 {
@@ -67,67 +24,114 @@ void			print_test(char *line)
 		printf("%s\n", line);
 }
 
+static int			build_str(int fd, t_mem *m)
+{
+	char		*tmp;
+	char		*prev_str;
+
+	while (m->str && !ft_strchr(m->str, '\n') && m->read_b)
+	{
+		//printf("build_str while loop activates\n");
+		prev_str = m->str;
+		if (!(tmp = ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
+			return (-1);
+		m->read_b = read(fd, tmp, BUFF_SIZE);
+		m->str = ft_strjoin(m->str, tmp);
+		if (*prev_str != '\0')
+		{
+			//printf("ft_memdel for prev_str activates\n");
+			ft_memdel((void **)(&prev_str));
+		}
+		ft_memdel((void **)(&tmp));
+		//printf("ft_memdel for tmp activated\n");
+	}
+	return (0);
+}
+
+int					get_next_line(const int fd, char **line)
+{
+	static t_mem	m = {"", NULL, -1, 1};
+
+	if (fd < 0 || BUFF_SIZE < 1 || !line)
+		return (-1);
+	if (m.prev_fd != fd)
+		m.str = "";
+	if (m.prev_fd != fd)
+		m.read_b = 1;
+	m.prev_fd = fd;
+	if (m.str && !ft_strchr(m.str, '\n') && m.read_b)
+		if ((build_str(fd, &m)) == -1)
+			return (-1);
+	//printf("build_str activated\n");
+	*line = ft_strsub(m.str, 0, ft_strclen(m.str, '\n'));
+	m.prev_str = m.str;
+	if (m.str && ft_strchr(m.str, '\n')) // Fixes segfault.
+		m.str = ft_strdup(ft_strchr(m.str, '\n') + 1);
+	print_test(m.prev_str);
+	//if (*m.prev_str != '\0')
+	ft_memdel((void **)(&m.prev_str));
+	//printf("ft_memdel for prev_str outside loop activated\n");
+	printf("last ft_memdel activated\n");
+	if (!m.read_b && !ft_strlen(*line))
+		return (0);
+	return (1);
+}
+
 int		main(int ac, char **av)
 {
 	int			fd;
-	int			fd2;
-	int			fd3;
 	int			ans;
 	char		*line;
 
 	(void)ac;
 	fd = open(av[1], O_RDONLY);
-	fd2 = open(av[2], O_RDONLY);
-	fd3 = open(av[3], O_RDONLY);
 
+	//while (get_next_line(fd, &line))
+	//{
+	//	ft_putendl(line);
+	//	free(line);
+	//}
+
+	//printf("\n");
+	//printf("--------------------------------------------------------------\n");
 	ans = get_next_line(fd, &line);
-	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("1st File, 1st read\n");
-	print_test(line);
-	printf("---------------------------------------------------------------\n");
+	//print_test(line);
+	//printf("ans == %d\n", ans);
+	//printf("--------------------------------------------------------------\n");
 
-	ans = get_next_line(fd2, &line);
-	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("2nd File, 1st read\n");
-	print_test(line);
-	printf("---------------------------------------------------------------\n");
+	sleep(5);
 
-	ans = get_next_line(fd3, &line);
-	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("3rd File, 1st read\n");
-	print_test(line);
-	printf("---------------------------------------------------------------\n");
-
+	//printf("\n");
+	//printf("--------------------------------------------------------------\n");
 	ans = get_next_line(fd, &line);
-	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("1st File, 2nd read\n");
-	print_test(line);
-	printf("---------------------------------------------------------------\n");
+	//print_test(line);
+	//printf("ans == %d\n", ans);
+	//printf("--------------------------------------------------------------\n");
 
-	ans = get_next_line(fd2, &line);
+	/*
 	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("2nd File, 2nd read\n");
-	print_test(line);
-	printf("---------------------------------------------------------------\n");
-
+	printf("--------------------------------------------------------------\n");
 	ans = get_next_line(fd, &line);
-	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("1st File, 3rd read\n");
 	print_test(line);
-	printf("---------------------------------------------------------------\n");
+	printf("ans == %d\n", ans);
+	printf("--------------------------------------------------------------\n");
 
-	ans = get_next_line(fd, &line);
 	printf("\n");
-	printf("---------------------------------------------------------------\n");
-	printf("1st File, 4th read\n");
+	printf("--------------------------------------------------------------\n");
+	ans = get_next_line(fd, &line);
 	print_test(line);
-	printf("---------------------------------------------------------------\n");
+	printf("ans == %d\n", ans);
+	printf("--------------------------------------------------------------\n");
+
+	printf("\n");
+	printf("--------------------------------------------------------------\n");
+	ans = get_next_line(fd, &line);
+	print_test(line);
+	printf("ans == %d\n", ans);
+	printf("--------------------------------------------------------------\n");
+	*/
+
+	sleep(60);
 
 	printf("\n");
 	return (0);
