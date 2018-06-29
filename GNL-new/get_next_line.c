@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 06:27:40 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/29 10:44:22 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/29 12:16:22 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,6 @@ int		main(int ac, char **av)
 
 	(void)ac;
 	fd = open(av[1], O_RDONLY);
-
-	//while (get_next_line(fd, &line))
-	//{
-	//	ft_putendl(line);
-	//	free(line);
-	//}
 
 	for (int i = 0; i < 10; i++)
 	{
