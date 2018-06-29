@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 06:28:04 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/28 18:39:25 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/29 08:39:19 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef	struct	s_mem
 	char		*prev_arr;
 	int			prev_fd;
 	ssize_t		read_b;
+	_Bool		swtch;
 }				t_mem;
 
 int	get_next_line(const int fd, char **line);
