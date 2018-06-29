@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 06:27:40 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/29 08:47:54 by egenis           ###   ########.fr       */
+/*   Updated: 2018/06/29 10:44:22 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,24 @@ static int			build_arr(int fd, t_mem *m)
 	return (0);
 }
 
+static void			ft_reset(int fd, t_mem *m)
+{
+	if (m->prev_fd != fd)
+	{
+		m->arr = NULL;
+		m->read_b = 1;
+		m->swtch = 1;
+	}
+	return ;
+}
+
 int					get_next_line(const int fd, char **line)
 {
 	static	t_mem	m = {NULL, NULL, -1, 1, 1};
 
 	if (fd < 0 || BUFF_SIZE < 1 || !line)
 		return (-1);
-	if (m.prev_fd != fd)
-		m.arr = NULL;
-	if (m.prev_fd != fd)
-		m.read_b = 1;
+	ft_reset(fd, &m);
 	m.prev_fd = fd;
 	if ((build_arr(fd, &m)) == -1)
 		return (-1);
@@ -69,7 +77,6 @@ int					get_next_line(const int fd, char **line)
 		*line = ft_strsub(m.arr, 0, ft_strclen(m.arr, '\n'));
 	else
 		*line = ft_strsub(m.arr, 0, 0);
-	m.prev_arr = m.arr;
 	if (m.arr && ft_strchr(m.arr, '\n'))
 	{
 		m.prev_arr = m.arr;
