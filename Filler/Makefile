@@ -6,13 +6,19 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/19 12:38:07 by egenis            #+#    #+#              #
-#    Updated: 2018/07/06 07:42:39 by egenis           ###   ########.fr        #
+#    Updated: 2018/07/06 07:37:01 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = egenis.filler
 
 FLAGS = -c -Wall -Wextra -Werror
+
+FILES =	
+
+CFILES = $(FILES:=.c)
+
+OFILES = $(FILES:=.o)
 
 all: $(NAME)
 
