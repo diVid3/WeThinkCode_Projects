@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 15:01:52 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/09 15:50:03 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/09 16:52:47 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,24 @@ int			ft_get_map_size(t_data *data)
 		return (-1);
 	data->map_rws = ft_atoi(size_addr);
 	if ((size_addr = ft_get_size_addr(line, 1)) == NULL)
+	{
+		data->map_rws = 0;
 		return (-1);
+	}
 	data->map_cls = ft_atoi(size_addr);
+	ft_memdel((void **)(&line));
 	return (0);
 }
+
+/*
+int		main(void)
+{
+	static t_data	data;
+	int				ans = ft_get_plyr_num(&data);
+	int				ans2 = ft_get_map_size(&data);
+	printf("data.map_rws = %d && data.map_cls = %d\n", data.map_rws, data.map_cls);
+	(void)ans;
+	(void)ans2;
+	return (0);
+}
+*/
