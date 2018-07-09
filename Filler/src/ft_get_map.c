@@ -21,6 +21,12 @@ int			ft_get_map(t_data *data)
 	if ((get_next_line(0, &line)) == -1)
 		return (-1);
 	ft_memdel((void **)(&line));
+	if (data->map_skp_2line)
+		if ((get_next_line(0, &line)) == -1)
+			return (-1);
+	if (data->map_skp_2line)
+		ft_memdel((void **)(&line));
+	data->map_skp_2line = 1;
 	return (0);
 }
 

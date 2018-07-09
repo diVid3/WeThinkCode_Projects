@@ -22,6 +22,8 @@ typedef struct	s_data
 	int			pce_rws;
 	int			pce_cls;
 	char		**pce;
+	_Bool		map_skp_2line;
+	_Bool		pce_skp_1line;
 }				t_data;
 
 #endif
