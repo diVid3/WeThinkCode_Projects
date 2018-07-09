@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                          :+:      :+:    :+:   */
+/*   filler.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 10:28:56 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/09 11:20:30 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/09 11:12:15 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/09 13:29:49 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#ifndef DATA_H
+# define DATA_H
 
-int		ft_get_data(t_data *data)
+typedef struct	s_data
 {
+	int			plyr_num;
+	int			map_rws;
+	int			map_cls;
+	char		**map;
+	int			pce_rws;
+	int			pce_cls;
+	char		**pce;
+}				t_data;
 
-}
+#endif

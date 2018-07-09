@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 06:28:04 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/06 07:38:43 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/09 13:16:41 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include "libft.h"
-# define BUFF_SIZE 32
+# define BUFF_SIZE 10000
 
 typedef	struct	s_mem
 {
