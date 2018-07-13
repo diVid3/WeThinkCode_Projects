@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 09:27:47 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/15 06:56:38 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/13 14:08:22 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# define BUFF_SIZE 511
 
 typedef struct		s_list
 {
@@ -23,6 +24,15 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef	struct		s_mem
+{
+	char			*arr;
+	char			*prev_arr;
+	int				prev_fd;
+	ssize_t			read_b;
+	_Bool			swtch;
+}					t_mem;
 
 typedef unsigned char	t_uchar;
 
@@ -40,6 +50,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_del_matrix(void **arr, size_t rows);
 
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
@@ -67,6 +78,7 @@ char				*ft_strtrim(char const *s);
 char				*ft_itoa(int n);
 
 char				**ft_strsplit(char const *s, char c);
+char				**ft_alloc_char_m(size_t rows, size_t cols);
 
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_atoi(const char *str);
@@ -81,6 +93,7 @@ int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
+int					get_next_line(const int fd, char **line);
 
 size_t				ft_strlen(const char *s);
 size_t				ft_strclen(const char *s, const char c);

@@ -6,7 +6,7 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/19 12:38:07 by egenis            #+#    #+#              #
-#    Updated: 2018/07/06 07:37:01 by egenis           ###   ########.fr        #
+#    Updated: 2018/07/13 14:07:56 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES =	ft_atoi ft_bzero ft_isalnum ft_isalpha ft_isascii\
 		ft_itoa ft_putstr ft_putendl ft_putnbr ft_putchar_fd\
 		ft_putstr_fd ft_putendl_fd ft_putnbr_fd ft_lstnew\
 		ft_lstadd ft_lstdelone ft_lstdel ft_lstiter ft_lstmap\
-		get_next_line\
+		get_next_line ft_del_matrix ft_alloc_char_m\
 
 CFILES = $(FILES:=.c)
 

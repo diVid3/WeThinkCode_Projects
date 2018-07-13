@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_map.c                                       :+:      :+:    :+:   */
+/*   ft_get_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 16:53:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/11 16:17:24 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/13 10:55:00 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/13 11:31:23 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <fcntl.h>
 #include <stdio.h>
 
-int			ft_get_map(t_data *data)
+int		ft_get_player_num(t_data *data)
 {
-	char	*line;
+	char		*line;
 
-	if ((get_next_line(0, &line)) == -1)
-		return (-1);
-	ft_memdel((void **)(&line));
-	if (!data->map_skp_2line)
-		if ((get_next_line(0, &line)) == -1)
-			return (-1);
-	if (!data->map_skp_2line)
-		ft_memdel((void **)(&line));
-	data->map_skp_2line = 1;
-	return (0);
+	if ((get_next_line(0, &line) <= 0))
 }
 
 int		main(void)

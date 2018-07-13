@@ -6,11 +6,11 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 06:27:40 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/29 12:07:59 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/13 11:44:01 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static int			build_arr(int fd, t_mem *m)
 {

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_del_matrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/28 06:28:04 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/09 13:16:41 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/13 13:55:28 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/13 13:55:39 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# define BUFF_SIZE 10000
-
-typedef	struct	s_mem
+void		ft_del_matrix(void **arr, size_t rows)
 {
-	char		*arr;
-	char		*prev_arr;
-	int			prev_fd;
-	ssize_t		read_b;
-	_Bool		swtch;
-}				t_mem;
+	size_t		cntr;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	if (!rows || !arr)
+		return ;
+	cntr = 0;
+	while (cntr < rows && arr[cntr])
+	{
+		free(arr[cntr]);
+		arr[cntr] = NULL;
+		++cntr;
+	}
+	free(arr);
+	arr = NULL;
+	return ;
+}
