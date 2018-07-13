@@ -6,13 +6,14 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 07:31:43 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 10:29:33 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/13 10:46:35 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
+//#include <stdio.h>
 
+/*
 void		ft_del_arr2d(char **arr, size_t row_count)
 {
 	size_t		cntr;
@@ -30,6 +31,7 @@ void		ft_del_arr2d(char **arr, size_t row_count)
 	arr = NULL;
 	return ;
 }
+*/
 
 char		**ft_alloc_arr2d(size_t rows, size_t cols)
 {
@@ -43,17 +45,19 @@ char		**ft_alloc_arr2d(size_t rows, size_t cols)
 	cntr_row = 0;
 	while (cntr_row < rows)
 	{
-		if ((arr[cntr_row] = malloc(sizeof(char) * cols)) == NULL)
+		if ((arr[cntr_row] = malloc(sizeof(char) * cols + 1)) == NULL)
 		{
 			ft_del_arr2d(arr, rows);
 			return (NULL);
 		}
+		ft_bzero(arr[cntr_row], cols + 1);
 		++cntr_row;
 	}
 	arr[rows] = NULL;
 	return (arr);
 }
 
+/*
 void		print_arr2d(char **arr, size_t row_count)
 {
 	size_t		cntr;
@@ -103,3 +107,4 @@ int			main(int ac, char **av)
 	//sleep(60);
 	return (0);
 }
+*/
