@@ -1,5 +1,5 @@
 #include "../inc/filler.h"
-//#include <stdio.h>
+#include <stdio.h>
 
 void		ft_del_arr2d(char **arr, size_t row_count)
 {
@@ -19,7 +19,6 @@ void		ft_del_arr2d(char **arr, size_t row_count)
 	return ;
 }
 
-/*
 size_t		ft_count_wrds(char *s, char c)
 {
 	size_t		cntr;
@@ -68,9 +67,8 @@ int			main(int ac, char **av)
 	wrd_count = ft_count_wrds(av[1], ' ');
 	arr = ft_strsplit(av[1], ' ');
 	printf("The word count for av[1] is %zu\n", wrd_count);
-	print_arr2d(arr, wrd_count);
-	ft_del_arr2d(arr, wrd_count);
-	sleep(60);
+	print_arr2d(arr, 6);
+	ft_del_arr2d(arr, 6);
+	//sleep(60);
 	return (0);
 }
-*/
