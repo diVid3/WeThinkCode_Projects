@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   ft_del_matrix_nul.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 11:12:15 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 14:16:19 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/13 16:14:17 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/13 16:14:43 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "../inc/filler.h"
 
-typedef struct	s_input
+static	void	ft_del_matrix_nul(void **arr)
 {
-	int			plyr_num;
-	int			map_rws;
-	int			map_cls;
-	char		**map;
-	int			pce_rws;
-	int			pce_cls;
-	char		**pce;
-}				t_input;
+	size_t		cntr;
 
-#endif
+	if (!arr)
+		return ;
+	cntr = 0;
+	while (arr[cntr])
+	{
+		free(arr[cntr]);
+		arr[cntr] = NULL;
+		++cntr;
+	}
+	free(arr);
+	arr = NULL;
+	return ;
+}

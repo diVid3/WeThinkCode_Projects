@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 09:27:47 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 14:08:22 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/13 16:38:24 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int					get_next_line(const int fd, char **line);
 size_t				ft_strlen(const char *s);
 size_t				ft_strclen(const char *s, const char c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t				ft_count_words(char *s, char c);
 
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));

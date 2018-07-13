@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 13:32:26 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 13:46:27 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/13 14:18:15 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 # include "./input.h"
 # include "../lib/libft/libft.h"
+# include <stdio.h>
 
 #endif

@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   ft_count_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 11:12:15 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 14:16:19 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/13 16:32:31 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/13 16:38:00 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#include "libft.h"
 
-typedef struct	s_input
+size_t	ft_count_words(char *s, char c)
 {
-	int			plyr_num;
-	int			map_rws;
-	int			map_cls;
-	char		**map;
-	int			pce_rws;
-	int			pce_cls;
-	char		**pce;
-}				t_input;
+	size_t		cntr;
+	size_t		wrd_count;
+	_Bool		swtch;
+	t_uchar		ch;
 
-#endif
+	cntr = 0;
+	wrd_count = 0;
+	swtch = 0;
+	ch = (t_uchar)c;
+	while (s[cntr])
+	{
+		if (s[cntr] != ch && swtch == 0)
+			++wrd_count;
+		if (s[cntr] != ch)
+			swtch = 1;
+		if (s[cntr] == ch)
+			swtch = 0;
+		++cntr;
+	}
+	return (wrd_count);
+}
