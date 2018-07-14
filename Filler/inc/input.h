@@ -15,13 +15,13 @@
 
 typedef struct	s_input
 {
-	int			plyr_num;
-	int			map_rws;
-	int			map_cls;
+	int			player_num;
+	int			map_rows;
+	int			map_cols;
 	char		**map;
-	int			pce_rws;
-	int			pce_cls;
-	char		**pce;
+	int			piece_rows;
+	int			piece_cols;
+	char		**piece;
 }				t_input;
 
 #endif
