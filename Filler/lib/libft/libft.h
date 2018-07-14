@@ -78,7 +78,6 @@ char				*ft_strtrim(char const *s);
 char				*ft_itoa(int n);
 
 char				**ft_strsplit(char const *s, char c);
-char				**ft_alloc_char_m(size_t rows, size_t cols);
 
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_atoi(const char *str);

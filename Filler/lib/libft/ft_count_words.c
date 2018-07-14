@@ -23,7 +23,7 @@ size_t	ft_count_words(char *s, char c)
 	wrd_count = 0;
 	swtch = 0;
 	ch = (t_uchar)c;
-	while (s[cntr])
+	while (s && s[cntr])
 	{
 		if (s[cntr] != ch && swtch == 0)
 			++wrd_count;
