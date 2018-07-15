@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 11:12:15 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 14:16:19 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/15 10:07:36 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_input
 	int			map_rows;
 	int			map_cols;
 	char		**map;
+	char		**saved_line;
 	int			piece_rows;
 	int			piece_cols;
 	char		**piece;
