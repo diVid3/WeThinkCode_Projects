@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
 
 static	int		ft_verify_1st_num(char *str)
 {
@@ -72,6 +71,7 @@ int				ft_get_piece_size(t_input *data)
 	return (0);
 }
 
+/*
 int		main(void)
 {
 	static t_input	data;
@@ -83,3 +83,4 @@ int		main(void)
 	printf("piece_cols is %d\n", data.piece_cols);
 	return (0);
 }
+*/

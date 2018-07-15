@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
 
 static int		ft_verify_1st_num(char *str)
 {
@@ -77,6 +76,7 @@ int				ft_get_map_size(t_input *data)
 	return (0);
 }
 
+/*
 int		main(void)
 {
 	static t_input	data;
@@ -88,3 +88,4 @@ int		main(void)
 	printf("map_cols is %d\n", data.map_cols);
 	return (0);
 }
+*/

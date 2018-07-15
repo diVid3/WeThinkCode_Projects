@@ -11,32 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
-
-/*
-static	int		ft_verify_piece_row(t_input *data, char **line)
-{
-	char		**arr;
-	int			cntr;
-
-	if (ft_count_words(*line, ' ') != 1)
-		return (0);
-	arr = ft_strsplit(*line, ' ');
-	if (ft_strlen(arr[0]) != (size_t)data->piece_cols)
-		return (0);
-	cntr = 0;
-	while (arr[0][cntr])
-	{
-		if (arr[0][cntr] != '.')
-			if (arr[0][cntr] != '*')
-				return (0);
-		++cntr;
-	}
-	ft_memdel((void **)(&line));
-	*line = arr[0];
-	return (1);
-}
-*/
 
 static	int		ft_verify_piece_row(t_input *data, char **line)
 {
@@ -57,19 +31,6 @@ static	int		ft_verify_piece_row(t_input *data, char **line)
 	return (1);
 }
 
-void			print_arr2d(char **arr, size_t rows)
-{
-	size_t		cntr;
-
-	cntr = 0;
-	while (arr[cntr] && cntr < rows)
-	{
-		printf("%s\n", arr[cntr]);
-		++cntr;
-	}
-	return ;
-}
-
 int				ft_get_piece(t_input *data)
 {
 	char		*line;
@@ -83,17 +44,15 @@ int				ft_get_piece(t_input *data)
 	{
 		if (get_next_line(0, &line) <= 0)
 			return (-1);
-		//printf("Fail here 0?\n");
 		if (ft_verify_piece_row(data, &line) == 0)
 			return (-1);
-		//printf("Fail here 1?\n");
 		data->piece[cntr] = line;
 		++cntr;
 	}
-	print_arr2d(data->piece, (size_t)data->piece_rows);
 	return (0);
 }
 
+/*
 int		main(void)
 {
 	static t_input		data;
@@ -105,3 +64,4 @@ int		main(void)
 	printf("ft_get_piece() returned %d\n", ans);
 	return (0);
 }
+*/

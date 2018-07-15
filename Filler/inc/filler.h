@@ -13,8 +13,14 @@
 #ifndef FILLER_H
 # define FILLER_H
 
-# include "./input.h"
+# include "input.h"
 # include "../lib/libft/libft.h"
 # include <stdio.h>
+
+int				ft_get_player_num(t_input *data);
+int				ft_get_map_size(t_input *data);
+int				ft_get_map(t_input *data);
+int				ft_get_piece_size(t_input *data);
+int				ft_get_piece(t_input *data);
 
 #endif

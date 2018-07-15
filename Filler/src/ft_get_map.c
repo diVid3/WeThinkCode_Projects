@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
 
 static	int		ft_verify_top_ruler(char *line)
 {
@@ -60,19 +59,6 @@ static	int		ft_verify_map_row(t_input *data, char **line)
 	return (1);
 }
 
-void			print_arr2d(char **arr, size_t rows)
-{
-	size_t		cntr;
-
-	cntr = 0;
-	while (arr[cntr] && cntr < rows)
-	{
-		printf("%s\n", arr[cntr]);
-		++cntr;
-	}
-	return ;
-}
-
 int				ft_get_map(t_input *data)
 {
 	char		*line;
@@ -96,10 +82,10 @@ int				ft_get_map(t_input *data)
 		data->map[cntr] = line;
 		++cntr;
 	}
-	//print_arr2d(data->map, (size_t)data->map_rows);
 	return (0);
 }
 
+/*
 int 	main(void)
 {
 	static t_input	data;
@@ -112,3 +98,4 @@ int 	main(void)
 	//sleep(60);
 	return (0);
 }
+*/

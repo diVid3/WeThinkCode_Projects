@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
 
 int				ft_get_player_num(t_input *data)
 {
@@ -36,6 +35,7 @@ int				ft_get_player_num(t_input *data)
 	return (0);
 }
 
+/*
 int		main(void)
 {
 	static t_input	data;
@@ -45,3 +45,5 @@ int		main(void)
 	printf("ans returned %d\nplayer_num is %d\n", ans, data.player_num);
 	return (0);
 }
+*/
+
