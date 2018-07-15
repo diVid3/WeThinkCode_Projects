@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 09:27:47 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/13 16:38:24 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/15 12:11:42 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# define BUFF_SIZE 511
+# define BUFF_SIZE 10000
 
 typedef struct		s_list
 {
@@ -78,6 +78,7 @@ char				*ft_strtrim(char const *s);
 char				*ft_itoa(int n);
 
 char				**ft_strsplit(char const *s, char c);
+char				**ft_alloc_mat_rows(size_t rows);
 
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_atoi(const char *str);

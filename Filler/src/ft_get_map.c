@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:53:33 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 10:40:42 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/15 12:14:45 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ static	int		verify_top_ruler(char *line)
 	return (1);
 }
 
-static	int		verify_map_row(t_input *data, char *line)
+static	int		verify_map_row(t_input *data, char **line)
 {
 	char		**arr;
-	size_t		cntr;
+	int			cntr;
 
-	if (ft_count_words(line, ' ') != 2)
+	if (ft_count_words(*line, ' ') != 2)
 		return (0);
-	arr = ft_strsplit(line, ' ');
-	if (ft_strlen(arr[1]) != data->map_cols)
+	arr = ft_strsplit(*line, ' ');
+	if (ft_strlen(arr[1]) != (size_t)data->map_cols)
 		return (0);
 	cntr = 0;
 	while (arr[1][cntr])
@@ -54,15 +54,16 @@ static	int		verify_map_row(t_input *data, char *line)
 							return (0);
 		++cntr;
 	}
-	ft_memdel((void **)(&line));
+	ft_memdel((void **)(line));
+	*line = arr[1];
+	ft_del_matrix((void **)arr, 1);
 	return (1);
 }
 
-int				get_map(t_input *data)
+int				ft_get_map(t_input *data)
 {
-	char		*line
-	char		**arr;
-	size_t		cntr;
+	char		*line;
+	int			cntr;
 
 	if ((!data->map_rows || !data->map_cols) || (data->map_rows == 1 &&
 			data->map_cols == 1))
@@ -71,17 +72,43 @@ int				get_map(t_input *data)
 		return (-1);
 	if (verify_top_ruler(line) == 0)
 		return (-1);
-	arr = ft_alloc_mat_rows(data->map_rows);
+	data->map = ft_alloc_mat_rows(data->map_rows);
 	cntr = 0;
 	while (cntr < data->map_rows)
 	{
 		if (get_next_line(0, &line) <= 0)
 			return (-1);
+		if (verify_map_row(data, &line) == 0)
+			return (-1);
+		data->map[cntr] = line;
 		++cntr;
 	}
 	return (0);
 }
 
+void			print_arr2d(char **arr, size_t rows)
+{
+	size_t		cntr;
+
+	cntr = 0;
+	while (arr[cntr] && cntr < rows)
+	{
+		printf("%s\n", arr[cntr]);
+		++cntr;
+	}
+	return ;
+}
+
 int 	main(void)
 {
+	static t_input	data;
+	int				ans;
+
+	data.map_rows = 24;
+	data.map_cols = 40;
+	ans = ft_get_map(&data);
+	printf("\nft_get_map_size() returned %d\n", ans);
+	print_arr2d(data.map, (size_t)data.map_rows);
+	printf("\n");
+	return (0);
 }
