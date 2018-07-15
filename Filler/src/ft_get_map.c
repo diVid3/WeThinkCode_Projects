@@ -6,14 +6,14 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:53:33 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 12:52:54 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/15 13:32:19 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 #include <stdio.h>
 
-static	int		verify_top_ruler(char *line)
+static	int		ft_verify_top_ruler(char *line)
 {
 	char		**arr;
 	size_t		cntr;
@@ -33,7 +33,7 @@ static	int		verify_top_ruler(char *line)
 	return (1);
 }
 
-static	int		verify_map_row(t_input *data, char **line)
+static	int		ft_verify_map_row(t_input *data, char **line)
 {
 	char		**arr;
 	int			cntr;
@@ -83,7 +83,7 @@ int				ft_get_map(t_input *data)
 		return (-1);
 	if (get_next_line(0, &line) <= 0)
 		return (-1);
-	if (verify_top_ruler(line) == 0)
+	if (ft_verify_top_ruler(line) == 0)
 		return (-1);
 	data->map = ft_alloc_mat_rows(data->map_rows);
 	cntr = 0;
@@ -91,12 +91,12 @@ int				ft_get_map(t_input *data)
 	{
 		if (get_next_line(0, &line) <= 0)
 			return (-1);
-		if (verify_map_row(data, &line) == 0)
+		if (ft_verify_map_row(data, &line) == 0)
 			return (-1);
 		data->map[cntr] = line;
 		++cntr;
 	}
-	print_arr2d(data->map, (size_t)data->map_rows);
+	//print_arr2d(data->map, (size_t)data->map_rows);
 	return (0);
 }
 
