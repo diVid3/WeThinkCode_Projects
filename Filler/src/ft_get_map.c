@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:53:33 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 12:14:45 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/15 12:52:54 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ static	int		verify_map_row(t_input *data, char **line)
 	return (1);
 }
 
+void			print_arr2d(char **arr, size_t rows)
+{
+	size_t		cntr;
+
+	cntr = 0;
+	while (arr[cntr] && cntr < rows)
+	{
+		printf("%s\n", arr[cntr]);
+		++cntr;
+	}
+	return ;
+}
+
 int				ft_get_map(t_input *data)
 {
 	char		*line;
@@ -83,20 +96,8 @@ int				ft_get_map(t_input *data)
 		data->map[cntr] = line;
 		++cntr;
 	}
+	print_arr2d(data->map, (size_t)data->map_rows);
 	return (0);
-}
-
-void			print_arr2d(char **arr, size_t rows)
-{
-	size_t		cntr;
-
-	cntr = 0;
-	while (arr[cntr] && cntr < rows)
-	{
-		printf("%s\n", arr[cntr]);
-		++cntr;
-	}
-	return ;
 }
 
 int 	main(void)
@@ -107,8 +108,7 @@ int 	main(void)
 	data.map_rows = 24;
 	data.map_cols = 40;
 	ans = ft_get_map(&data);
-	printf("\nft_get_map_size() returned %d\n", ans);
-	print_arr2d(data.map, (size_t)data.map_rows);
-	printf("\n");
+	printf("ft_get_map() returned %d\n", ans);
+	//sleep(60);
 	return (0);
 }
