@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/16 07:06:10 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 14:25:06 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/16 15:48:11 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ static void		ft_add_node(t_move **head, int map_row, int map_col)
 	t_move		*node;
 
 	node = malloc(sizeof(t_move));
-	node.row = map.row;
-	node.col = map.col;
+	node->row = map_row;
+	node->col = map_col;
 	if (*head == NULL)
-		node.next = NULL;
+		node->next = NULL;
 	else
-		node.next = *head;
+		node->next = *head;
 	*head = node;
 }
 
 static t_move		*ft_make_move_list(t_input *data)
 {
 	t_move		*head;
-	size_t		cntr_row;
-	size_t		cntr_col;
+	int			cntr_row;
+	int			cntr_col;
 
 	head = NULL;
 	cntr_row = 0;
@@ -90,7 +90,7 @@ static t_move		*ft_make_move_list(t_input *data)
 		{
 			if (ft_can_place(data, cntr_row, cntr_col) == 1)
 				ft_add_node(&head, cntr_row, cntr_col);
-			++cntr_col
+			++cntr_col;
 		}
 		++cntr_row;
 	}
