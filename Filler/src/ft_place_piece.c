@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   ft_place_piece.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 13:32:26 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 07:00:46 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/16 07:06:10 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/16 08:29:01 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_H
-# define FILLER_H
+#include "../inc/filler.h"
 
-# include "input.h"
-# include "../lib/libft/libft.h"
+int				ft_place_piece(t_input *data)
+{
+	size_t		cntr_row;
+	size_t		cntr_col;
 
-int				ft_get_player_num(t_input *data);
-int				ft_get_map_size(t_input *data);
-int				ft_get_map(t_input *data);
-int				ft_get_piece_size(t_input *data);
-int				ft_get_piece(t_input *data);
 
-#endif
+}

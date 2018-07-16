@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 13:32:26 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 07:00:46 by egenis           ###   ########.fr       */
+/*   Created: 2018/07/16 06:43:39 by egenis            #+#    #+#             */
+/*   Updated: 2018/07/16 07:24:28 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_H
-# define FILLER_H
+#include "../inc/filler.h"
 
-# include "input.h"
-# include "../lib/libft/libft.h"
+int		main(void)
+{
+	static t_input	data;
+	int				ans_input;
 
-int				ft_get_player_num(t_input *data);
-int				ft_get_map_size(t_input *data);
-int				ft_get_map(t_input *data);
-int				ft_get_piece_size(t_input *data);
-int				ft_get_piece(t_input *data);
-
-#endif
+	while (1)
+	{
+		if ((ans_input = ft_get_input(&data)) == -1)
+			ft_putstr_fd("Bad input.\n", 2);
+		if (ans_input == -1)
+			return (-1);
+		if (ans_input == 2)
+			continue;
+	}
+	return (0);
+}
