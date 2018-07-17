@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
+#include <stdio.h>
 
 static _Bool	ft_can_place_p1(t_input *data, int map_row, int map_col)
 {
@@ -30,8 +31,6 @@ static _Bool	ft_can_place_p1(t_input *data, int map_row, int map_col)
 		{
 			if ((data->map[map_row + p_row][map_col + p_col] == 'o' ||
 				data->map[map_row + p_row][map_col + p_col] == 'O') &&
-				(data->map[map_row + p_row][map_col + p_col] != 'x' ||
-				data->map[map_row + p_row][map_col + p_col] != 'X') &&
 				data->piece[p_row][p_col] == '*')
 				++overlaps;
 			++p_col;
@@ -59,8 +58,6 @@ static _Bool	ft_can_place_p2(t_input *data, int map_row, int map_col)
 		{
 			if ((data->map[map_row + p_row][map_col + p_col] == 'x' ||
 				data->map[map_row + p_row][map_col + p_col] == 'X') &&
-				(data->map[map_row + p_row][map_col + p_col] != 'o' ||
-				data->map[map_row + p_row][map_col + p_col] != 'O') &&
 				data->piece[p_row][p_col] == '*')
 				++overlaps;
 			++p_col;
@@ -155,12 +152,18 @@ void			ft_place_piece(t_input *data)
 	move = ft_make_move_list(data);
 	sleep(1);
 	if (move)
+	{
+		dprintf(2, "First avaiable move is row -- %d ", move->row);
 		ft_putnbr(move->row);
+	}
 	else
 		ft_putnbr(0);
 	ft_putchar(' ');
 	if (move)
+	{
+		dprintf(2, "col -- %d\n", move->col);
 		ft_putnbr(move->col);
+	}
 	else
 		ft_putnbr(0);
 	ft_putchar('\n');
