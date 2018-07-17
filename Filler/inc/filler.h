@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 13:32:26 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 14:32:00 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 08:23:51 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int				ft_get_piece_size(t_input *data);
 int				ft_get_piece(t_input *data);
 int				ft_get_input(t_input *data);
 
+void			ft_add_node_back(t_move **head, int map_row, int map_col);
+void			ft_free_list(t_move *head);
 void			ft_place_piece(t_input *data);
+
+_Bool			ft_can_place_p1(t_input *d, int m_rw, int m_cl);
+_Bool			ft_can_place_p2(t_input *d, int m_rw, int m_cl);
+
+t_move			*ft_make_move_list(t_input *data);
 
 #endif
