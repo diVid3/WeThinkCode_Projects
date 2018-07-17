@@ -13,12 +13,41 @@
 #include "../inc/filler.h"
 #include <stdio.h>
 
+static t_star	ft_optmze_rating(t_input *d, t_move *n)
+{
+	t_star	star_pos;
+	int		p_rw;
+	int		p_cl;
+
+	star_pos.rw = n->row;
+	star_pos.cl = n->col;
+	p_rw = 0;
+	while (p_rw < d->p_rws)
+	{
+		p_cl = 0;
+		while (p_cl < d->p_cls)
+		{
+			if (d->p[p_rw][p_cl] == '*')
+			{
+				star_pos.rw = n->row + p_rw;
+				star_pos.cl = n->col + p_cl;
+				return (star_pos);
+			}
+			++p_cl;
+		}
+		++p_rw;
+	}
+	return (star_pos);
+}
+
 static void		ft_rate_move_p1(t_input *d, t_move *n)
 {
 	int		rating;
 	int		rw;
 	int		cl;
+	t_star	s_pos;
 
+	s_pos = ft_optmze_rating(d, n);
 	rw = 0;
 	while (rw < d->mp_rws)
 	{
@@ -26,9 +55,9 @@ static void		ft_rate_move_p1(t_input *d, t_move *n)
 		while (cl < d->mp_cls)
 		{
 			if (d->mp[rw][cl] == 'x' || d->mp[rw][cl] == 'X')
-				rating = ((n->row - rw) * (n->row - rw)) +
-						((n->col - cl) * (n->col - cl));
-			if (rating <= n->rating)
+				rating = ((s_pos.rw - rw) * (s_pos.rw - rw)) +
+						((s_pos.cl - cl) * (s_pos.cl - cl));
+			if (rating < n->rating)
 				n->rating = rating;
 			//dprintf(2, "n->rating is %d\n", n->rating);
 			++cl;
@@ -42,7 +71,9 @@ static void		ft_rate_move_p2(t_input *d, t_move *n)
 	int		rating;
 	int		rw;
 	int		cl;
+	t_star	s_pos;
 
+	s_pos = ft_optmze_rating(d, n);
 	rw = 0;
 	while (rw < d->mp_rws)
 	{
@@ -50,9 +81,9 @@ static void		ft_rate_move_p2(t_input *d, t_move *n)
 		while (cl < d->mp_cls)
 		{
 			if (d->mp[rw][cl] == 'o' || d->mp[rw][cl] == 'O')
-				rating = ((n->row - rw) * (n->row - rw)) +
-						((n->col - cl) * (n->col - cl));
-			if (rating <= n->rating)
+				rating = ((s_pos.rw - rw) * (s_pos.rw - rw)) +
+						((s_pos.cl - cl) * (s_pos.cl - cl));
+			if (rating < n->rating)
 				n->rating = rating;
 			//dprintf(2, "n->rating is %d\n", n->rating);
 			++cl;
