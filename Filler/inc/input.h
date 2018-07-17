@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/16 06:23:13 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 06:23:32 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 07:20:47 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ typedef struct	s_input
 {
 	_Bool		read_1st;
 	int			player_num;
-	int			map_rows;
-	int			map_cols;
-	char		**map;
-	int			piece_rows;
-	int			piece_cols;
-	char		**piece;
+	int			mp_rws;
+	int			mp_cls;
+	char		**mp;
+	int			p_rws;
+	int			p_cls;
+	char		**p;
+	int			overlaps;
 }				t_input;
 
 #endif

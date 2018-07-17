@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:51:31 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 16:18:31 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 06:55:32 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,9 @@ int				ft_get_map_size(t_input *data)
 		return (-1);
 	if (ft_verify_2nd_num(arr[2]) == 0)
 		return (-1);
-	data->map_rows = ft_atoi(arr[1]);
-	data->map_cols = ft_atoi(arr[2]);
+	data->mp_rws = ft_atoi(arr[1]);
+	data->mp_cls = ft_atoi(arr[2]);
 	ft_memdel((void **)(&line));
 	ft_del_matrix((void **)arr, 3);
 	return (0);
 }
-
-/*
-int		main(void)
-{
-	static t_input	data;
-	int				ans;
-
-	ans = ft_get_map_size(&data);
-	printf("ans returned %d\n", ans);
-	printf("map_rows is %d\n", data.map_rows);
-	printf("map_cols is %d\n", data.map_cols);
-	return (0);
-}
-*/

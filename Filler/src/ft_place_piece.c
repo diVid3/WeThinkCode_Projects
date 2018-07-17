@@ -6,65 +6,77 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/16 07:06:10 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 15:48:11 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 07:21:55 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 #include <stdio.h>
 
-static _Bool	ft_can_place_p1(t_input *data, int map_row, int map_col)
+static _Bool	ft_out_of_bounds(t_input *data, int map_row, int map_col)
 {
-	int		overlaps;
-	int		p_row;
-	int		p_col;
-
-	overlaps = 0;
-	if (map_row + data->piece_rows > data->map_rows || 
-		map_col + data->piece_cols > data->map_cols)
+	if (map_row + data->p_rws > data->mp_rws || 
+		map_col + data->p_cls > data->mp_cls)
 		return (0);
-	p_row = 0;
-	while (p_row < data->piece_rows)
-	{
-		p_col = 0;
-		while (p_col < data->piece_cols)
-		{
-			if ((data->map[map_row + p_row][map_col + p_col] == 'o' ||
-				data->map[map_row + p_row][map_col + p_col] == 'O') &&
-				data->piece[p_row][p_col] == '*')
-				++overlaps;
-			++p_col;
-		}
-		++p_row;
-	}
-	return ((overlaps == 1) ? 1 : 0);
+	return (1);
 }
 
-static _Bool	ft_can_place_p2(t_input *data, int map_row, int map_col)
+static _Bool	ft_can_place_p1(t_input *d, int m_rw, int m_cl)
 {
-	int		overlaps;
-	int		p_row;
-	int		p_col;
+	int		p_rw;
+	int		p_cl;
 
-	overlaps = 0;
-	if (map_row + data->piece_rows > data->map_rows || 
-		map_col + data->piece_cols > data->map_cols)
+	d->overlaps = 0;
+	if (ft_out_of_bounds(d, m_rw, m_cl) == 0)
 		return (0);
-	p_row = 0;
-	while (p_row < data->piece_rows)
+	p_rw = 0;
+	while (p_rw < d->p_rws)
 	{
-		p_col = 0;
-		while (p_col < data->piece_cols)
+		p_cl = 0;
+		while (p_cl < d->p_cls)
 		{
-			if ((data->map[map_row + p_row][map_col + p_col] == 'x' ||
-				data->map[map_row + p_row][map_col + p_col] == 'X') &&
-				data->piece[p_row][p_col] == '*')
-				++overlaps;
-			++p_col;
+			if ((d->mp[m_rw + p_rw][m_cl + p_cl] == 'x' ||
+				d->mp[m_rw + p_rw][m_cl + p_cl] == 'X') &&
+				d->p[p_rw][p_cl] == '*')
+				return (0);
+			if ((d->mp[m_rw + p_rw][m_cl + p_cl] == 'o' ||
+				d->mp[m_rw + p_rw][m_cl + p_cl] == 'O') &&
+				d->p[p_rw][p_cl] == '*')
+				++d->overlaps;
+			++p_cl;
 		}
-		++p_row;
+		++p_rw;
 	}
-	return ((overlaps == 1) ? 1 : 0);
+	return ((d->overlaps == 1) ? 1 : 0);
+}
+
+static _Bool	ft_can_place_p2(t_input *d, int m_rw, int m_cl)
+{
+	int		p_rw;
+	int		p_cl;
+
+	d->overlaps = 0;
+	if (ft_out_of_bounds(d, m_rw, m_cl) == 0)
+		return (0);
+	p_rw = 0;
+	while (p_rw < d->p_rws)
+	{
+		p_cl = 0;
+		while (p_cl < d->p_cls)
+		{
+			if ((d->mp[m_rw + p_rw][m_cl + p_cl] == 'o' ||
+				d->mp[m_rw + p_rw][m_cl + p_cl] == 'O') &&
+				d->p[p_rw][p_cl] == '*')
+				return (0);
+			if ((d->mp[m_rw + p_rw][m_cl + p_cl] == 'x' ||
+				d->mp[m_rw + p_rw][m_cl + p_cl] == 'X') &&
+				d->p[p_rw][p_cl] == '*')
+				++d->overlaps;
+			++p_cl;
+		}
+		++p_rw;
+	}
+	return ((d->overlaps == 1) ? 1 : 0);
 }
 
 static void		ft_add_node_back(t_move **head, int map_row, int map_col)
@@ -114,10 +126,10 @@ static t_move		*ft_make_move_list(t_input *data)
 
 	head = NULL;
 	cntr_row = 0;
-	while (cntr_row < data->map_rows)
+	while (cntr_row < data->mp_rws)
 	{
 		cntr_col = 0;
-		while (cntr_col < data->map_cols)
+		while (cntr_col < data->mp_cls)
 		{
 			if (data->player_num == 1)
 				if (ft_can_place_p1(data, cntr_row, cntr_col) == 1)
@@ -150,7 +162,7 @@ void			ft_place_piece(t_input *data)
 	t_move		*move;
 
 	move = ft_make_move_list(data);
-	sleep(1);
+	//sleep(1);
 	if (move)
 	{
 		dprintf(2, "First avaiable move is row -- %d ", move->row);

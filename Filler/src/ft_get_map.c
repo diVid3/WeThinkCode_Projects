@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:53:33 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 13:32:19 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 06:57:30 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static	int		ft_verify_map_row(t_input *data, char **line)
 	if (ft_count_words(*line, ' ') != 2)
 		return (0);
 	arr = ft_strsplit(*line, ' ');
-	if (ft_strlen(arr[1]) != (size_t)data->map_cols)
+	if (ft_strlen(arr[1]) != (size_t)data->mp_cls)
 		return (0);
 	cntr = 0;
 	while (arr[1][cntr])
@@ -64,38 +64,23 @@ int				ft_get_map(t_input *data)
 	char		*line;
 	int			cntr;
 
-	if ((!data->map_rows || !data->map_cols) || (data->map_rows == 1 &&
-			data->map_cols == 1))
+	if ((!data->mp_rws || !data->mp_cls) || (data->mp_rws == 1 &&
+			data->mp_cls == 1))
 		return (-1);
 	if (get_next_line(0, &line) <= 0)
 		return (-1);
 	if (ft_verify_top_ruler(line) == 0)
 		return (-1);
-	data->map = ft_alloc_mat_rows(data->map_rows);
+	data->mp = ft_alloc_mat_rows(data->mp_rws);
 	cntr = 0;
-	while (cntr < data->map_rows)
+	while (cntr < data->mp_rws)
 	{
 		if (get_next_line(0, &line) <= 0)
 			return (-1);
 		if (ft_verify_map_row(data, &line) == 0)
 			return (-1);
-		data->map[cntr] = line;
+		data->mp[cntr] = line;
 		++cntr;
 	}
 	return (0);
 }
-
-/*
-int 	main(void)
-{
-	static t_input	data;
-	int				ans;
-
-	data.map_rows = 24;
-	data.map_cols = 40;
-	ans = ft_get_map(&data);
-	printf("ft_get_map() returned %d\n", ans);
-	//sleep(60);
-	return (0);
-}
-*/

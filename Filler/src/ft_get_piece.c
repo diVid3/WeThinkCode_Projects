@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 13:24:07 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 14:16:14 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 07:00:12 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	int		ft_verify_piece_row(t_input *data, char **line)
 
 	if (ft_count_words(*line, ' ') != 1)
 		return (0);
-	if (ft_strlen(*line) != (size_t)data->piece_cols)
+	if (ft_strlen(*line) != (size_t)data->p_cls)
 		return (0);
 	cntr = 0;
 	while ((*line)[cntr])
@@ -36,32 +36,18 @@ int				ft_get_piece(t_input *data)
 	char		*line;
 	int			cntr;
 
-	if (!data->piece_rows || !data->piece_cols)
+	if (!data->p_rws || !data->p_cls)
 		return (-1);
-	data->piece = ft_alloc_mat_rows(data->piece_rows);
+	data->p = ft_alloc_mat_rows(data->p_rws);
 	cntr = 0;
-	while (cntr < data->piece_rows)
+	while (cntr < data->p_rws)
 	{
 		if (get_next_line(0, &line) <= 0)
 			return (-1);
 		if (ft_verify_piece_row(data, &line) == 0)
 			return (-1);
-		data->piece[cntr] = line;
+		data->p[cntr] = line;
 		++cntr;
 	}
 	return (0);
 }
-
-/*
-int		main(void)
-{
-	static t_input		data;
-	int					ans;
-
-	data.piece_rows = 4;
-	data.piece_cols = 7;
-	ans = ft_get_piece(&data);
-	printf("ft_get_piece() returned %d\n", ans);
-	return (0);
-}
-*/

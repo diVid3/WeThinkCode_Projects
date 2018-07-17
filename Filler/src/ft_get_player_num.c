@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/15 09:51:13 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/15 09:51:22 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 06:55:47 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,3 @@ int				ft_get_player_num(t_input *data)
 	ft_del_matrix((void **)arr, 5);
 	return (0);
 }
-
-/*
-int		main(void)
-{
-	static t_input	data;
-	int				ans;
-
-	ans = ft_get_player_num(&data);
-	printf("ans returned %d\nplayer_num is %d\n", ans, data.player_num);
-	return (0);
-}
-*/
-
