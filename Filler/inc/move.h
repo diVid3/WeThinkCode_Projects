@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/16 10:28:28 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/16 10:58:56 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 09:28:43 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct		s_move
 {
 	int				row;
 	int				col;
+	int				rating;
 	struct s_move	*next;
 }					t_move;
 

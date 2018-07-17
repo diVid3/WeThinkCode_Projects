@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:14:39 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/17 08:20:42 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 12:44:22 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		ft_add_node_back(t_move **head, int map_row, int map_col)
 	node = malloc(sizeof(t_move));
 	node->row = map_row;
 	node->col = map_col;
+	node->rating = 2147483647;
 	if (*head == NULL)
 	{
 		node->next = NULL;
