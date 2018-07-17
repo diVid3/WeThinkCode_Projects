@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/16 07:06:10 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/17 13:43:02 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 15:21:17 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,28 @@ void			ft_place_piece(t_input *data)
 	int			row;
 	int			col;
 	int			rating;
-	t_move		*move;
+	t_move		*moves;
 
-	move = ft_make_move_list(data);
-	sleep(1);
-	if (move == NULL)
+	moves = ft_make_move_list(data);
+	//sleep(1);
+	if (moves == NULL)
 		ft_no_moves();
-	if (move == NULL)
+	if (moves == NULL)
 		return ;
-	row = move->row;
-	col = move->col;
-	rating = move->rating;
-	while (move)
+	ft_rate_moves(data, moves);
+	rating = moves->rating;
+	//dprintf(2, "rating is %d\n", rating);
+	while (moves)
 	{
-		if (move->rating <= rating)
+		if (moves->rating <= rating)
 		{
-			row = move->row;
-			col = move->col;
-			rating = move->rating;
+			row = moves->row;
+			col = moves->col;
+			rating = moves->rating;
+			//dprintf(2, "rating is %d\n", rating);
 		}
-		move = move->next;
+		moves = moves->next;
 	}
 	ft_print_move(row, col);
-	ft_free_list(move);
+	ft_free_list(moves);
 }

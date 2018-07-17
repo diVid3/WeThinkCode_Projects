@@ -6,11 +6,12 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 11:08:16 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/17 13:06:57 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/17 15:13:34 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
+#include <stdio.h>
 
 static void		ft_rate_move_p1(t_input *d, t_move *n)
 {
@@ -29,6 +30,7 @@ static void		ft_rate_move_p1(t_input *d, t_move *n)
 						((n->col - cl) * (n->col - cl));
 			if (rating <= n->rating)
 				n->rating = rating;
+			//dprintf(2, "n->rating is %d\n", n->rating);
 			++cl;
 		}
 		++rw;
@@ -52,6 +54,7 @@ static void		ft_rate_move_p2(t_input *d, t_move *n)
 						((n->col - cl) * (n->col - cl));
 			if (rating <= n->rating)
 				n->rating = rating;
+			//dprintf(2, "n->rating is %d\n", n->rating);
 			++cl;
 		}
 		++rw;
