@@ -17,6 +17,7 @@
 # include "input.h"
 # include "move.h"
 # include "star.h"
+# include "midpos.h"
 
 int				ft_get_player_num(t_input *data);
 int				ft_get_map_size(t_input *data);
@@ -34,5 +35,7 @@ _Bool			ft_can_place_p1(t_input *d, int m_rw, int m_cl);
 _Bool			ft_can_place_p2(t_input *d, int m_rw, int m_cl);
 
 t_move			*ft_make_move_list(t_input *data);
+
+t_midpos		ft_optmze(t_input *d, t_move *n);
 
 #endif
