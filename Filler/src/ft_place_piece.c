@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-#include <stdio.h>
 
 static void		ft_no_moves(void)
 {
@@ -56,7 +55,6 @@ void			ft_place_piece(t_input *data)
 	t_move		*opt_move;
 
 	moves = ft_make_move_list(data);
-	//sleep(1);
 	if (moves == NULL)
 		ft_no_moves();
 	if (moves == NULL)

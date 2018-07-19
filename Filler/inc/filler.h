@@ -16,7 +16,6 @@
 # include "../lib/libft/libft.h"
 # include "input.h"
 # include "move.h"
-# include "star.h"
 # include "midpos.h"
 
 int				ft_get_player_num(t_input *data);
