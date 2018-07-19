@@ -36,7 +36,6 @@ all: $(NAME)
 
 $(NAME): $(OFILES)
 	$(MAKE) -C ./libft/
-	$(MAKE) -C ./libft/ clean
 	gcc -o $(NAME) $(OFILES) ./libft/libft.a
 
 $(OFILES): $(CFILES)
