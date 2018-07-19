@@ -14,23 +14,23 @@ NAME = filler
 
 FLAGS = -Wall -Wextra -Werror
 
-FILES =	src/ft_get_input\
-		src/ft_get_map\
-		src/ft_get_map_size\
-		src/ft_get_piece\
-		src/ft_get_piece_size\
-		src/ft_get_player_num\
-		src/ft_make_move_list\
-		src/ft_optimizer\
-		src/ft_place_piece\
-		src/ft_players_exist\
-		src/ft_rate_moves\
-		src/ft_verify_move\
-		src/main\
+FILES =	ft_get_input\
+		ft_get_map\
+		ft_get_map_size\
+		ft_get_piece\
+		ft_get_piece_size\
+		ft_get_player_num\
+		ft_make_move_list\
+		ft_optimizer\
+		ft_place_piece\
+		ft_players_exist\
+		ft_rate_moves\
+		ft_verify_move\
+		main\
 
-CFILES = $(FILES:=.c)
+CFILES = $(FILES:%=src/%.c)
 
-OFILES = $(FILES:=.o)
+OFILES = $(FILES:%=./%.o)
 
 all: $(NAME)
 
