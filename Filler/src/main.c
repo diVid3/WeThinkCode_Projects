@@ -26,6 +26,8 @@ int		main(void)
 		if (ans_input == 2)
 			return (0);
 		ft_place_piece(&data);
+		ft_del_matrix((void **)data.mp, data.mp_rws);
+		ft_del_matrix((void **)data.p, data.p_rws);
 	}
 	return (0);
 }

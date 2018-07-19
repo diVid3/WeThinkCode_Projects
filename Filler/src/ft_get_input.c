@@ -28,6 +28,8 @@ int				ft_get_input(t_input *data)
 		return (2);
 	if (ft_get_map(data) == -1)
 		return (-1);
+	if (ft_players_exist(data) == -1)
+		return (-1);
 	if (ft_get_piece_size(data) == -1)
 		return (-1);
 	if (ft_get_piece(data) == -1)
