@@ -13,7 +13,7 @@
 #ifndef FILLER_H
 # define FILLER_H
 
-# include "../lib/libft/libft.h"
+# include "../libft/libft.h"
 # include "input.h"
 # include "move.h"
 # include "midpos.h"
