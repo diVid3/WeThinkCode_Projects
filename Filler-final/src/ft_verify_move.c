@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:16:54 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/17 08:20:08 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/20 10:56:00 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static _Bool	ft_out_of_bounds(t_input *data, int map_row, int map_col)
 	return (1);
 }
 
-_Bool	ft_can_place_p1(t_input *d, int m_rw, int m_cl)
+_Bool			ft_can_place_p1(t_input *d, int m_rw, int m_cl)
 {
 	int		p_rw;
 	int		p_cl;
@@ -49,7 +49,7 @@ _Bool	ft_can_place_p1(t_input *d, int m_rw, int m_cl)
 	return ((d->overlaps == 1) ? 1 : 0);
 }
 
-_Bool	ft_can_place_p2(t_input *d, int m_rw, int m_cl)
+_Bool			ft_can_place_p2(t_input *d, int m_rw, int m_cl)
 {
 	int		p_rw;
 	int		p_cl;
