@@ -10,6 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/checker/checker.h"
+
+// Add boolean value for first word.
+static char		*ft_nxt_num_adrs(char *s)
+{
+	static int		cntr;
+	char			*s_cpy;
+
+	if (*s == '+' || *s == '-' || (*s >= '0' && *s <= '9'))
+	{
+		s_cpy = s;
+		while (((s[cntr] >= '0' && s[cntr] <= '9') || s[cntr] == '+' ||
+				s[cntr] == '-') && s[cntr])
+			++cntr;
+		return (&s[cntr]);
+	}
+	while (((s[cntr] >= 9 && s[cntr] <= 13) || s[cntr] == 32) && s[cntr])
+		++cntr;
+	return (&s[cntr]);
+}
+
+static int		ft_check_valid_ch(char *str)
+{
+	int		cntr;
+
+	cntr = 0;
+	while (((str[cntr] >= 9 && str[cntr] <= 13) ||
+			(str[cntr] >= '0' && str[cntr] <= '9') || str[cntr] == 32 ||
+			str[cntr] == '+' || str[cntr] == '-') && str[cntr])
+		++cntr;
+	if (str[cntr] != '\0')
+		return (-1);
+	return (0);
+}
+
 int				ft_check_arg1(char *str)
 {
+
 }
