@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 static void		ft_reset(_Bool *wrd_first, int *cntr)
 {
@@ -27,7 +27,7 @@ char		*ft_nxt_num_adrs(char *s)
 	char			*num;
 
 	num = NULL;
-	if (s != s_old || !(*s))
+	if (s != s_old || s[cntr] == '\0')
 		ft_reset(&wrd_first, &cntr);
 	if ((*s == '+' || *s == '-' || (*s >= '0' && *s <= '9')) && !wrd_first)
 	{
@@ -48,16 +48,33 @@ char		*ft_nxt_num_adrs(char *s)
 	return (num);
 }
 
+/*
 int		main(void)
 {
-	char	arr[] = "+413 +251    2 488 1		2 +3 -1";
-	//char	arr2[] = "0353133 +85721 -15616 0 16 3 9		93";
-	char	*str = arr;
+	char	arr[] = "1 2 3 4 5";
+	char	arr2[] = "+13 -7 +0 0 4";
+	char	arr3[] = "";	
 	//for (int i = 0; i < 8; ++i)
 	//{
 	//	str = ft_nxt_num_adrs(str);
 	//	printf("%s\n", str);
 	//}
-	
+	printf("%s\n", ft_nxt_num_adrs(arr));
+	printf("%s\n", ft_nxt_num_adrs(arr));
+	printf("%s\n", ft_nxt_num_adrs(arr));
+	printf("%s\n", ft_nxt_num_adrs(arr));
+	printf("%s\n", ft_nxt_num_adrs(arr));
+	printf("%s\n", ft_nxt_num_adrs(arr));
+
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+	printf("%s\n", ft_nxt_num_adrs(arr2));
+
+	printf("%s\n", ft_nxt_num_adrs(arr3));
+
 	return (0);
 }
+*/
