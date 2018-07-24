@@ -6,29 +6,50 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:31:50 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/23 15:23:12 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/24 08:02:22 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
 
-// Add boolean value for first word.
 static char		*ft_nxt_num_adrs(char *s)
 {
 	static int		cntr;
-	char			*s_cpy;
+	static _Bool	wrd_first;
+	char			*num;
 
-	if (*s == '+' || *s == '-' || (*s >= '0' && *s <= '9'))
+	num = NULL;
+	if ((*s == '+' || *s == '-' || (*s >= '0' && *s <= '9')) && !wrd_first)
 	{
-		s_cpy = s;
+		num = s;
 		while (((s[cntr] >= '0' && s[cntr] <= '9') || s[cntr] == '+' ||
 				s[cntr] == '-') && s[cntr])
 			++cntr;
-		return (&s[cntr]);
+		wrd_first = 1;
+		return (num);
 	}
 	while (((s[cntr] >= 9 && s[cntr] <= 13) || s[cntr] == 32) && s[cntr])
 		++cntr;
-	return (&s[cntr]);
+	num = s + cntr;
+	while (((s[cntr] >= '0' && s[cntr] <= '9') || s[cntr] == '+' ||
+			s[cntr] == '-') && s[cntr])
+		++cntr;
+	return (num);
+}
+
+static int		ft_check_operators(char *str)
+{
+	int		cntr;
+
+	cntr = 0;
+	while (str[cntr] && str[cntr + 1])
+	{
+		if (((str[cntr] == '+') || (str[cntr] == '-')) &&
+			!(str[cntr + 1] >= '0' && str[cntr + 1] <= '9'))
+			return (-1);
+		++cntr;
+	}
+	return (0);
 }
 
 static int		ft_check_valid_ch(char *str)
