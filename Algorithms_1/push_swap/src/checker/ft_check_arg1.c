@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
+//#include <stdio.h>
 
-static int		ft_check_operators(char *str)
+static int		ft_check_oprts(char *str)
 {
 	int		cntr;
 
@@ -45,3 +46,26 @@ int				ft_check_arg1(char *str)
 {
 
 }
+
+/*
+int		main(void)
+{
+	char		arr1[] = "+5 	-2   0 9	 -9749   ";
+	char		arr2[] = "7439 		30848 	z";
+	char		arr3[] = "	 +5		-34 		++2 ";
+	char		arr4[] = "4089 		 --6";
+
+	printf("ft_check_valid_ch for arr1 returns %d\n", ft_check_valid_ch(arr1));
+	printf("ft_check_valid_ch for arr2 returns %d\n", ft_check_valid_ch(arr2));
+	printf("ft_check_valid_ch for arr3 returns %d\n", ft_check_valid_ch(arr3));
+	printf("ft_check_valid_ch for arr4 returns %d\n", ft_check_valid_ch(arr4));
+
+	printf("\n");
+
+	printf("ft_check_oprts for arr1 returns %d\n", ft_check_oprts(arr1));
+	printf("ft_check_oprts for arr2 returns %d\n", ft_check_oprts(arr2));
+	printf("ft_check_oprts for arr3 returns %d\n", ft_check_oprts(arr3));
+	printf("ft_check_oprts for arr4 returns %d\n", ft_check_oprts(arr4));
+	return (0);
+}
+*/
