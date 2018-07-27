@@ -42,9 +42,34 @@ static int		ft_check_valid_ch(char *str)
 	return (0);
 }
 
-int				ft_check_arg1(char *str)
+static int		ft_check_int_sizes(char *str)
 {
+	int		num_count;
+	char	num_adrs;
+	int		int_valid;
 
+	num_count = ft_count_nums(str);
+	ft_nxt_num_adrs(str, 1);
+	while (num_count-- > 0)
+	{
+		num_adrs = ft_nxt_num_adrs(str, 0);
+		int_valid = ft_check_min_max(num_adrs);
+		if (int_valid == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+int				ft_check_arg1(const char *str)
+{
+	if (ft_check_valid_ch(str) == -1)
+		return (-1);
+	if (ft_check_oprts(str) == -1)
+		return (-1);
+	if (ft_check_int_sizes(str) == -1)
+		return (-1);
+	// Check dups.
+	return (0);
 }
 
 /*
