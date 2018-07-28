@@ -11,19 +11,20 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
+#include <stdio.h>
 
 static int		ft_check(int ac, char **av)
 {
 	char		*str;
 
-	if (ac == 2 && ft_check_arg(av[1]) == -1))
+	if (ac == 2 && ft_check_arg(av[1]) == -1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		return (-1);
 	}
 	if (ac > 2)
 	{
-		str = ft_join_args(ac, av);
+		str = ft_join_args(av);
 		if (ft_check_arg(str) == -1)
 		{
 			ft_putstr_fd("Error\n", 2);

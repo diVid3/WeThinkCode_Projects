@@ -75,7 +75,7 @@ static int		ft_check_dups(const char *str)
 	return (0);
 }
 
-int				ft_check_arg1(const char *str)
+int				ft_check_arg(const char *str)
 {
 	if (ft_check_valid_ch(str) == -1)
 		return (-1);

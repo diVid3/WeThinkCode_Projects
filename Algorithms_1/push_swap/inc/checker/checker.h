@@ -22,5 +22,6 @@ int		ft_count_nums(const char *str);
 long	ft_atol(const char *str);
 
 char	*ft_nxt_num_adrs(char *s, _Bool reset);
+char	*ft_join_args(char **av);
 
 #endif
