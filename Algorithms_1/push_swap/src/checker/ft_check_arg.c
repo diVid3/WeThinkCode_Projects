@@ -1,17 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_check_arg1.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/23 14:31:50 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/24 08:31:01 by egenis           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/checker/checker.h"
-#include <stdio.h>
 
 static int		ft_check_oprts(const char *str)
 {
@@ -98,16 +85,5 @@ int				ft_check_arg1(const char *str)
 		return (-1);
 	if (ft_check_dups(str) == -1)
 		return (-1);
-	return (0);
-}
-
-
-int		main(int ac, char **av)
-{
-	(void)ac;
-	(void)av;
-
-	printf("\nret for \"%s\" is \n%d\n\n", av[1], ft_check_arg1(av[1]));
-
 	return (0);
 }

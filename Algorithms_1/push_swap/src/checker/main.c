@@ -14,27 +14,31 @@
 
 static int		ft_check(int ac, char **av)
 {
-	if (ac < 2)
+	char		*str;
+
+	if (ac == 2 && ft_check_arg(av[1]) == -1))
+	{
 		ft_putstr_fd("Error\n", 2);
-	if (ac < 2)
 		return (-1);
-	if (ac == 2)
-		if (ft_check_arg1(av[1]) == -1)
-		{
-			ft_putstr_fd("Error\n", 2);
-			return (-1);
-		}
+	}
 	if (ac > 2)
-		if (ft_check_argm(ac, av) == -1)
+	{
+		str = ft_join_args(ac, av);
+		if (ft_check_arg(str) == -1)
 		{
 			ft_putstr_fd("Error\n", 2);
+			ft_memdel((void **)(&str));
 			return (-1);
 		}
+		ft_memdel((void **)(&str));
+	}
 	return (0);
 }
 
 int				main(int ac, char **av)
 {
+	if (ac < 2)
+		return (0);
 	if (ft_check(ac, av) == -1)
 		return (-1);
 	return (0);
