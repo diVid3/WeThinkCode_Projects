@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-//#include <stdio.h>
 
 static void		ft_reset(_Bool *wrd_first, int *cntr)
 {
@@ -46,34 +45,4 @@ char		*ft_nxt_num_adrs(char *s, _Bool reset)
 			s[cntr] == '-') && s[cntr])
 		++cntr;
 	return (num);
-}
-
-/*
-int		main(void)
-{
-	char	arr[] = "1 2 3 4 5";
-	char	arr2[] = "+13 -7 +0 0 4";
-	char	arr3[] = "";	
-
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr, 0));
-
-	ft_nxt_num_adrs(arr2, 1);
-
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-	printf("%s\n", ft_nxt_num_adrs(arr2, 0));
-
-	ft_nxt_num_adrs(arr3, 1);
-
-	printf("%s\n", ft_nxt_num_adrs(arr3, 0));
-
-	return (0);
 }

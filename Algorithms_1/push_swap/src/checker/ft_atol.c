@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-//#include <stdio.h>
 
-long	ft_atol(char *str)
+long	ft_atol(const char *str)
 {
 	long	ans;
 	long	sign;
@@ -41,14 +40,3 @@ long	ft_atol(char *str)
 	}
 	return (ans * sign);
 }
-
-/*
-int		main(void)
-{
-	char	arr1[] = "-21474836487439";
-
-	printf("ft_atoi_l of arr1 is %ld\n", ft_atol(arr1));
-
-	return (0);
-}
-*/

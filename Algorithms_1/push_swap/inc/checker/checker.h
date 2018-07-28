@@ -15,4 +15,12 @@
 
 # include "../../libft/libft.h"
 
+int		ft_check_arg1(const char *str);
+int		ft_check_min_max(const char *num_adrs);
+int		ft_count_nums(const char *str);
+
+long	ft_atol(const char *str);
+
+char	*ft_nxt_num_adrs(char *s, _Bool reset);
+
 #endif
