@@ -6,12 +6,18 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/24 08:07:51 by egenis           ###   ########.fr       */
+/*   Updated: 2018/07/30 11:56:24 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
 #include <stdio.h>
+
+
+// Fix multiple 00000000000000000000000000 before int.
+
+
+
 
 static int		ft_check(int ac, char **av)
 {
