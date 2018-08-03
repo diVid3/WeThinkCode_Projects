@@ -11,13 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-#include <stdio.h>
-
-
-// Fix multiple 00000000000000000000000000 before int.
-
-
-
 
 static int		ft_check(int ac, char **av)
 {

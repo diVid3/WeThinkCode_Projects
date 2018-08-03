@@ -24,6 +24,8 @@ static int		ft_check_oprts(const char *str)
 			return (-1);
 		++cntr;
 	}
+	if ((str[cntr] == '+' || str[cntr] == '-') && str[cntr + 1] == '\0')
+		return (-1);
 	return (0);
 }
 
