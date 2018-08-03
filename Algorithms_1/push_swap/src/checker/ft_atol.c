@@ -29,7 +29,7 @@ long	ft_atol(const char *str)
 			sign = -1;
 		++str;
 	}
-	while (*str == 0)
+	while (*str == '0')
 		++str;
 	while (*str && (*str >= '0' && *str <= '9'))
 	{

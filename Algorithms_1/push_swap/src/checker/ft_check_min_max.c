@@ -22,6 +22,8 @@ int				ft_check_min_max(const char *num_adrs)
 	if (num_adrs[cntr] == '+' || num_adrs[cntr] == '-')
 		++cntr;
 	len = 0;
+	while (num_adrs[cntr] == '0')
+		++cntr;
 	while (num_adrs[cntr] && !((num_adrs[cntr] >= 9 && num_adrs[cntr] <= 13) ||
 			(num_adrs[cntr] == 32)))
 	{
