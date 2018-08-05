@@ -20,14 +20,3 @@ char		*ft_join_args(char **av)
 	}
 	return (str);
 }
-
-/*
-int		main(int ac, char **av)
-{
-	if (ac < 3)
-		return (0);
-	char *str = ft_join_args(av);
-	printf("%s\n", str);
-	return (0);
-}
-*/

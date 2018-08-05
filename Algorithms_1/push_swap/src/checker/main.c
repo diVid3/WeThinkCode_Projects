@@ -41,5 +41,8 @@ int				main(int ac, char **av)
 		return (0);
 	if (ft_check(ac, av) == -1)
 		return (-1);
+	// ft_build_stacks()
+	// ft_do_ops()
+	// ft_validate_stack()
 	return (0);
 }

@@ -15,13 +15,22 @@
 
 # include "../../libft/libft.h"
 
-int		ft_check_arg(const char *str);
-int		ft_check_min_max(const char *num_adrs);
-int		ft_count_nums(const char *str);
+typedef struct	s_stacks
+{
+	int			*stk_a;
+	int			stk_a_t;
+	int			*stk_b;
+	int			stk_b_t;
+	int			stk_size;
+}				t_stacks;
 
-long	ft_atol(const char *str);
+int				ft_check_arg(const char *str);
+int				ft_check_min_max(const char *num_adrs);
+int				ft_count_nums(const char *str);
 
-char	*ft_nxt_num_adrs(char *s, _Bool reset);
-char	*ft_join_args(char **av);
+long			ft_atol(const char *str);
+
+char			*ft_nxt_num_adrs(char *s, _Bool reset);
+char			*ft_join_args(char **av);
 
 #endif
