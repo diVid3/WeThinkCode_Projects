@@ -37,12 +37,15 @@ static int		ft_check(int ac, char **av)
 
 int				main(int ac, char **av)
 {
+	t_stacks	*stacks;
+
 	if (ac < 2)
 		return (0);
 	if (ft_check(ac, av) == -1)
 		return (-1);
-	// ft_build_stacks()
-	// ft_do_ops()
+	stacks = ft_build_stacks(ac, av);
+	if (ft_do_ops(stacks) == -1)
+		return (-1);
 	// ft_validate_stack()
 	return (0);
 }
