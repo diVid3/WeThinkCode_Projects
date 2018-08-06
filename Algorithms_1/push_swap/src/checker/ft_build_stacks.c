@@ -25,7 +25,7 @@ static void		ft_one_arg(t_stacks *stacks, char **av)
 		(stacks->stk_a)[cntr] = ft_atoi(ft_nxt_num_adrs(av[1], 0));
 	stacks->stk_b = malloc(sizeof(int) * num_count);
 	stacks->stk_a_t = 0;
-	stacks->stk_b_t = num_count - 1;
+	stacks->stk_b_t = num_count;
 	stacks->stk_size = num_count;
 }
 
@@ -43,7 +43,7 @@ static void		ft_multi_arg(t_stacks *stacks, char **av)
 		(stacks->stk_a)[cntr] = ft_atoi(ft_nxt_num_adrs(str, 0));
 	stacks->stk_b = malloc(sizeof(int) * num_count);
 	stacks->stk_a_t = 0;
-	stacks->stk_b_t = num_count - 1;
+	stacks->stk_b_t = num_count;
 	stacks->stk_size = num_count;
 	ft_memdel((void **)(&str));
 }
