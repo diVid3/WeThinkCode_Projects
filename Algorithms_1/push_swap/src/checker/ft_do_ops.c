@@ -6,11 +6,35 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/06 10:56:29 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/06 14:09:12 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
+
+void			ft_swap(t_stacks *stacks, int mode)
+{
+	(void)stacks;
+	(void)mode;
+}
+
+void			ft_push(t_stacks *stacks, int mode)
+{
+	(void)stacks;
+	(void)mode;
+}
+
+void			ft_rotate(t_stacks *stacks, int mode)
+{
+	(void)stacks;
+	(void)mode;
+}
+
+void			ft_r_rotate(t_stacks *stacks, int mode)
+{
+	(void)stacks;
+	(void)mode;
+}
 
 static int		ft_pick_op(t_stacks *stacks, char **line)
 {
@@ -43,18 +67,18 @@ static int		ft_pick_op(t_stacks *stacks, char **line)
 
 int				ft_do_ops(t_stacks *stacks)
 {
-	char	**line;
+	char	*line;
 
-	while (get_next_line(0, line))
+	while (get_next_line(0, &line))
 	{
-		if (ft_pick_op(stacks, line) == -1)
+		if (ft_pick_op(stacks, &line) == -1)
 		{
 			ft_putstr_fd("Error\n", 2);
-			ft_memdel((void **)(line));
+			ft_memdel((void **)(&line));
 			return (-1);
 		}
 		else
-			ft_memdel((void **)(line));
+			ft_memdel((void **)(&line));
 	}
 	return (0);
 }
