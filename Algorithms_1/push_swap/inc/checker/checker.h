@@ -24,6 +24,8 @@ typedef struct	s_stacks
 	int			stk_size;
 }				t_stacks;
 
+void			ft_swap(t_stacks *stacks, int mode);
+
 int				ft_check_arg(const char *str);
 int				ft_check_min_max(const char *num_adrs);
 int				ft_count_nums(const char *str);
