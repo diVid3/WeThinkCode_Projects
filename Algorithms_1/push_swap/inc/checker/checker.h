@@ -28,6 +28,7 @@ int				ft_check_arg(const char *str);
 int				ft_check_min_max(const char *num_adrs);
 int				ft_count_nums(const char *str);
 int				ft_do_ops(t_stacks *stacks);
+int				ft_check_spaces(const char *str);
 
 long			ft_atol(const char *str);
 
