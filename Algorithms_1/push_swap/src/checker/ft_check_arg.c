@@ -95,6 +95,8 @@ int				ft_check_arg(const char *str)
 		return (-1);
 	if (ft_check_oprts(str) == -1)
 		return (-1);
+	if (ft_check_spaces(str) == -1)
+		return (-1);
 	if (ft_check_int_sizes(str) == -1)
 		return (-1);
 	if (ft_check_dups(str) == -1)
