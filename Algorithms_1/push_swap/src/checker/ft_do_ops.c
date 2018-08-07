@@ -6,17 +6,11 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 12:14:05 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 15:07:04 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-
-void			ft_r_rotate(t_stacks *stacks, int mode)
-{
-	(void)stacks;
-	(void)mode;
-}
 
 static int		ft_pick_op(t_stacks *stacks, char **line)
 {

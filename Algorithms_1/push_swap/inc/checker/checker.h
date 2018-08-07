@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:24:36 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 13:23:48 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 15:08:28 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	s_stacks
 void			ft_swap(t_stacks *stacks, int mode);
 void			ft_push(t_stacks *stacks, int mode);
 void			ft_rotate(t_stacks *stacks, int mode);
+void			ft_r_rotate(t_stacks *stacks, int mode);
 void			ft_print_stacks(t_stacks *stacks);
 
 int				ft_check_arg(const char *str);

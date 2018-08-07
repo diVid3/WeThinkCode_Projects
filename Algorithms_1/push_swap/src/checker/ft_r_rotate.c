@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 12:21:16 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 14:19:31 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 15:06:51 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void				ft_r_rotate(t_stacks *stacks, int mode)
 	}
 	if (mode == 1 && (stacks->stk_size - 1) - stacks->stk_b_t >= 1)
 	{
+		tmp = (stacks->stk_b)[stacks->stk_size - 1];
+		cntr = stacks->stk_size;
+		while (--cntr - 1 >= stacks->stk_b_t)
+			(stacks->stk_b)[cntr] = (stacks->stk_b)[cntr - 1];
+		(stacks->stk_b)[stacks->stk_b_t] = tmp;
 	}
 	if (mode == 2)
 		ft_r_rotate(stacks, 0);
