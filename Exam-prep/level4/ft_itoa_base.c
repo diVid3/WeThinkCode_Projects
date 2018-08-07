@@ -6,32 +6,43 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 17:18:02 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 17:44:44 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 18:33:51 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h> // <-------------------------------------------- Remove this.
 
-int	ft_itoa_base(int value, int base)
+char	*ft_itoa_base(int value, int base)
 {
 	int		len;
+	int		stop;
 	long	nb;
 	char	*str;
 
-	len = (value < 0 && base == 10) ? 3 : 2;
-	nb = (value < 0) ? (value *= -1) : value;
-	while ((value /= 10) >= 1)
+	len = (value < 0 && base == 10) ? 2 : 1;
+	nb = (value < 0) ? -(long)value : value;
+	while ((nb /= base) >= 1)
 		++len;
-	str = malloc(sizeof(char) * len);
-	str[len--] = '\0';
-	nb = (value < 0) ? (value *= -1) : value;
-	return (len);
+	str = malloc(sizeof(char) * len + 1);
+	str[len] = '\0';
+	nb = (value < 0) ? -(long)value : value;
+	stop = (value < 0 && base == 10) ? 1 : 0;
+	while (--len >= stop)
+	{
+		str[len] = (nb % base < 10) ? nb % base + 48 : nb % base - 10 + 65;
+		nb /= base;
+	}
+	(value < 0 && base == 10) ? str[0] = '-' : 0;
+	return (str);
 }
 
-int		main(void)
+int		main(int ac, char **av)
 {
-	int x = 5734;
-	printf("len is %d\n", ft_itoa_base(x, 10));
+	(void)ac;
+
+	int value = atoi(av[1]);
+	int base = atoi(av[2]);
+	printf("%s\n", ft_itoa_base(value, base));
 	return (0);
 }
