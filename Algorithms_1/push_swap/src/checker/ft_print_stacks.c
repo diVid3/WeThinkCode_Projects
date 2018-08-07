@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 06:29:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 07:03:21 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 08:51:51 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void				ft_print_stacks(t_stacks *stacks)
 		printf("\t\t%d\n", (stacks->stk_b)[cntr]);
 		++cntr;
 	}
+	printf("\n");
 }

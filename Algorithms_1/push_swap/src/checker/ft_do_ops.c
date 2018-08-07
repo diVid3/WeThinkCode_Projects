@@ -6,23 +6,11 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 07:02:35 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 12:14:05 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-
-void			ft_push(t_stacks *stacks, int mode)
-{
-	(void)stacks;
-	(void)mode;
-}
-
-void			ft_rotate(t_stacks *stacks, int mode)
-{
-	(void)stacks;
-	(void)mode;
-}
 
 void			ft_r_rotate(t_stacks *stacks, int mode)
 {
@@ -74,6 +62,7 @@ int				ft_do_ops(t_stacks *stacks)
 		}
 		else
 			ft_memdel((void **)(&line));
+		ft_print_stacks(stacks);
 	}
 	return (0);
 }
