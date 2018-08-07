@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 06:29:13 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 07:02:35 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				ft_do_ops(t_stacks *stacks)
 {
 	char	*line;
 
+	ft_print_stacks(stacks);
 	while (get_next_line(0, &line))
 	{
 		if (ft_pick_op(stacks, &line) == -1)
