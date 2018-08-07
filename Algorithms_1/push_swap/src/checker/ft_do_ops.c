@@ -6,17 +6,11 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/06 14:09:12 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/07 06:29:13 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-
-void			ft_swap(t_stacks *stacks, int mode)
-{
-	(void)stacks;
-	(void)mode;
-}
 
 void			ft_push(t_stacks *stacks, int mode)
 {

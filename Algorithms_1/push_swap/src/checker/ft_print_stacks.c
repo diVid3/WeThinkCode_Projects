@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_spaces.c                                  :+:      :+:    :+:   */
+/*   ft_print_stacks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/07 06:24:23 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 06:24:45 by egenis           ###   ########.fr       */
+/*   Created: 2018/08/07 06:29:21 by egenis            #+#    #+#             */
+/*   Updated: 2018/08/07 06:46:30 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
+#include <stdio.h>
 
-int				ft_check_spaces(const char *str)
+void				ft_print_stacks(t_stacks *stacks)
 {
 	int		cntr;
 
-	cntr = 0;
-	while (str[cntr])
+	printf("\tSTACK A:\n");
+	cntr = stack->stk_a_t;
+	while (stack->stk_a_t < stack->stk_size && cntr < stack->stk_size)
 	{
-		if (cntr == 0 && (str[cntr] == '+' || str[cntr] == '-'))
-			++cntr;
-		if (str[cntr] == '+' || str[cntr] == '-')
-			if (!(str[cntr - 1] >= 9 && str[cntr - 1] <= 13) &&
-				!(str[cntr - 1] == 32))
-				return (-1);
+		printf("\t\t%d\n", (stack->stk_a)[cntr]);
 		++cntr;
 	}
-	return (0);
+	printf("\tSTACK B:\n");
+	cntr = stack->stk_b_t;
+	while (stack->stk_b_t < stack->stk_size && cntr < stack->stk_size)
+	{
+		printf("\t\t%d\n", (stack->stk_b)[cntr]);
+		++cntr;
+	}
 }
