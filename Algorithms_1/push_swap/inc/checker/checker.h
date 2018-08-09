@@ -29,6 +29,7 @@ void			ft_push(t_stacks *stacks, int mode);
 void			ft_rotate(t_stacks *stacks, int mode);
 void			ft_r_rotate(t_stacks *stacks, int mode);
 void			ft_print_stacks(t_stacks *stacks);
+void			ft_validate_stack(t_stacks *stacks);
 
 int				ft_check_arg(const char *str);
 int				ft_check_min_max(const char *num_adrs);

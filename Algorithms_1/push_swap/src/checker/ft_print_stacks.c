@@ -11,27 +11,28 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-#include <stdio.h>
 
 void				ft_print_stacks(t_stacks *stacks)
 {
 	int		cntr;
 
-	printf("\n");
-	printf("\t\tSTACK A:\n");
+	ft_putstr("\n\t\tSTACK A:\n");
 	cntr = stacks->stk_a_t;
 	while (stacks->stk_a_t < stacks->stk_size && cntr < stacks->stk_size)
 	{
-		printf("\t\t%d\n", (stacks->stk_a)[cntr]);
+		ft_putstr("\t\t");
+		ft_putnbr((stacks->stk_a)[cntr]);
+		ft_putchar('\n');
 		++cntr;
 	}
-	printf("\n");
-	printf("\t\tSTACK B:\n");
+	ft_putstr("\n\t\tSTACK B:\n");
 	cntr = stacks->stk_b_t;
 	while (stacks->stk_b_t < stacks->stk_size && cntr < stacks->stk_size)
 	{
-		printf("\t\t%d\n", (stacks->stk_b)[cntr]);
+		ft_putstr("\t\t");
+		ft_putnbr((stacks->stk_b)[cntr]);
+		ft_putchar('\n');
 		++cntr;
 	}
-	printf("\n");
+	ft_putchar('\n');
 }

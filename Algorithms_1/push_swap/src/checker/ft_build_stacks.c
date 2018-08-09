@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/checker/checker.h"
-//#include <stdio.h>
 
 static void		ft_one_arg(t_stacks *stacks, char **av)
 {
@@ -60,24 +59,3 @@ t_stacks		*ft_build_stacks(int ac, char **av)
 		ft_multi_arg(stacks, av);
 	return (stacks);
 }
-
-/*
-int		main(int ac, char **av)
-{
-	t_stacks	*stacks;
-	int			cntr;
-
-	stacks = ft_build_stacks(ac, av);
-	cntr = -1;
-	while (++cntr < stacks->stk_size)
-		printf("%d ", (stacks->stk_a)[cntr]);
-	printf("\n");
-
-	cntr = -1;
-	while (++cntr < stacks->stk_size)
-		printf("%d ", (stacks->stk_b)[cntr]);
-	printf("\n");
-
-	return (0);
-}
-*/
