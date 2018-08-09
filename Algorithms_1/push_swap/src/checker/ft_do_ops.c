@@ -45,7 +45,6 @@ int				ft_do_ops(t_stacks *stacks)
 {
 	char	*line;
 
-	//ft_print_stacks(stacks);
 	while (get_next_line(0, &line))
 	{
 		if (ft_pick_op(stacks, &line) == -1)
@@ -56,7 +55,6 @@ int				ft_do_ops(t_stacks *stacks)
 		}
 		else
 			ft_memdel((void **)(&line));
-		//ft_print_stacks(stacks);
 	}
 	return (0);
 }
