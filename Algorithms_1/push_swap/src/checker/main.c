@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 07:21:07 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 13:55:40 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ int				main(int ac, char **av)
 	if (ft_do_ops(av, stacks) == -1)
 		return (-1);
 	ft_validate_stack(stacks);
+	ft_memdel((void **)(&stacks->stk_a));
+	ft_memdel((void **)(&stacks->stk_b));
+	ft_memdel((void **)(&stacks));
 	return (0);
 }
