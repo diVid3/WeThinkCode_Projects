@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/06 07:32:41 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 07:06:39 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@ static int		ft_check(int ac, char **av)
 {
 	char		*str;
 
-	if (ac == 2 && ft_check_arg(av[1]) == -1)
+	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (-1);
+	}
+	else if (ac == 2 && ft_check_arg(av[1]) == -1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		return (-1);

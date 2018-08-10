@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:13:27 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/06 07:13:29 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 06:57:43 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ char		*ft_join_args(char **av)
 	cntr = 2;
 	if (!av[1])
 		return (NULL);
-	str = ft_strdup(av[1]);
+	if (ft_strcmp(av[1], "-v") == 0)
+	{
+		cntr = 3;
+		str = ft_strdup(av[2]);
+	}
+	else
+		str = ft_strdup(av[1]);
 	while (av[cntr])
 	{
 		tmp = ft_strjoin(str, " ");
