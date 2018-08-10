@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 07:09:44 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 07:20:47 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int		ft_pick_op(t_stacks *stacks, char **line)
 	return (0);
 }
 
-int				ft_do_ops(t_stacks *stacks)
+int				ft_do_ops(char **av, t_stacks *stacks)
 {
 	char	*line;
 
