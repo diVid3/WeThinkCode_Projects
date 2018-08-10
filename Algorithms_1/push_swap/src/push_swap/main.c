@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 15:10:13 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 16:47:05 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 static int		ft_check(int ac, char **av)
 {
+	int			ret;
 	char		*str;
 
-	if (ac == 2 && ft_check_arg(av[1]) == -1)
-	{
-		ft_putstr_fd("Error\n", 2);
-		return (-1);
-	}
-	if (ac > 2)
-	{
-		str = ft_join_args(av);
-		if (ft_check_arg(str) == -1)
+	if (ac == 2 && (ret = ft_check_arg(av[1])) < 3)
+		if (ret == -1 || ret == 2)
 		{
-			ft_putstr_fd("Error\n", 2);
+			if (ret == -1)
+				ft_putstr_fd("Error\n", 2);
+			return (-1);
+		}
+	if (ac > 2 && (str = ft_join_args(av)) && (ret = ft_check_arg(str)) < 3)
+	{
+		if (ret == -1 || ret == 2)
+		{
+			if (ret == -1)
+				ft_putstr_fd("Error\n", 2);
 			ft_memdel((void **)(&str));
 			return (-1);
 		}
@@ -51,6 +54,11 @@ int				main(int ac, char **av)
 	if (ft_check(ac, av) == -1)
 		return (-1);
 	stacks = ft_build_stacks(ac, av);
+	if (ft_validate_stack(stacks) == 1)
+	{
+		ft_free_stacks(stacks);
+		return (0);
+	}
 	ft_sort_stack(stacks);
 	ft_free_stacks(stacks);
 	return (0);
