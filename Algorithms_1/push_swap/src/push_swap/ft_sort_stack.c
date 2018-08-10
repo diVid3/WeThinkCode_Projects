@@ -56,4 +56,5 @@ void				ft_sort_stack(t_stacks *stacks)
 		ft_push(stacks, 0);
 		ft_putstr("pa\n");
 	}
+	ft_memdel((void **)(&info));
 }
