@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 15:02:32 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 17:18:21 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static int		ft_check(int ac, char **av)
 {
+	int			ret;
 	char		*str;
 
 	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
-	{
-		ft_putstr_fd("Error\n", 2);
 		return (-1);
-	}
-	else if (ac == 2 && ft_check_arg(av[1]) == -1)
-	{
-		ft_putstr_fd("Error\n", 2);
-		return (-1);
-	}
-	if (ac > 2)
-	{
-		str = ft_join_args(av);
-		if (ft_check_arg(str) == -1)
+	if (ac == 2 && (ret = ft_check_arg(av[1])) < 3)
+		if (ret == -1 || ret == 2)
 		{
-			ft_putstr_fd("Error\n", 2);
+			if (ret == -1)
+				ft_putstr_fd("Error\n", 2);
+			return (-1);
+		}
+	if (ac > 2 && (str = ft_join_args(av)) && (ret = ft_check_arg(str)) < 3)
+	{
+		if (ret == -1 || ret == 2)
+		{
+			if (ret == -1)
+				ft_putstr_fd("Error\n", 2);
 			ft_memdel((void **)(&str));
 			return (-1);
 		}

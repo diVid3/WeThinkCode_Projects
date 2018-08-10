@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 13:54:45 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/02 13:54:47 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 17:07:14 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int		ft_check_int_sizes(const char *str)
 	int		int_valid;
 
 	num_count = ft_count_nums(str);
+	if (num_count == 0)
+		return (2);
 	ft_nxt_num_adrs((char *)str, 1);
 	while (num_count-- > 0)
 	{
@@ -99,6 +101,8 @@ int				ft_check_arg(const char *str)
 		return (-1);
 	if (ft_check_int_sizes(str) == -1)
 		return (-1);
+	if (ft_check_int_sizes(str) == 2)
+		return (2);
 	if (ft_check_dups(str) == -1)
 		return (-1);
 	return (0);
