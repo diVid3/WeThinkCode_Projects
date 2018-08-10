@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 13:55:40 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 15:02:32 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ static int		ft_check(int ac, char **av)
 	return (0);
 }
 
+static void		ft_free_stacks(t_stacks *stacks)
+{
+	ft_memdel((void **)(&stacks->stk_a));
+	ft_memdel((void **)(&stacks->stk_b));
+	ft_memdel((void **)(&stacks));
+}
+
 int				main(int ac, char **av)
 {
 	t_stacks	*stacks;
@@ -50,10 +57,11 @@ int				main(int ac, char **av)
 		return (-1);
 	stacks = ft_build_stacks(ac, av);
 	if (ft_do_ops(av, stacks) == -1)
+	{
+		ft_free_stacks(stacks);
 		return (-1);
+	}
 	ft_validate_stack(stacks);
-	ft_memdel((void **)(&stacks->stk_a));
-	ft_memdel((void **)(&stacks->stk_b));
-	ft_memdel((void **)(&stacks));
+	ft_free_stacks(stacks);
 	return (0);
 }
