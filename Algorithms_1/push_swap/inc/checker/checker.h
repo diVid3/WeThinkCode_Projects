@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:24:36 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/07 15:08:28 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/10 07:22:57 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			ft_validate_stack(t_stacks *stacks);
 int				ft_check_arg(const char *str);
 int				ft_check_min_max(const char *num_adrs);
 int				ft_count_nums(const char *str);
-int				ft_do_ops(t_stacks *stacks);
+int				ft_do_ops(char **av, t_stacks *stacks);
 int				ft_check_spaces(const char *str);
 
 long			ft_atol(const char *str);
