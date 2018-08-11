@@ -35,7 +35,14 @@ void			ft_swap(t_stacks *stacks, int mode);
 void			ft_push(t_stacks *stacks, int mode);
 void			ft_rotate(t_stacks *stacks, int mode);
 void			ft_r_rotate(t_stacks *stacks, int mode);
+void			ft_call_r_rotate_a(t_stacks *stacks);
+void			ft_call_rotate_a(t_stacks *stacks);
+void			ft_call_push_b(t_stacks *stacks);
+void			ft_call_swap_a(t_stacks *stacks);
+void			ft_call_rra_and_sa(t_stacks *stacks);
+void			ft_call_ra_and_sa(t_stacks *stacks);
 void			ft_sort_stack(t_stacks *stacks);
+void			ft_sort_stack_rem_val(t_stacks *s);
 
 int				ft_check_arg(const char *str);
 int				ft_check_min_max(const char *num_adrs);
