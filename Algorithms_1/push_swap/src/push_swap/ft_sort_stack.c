@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sort_stack.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/13 17:45:51 by egenis            #+#    #+#             */
+/*   Updated: 2018/08/13 17:46:24 by egenis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/push_swap/push_swap.h"
 
-static void			ft_get_lwst_n_info(t_info_ln *info, t_stacks *stacks)
+static void		ft_get_lwst_n_info(t_info_ln *info, t_stacks *stacks)
 {
 	int			cntr;
 
@@ -34,7 +46,7 @@ void			ft_call_push_b(t_stacks *stacks)
 	ft_putstr("pb\n");
 }
 
-void				ft_sort_stack(t_stacks *stacks)
+void			ft_sort_stack(t_stacks *stacks)
 {
 	t_info_ln	*info;
 

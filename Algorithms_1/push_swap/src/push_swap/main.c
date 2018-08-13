@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:44:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/13 14:18:38 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/13 17:47:21 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int		ft_check(int ac, char **av)
 				ft_putstr_fd("Error\n", 2);
 			return (-1);
 		}
-	if (ac > 2 && (str = ft_join_args(av)) && (ret = ft_check_arg(str)) < 3)
+	if (ac > 2 && (str = ft_join_args(av)) &&
+		(ret = ft_check_arg(str)) < 3)
 	{
 		if (ret == -1 || ret == 2)
 		{

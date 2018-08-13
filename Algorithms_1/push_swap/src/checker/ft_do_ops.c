@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 07:10:34 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 14:17:09 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/13 17:23:00 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int				ft_do_ops(char **av, t_stacks *stacks)
 		}
 		else
 			ft_memdel((void **)(&line));
-	if (ft_strcmp(av[1], "-v") == 0)
-		ft_print_stacks(stacks);
+		if (ft_strcmp(av[1], "-v") == 0)
+			ft_print_stacks(stacks);
 	}
 	ft_memdel((void **)(&line));
 	return (0);

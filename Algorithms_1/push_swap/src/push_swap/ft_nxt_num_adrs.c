@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 08:20:14 by egenis            #+#    #+#             */
-/*   Updated: 2018/07/24 17:36:22 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/13 17:45:32 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		ft_reset(_Bool *wrd_first, int *cntr)
 	*cntr = 0;
 }
 
-char		*ft_nxt_num_adrs(char *s, _Bool reset)
+char			*ft_nxt_num_adrs(char *s, _Bool reset)
 {
 	static int		cntr;
 	static _Bool	wrd_first;
