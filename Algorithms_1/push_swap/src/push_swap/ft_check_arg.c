@@ -6,12 +6,11 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 13:54:45 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/10 16:13:24 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/13 15:56:29 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap/push_swap.h"
-#include <stdio.h>
 
 static int		ft_check_oprts(const char *str)
 {
@@ -44,6 +43,7 @@ static int		ft_check_valid_ch(const char *str)
 	return (0);
 }
 
+/*
 static int		ft_check_int_sizes(const char *str)
 {
 	int		num_count;
@@ -61,6 +61,30 @@ static int		ft_check_int_sizes(const char *str)
 		if (int_valid == -1)
 			return (-1);
 	}
+	return (0);
+}
+*/
+
+static int		ft_check_int_sizes(const char *str)
+{
+	int			cntr;
+	int			num_count;
+	char		*num_adrs;
+	int			int_valid;
+	
+	cntr = 0;
+	num_count = ft_count_nums(str);
+	ft_nxt_num_adrs((char *)str, 1);
+	while (cntr < num_count)
+	{
+		num_adrs = ft_nxt_num_adrs((char *)str, 0);
+		int_valid = ft_check_min_max(num_adrs);
+		if (int_valid == -1)
+			return (-1);
+		++cntr;
+	}
+	if (num_count == 1)
+		return (2);
 	return (0);
 }
 
