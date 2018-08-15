@@ -6,46 +6,24 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/23 13:16:14 by egenis            #+#    #+#              #
-#    Updated: 2018/08/15 15:55:50 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/15 17:33:46 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = checker
+all: $(NAME)
 
-NAME2 = push_swap
+$(NAME):
+	$(MAKE) -C ./src/checker/
+	$(MAKE) -C ./src/push_swap/
 
-FLAGS = -Wall -Wextra -Werror
+clean:
+	$(MAKE) clean -C ./src/checker/
+	$(MAKE) clean -C ./src/push_swap/
+	$(MAKE) clean -C ./libft/
 
-CHECK_FILES = ft_atol.c\
-			  ft_build_stacks.c\
-			  ft_check_arg.c\
-			  ft_check_min_max.c\
-			  ft_check_spaces.c\
-			  ft_count_nums.c\
-			  ft_do_ops.c\
-			  ft_join_args.c\
-			  ft_nxt_num_adrs.c\
-			  ft_print_stacks.c\
-			  ft_push.c\
-			  ft_r_rotate.c\
-			  ft_rotate.c\
-			  ft_swap.c\
-			  ft_validate_stack.c\
-			  main.c\
+fclean:
+	$(MAKE) fclean -C ./src/checker/
+	$(MAKE) fclean -C ./src/push_swap/
+	$(MAKE) fclean -C ./libft/
 
-PUSH_FILES = ft_atol.c\
-			 ft_build_stacks.c\
-			 ft_check_arg.c\
-			 ft_check_min_max.c\
-			 ft_check_spaces.c\
-			 ft_count_nums.c\
-			 ft_join_args.c\
-			 ft_nxt_num_adrs.c\
-			 ft_push.c\
-			 ft_r_rotate.c\
-			 ft_rotate.c\
-			 ft_sort_stack.c\
-			 ft_sort_stack_rem_val.c\
-			 ft_swap.c\
-			 ft_validate_stack.c\
-			 main.c
+re: fclean all

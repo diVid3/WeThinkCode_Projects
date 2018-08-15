@@ -6,11 +6,11 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/23 13:16:14 by egenis            #+#    #+#              #
-#    Updated: 2018/08/15 17:32:55 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/15 17:33:16 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = checker
+NAME = push_swap
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -20,13 +20,13 @@ FILES = ft_atol\
 		ft_check_min_max\
 		ft_check_spaces\
 		ft_count_nums\
-		ft_do_ops\
 		ft_join_args\
 		ft_nxt_num_adrs\
-		ft_print_stacks\
 		ft_push\
 		ft_r_rotate\
 		ft_rotate\
+		ft_sort_stack\
+		ft_sort_stack_rem_val\
 		ft_swap\
 		ft_validate_stack\
 		main\
@@ -42,7 +42,7 @@ $(NAME): $(OFILES)
 	gcc -o ../../$(NAME) $(OFILES) ../../libft/libft.a
 
 $(OFILES): $(CFILES)
-	gcc -c $(FLAGS) $(CFILES) -I ../../inc/checker/
+	gcc -c $(FLAGS) $(CFILES) -I ../../inc/push_swap/
 
 clean:
 	rm -f $(OFILES)
