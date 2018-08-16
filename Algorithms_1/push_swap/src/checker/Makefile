@@ -6,9 +6,13 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/23 13:16:14 by egenis            #+#    #+#              #
-#    Updated: 2018/08/15 17:32:55 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/16 09:10:47 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+RED = \033[0;31m
+
+WHITE = \033[0;37m
 
 NAME = checker
 
@@ -38,17 +42,19 @@ OFILES = $(FILES:%=./%.o)
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	$(MAKE) -C ../../libft/
-	gcc -o ../../$(NAME) $(OFILES) ../../libft/libft.a
+	@echo "[${RED}BUILDING CHECKER${WHITE}]"
+	@$(MAKE) fclean -C ../../libft/
+	@$(MAKE) -C ../../libft/
+	@gcc -o ../../$(NAME) $(OFILES) ../../libft/libft.a
 
 $(OFILES): $(CFILES)
-	gcc -c $(FLAGS) $(CFILES) -I ../../inc/checker/
+	@gcc -c $(FLAGS) $(CFILES) -I ../../inc/checker/
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
 
 fclean: clean
-	rm -f ../../$(NAME)
+	@rm -f ../../$(NAME)
 
 re: fclean all
 
