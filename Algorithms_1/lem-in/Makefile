@@ -6,7 +6,7 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/20 11:37:42 by egenis            #+#    #+#              #
-#    Updated: 2018/08/20 12:50:09 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/20 13:23:28 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,22 @@ $(NAME): $(OFILES)
 	@printf "[${RED}BUILT LEM-IN${WHITE}]\n"
 
 $(OFILES): $(CFILES)
-	@mkdir ./obj
 	@gcc $(FLAGS) -c $(CFILES) -I ./inc/ -o $(OFILES)
 
 clean:
 	@rm -f $(OFILES)
-	@rmdir ./obj
+	@$(MAKE) clean -C ./libft/
 	@printf "[${RED}CLEANED${WHITE}]\n"
 
-fclean: clean
+fclean:
+	@rm -f $(OFILES)
 	@rm -f $(NAME)
+	@$(MAKE) fclean -C ./libft/
 	@printf "[${RED}FORCE CLEANED${WHITE}]\n"
 
 norm:
+	@printf "[${RED}NORMING PROJECT${WHITE}]\n"
+	norminette -R CheckForbiddenSourceHeader ./src/
 	@printf "[${RED}NORMING LIBRARY${WHITE}]\n"
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_a*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_b*.c
