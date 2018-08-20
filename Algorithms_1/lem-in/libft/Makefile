@@ -6,7 +6,7 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/19 12:38:07 by egenis            #+#    #+#              #
-#    Updated: 2018/07/15 12:09:45 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/20 12:43:29 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ CFILES = $(FILES:=.c)
 OFILES = $(FILES:=.o)
 
 all: $(NAME)
+	@:
 
 $(NAME): $(OFILES)
 	ar rcs $(NAME) $(OFILES)

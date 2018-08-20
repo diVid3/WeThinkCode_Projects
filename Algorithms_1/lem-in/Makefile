@@ -6,7 +6,7 @@
 #    By: egenis <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/20 11:37:42 by egenis            #+#    #+#              #
-#    Updated: 2018/08/20 12:01:56 by egenis           ###   ########.fr        #
+#    Updated: 2018/08/20 12:50:09 by egenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = lem-in
 
 FLAGS = -Wall -Wextra -Werror
 
-FILES =
+FILES = main\
 
 CFILES = $(FILES:%=./src/%.c)
 
@@ -27,16 +27,21 @@ OFILES = $(FILES:%=./obj/%.o)
 all: $(NAME)
 
 $(NAME): $(OFILES)
+	@$(MAKE) -C ./libft/
+	@gcc $(OFILES) ./libft/libft.a -o $(NAME)
 	@printf "[${RED}BUILT LEM-IN${WHITE}]\n"
 
 $(OFILES): $(CFILES)
 	@mkdir ./obj
-	@gcc -c $(FLAGS) $(CFILES) -I ./inc/ -o $(OFILES)
+	@gcc $(FLAGS) -c $(CFILES) -I ./inc/ -o $(OFILES)
 
 clean:
+	@rm -f $(OFILES)
+	@rmdir ./obj
 	@printf "[${RED}CLEANED${WHITE}]\n"
 
-fclean:
+fclean: clean
+	@rm -f $(NAME)
 	@printf "[${RED}FORCE CLEANED${WHITE}]\n"
 
 norm:
