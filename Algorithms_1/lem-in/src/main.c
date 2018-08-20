@@ -12,10 +12,10 @@
 
 #include "../inc/lem_in.h"
 
-void		ft_add_node_back(t_move **head, char *line)
+void		ft_input_add_node_end(t_move **head, char *line)
 {
-	t_move		*node;
-	t_move		*tmp;
+	t_input		*node;
+	t_input		*tmp;
 
 	node = malloc(sizeof(t_input));
 	node->line_ptr = line;
@@ -34,13 +34,14 @@ void		ft_add_node_back(t_move **head, char *line)
 	}
 }
 
-void		ft_free_list(t_move *head)
+void		ft_input_free_list(t_input *head)
 {
-	t_move		*tmp;
+	t_input		*tmp;
 
 	while (head)
 	{
 		tmp = head->next;
+		ft_memdel((void **)(&(head->line_ptr)));
 		ft_memdel((void **)(&head));
 		head = tmp;
 	}
