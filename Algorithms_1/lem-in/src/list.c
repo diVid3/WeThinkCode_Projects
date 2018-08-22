@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void		ft_add_node_back(t_move **head)
+#include "../inc/lem_in.h"
+
+void		ft_input_add_node_end(t_move **head, char *line)
 {
 	t_input		*node;
 	t_input		*tmp;
 
-	node = malloc(sizeof(t_move));
-	node->row = map_row;
-	node->col = map_col;
-	node->rating = 2147483647;
+	node = malloc(sizeof(t_input));
+	node->line_ptr = line;
 	if (*head == NULL)
 	{
 		node->next = NULL;
@@ -34,13 +34,14 @@ void		ft_add_node_back(t_move **head)
 	}
 }
 
-void		ft_free_list(t_move *head)
+void		ft_input_free_list(t_input *head)
 {
-	t_move		*tmp;
+	t_input		*tmp;
 
 	while (head)
 	{
 		tmp = head->next;
+		ft_memdel((void **)(&(head->line_ptr)));
 		ft_memdel((void **)(&head));
 		head = tmp;
 	}
