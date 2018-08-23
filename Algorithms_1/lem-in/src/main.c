@@ -12,7 +12,7 @@
 
 #include "../inc/lem_in.h"
 
-void		ft_input_add_node_end(t_move **head, char *line)
+void		ft_input_add_node_end(t_input **head, char *line)
 {
 	t_input		*node;
 	t_input		*tmp;
@@ -57,7 +57,7 @@ void		ft_get_input(t_input **input_h)
 	while (read_b)
 	{
 		read_b = get_next_line(0, &line);
-		ft_add_node_back(input_h, line)
+		ft_input_add_node_end(input_h, line);
 	}
 }
 
@@ -65,7 +65,7 @@ int			main(void)
 {
 	t_input		*input_h;
 
-	*input_h = NULL;
-	ft_get_input(&input_h);
+	input_h = NULL;
+	//ft_get_input(&input_h);
 	return (0);
 }

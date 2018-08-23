@@ -25,22 +25,32 @@ CFILES = $(FILES:%=./src/%.c)
 OFILES = $(FILES:%=./obj/%.o)
 
 all: $(NAME)
+	@:
 
 $(NAME): $(OFILES)
 	@$(MAKE) -C ./libft/
-	@gcc $(OFILES) ./libft/libft.a -o $(NAME)
+	@gcc $^ ./libft/libft.a -o $@
 	@printf "[${RED}BUILT LEM-IN${WHITE}]\n"
 
 $(OFILES): $(CFILES)
-	@gcc $(FLAGS) -c $(CFILES) -I ./inc/ -o $(OFILES)
+ifeq ("$(wildcard ./obj)","")
+	@mkdir ./obj
+endif
+	@gcc $(FLAGS) -c $^ -I ./inc/ -o $@
 
 clean:
 	@rm -f $(OFILES)
+ifneq ("$(wildcard ./obj)","")
+	@rmdir ./obj
+endif
 	@$(MAKE) clean -C ./libft/
 	@printf "[${RED}CLEANED${WHITE}]\n"
 
 fclean:
 	@rm -f $(OFILES)
+ifneq ("$(wildcard ./obj)","")
+	@rmdir ./obj
+endif
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C ./libft/
 	@printf "[${RED}FORCE CLEANED${WHITE}]\n"
