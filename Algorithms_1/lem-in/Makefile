@@ -19,10 +19,14 @@ NAME = lem-in
 FLAGS = -Wall -Wextra -Werror
 
 FILES = main\
+		input\
+		validate\
 
 CFILES = $(FILES:%=./src/%.c)
 
 OFILES = $(FILES:%=./obj/%.o)
+
+CD_CFILES = $(FILES:%=../src/%.c)
 
 all: $(NAME)
 	@:
@@ -36,7 +40,7 @@ $(OFILES): $(CFILES)
 ifeq ("$(wildcard ./obj)","")
 	@mkdir ./obj
 endif
-	@gcc $(FLAGS) -c $^ -I ./inc/ -o $@
+	@cd ./obj && gcc $(FLAGS) -c $(CD_CFILES) -I ../inc/
 
 clean:
 	@rm -f $(OFILES)
@@ -72,6 +76,8 @@ norm:
 	norminette -R CheckForbiddenSourceHeader ./libft/get_next_line.c
 	norminette -R CheckForbiddenSourceHeader ./libft/*.h
 
-re: fclean all
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 .PHONY: all clean fclean norm re

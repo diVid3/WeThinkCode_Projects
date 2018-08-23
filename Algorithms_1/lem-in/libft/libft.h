@@ -95,6 +95,8 @@ int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					get_next_line(const int fd, char **line);
 
+long				ft_atol(const char *str);
+
 size_t				ft_strlen(const char *s);
 size_t				ft_strclen(const char *s, const char c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);

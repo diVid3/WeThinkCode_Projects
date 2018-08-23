@@ -12,60 +12,20 @@
 
 #include "../inc/lem_in.h"
 
-void		ft_input_add_node_end(t_input **head, char *line)
+void		quit(t_data *data, int error)
 {
-	t_input		*node;
-	t_input		*tmp;
-
-	node = malloc(sizeof(t_input));
-	node->line_ptr = line;
-	if (*head == NULL)
-	{
-		node->next = NULL;
-		*head = node;
-	}
-	else
-	{
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = node;
-		node->next = NULL;
-	}
-}
-
-void		ft_input_free_list(t_input *head)
-{
-	t_input		*tmp;
-
-	while (head)
-	{
-		tmp = head->next;
-		ft_memdel((void **)(&(head->line_ptr)));
-		ft_memdel((void **)(&head));
-		head = tmp;
-	}
-	return ;
-}
-
-void		ft_get_input(t_input **input_h)
-{
-	int		read_b;
-	char	*line;
-
-	read_b = 1;
-	while (read_b)
-	{
-		read_b = get_next_line(0, &line);
-		ft_input_add_node_end(input_h, line);
-	}
+	if (error)
+		ft_putstr_fd("ERROR\n", 2);
+	input_free_list(data->input);
+	exit(1);
 }
 
 int			main(void)
 {
-	t_input		*input_h;
+	static t_data	data;
 
-	input_h = NULL;
-	//ft_get_input(&input_h);
+	get_input(&data);
+	//input_print_list(data.input);
+	validate_input(&data);
 	return (0);
 }
