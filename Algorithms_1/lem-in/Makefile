@@ -19,28 +19,42 @@ NAME = lem-in
 FLAGS = -Wall -Wextra -Werror
 
 FILES = main\
+		input\
+		validate\
 
 CFILES = $(FILES:%=./src/%.c)
 
 OFILES = $(FILES:%=./obj/%.o)
 
+CD_CFILES = $(FILES:%=../src/%.c)
+
 all: $(NAME)
+	@:
 
 $(NAME): $(OFILES)
 	@$(MAKE) -C ./libft/
-	@gcc $(OFILES) ./libft/libft.a -o $(NAME)
+	@gcc $^ ./libft/libft.a -o $@
 	@printf "[${RED}BUILT LEM-IN${WHITE}]\n"
 
 $(OFILES): $(CFILES)
-	@gcc $(FLAGS) -c $(CFILES) -I ./inc/ -o $(OFILES)
+ifeq ("$(wildcard ./obj)","")
+	@mkdir ./obj
+endif
+	@cd ./obj && gcc $(FLAGS) -c $(CD_CFILES) -I ../inc/
 
 clean:
 	@rm -f $(OFILES)
+ifneq ("$(wildcard ./obj)","")
+	@rmdir ./obj
+endif
 	@$(MAKE) clean -C ./libft/
 	@printf "[${RED}CLEANED${WHITE}]\n"
 
 fclean:
 	@rm -f $(OFILES)
+ifneq ("$(wildcard ./obj)","")
+	@rmdir ./obj
+endif
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C ./libft/
 	@printf "[${RED}FORCE CLEANED${WHITE}]\n"
@@ -62,6 +76,8 @@ norm:
 	norminette -R CheckForbiddenSourceHeader ./libft/get_next_line.c
 	norminette -R CheckForbiddenSourceHeader ./libft/*.h
 
-re: fclean all
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 .PHONY: all clean fclean norm re

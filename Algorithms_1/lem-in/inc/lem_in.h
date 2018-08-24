@@ -18,7 +18,20 @@
 typedef struct		s_input
 {
 	char			*line_ptr;
-	char			*next;
+	struct s_input	*next;
 }					t_input;
+
+typedef struct		s_data
+{
+	t_input			*input;
+}					t_data;
+
+void		input_add_node_end(t_input **head, char *line);
+void		input_free_list(t_input *head);
+void		input_print_list(t_input *input);
+void		get_input(t_data *data);
+void		quit(t_data *data, int error);
+void		validate_input(t_data *d);
+void		validate_ants(t_data *d);
 
 #endif
