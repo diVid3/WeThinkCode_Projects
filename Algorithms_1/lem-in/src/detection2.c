@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   detection2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/31 17:16:18 by egenis            #+#    #+#             */
-/*   Updated: 2018/06/06 16:38:30 by egenis           ###   ########.fr       */
+/*   Created: 2018/08/24 14:45:28 by egenis            #+#    #+#             */
+/*   Updated: 2018/08/24 14:45:29 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
+int		is_link(char *str)
 {
-	size_t	str1_len;
-	size_t	str2_len;
-	char	*newstr;
+	int		cntr;
 
-	if (!s1 || !s2)
-		return (NULL);
-	str1_len = ft_strlen(s1);
-	str2_len = ft_strlen(s2);
-	newstr = ft_strnew(str1_len + str2_len);
-	if (!newstr)
-		return (NULL);
-	ft_strcpy(newstr, s1);
-	ft_strcat(newstr, s2);
-	return (newstr);
+	cntr = 0;
+	return (1);
+}
+
+int		is_room(char *str)
+{
+	int		cntr;
+
+	if (is_comment(str))
+		return (0);
+	if (is_command(str))
+		return (0);
+	cntr = 0;
+	while (str[cntr] && str[cntr] != ' ')
+		++cntr;
+	return (1);
 }

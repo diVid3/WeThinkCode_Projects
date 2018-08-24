@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/24 06:42:01 by egenis            #+#    #+#             */
+/*   Updated: 2018/08/24 07:39:36 by egenis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/lem_in.h"
 
 void		input_add_node_end(t_input **head, char *line)
@@ -48,19 +60,22 @@ void		input_print_list(t_input *input)
 	}
 }
 
-void		get_input(t_data *data)
+void		get_input(t_data *d)
 {
-	t_input		*input;
 	int			read_b;
 	char		*line;
 
-	input = NULL;
 	read_b = 1;
 	while (read_b)
 	{
-		read_b = get_next_line(0, &line);
-		if (read_b)
-			input_add_node_end(&input, line);
+		if ((read_b = get_next_line(0, &line)) == 0)
+			quit(d, 1);
+		if (d->read_ants == 0)
+			get_ants(d, line);
+		else if (d->read_rooms == 0)
+			get_rooms(d, line);
+		else if (d->read_links == 0)
+			get_links(d, line);
+		input_add_node_end(&(d->input), line);
 	}
-	data->input = input;
 }

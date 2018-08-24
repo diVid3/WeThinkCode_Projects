@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 12:52:21 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/20 14:00:23 by egenis           ###   ########.fr       */
+/*   Updated: 2018/08/24 06:43:20 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct		s_input
 typedef struct		s_data
 {
 	t_input			*input;
+	_Bool			read_ants;
+	_Bool			read_rooms;
+	_Bool			read_links;
 }					t_data;
 
 void		input_add_node_end(t_input **head, char *line);

@@ -26,6 +26,5 @@ int			main(void)
 
 	get_input(&data);
 	//input_print_list(data.input);
-	validate_input(&data);
 	return (0);
 }

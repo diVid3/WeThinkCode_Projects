@@ -93,6 +93,7 @@ int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
+int					ft_is_int(const char *num_adrs);
 int					get_next_line(const int fd, char **line);
 
 long				ft_atol(const char *str);
