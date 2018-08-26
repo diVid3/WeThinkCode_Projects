@@ -32,9 +32,9 @@ int			ft_is_int(const char *num_adrs)
 		++cntr;
 	}
 	if (len > 10)
-		return (-1);
+		return (0);
 	num = ft_atol(num_adrs);
 	if (num > 2147483647 || num < -2147483648)
-		return (-1);
-	return (0);
+		return (0);
+	return (1);
 }

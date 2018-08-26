@@ -25,6 +25,8 @@ typedef struct		s_data
 {
 	t_input			*input;
 	_Bool			read_ants;
+	_Bool			read_start;
+	_Bool			read_end;
 	_Bool			read_rooms;
 	_Bool			read_links;
 }					t_data;
@@ -36,5 +38,18 @@ void		get_input(t_data *data);
 void		quit(t_data *data, int error);
 void		validate_input(t_data *d);
 void		validate_ants(t_data *d);
+
+int			is_comment(char *str);
+int			is_command(char *str);
+int			is_start(char *str);
+int			is_end(char *str);
+int			is_link(char *str);
+int			is_room(char *str);
+int			is_ants(char *str);
+int			count_pluses(char *str);
+int			count_hashes(char *str);
+int			count_dashes(char *str);
+int			count_spaces(char *str);
+int			count_whitespaces(char *str);
 
 #endif
