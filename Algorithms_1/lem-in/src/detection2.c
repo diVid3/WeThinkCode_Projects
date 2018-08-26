@@ -13,29 +13,26 @@
 #include "../inc/lem_in.h"
 //#include <stdio.h>
 
-int				is_link(char *str)
+int				is_ants(char *str)
 {
 	int		cntr;
+	int		digits;
+	int		len;
 
-	if (count_whitespaces(str) > 0 || count_spaces(str) > 0 ||
-		count_dashes(str) != 1 || ft_strclen(str, '-') == 0 ||
-		is_comment(str) || is_command(str))
+	if (count_whitespaces(str) > 0 || count_spaces(str) != 0 ||
+		count_dashes(str) != 0 || count_pluses(str) >= 2 ||
+		(count_pluses(str) == 1 && *str != '+'))
 		return (0);
-	cntr = 0;
-	while (str[cntr] && ft_isprint((int)(str[cntr])) && str[cntr] != '-')
-		++cntr;
-	if (str[cntr] != '-')
-		return (0);
-	++cntr;
-	if (ft_strclen(str + cntr, '\0') == 0 || is_comment(str + cntr) ||
-		is_command(str + cntr))
-		return (0);
-	if (ft_strclen(str, '-') == ft_strclen(str + cntr, '\0'))
-		if (ft_strncmp(str, str + cntr, ft_strclen(str, '-')) == 0)
-			return (0);
-	while (str[cntr] && ft_isprint((int)(str[cntr])))
-		++cntr;
-	if (str[cntr] != '\0')
+	digits = 0;
+	if (*str == '+')
+		cntr = 0;
+	else
+		cntr = -1;
+	while (str[++cntr])
+		if (str[cntr] >= '0' && str[cntr] <= '9')
+			++digits;
+	len = (*str == '+') ? ft_strlen(str) - 1 : ft_strlen(str);
+	if (digits != len || ft_is_int(str) == 0 || ft_atoi(str) <= 0)
 		return (0);
 	return (1);
 }
@@ -83,26 +80,29 @@ int				is_room(char *str)
 	return (1);
 }
 
-int				is_ants(char *str)
+int				is_link(char *str)
 {
 	int		cntr;
-	int		digits;
-	int		len;
 
-	if (count_whitespaces(str) > 0 || count_spaces(str) != 0 ||
-		count_dashes(str) != 0 || count_pluses(str) >= 2 ||
-		(count_pluses(str) == 1 && *str != '+'))
+	if (count_whitespaces(str) > 0 || count_spaces(str) > 0 ||
+		count_dashes(str) != 1 || ft_strclen(str, '-') == 0 ||
+		is_comment(str) || is_command(str))
 		return (0);
-	digits = 0;
-	if (*str == '+')
-		cntr = 0;
-	else
-		cntr = -1;
-	while (str[++cntr])
-		if (str[cntr] >= '0' && str[cntr] <= '9')
-			++digits;
-	len = (*str == '+') ? ft_strlen(str) - 1 : ft_strlen(str);
-	if (digits != len || ft_is_int(str) == 0 || ft_atoi(str) <= 0)
+	cntr = 0;
+	while (str[cntr] && ft_isprint((int)(str[cntr])) && str[cntr] != '-')
+		++cntr;
+	if (str[cntr] != '-')
+		return (0);
+	++cntr;
+	if (ft_strclen(str + cntr, '\0') == 0 || is_comment(str + cntr) ||
+		is_command(str + cntr))
+		return (0);
+	if (ft_strclen(str, '-') == ft_strclen(str + cntr, '\0'))
+		if (ft_strncmp(str, str + cntr, ft_strclen(str, '-')) == 0)
+			return (0);
+	while (str[cntr] && ft_isprint((int)(str[cntr])))
+		++cntr;
+	if (str[cntr] != '\0')
 		return (0);
 	return (1);
 }
