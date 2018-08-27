@@ -46,12 +46,14 @@ void				input_add_node_end(t_input **head, char *line);
 void				input_free_list(t_input *head);
 void				input_print_list(t_input *input);
 void				quit(t_data *data, int error);
-void				get_ants(t_data *d, char *line);
-void				get_room(t_data *d, char *line);
+void				get_ants(t_data *d);
+void				get_rooms(t_data *d);
+void				get_links(t_data *d);
 void				get_input(t_data *data);
 
+int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);
-int					is_command(char *str);
+int					is_rand_command(char *str);
 int					is_start(char *str);
 int					is_end(char *str);
 int					is_link(char *str);
