@@ -26,7 +26,5 @@ int			main(void)
 	static t_data	data;
 
 	get_input(&data);
-	//input_print_list(data.input);
-	//room_print_list(data.room);
 	return (0);
 }

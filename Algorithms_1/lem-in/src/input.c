@@ -59,7 +59,9 @@ void		get_rooms(t_data *d)
 	read_b = 1;
 	while (read_b && d->read_rooms == 0)
 	{
-		read_b = get_next_line(0, &line);
+		// Might need or not need to remove check for empty line.
+		if ((read_b = get_next_line(0, &line)) == 0)
+			break ;
 		input_add_node_end(&(d->input), line);
 		if (is_comment(line))
 			continue ;
@@ -91,5 +93,7 @@ void		get_input(t_data *d)
 {
 	get_ants(d);
 	get_rooms(d);
+	//input_print_list(d->input);
+	//room_print_list(data.room);
 	get_links(d);
 }
