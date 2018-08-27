@@ -83,6 +83,7 @@ void		get_rooms(t_data *d)
 
 void		get_links(t_data *d)
 {
+	(void)d;
 	return ;
 }
 

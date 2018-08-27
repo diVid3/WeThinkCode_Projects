@@ -45,8 +45,14 @@ typedef struct		s_data
 void				input_add_node_end(t_input **head, char *line);
 void				input_free_list(t_input *head);
 void				input_print_list(t_input *input);
+void				room_add_node_end(t_room **head, char *str, int s, int e);
+void				room_free_list(t_room *head);
+void				room_print_list(t_room *room);
 void				quit(t_data *data, int error);
+void				insert_room(t_data *d, char *line, int start, int end);
 void				get_ants(t_data *d);
+void				get_start(t_data *d);
+void				get_end(t_data *d);
 void				get_rooms(t_data *d);
 void				get_links(t_data *d);
 void				get_input(t_data *data);

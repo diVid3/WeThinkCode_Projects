@@ -18,9 +18,14 @@ NAME = lem-in
 
 FLAGS = -Wall -Wextra -Werror
 
-FILES = main\
-		input\
-		validate\
+FILES = input\
+		input2\
+		count\
+		list_input\
+		list_room\
+		detection\
+		detection2\
+		main\
 
 CFILES = $(FILES:%=./src/%.c)
 

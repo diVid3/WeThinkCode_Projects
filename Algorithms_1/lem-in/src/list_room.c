@@ -44,7 +44,7 @@ void		room_print_list(t_room *room)
 {
 	t_room		*tmp;
 
-	tmp = input;
+	tmp = room;
 	while (tmp)
 	{
 		ft_putchar('\n');
