@@ -43,7 +43,7 @@ int		is_room_dup(t_data *d, char *str)
 	tmp = d->room;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->room_name, str) != 0)
+		if (ft_strcmp(tmp->room_name, str) == 0)
 			return (1);
 		tmp = tmp->next;
 	}
