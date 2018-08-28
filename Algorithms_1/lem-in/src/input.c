@@ -59,9 +59,12 @@ void		get_rooms(t_data *d)
 	read_b = 1;
 	while (read_b && d->read_rooms == 0)
 	{
-		// Might need or not need to remove check for empty line.
+		// If an empty line gets read in the room section, it'll simply
+		// get passed on to the links section, which will promptly error
+		// out due to read_rooms being 0. This if-statement might still
+		// be unnecessary. It can also be changed to quit if read_b == 0.
 		if ((read_b = get_next_line(0, &line)) == 0)
-			break ;
+			quit(d, 1);
 		input_add_node_end(&(d->input), line);
 		if (is_comment(line))
 			continue ;

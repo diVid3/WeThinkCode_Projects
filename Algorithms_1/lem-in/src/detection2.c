@@ -74,8 +74,9 @@ int				is_room(char *str)
 	int		cntr;
 
 	if (count_whitespaces(str) > 0 || count_spaces(str) != 2 ||
-		count_dashes(str) != 0 || ft_strclen(str, ' ') == 0 || 
-		is_comment(str) || is_rand_command(str) || is_start(str) || is_end(str))
+		count_dashes_c(str, ' ') != 0 || ft_strclen(str, ' ') == 0 || 
+		is_comment(str) || is_rand_command(str) || is_start(str) ||
+		is_end(str) || *str == 'L')
 		return (0);
 	cntr = 0;
 	while (str[cntr] && ft_isprint((int)(str[cntr])) && str[cntr] != ' ')

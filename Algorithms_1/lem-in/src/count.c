@@ -16,20 +16,20 @@ int		count_pluses(char *str)
 	return (pluses);
 }
 
-int		count_hashes(char *str)
+int		count_dashes_c(char *str, char c)
 {
 	int		cntr;
-	int		hashes;
+	int		dashes;
 
 	cntr = 0;
-	hashes = 0;
-	while (str[cntr])
+	dashes = 0;
+	while (str[cntr] && str[cntr] != c)
 	{
-		if (str[cntr] == '#')
-			++hashes;
+		if (str[cntr] == '-')
+			++dashes;
 		++cntr;
 	}
-	return (hashes);
+	return (dashes);
 }
 
 int		count_dashes(char *str)

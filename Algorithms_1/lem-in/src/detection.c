@@ -48,7 +48,7 @@ int		is_rand_command(char *str)
 		return (0);
 	if (is_end(str))
 		return (0);
-	if (str[0] && str[1] && str[0] == '#' && str[1] == '#' && str[2] != '#')
+	if (str[0] && str[1] && str[0] == '#' && str[1] == '#')
 		return (1);
 	return (0);
 }

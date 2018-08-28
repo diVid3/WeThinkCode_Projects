@@ -68,6 +68,7 @@ int					is_ants(char *str);
 int					count_pluses(char *str);
 int					count_hashes(char *str);
 int					count_dashes(char *str);
+int					count_dashes_c(char *str, char c);
 int					count_spaces(char *str);
 int					count_whitespaces(char *str);
 
