@@ -29,5 +29,6 @@ int			main(void)
 	get_input(&d);
 	//find_path(&d);
 	//send_ants(&d);
+	quit(&d, 0);
 	return (0);
 }

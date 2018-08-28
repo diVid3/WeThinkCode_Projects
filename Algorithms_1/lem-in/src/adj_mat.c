@@ -40,6 +40,8 @@ void			print_adj_mat(t_data *d)
 	adj_mat = d->adj_mat;
 	room_count = count_rooms(d);
 	row = -1;
+	ft_putchar('\n');
+	ft_putchar('\n');
 	while (++row < room_count)
 	{
 		col = -1;
@@ -51,6 +53,7 @@ void			print_adj_mat(t_data *d)
 		}
 		ft_putchar('\n');
 	}
+	ft_putchar('\n');
 }
 
 static void		zero_int_row(int *arr, int size)

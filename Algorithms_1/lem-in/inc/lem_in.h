@@ -60,7 +60,8 @@ void				get_input(t_data *data);
 void				make_adj_mat(t_data *d);
 void				print_adj_mat(t_data *d);
 void				free_adj_mat(t_data *d);
-void				make_first_link(t_data *d);
+void				make_link(t_data *d, char *link, int mode);
+void				link_rooms(t_data *d, char *link);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);

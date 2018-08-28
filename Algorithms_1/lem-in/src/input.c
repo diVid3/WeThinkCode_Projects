@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/lem_in.h"
-//#include <stdio.h>
 
 void		get_ants(t_data *d)
 {
@@ -80,75 +79,14 @@ void		get_rooms(t_data *d)
 	}
 }
 
-// --------------------------------------------------------------------------
-
-int			does_rooms_exist(t_data *d, char *link)
-{
-	char		**arr;
-	int			room1_exist;
-	int			room2_exist;
-	t_room		*tmp;
-
-	arr = ft_strsplit(link, '-');
-	room1_exist = 0;
-	room2_exist = 0;
-	tmp = d->room;
-	while (tmp)
-	{
-		if (ft_strcmp(arr[0], tmp->room_name) == 0)
-			room1_exist = 1;
-		if (ft_strcmp(arr[1], tmp->room_name) == 0)
-			room2_exist = 1;
-		tmp = tmp->next;
-	}
-	if (room1_exist == 1 && room2_exist == 1)
-		ft_del_matrix((void **)(arr), 2);
-	if (room1_exist == 1 && room2_exist == 1)
-		return (1);
-	ft_del_matrix((void **)(arr), 2);
-	return (0);
-}
-
-void		link_rooms(t_data *d, char *link)
-{
-	char		**arr;
-	int			room1_index;
-	int			room2_index;
-	t_room		*tmp;
-
-	arr = ft_strsplit(link, '-');
-	tmp = d->room;
-	while (tmp)
-	{
-
-		tmp = tmp->next;
-	}
-}
-
-void		make_first_link(t_data *d)
-{
-	t_input		*tmp;
-	char		*link;
-
-	tmp = d->input;
-	while (tmp->next)
-		tmp = tmp->next;
-	link = tmp->line_ptr;
-	if (does_rooms_exist(d, link) == 0)
-		quit(d, 1);
-
-}
-
-// get_links() should generate the adjacency matrix before the linking
-// happens. Remeber to get the 1st link in input list, it's the last node.
-
 void		get_links(t_data *d)
 {
 	int		read_b;
 	char	*line;
 
+	line = NULL;
 	make_adj_mat(d);
-	make_first_link(d); // <------------------------------ Add this function.
+	make_link(d, line, 1);
 	read_b = 1;
 	while (read_b)
 	{
@@ -162,23 +100,18 @@ void		get_links(t_data *d)
 		else if (is_rand_command(line))
 			continue ;
 		else if (is_link(line))
-			continue ;
-			//make_link(d, line); // <----------------------- Uncomment this.
+			make_link(d, line, 0);
 		else
 			quit(d, 1);
 	}
-	//ft_putchar('\n');
-	//print_adj_mat(d);
-	//ft_putchar('\n');
 }
-
-// --------------------------------------------------------------------------
 
 void		get_input(t_data *d)
 {
 	get_ants(d);
 	get_rooms(d);
 	//input_print_list(d->input);
-	//room_print_list(data.room);
+	//room_print_list(d->room);
 	get_links(d);
+	print_adj_mat(d);
 }

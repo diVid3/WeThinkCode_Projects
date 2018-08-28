@@ -27,6 +27,7 @@ FILES = input\
 		detection2\
 		main\
 		adj_mat\
+		link\
 
 CFILES = $(FILES:%=./src/%.c)
 
