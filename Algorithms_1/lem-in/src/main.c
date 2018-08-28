@@ -27,5 +27,7 @@ int			main(void)
 	static t_data	d;
 
 	get_input(&d);
+	//find_path(&d);
+	//send_ants(&d);
 	return (0);
 }

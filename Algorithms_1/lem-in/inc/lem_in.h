@@ -60,6 +60,7 @@ void				get_input(t_data *data);
 void				make_adj_mat(t_data *d);
 void				print_adj_mat(t_data *d);
 void				free_adj_mat(t_data *d);
+void				make_first_link(t_data *d);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);
@@ -75,5 +76,6 @@ int					count_dashes(char *str);
 int					count_dashes_c(char *str, char c);
 int					count_spaces(char *str);
 int					count_whitespaces(char *str);
+int					does_rooms_exist(t_data *d, char *link);
 
 #endif
