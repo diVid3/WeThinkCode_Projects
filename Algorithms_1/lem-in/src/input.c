@@ -88,8 +88,10 @@ void		get_rooms(t_data *d)
 
 void		get_links(t_data *d)
 {
-	(void)d;
-	return ;
+	ft_putchar('\n');
+	make_adj_mat(d);
+	print_adj_mat(d);
+	ft_putchar('\n');
 }
 
 void		get_input(t_data *d)

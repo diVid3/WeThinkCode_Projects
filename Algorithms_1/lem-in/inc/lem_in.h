@@ -38,6 +38,7 @@ typedef struct		s_data
 	int				read_end;
 	int				read_rooms;
 	int				read_links;
+	int				**adj_mat;
 	t_input			*input;
 	t_room			*room;
 }					t_data;
@@ -56,6 +57,9 @@ void				get_end(t_data *d);
 void				get_rooms(t_data *d);
 void				get_links(t_data *d);
 void				get_input(t_data *data);
+void				make_adj_mat(t_data *d);
+void				print_adj_mat(t_data *d);
+void				free_adj_mat(t_data *d);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);

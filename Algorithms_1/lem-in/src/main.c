@@ -12,19 +12,20 @@
 
 #include "../inc/lem_in.h"
 
-void		quit(t_data *data, int error)
+void		quit(t_data *d, int error)
 {
 	if (error)
 		ft_putstr_fd("ERROR\n", 2);
-	input_free_list(data->input);
-	room_free_list(data->room);
+	input_free_list(d->input);
+	room_free_list(d->room);
+	free_adj_mat(d);
 	exit(1);
 }
 
 int			main(void)
 {
-	static t_data	data;
+	static t_data	d;
 
-	get_input(&data);
+	get_input(&d);
 	return (0);
 }
