@@ -74,6 +74,13 @@ void				print_adj_mat(t_data *d);
 void				free_adj_mat(t_data *d);
 void				make_link(t_data *d, char *link, int mode);
 void				link_rooms(t_data *d, char *link);
+void				solve_graph(t_data *d);
+void				make_stack(t_data *d);
+void				neg_int_row(int *arr, int size);
+void				print_stack(t_data *d);
+void				stack_push(t_data *d, int value);
+void				stack_pop(t_data *d);
+void				find_path(t_data *d, t_bcktrk *i, int row, int col);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);
@@ -91,5 +98,7 @@ int					count_spaces(char *str);
 int					count_whitespaces(char *str);
 int					count_rooms(t_data *d);
 int					does_rooms_exist(t_data *d, char *link);
+int					find_start_room(t_data *d);
+int					find_end_room(t_data *d);
 
 #endif

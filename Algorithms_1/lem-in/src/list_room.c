@@ -47,7 +47,6 @@ void		room_print_list(t_room *room)
 	tmp = room;
 	while (tmp)
 	{
-		ft_putchar('\n');
 		ft_putstr("room name  : ");
 		ft_putstr(tmp->room_name);
 		ft_putchar('\n');
@@ -59,7 +58,7 @@ void		room_print_list(t_room *room)
 		ft_putchar('\n');
 		ft_putstr("room end   : ");
 		ft_putnbr(tmp->room_end);
-		ft_putstr("\n\n");
+		ft_putchar('\n');
 		tmp = tmp->next;
 	}
 }

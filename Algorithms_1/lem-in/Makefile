@@ -30,6 +30,8 @@ FILES = input\
 		main\
 		adj_mat\
 		link\
+		stack\
+		backtrack\
 
 CFILES = $(FILES:%=./src/%.c)
 

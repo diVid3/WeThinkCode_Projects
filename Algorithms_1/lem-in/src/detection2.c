@@ -94,6 +94,10 @@ int				is_room(char *str)
 	return (1);
 }
 
+/*
+** Rooms can't link to themselves otherwise the ants will squash themselves.
+*/
+
 int				is_link(char *str)
 {
 	int		cntr;
@@ -113,9 +117,9 @@ int				is_link(char *str)
 		is_rand_command(str + cntr) || is_start(str + cntr) ||
 		is_end(str + cntr))
 		return (0);
-	//if (ft_strclen(str, '-') == ft_strclen(str + cntr, '\0'))
-	//	if (ft_strncmp(str, str + cntr, ft_strclen(str, '-')) == 0)
-	//		return (0);
+	if (ft_strclen(str, '-') == ft_strclen(str + cntr, '\0'))
+		if (ft_strncmp(str, str + cntr, ft_strclen(str, '-')) == 0)
+			return (0);
 	while (str[cntr] && ft_isprint((int)(str[cntr])))
 		++cntr;
 	if (str[cntr] != '\0')

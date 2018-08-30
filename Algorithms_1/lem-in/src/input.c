@@ -112,8 +112,5 @@ void		get_input(t_data *d)
 	get_rooms(d);
 	if (d->read_start == 0 || d->read_end == 0 || d->room == NULL)
 		quit(d, 1);
-	//input_print_list(d->input);
-	//room_print_list(d->room);
 	get_links(d);
-	//print_adj_mat(d);
 }

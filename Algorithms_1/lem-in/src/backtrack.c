@@ -1,4 +1,5 @@
 #include "../inc/lem_in.h"
+#include <stdio.h>
 
 int			find_start_room(t_data *d)
 {
@@ -50,11 +51,11 @@ void		find_path(t_data *d, t_bcktrk *i, int row, int col)
 		i->found_end = 1;
 		return ;
 	}
-	while (col < i->room_count - 1)
+	while (col < i->room_count)
 	{
 		if ((d->adj_mat)[row][col] == 1)
 		{
-			(d->adj_mat)[row][col] == 0;
+			(d->adj_mat)[row][col] = 0;
 			find_path(d, i, col, 0);
 			if (i->found_end == 1)
 				return ;
@@ -73,6 +74,7 @@ void		solve_graph(t_data *d)
 	info.end = find_end_room(d);
 	info.room_count = count_rooms(d);
 	info.found_end = 0;
+	print_adj_mat(d);
 	find_path(d, &info, info.start, 0);
 	if (d->stack_top <= -1)
 		quit(d, 2);

@@ -3,7 +3,7 @@
 void		stack_push(t_data *d, int value)
 {
 	++(d->stack_top);
-	(d->stack)[stack_top] = value;
+	(d->stack)[d->stack_top] = value;
 }
 
 void		stack_pop(t_data *d)
@@ -24,15 +24,14 @@ void		print_stack(t_data *d)
 {
 	int		cntr;
 
-	ft_putchar('\n');
 	cntr = -1;
-	while (++cntr < d->stack_size - 1 && (d->stack)[cntr] != -1)
+	while (++cntr < d->stack_size && (d->stack)[cntr] != -1)
 	{
 		ft_putnbr((d->stack)[cntr]);
-		if (cntr < d->stack_size - 2)
+		if (cntr < d->stack_size - 1)
 			ft_putchar(' ');
 	}
-	ft_putstr("\n\n");
+	ft_putchar('\n');
 }
 
 void		make_stack(t_data *d)
@@ -42,7 +41,7 @@ void		make_stack(t_data *d)
 	room_count = count_rooms(d);
 	d->stack_size = room_count;
 	d->stack = malloc(sizeof(int) * (room_count * room_count));
-	neg_int_row(d->stack, (row_count * row_count));
+	neg_int_row(d->stack, (room_count * room_count));
 	d->stack_top = -1;
-	d->stack_size = row_count * row_count;
+	d->stack_size = room_count * room_count;
 }
