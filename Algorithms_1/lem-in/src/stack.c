@@ -19,6 +19,22 @@ void		neg_int_row(int *arr, int size)
 	while (++cntr < size)
 		arr[cntr] = -1;
 }
+
+void		print_stack(t_data *d)
+{
+	int		cntr;
+
+	ft_putchar('\n');
+	cntr = -1;
+	while (++cntr < d->stack_size - 1 && (d->stack)[cntr] != -1)
+	{
+		ft_putnbr((d->stack)[cntr]);
+		if (cntr < d->stack_size - 2)
+			ft_putchar(' ');
+	}
+	ft_putstr("\n\n");
+}
+
 void		make_stack(t_data *d)
 {
 	int		room_count;

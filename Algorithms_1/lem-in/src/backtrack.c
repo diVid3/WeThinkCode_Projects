@@ -39,26 +39,29 @@ int			find_end_room(t_data *d)
 }
 
 /*
-int			stack_contain_end(t_data *d, t_bcktrk *inf)
-{
-	int		has_end;
-	int		cntr;
-	int		*tmp;
-
-	tmp = d->stack;
-	cntr = -1;
-	while (++cntr < d->stack_size - 1)
-		if 
-}
+** The actual recursive backtracking algorithm.
 */
 
-/*
-** The actual backtracking algorithm.
-*/
-
-void		find_path(t_data *d, t_bcktrk *i)
+void		find_path(t_data *d, t_bcktrk *i, int row, int col)
 {
-	while (i->col < i->room_count - 1)
+	stack_push(d, row);
+	if (row == i->end)
+	{
+		i->found_end = 1;
+		return ;
+	}
+	while (col < i->room_count - 1)
+	{
+		if ((d->adj_mat)[row][col] == 1)
+		{
+			(d->adj_mat)[row][col] == 0;
+			find_path(d, i, col, 0);
+			if (i->found_end == 1)
+				return ;
+		}
+		++col;
+	}
+	stack_pop(d);
 }
 
 void		solve_graph(t_data *d)
@@ -66,9 +69,11 @@ void		solve_graph(t_data *d)
 	t_bcktrk	info;
 
 	make_stack(d);
-	info.row = find_start_room(d);
+	info.start = find_start_room(d);
 	info.end = find_end_room(d);
-	info.col = 0;
 	info.room_count = count_rooms(d);
-	find_path(d, &info);
+	info.found_end = 0;
+	find_path(d, &info, info.start, 0);
+	if (d->stack_top <= -1)
+		quit(d, 2);
 }

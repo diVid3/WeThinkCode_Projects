@@ -14,8 +14,10 @@
 
 void		quit(t_data *d, int error)
 {
-	if (error)
+	if (error == 1)
 		ft_putstr_fd("ERROR\n", 2);
+	if (error == 2)
+		ft_putstr_fd("ERROR: NO PATH\n", 2);
 	input_free_list(d->input);
 	free_adj_mat(d);
 	ft_memdel((void **)(&(d->stack)));

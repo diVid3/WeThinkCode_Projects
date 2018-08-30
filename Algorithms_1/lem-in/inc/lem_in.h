@@ -32,10 +32,10 @@ typedef struct		s_room
 
 typedef struct		s_bcktrk
 {
-	int				row;
+	int				start;
 	int				end;
-	int				col;
 	int				room_count;
+	int				found_end;
 }					t_bcktrk;
 
 typedef struct		s_data
