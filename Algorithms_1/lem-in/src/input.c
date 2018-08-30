@@ -113,5 +113,5 @@ void		get_input(t_data *d)
 	//input_print_list(d->input);
 	//room_print_list(d->room);
 	get_links(d);
-	print_adj_mat(d);
+	//print_adj_mat(d);
 }

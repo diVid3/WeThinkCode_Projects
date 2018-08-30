@@ -48,18 +48,18 @@ void		room_print_list(t_room *room)
 	while (tmp)
 	{
 		ft_putchar('\n');
-		ft_putstr("room name: ");
+		ft_putstr("room name  : ");
 		ft_putstr(tmp->room_name);
 		ft_putchar('\n');
-		ft_putstr("room index: ");
-		ft_putnbr(room->room_index);
+		ft_putstr("room index : ");
+		ft_putnbr(tmp->room_index);
 		ft_putchar('\n');
-		ft_putstr("room start: ");
-		ft_putnbr(room->room_start);
+		ft_putstr("room start : ");
+		ft_putnbr(tmp->room_start);
 		ft_putchar('\n');
-		ft_putstr("room end: ");
-		ft_putnbr(room->room_end);
-		ft_putchar('\n');
+		ft_putstr("room end   : ");
+		ft_putnbr(tmp->room_end);
+		ft_putstr("\n\n");
 		tmp = tmp->next;
 	}
 }

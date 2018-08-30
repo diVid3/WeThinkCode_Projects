@@ -10,11 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-RED = \033[0;31m
+YELLOW = \033[0;33m
 
-WHITE = \033[0;37m
+RESET = \033[0m
 
 NAME = lem-in
+
+CC = clang
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -40,14 +42,14 @@ all: $(NAME)
 
 $(NAME): $(OFILES)
 	@$(MAKE) -C ./libft/
-	@gcc $^ ./libft/libft.a -o $@
-	@printf "[${RED}BUILT LEM-IN${WHITE}]\n"
+	@$(CC) $^ ./libft/libft.a -o $@
+	@printf "${RESET}[${YELLOW}BUILT LEM-IN${RESET}]\n"
 
 $(OFILES): $(CFILES)
 ifeq ("$(wildcard ./obj)","")
 	@mkdir ./obj
 endif
-	@cd ./obj && gcc $(FLAGS) -c $(CD_CFILES) -I ../inc/
+	@cd ./obj && $(CC) $(FLAGS) -c $(CD_CFILES) -I ../inc/
 
 clean:
 	@rm -f $(OFILES)
@@ -55,7 +57,7 @@ ifneq ("$(wildcard ./obj)","")
 	@rmdir ./obj
 endif
 	@$(MAKE) clean -C ./libft/
-	@printf "[${RED}CLEANED${WHITE}]\n"
+	@printf "${RESET}[${YELLOW}CLEANED${RESET}]\n"
 
 fclean:
 	@rm -f $(OFILES)
@@ -64,12 +66,12 @@ ifneq ("$(wildcard ./obj)","")
 endif
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C ./libft/
-	@printf "[${RED}FORCE CLEANED${WHITE}]\n"
+	@printf "${RESET}[${YELLOW}FORCE CLEANED${RESET}]\n"
 
 norm:
-	@printf "[${RED}NORMING PROJECT${WHITE}]\n"
+	@printf "${RESET}[${YELLOW}NORMING PROJECT${RESET}]\n"
 	norminette -R CheckForbiddenSourceHeader ./src/
-	@printf "[${RED}NORMING LIBRARY${WHITE}]\n"
+	@printf "${RESET}[${YELLOW}NORMING LIBRARY${RESET}]\n"
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_a*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_b*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_c*.c

@@ -30,6 +30,14 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
+typedef struct		s_bcktrk
+{
+	int				row;
+	int				end;
+	int				col;
+	int				room_count;
+}					t_bcktrk;
+
 typedef struct		s_data
 {
 	int				ants;
@@ -38,6 +46,9 @@ typedef struct		s_data
 	int				read_end;
 	int				read_rooms;
 	int				read_links;
+	int				stack_top;
+	int				stack_size;
+	int				*stack;
 	int				**adj_mat;
 	t_input			*input;
 	t_room			*room;
@@ -57,6 +68,7 @@ void				get_end(t_data *d);
 void				get_rooms(t_data *d);
 void				get_links(t_data *d);
 void				get_input(t_data *data);
+void				zero_int_row(int *arr, int size);
 void				make_adj_mat(t_data *d);
 void				print_adj_mat(t_data *d);
 void				free_adj_mat(t_data *d);
@@ -77,6 +89,7 @@ int					count_dashes(char *str);
 int					count_dashes_c(char *str, char c);
 int					count_spaces(char *str);
 int					count_whitespaces(char *str);
+int					count_rooms(t_data *d);
 int					does_rooms_exist(t_data *d, char *link);
 
 #endif

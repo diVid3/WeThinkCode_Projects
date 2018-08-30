@@ -1,6 +1,6 @@
 #include "../inc/lem_in.h"
 
-static int		count_rooms(t_data *d)
+int			count_rooms(t_data *d)
 {
 	int			room_count;
 	t_room		*tmp;
@@ -15,7 +15,7 @@ static int		count_rooms(t_data *d)
 	return (room_count);
 }
 
-void			free_adj_mat(t_data *d)
+void		free_adj_mat(t_data *d)
 {
 	int		cntr;
 	int		room_count;
@@ -30,7 +30,7 @@ void			free_adj_mat(t_data *d)
 	}
 }
 
-void			print_adj_mat(t_data *d)
+void		print_adj_mat(t_data *d)
 {
 	int		**adj_mat;
 	int		row;
@@ -56,7 +56,7 @@ void			print_adj_mat(t_data *d)
 	ft_putchar('\n');
 }
 
-static void		zero_int_row(int *arr, int size)
+void		zero_int_row(int *arr, int size)
 {
 	int		cntr;
 
@@ -65,7 +65,7 @@ static void		zero_int_row(int *arr, int size)
 		arr[cntr] = 0;
 }
 
-void			make_adj_mat(t_data *d)
+void		make_adj_mat(t_data *d)
 {
 	int		room_count;
 	int		cntr;

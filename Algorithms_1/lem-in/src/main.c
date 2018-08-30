@@ -17,9 +17,12 @@ void		quit(t_data *d, int error)
 	if (error)
 		ft_putstr_fd("ERROR\n", 2);
 	input_free_list(d->input);
-	room_free_list(d->room);
 	free_adj_mat(d);
-	exit(1);
+	ft_memdel((void **)(&(d->stack)));
+	room_free_list(d->room);
+	if (error)
+		exit(1);
+	exit(0);
 }
 
 int			main(void)
@@ -27,7 +30,7 @@ int			main(void)
 	static t_data	d;
 
 	get_input(&d);
-	//find_path(&d);
+	solve_graph(&d);
 	//send_ants(&d);
 	quit(&d, 0);
 	return (0);
