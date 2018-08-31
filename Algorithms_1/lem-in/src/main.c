@@ -33,7 +33,8 @@ int			main(void)
 
 	get_input(&d);
 	solve_graph(&d);
-	print_stack(&d);
-	//send_ants(&d);
+	//ft_putchar('\n');
+	input_print_list(d.input);
+	send_ants(&d);
 	quit(&d, 0);
 }

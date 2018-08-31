@@ -74,7 +74,6 @@ void		solve_graph(t_data *d)
 	info.end = find_end_room(d);
 	info.room_count = count_rooms(d);
 	info.found_end = 0;
-	print_adj_mat(d);
 	find_path(d, &info, info.start, 0);
 	if (d->stack_top <= -1)
 		quit(d, 2);

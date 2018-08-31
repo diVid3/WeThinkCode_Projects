@@ -81,6 +81,8 @@ void				print_stack(t_data *d);
 void				stack_push(t_data *d, int value);
 void				stack_pop(t_data *d);
 void				find_path(t_data *d, t_bcktrk *i, int row, int col);
+void				send_ants(t_data *d);
+void				print_room_name(t_data *d, int index);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);

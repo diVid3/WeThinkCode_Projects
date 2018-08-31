@@ -32,6 +32,7 @@ FILES = input\
 		link\
 		stack\
 		backtrack\
+		output\
 
 CFILES = $(FILES:%=./src/%.c)
 
