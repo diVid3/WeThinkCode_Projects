@@ -20,10 +20,10 @@ int			does_rooms_exist(t_data *d, char *link)
 		tmp = tmp->next;
 	}
 	if (room1_exist == 1 && room2_exist == 1)
-		ft_del_matrix((void **)(arr), 2);
+		ft_del_matrix((void **)(arr), 3);
 	if (room1_exist == 1 && room2_exist == 1)
 		return (1);
-	ft_del_matrix((void **)(arr), 2);
+	ft_del_matrix((void **)(arr), 3);
 	return (0);
 }
 
@@ -48,7 +48,7 @@ void		link_rooms(t_data *d, char *link)
 	}
 	(d->adj_mat)[room1_index][room2_index] = 1;
 	(d->adj_mat)[room2_index][room1_index] = 1;
-	ft_del_matrix((void **)(arr), 2);
+	ft_del_matrix((void **)(arr), 3);
 }
 
 /*

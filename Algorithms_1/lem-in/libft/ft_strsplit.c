@@ -65,7 +65,7 @@ static	char	**ft_alloc_and_cpy(char *s, char c, _Bool wrd_1st)
 
 	cntr = 0;
 	wrd_count = ft_wrd_count(s, c);
-	ar = (char **)malloc(sizeof(char *) * wrd_count + 1);
+	ar = (char **)malloc(sizeof(char *) * (wrd_count + 1));
 	if (!ar)
 		return (NULL);
 	wrd_1st = (*s != (t_uchar)c) ? 1 : 0;

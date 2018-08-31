@@ -44,11 +44,11 @@ void		insert_room(t_data *d, char *line, int start, int end)
 	arr = ft_strsplit(line, ' ');
 	if (is_room_dup(d, arr[0]))
 	{
-		ft_del_matrix((void **)(arr), 3);
+		ft_del_matrix((void **)(arr), 4);
 		quit(d, 1);
 	}
 	room_add_node_end(&(d->room), arr[0], start, end);
-	ft_del_matrix((void **)(arr), 3);
+	ft_del_matrix((void **)(arr), 4);
 }
 
 void		get_rooms(t_data *d)
@@ -92,9 +92,9 @@ void		get_links(t_data *d)
 	{
 		if ((read_b = get_next_line(0, &line)) == 0)
 			d->read_links = 1;
+		input_add_node_end(&(d->input), line);
 		if (read_b == 0)
 			break ;
-		input_add_node_end(&(d->input), line);
 		if (is_comment(line))
 			continue ;
 		else if (is_rand_command(line))
