@@ -33,7 +33,7 @@ void		get_start(t_data *d)
 			return ;
 		}
 		else
-			quit(d, 1);
+			quit(d, 4);
 	}
 }
 
@@ -58,6 +58,6 @@ void		get_end(t_data *d)
 			return ;
 		}
 		else
-			quit(d, 1);
+			quit(d, 4);
 	}
 }

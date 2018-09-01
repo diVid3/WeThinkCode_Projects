@@ -51,7 +51,7 @@ int			find_end_room(t_data *d)
 }
 
 /*
-** The actual recursive backtracking algorithm.
+** The recursive backtracking algorithm.
 */
 
 void		find_path(t_data *d, t_bcktrk *i, int row, int col)
@@ -87,5 +87,5 @@ void		solve_graph(t_data *d)
 	info.found_end = 0;
 	find_path(d, &info, info.start, 0);
 	if (d->stack_top <= -1)
-		quit(d, 2);
+		quit(d, 7);
 }

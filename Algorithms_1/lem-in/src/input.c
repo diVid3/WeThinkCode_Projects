@@ -45,7 +45,7 @@ void		insert_room(t_data *d, char *line, int start, int end)
 	if (is_room_dup(d, arr[0]))
 	{
 		ft_del_matrix((void **)(arr), 4);
-		quit(d, 1);
+		quit(d, 2);
 	}
 	room_add_node_end(&(d->room), arr[0], start, end);
 	ft_del_matrix((void **)(arr), 4);
@@ -60,7 +60,7 @@ void		get_rooms(t_data *d)
 	while (read_b && d->read_rooms == 0)
 	{
 		if ((read_b = get_next_line(0, &line)) == 0)
-			quit(d, 1);
+			quit(d, 3);
 		input_add_node_end(&(d->input), line);
 		if (is_comment(line))
 			continue ;
@@ -75,7 +75,7 @@ void		get_rooms(t_data *d)
 		else if (is_link(line))
 			d->read_rooms = 1;
 		else
-			quit(d, 1);
+			quit(d, 4);
 	}
 }
 
@@ -102,7 +102,7 @@ void		get_links(t_data *d)
 		else if (is_link(line))
 			make_link(d, line, 0);
 		else
-			quit(d, 1);
+			quit(d, 6);
 	}
 }
 
