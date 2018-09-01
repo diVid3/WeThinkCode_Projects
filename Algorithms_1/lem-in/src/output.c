@@ -7,11 +7,13 @@ void		print_room_name(t_data *d, int index)
 	tmp = d->room;
 	while (tmp)
 	{
-		if (index == tmp->room_index)
+		if (tmp->room_index == index)
+		{
+			ft_putstr(tmp->room_name);
 			break ;
+		}
 		tmp = tmp->next;
 	}
-	ft_putstr(tmp->room_name);
 }
 
 void		send_ants(t_data *d)
@@ -28,7 +30,7 @@ void		send_ants(t_data *d)
 			ft_putchar('L');
 			ft_putnbr(ant_cntr);
 			ft_putchar('-');
-			print_room_name(d, stk_cntr);
+			print_room_name(d, (d->stack)[stk_cntr]);
 			ft_putchar('\n');
 		}
 	}
