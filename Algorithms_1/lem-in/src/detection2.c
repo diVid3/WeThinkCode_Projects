@@ -6,7 +6,7 @@
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 14:45:28 by egenis            #+#    #+#             */
-/*   Updated: 2018/08/24 14:45:29 by egenis           ###   ########.fr       */
+/*   Updated: 2018/09/01 09:00:51 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				is_ants(char *str)
 	return (1);
 }
 
-int		is_room_dup(t_data *d, char *str)
+int				is_room_dup(t_data *d, char *str)
 {
 	t_room		*tmp;
 
@@ -74,7 +74,7 @@ int				is_room(char *str)
 	int		cntr;
 
 	if (count_whitespaces(str) > 0 || count_spaces(str) != 2 ||
-		count_dashes_c(str, ' ') != 0 || ft_strclen(str, ' ') == 0 || 
+		count_dashes_c(str, ' ') != 0 || ft_strclen(str, ' ') == 0 ||
 		is_comment(str) || is_rand_command(str) || is_start(str) ||
 		is_end(str) || *str == 'L')
 		return (0);
@@ -95,7 +95,8 @@ int				is_room(char *str)
 }
 
 /*
-** Rooms can't link to themselves otherwise the ants will squash themselves.
+** Rooms can't link to themselves otherwise there will be multiple ants in
+** a room.
 */
 
 int				is_link(char *str)

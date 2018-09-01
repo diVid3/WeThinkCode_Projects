@@ -74,6 +74,7 @@ endif
 norm:
 	@printf "${RESET}[${YELLOW}NORMING PROJECT${RESET}]\n"
 	norminette -R CheckForbiddenSourceHeader ./src/
+	norminette -R CheckForbiddenSourceHeader ./inc/
 	@printf "${RESET}[${YELLOW}NORMING LIBRARY${RESET}]\n"
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_a*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_b*.c
