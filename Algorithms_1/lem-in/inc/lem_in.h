@@ -38,6 +38,14 @@ typedef struct		s_bcktrk
 	int				found_end;
 }					t_bcktrk;
 
+typedef struct		s_print
+{
+	int				index;
+	int				ant_count;
+	struct s_print	*prev;
+	struct s_print	*next;
+}					t_print;
+
 typedef struct		s_data
 {
 	int				ants;
@@ -52,6 +60,7 @@ typedef struct		s_data
 	int				**adj_mat;
 	t_input			*input;
 	t_room			*room;
+	t_print			*print;
 }					t_data;
 
 void				input_add_node_end(t_input **head, char *line);
