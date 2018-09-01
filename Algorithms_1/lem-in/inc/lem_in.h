@@ -102,5 +102,6 @@ int					count_rooms(t_data *d);
 int					does_rooms_exist(t_data *d, char *link);
 int					find_start_room(t_data *d);
 int					find_end_room(t_data *d);
+int					is_room_unique(t_data *d, int row);
 
 #endif

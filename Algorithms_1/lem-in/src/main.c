@@ -42,7 +42,13 @@ int			main(void)
 	static t_data	d;
 
 	get_input(&d);
+	ft_putchar('\n');
+	ft_putchar('\n');
+	print_adj_mat(&d);
 	solve_graph(&d);
+	ft_putchar('\n');
+	print_stack(&d);
+	ft_putchar('\n');
 	input_print_list(d.input);
 	send_ants(&d);
 	quit(&d, 0);

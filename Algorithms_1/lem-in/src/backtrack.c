@@ -51,11 +51,35 @@ int			find_end_room(t_data *d)
 }
 
 /*
+** This function simply checks if there is an already existing room index
+** pushed onto the stack. This is used to keep the stack room indices
+** unique so that multiple ants can be sent later on.
+*/
+
+int			is_room_unique(t_data *d, int row)
+{
+	int		cntr;
+
+	cntr = -1;
+	while (++cntr < d->stack_size && (d->stack)[cntr] != -1)
+	{
+		if ((d->stack)[cntr] == row)
+			return (0);
+	}
+	return (1);
+}
+
+/*
 ** The recursive backtracking algorithm.
 */
 
 void		find_path(t_data *d, t_bcktrk *i, int row, int col)
 {
+	if (is_room_unique(d, row) == 0)
+	{
+		(d->adj_mat)[row][col] = 0;
+		return ;
+	}
 	stack_push(d, row);
 	if (row == i->end)
 	{
