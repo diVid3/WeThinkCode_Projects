@@ -17,7 +17,7 @@ void		print_error_line(t_data *d, int error)
 	int			cntr;
 	t_input		*tmp;
 
-	if (error <= 0)
+	if (error <= 0 || error == 8)
 		return ;
 	cntr = 0;
 	tmp = d->input;
