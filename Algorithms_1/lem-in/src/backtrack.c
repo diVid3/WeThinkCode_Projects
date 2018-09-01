@@ -111,5 +111,5 @@ void		solve_graph(t_data *d)
 	info.found_end = 0;
 	find_path(d, &info, info.start, 0);
 	if (d->stack_top <= -1)
-		quit(d, 7);
+		quit(d, 8);
 }

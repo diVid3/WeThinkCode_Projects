@@ -79,10 +79,10 @@ void		make_link(t_data *d, char *link, int mode)
 			tmp = tmp->next;
 		link = tmp->line_ptr;
 		if (does_rooms_exist(d, link) == 0)
-			quit(d, 5);
+			quit(d, 6);
 		link_rooms(d, link);
 	}
 	if (does_rooms_exist(d, link) == 0)
-		quit(d, 5);
+		quit(d, 6);
 	link_rooms(d, link);
 }

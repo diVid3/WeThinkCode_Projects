@@ -102,7 +102,7 @@ void		get_links(t_data *d)
 		else if (is_link(line))
 			make_link(d, line, 0);
 		else
-			quit(d, 6);
+			quit(d, 7);
 	}
 }
 
@@ -111,6 +111,6 @@ void		get_input(t_data *d)
 	get_ants(d);
 	get_rooms(d);
 	if (d->read_start == 0 || d->read_end == 0 || d->room == NULL)
-		quit(d, 1);
+		quit(d, 5);
 	get_links(d);
 }

@@ -83,6 +83,8 @@ void				stack_pop(t_data *d);
 void				find_path(t_data *d, t_bcktrk *i, int row, int col);
 void				send_ants(t_data *d);
 void				print_room_name(t_data *d, int index);
+void				print_error_type(int error);
+void				print_error_line(t_data *d, int error);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);

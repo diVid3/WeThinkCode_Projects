@@ -12,22 +12,53 @@
 
 #include "../inc/lem_in.h"
 
-void		quit(t_data *d, int error)
+void		print_error_line(t_data *d, int error)
+{
+	int			cntr;
+	t_input		*tmp;
+
+	if (error <= 0)
+		return ;
+	cntr = 0;
+	tmp = d->input;
+	while (tmp)
+	{
+		++cntr;
+		tmp = tmp->next;
+	}
+	if (error == 3)
+		++cntr;
+	ft_putstr_fd("\033[0;33mLINE - ", 2);
+	ft_putnbr(cntr);
+	ft_putstr_fd("\033[0m\n", 2);
+}
+
+void		print_error_type(int error)
 {
 	if (error == 1)
-		ft_putstr_fd("ERROR - ANTS - INCORRECT\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - ANTS - INCORRECT\033[0m\n", 2);
 	if (error == 2)
-		ft_putstr_fd("ERROR - ROOM - DUPLICATE ROOM\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - ROOM - DUPLICATE ROOM\033[0m\n", 2);
 	if (error == 3)
-		ft_putstr_fd("ERROR - ROOM - EMPTY LINE\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - ROOM - EMPTY LINE\033[0m\n", 2);
 	if (error == 4)
-		ft_putstr_fd("ERROR - ROOM - UNKNOWN LINE\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - ROOM - UNKNOWN LINE\033[0m\n", 2);
 	if (error == 5)
-		ft_putstr_fd("ERROR - LINK - ROOM(S) DOESN'T EXIST\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - ROOM - MISSING START/END OR "
+		"NO ROOMS\033[0m\n", 2);
 	if (error == 6)
-		ft_putstr_fd("ERROR - LINK - UNKNOWN LINE\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - LINK - ROOM(S) DOESN'T "
+		"EXIST\033[0m\n", 2);
 	if (error == 7)
-		ft_putstr_fd("ERROR - NO PATH\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - LINK - UNKNOWN LINE\033[0m\n", 2);
+	if (error == 8)
+		ft_putstr_fd("\033[0;33mERROR - NO PATH\n", 2);
+}
+
+void		quit(t_data *d, int error)
+{
+	print_error_type(error);
+	print_error_line(d, error);
 	input_free_list(d->input);
 	free_adj_mat(d);
 	ft_memdel((void **)(&(d->stack)));
@@ -42,7 +73,6 @@ int			main(void)
 	static t_data	d;
 
 	get_input(&d);
-	ft_putchar('\n');
 	ft_putchar('\n');
 	print_adj_mat(&d);
 	solve_graph(&d);
