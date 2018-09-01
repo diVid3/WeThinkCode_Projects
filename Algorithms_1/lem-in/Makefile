@@ -33,6 +33,8 @@ FILES = input\
 		stack\
 		backtrack\
 		output\
+		output2\
+		list_print\
 
 CFILES = $(FILES:%=./src/%.c)
 

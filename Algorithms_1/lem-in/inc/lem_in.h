@@ -94,6 +94,11 @@ void				send_ants(t_data *d);
 void				print_room_name(t_data *d, int index);
 void				print_error_type(int error);
 void				print_error_line(t_data *d, int error);
+void				print_add_node_end(t_print **head, int stack_val);
+void				print_ants(t_data *d);
+void				make_print_list(t_data *d);
+void				increase_ant_count(t_data *d);
+void				print_free_list(t_print *head);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);
@@ -114,5 +119,6 @@ int					does_rooms_exist(t_data *d, char *link);
 int					find_start_room(t_data *d);
 int					find_end_room(t_data *d);
 int					is_room_unique(t_data *d, int row);
+int					is_all_above_ant_count(t_data *d);
 
 #endif

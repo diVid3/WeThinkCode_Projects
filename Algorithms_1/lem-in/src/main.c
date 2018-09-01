@@ -52,7 +52,7 @@ void		print_error_type(int error)
 	if (error == 7)
 		ft_putstr_fd("\033[0;33mERROR - LINK - UNKNOWN LINE\033[0m\n", 2);
 	if (error == 8)
-		ft_putstr_fd("\033[0;33mERROR - NO PATH\n", 2);
+		ft_putstr_fd("\033[0;33mERROR - NO PATH\033[0m\n", 2);
 }
 
 void		quit(t_data *d, int error)
@@ -62,6 +62,7 @@ void		quit(t_data *d, int error)
 	input_free_list(d->input);
 	free_adj_mat(d);
 	ft_memdel((void **)(&(d->stack)));
+	print_free_list(d->print);
 	room_free_list(d->room);
 	if (error)
 		exit(1);
@@ -73,6 +74,7 @@ int			main(void)
 	static t_data	d;
 
 	get_input(&d);
+	ft_putchar('\n');
 	ft_putchar('\n');
 	print_adj_mat(&d);
 	solve_graph(&d);

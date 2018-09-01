@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/lem_in.h"
+
 void		print_add_node_end(t_print **head, int stack_val)
 {
 	t_print		*node;
@@ -35,23 +37,14 @@ void		print_add_node_end(t_print **head, int stack_val)
 	}
 }
 
-/*
-** This function is used to check if prev node linkage was done correctly.
-*/
-
-void		print_rev_print(t_print *head)
+void		print_free_list(t_print *head)
 {
 	t_print		*tmp;
 
-	if (head == NULL)
-		return ;
-	tmp = head;
-	while (tmp->next)
-		tmp = tmp->next;
-	while (tmp)
+	while (head)
 	{
-		ft_putnbr(tmp->index);
-		ft_putchar('\n');
-		tmp = tmp->prev;
+		tmp = head->next;
+		ft_memdel((void **)(&head));
+		head = tmp;
 	}
 }
