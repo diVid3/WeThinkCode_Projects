@@ -99,6 +99,7 @@ void				print_ants(t_data *d);
 void				make_print_list(t_data *d);
 void				increase_ant_count(t_data *d);
 void				print_free_list(t_print *head);
+void				options(int ac, char **av, t_data *d);
 
 int					is_room_dup(t_data *d, char *str);
 int					is_comment(char *str);

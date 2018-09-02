@@ -35,6 +35,7 @@ FILES = input\
 		output\
 		output2\
 		list_print\
+		options\
 
 CFILES = $(FILES:%=./src/%.c)
 

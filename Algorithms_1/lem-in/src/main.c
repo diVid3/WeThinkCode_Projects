@@ -69,17 +69,16 @@ void		quit(t_data *d, int error)
 	exit(0);
 }
 
-int			main(void)
+int			main(int ac, char **av)
 {
 	static t_data	d;
 
 	get_input(&d);
-	ft_putchar('\n');
-	ft_putchar('\n');
-	print_adj_mat(&d);
+	options(ac, av, &d);
 	solve_graph(&d);
-	ft_putchar('\n');
-	print_stack(&d);
+	options(ac, av, &d);
+	if (!(ac == 2 && (ft_strcmp(av[1], "-v") == 0)))
+		ft_putchar('\n');
 	ft_putchar('\n');
 	input_print_list(d.input);
 	send_ants(&d);
