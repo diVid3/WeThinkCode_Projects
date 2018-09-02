@@ -17,7 +17,8 @@ void		print_ants(t_data *d)
 			ft_putnbr(tmp->ant_count);
 			ft_putchar('-');
 			print_room_name(d, tmp->index);
-			ft_putchar(' ');
+			if (tmp->prev && tmp->ant_count < d->ants)
+				ft_putchar(' ');
 		}
 		tmp = tmp->prev;
 	}
