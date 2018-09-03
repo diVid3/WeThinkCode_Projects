@@ -40,7 +40,8 @@ void		print_stack(t_data *d)
 	while (++cntr < d->stack_size && (d->stack)[cntr] != -1)
 	{
 		ft_putnbr((d->stack)[cntr]);
-		if (cntr < d->stack_size - 1)
+		if (cntr < d->stack_size && cntr + 1 < d->stack_size &&
+			(d->stack)[cntr] != -1 && (d->stack)[cntr + 1] != -1)
 			ft_putchar(' ');
 	}
 	ft_putchar('\n');

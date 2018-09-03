@@ -31,5 +31,7 @@ void		options(int ac, char **av, t_data *d)
 	{
 		ft_putchar('\n');
 		print_stack(d);
+		ft_putchar('\n');
+		print_room_name_tab(d);
 	}
 }

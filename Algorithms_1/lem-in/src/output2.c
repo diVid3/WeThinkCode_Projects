@@ -36,3 +36,18 @@ void		print_ants(t_data *d)
 	}
 	ft_putchar('\n');
 }
+
+void		print_room_name_tab(t_data *d)
+{
+	t_room		*tmp;
+
+	tmp = d->room;
+	while (tmp)
+	{
+		ft_putnbr(tmp->room_index);
+		ft_putstr(" - ");
+		ft_putstr(tmp->room_name);
+		ft_putchar('\n');
+		tmp = tmp->next;
+	}
+}
