@@ -50,10 +50,6 @@
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
 
-/*
-** Are you ok?
-*/
-
 typedef char	t_arg_type;
 
 #define T_REG					1

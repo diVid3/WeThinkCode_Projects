@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/11 07:08:23 by egenis            #+#    #+#             */
-/*   Updated: 2018/09/11 07:09:28 by egenis           ###   ########.fr       */
+/*   Created: 2018/09/12 10:12:36 by egenis            #+#    #+#             */
+/*   Updated: 2018/09/12 10:12:37 by egenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#include "../inc/asm.h"
 
-# include <stdio.h>
-# include "../libft/libft.h"
-# include "./op.h"
-
-typedef struct		s_op
+int			check_ext(char *file)
 {
-	int				opcode;
-	char			*args;
-	t_label			*label;
-}					t_op;
+	int		cntr;
 
-typedef struct		s_label
+	cntr = -1;
+	while (file[++cntr])
+		;
+	--cntr;
+	if (file[cntr] == 's' && file[cntr - 1] == '.')
+		return (1);
+	return (0);
+}
+
+void		get_input(int ac, char **av)
 {
-	char			*label;
-	s_label			*next;
-}					t_label;
+	int		fd;
 
-typedef struct		s_data
-{
-	t_op			op;
-	t_label			label;
-}					t_data
-
-extern t_op		g_op_tab[17];
-
-#endif
+	if (check_ext(av[1]) == 0)
+		fd = open(ft_strjoin(av[1], ".s"), O_RDONLY);
+	else
+		fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		quit(1)
+}

@@ -12,11 +12,18 @@
 
 #include "../inc/asm.h"
 
-
+void	quit(t_data *d, int err_msg)
+{
+	exit(0);
+}
 
 int		main(int ac, char **av)
 {
-	return (0);
+	static t_data		d;
+
+	get_input(ac, av);
+	make_champ();
+	quit(d, 0);
 }
 
 /*
