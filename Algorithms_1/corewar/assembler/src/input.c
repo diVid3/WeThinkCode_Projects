@@ -16,12 +16,23 @@ void	save_input(t_data *d, int fd)
 {
 	char		*line;
 	int			read_b;
+	int			index;
+	t_input		*tmp;
 
 	read_b = 1;
 	while (read_b)
 	{
 		read_b = get_next_line(fd, &line);
 		input_add_node_end(&(d->input), line);
+	}
+	close(fd);
+	index = 1;
+	tmp = d->input;
+	while (tmp)
+	{
+		tmp->line_nbr = index;
+		tmp = tmp->next;
+		++index;
 	}
 }
 

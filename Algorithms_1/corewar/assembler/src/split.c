@@ -51,7 +51,7 @@ char	*nxt_addr(char *str, _Bool *word_first)
 		str[cntr] != 11 && str[cntr] != 12 && str[cntr] != 13)
 		++cntr;
 	while (str[cntr] && (str[cntr] == ' ' || str[cntr] == 9 ||
-		str[cntr] == 11 || str[cntr] != 12 || str[cntr] == 13))
+		str[cntr] == 11 || str[cntr] == 12 || str[cntr] == 13))
 		++cntr;
 	addr = &str[cntr];
 	return (addr);

@@ -19,7 +19,8 @@
 
 typedef struct		s_input
 {
-	char			*line;
+	char			*line_ptr;
+	int				line_nbr;
 	s_input			*next;
 }					t_input;
 
@@ -33,11 +34,15 @@ typedef struct		s_func
 	t_op			*prev;
 }					t_func;
 
+// Not needed as empty labels can be regarded as errors.
+
+/*
 typedef struct		s_label
 {
 	char			*label;
 	s_label			*next;
 }					t_label;
+*/
 
 typedef struct		s_data
 {
