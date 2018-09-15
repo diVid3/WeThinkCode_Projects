@@ -21,37 +21,33 @@ typedef struct		s_input
 {
 	char			*line_ptr;
 	int				line_nbr;
-	s_input			*next;
+	struct s_input	*next;
 }					t_input;
 
 typedef struct		s_func
 {
 	char			*op;
 	char			*args;
-	int				index;
-	t_label			*label;
-	t_op			*next;
-	t_op			*prev;
-}					t_func;
-
-// Not needed as empty labels can be regarded as errors.
-
-/*
-typedef struct		s_label
-{
 	char			*label;
-	s_label			*next;
-}					t_label;
-*/
+	int				index;
+	struct s_func	*next;
+	struct s_func	*prev;
+}					t_func;
 
 typedef struct		s_data
 {
 	char			*name;
 	char			*comment;
 	t_input			*input;
-	t_op			*func;
-}					t_data
+	t_func			*func;
+}					t_data;
 
 extern t_op			g_op_tab[17];
+
+char				*strcdup(char *str, char c);
+
+char				**split(char *str);
+
+int					strclen(char *str);
 
 #endif

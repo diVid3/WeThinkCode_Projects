@@ -10,19 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../asm.h>
+#include "../inc/asm.h"
 
 char		*strcdup(char *str, char c)
 {
 	int		word_c;
 	char	*dup;
 
-	if (!str || !c)
-		return (str);
+	if (str == NULL)
+		return (NULL);
 	word_c = 0;
 	while (str[word_c] != c && str[word_c])
 		++word_c;
-	dup = malloc(sizeof(char) * word_c);
+	dup = malloc(sizeof(char) * word_c + 1);
+	if (dup == NULL)
+		return (NULL);
 	word_c = 0;
 	while (str[word_c] != c && str[word_c])
 	{
