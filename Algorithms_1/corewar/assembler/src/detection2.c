@@ -62,7 +62,8 @@ int		is_label(char *str)
 		if (is_label_chars(arr[0][cntr2]) == 0)
 			if (free_return(str_no_cmmnt, arr, cntr) == 0)
 				return (0);
-	if (arr[0][cntr2] != LABEL_CHAR || arr[0][++cntr2] != '\0')
+	if (arr[0][cntr2] != LABEL_CHAR || arr[0][++cntr2] != '\0' ||
+		(arr[0][0] == LABEL_CHAR && arr[0][1] == '\0'))
 		if (free_return(str_no_cmmnt, arr, cntr) == 0)
 			return (0);
 	free_return(str_no_cmmnt, arr, cntr);
