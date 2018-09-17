@@ -69,12 +69,14 @@ int		is_label(char *str)
 	return (1);
 }
 
+/*
 int		is_label_op(char *str)
 {
 }
+*/
 
 /*
-** This function treats non-nil as true, and nil as false, it thus returns
+** This function treats non-zero as true, and zero as false, it thus returns
 ** the valid operation's opcode upon validation.
 */
 
@@ -89,46 +91,192 @@ int		is_func_valid(char *func)
 	return (0);
 }
 
-int		is_arg_types_valid(int opcode, char **arr)
+int		is_reg(char *arg)
 {
-	is_reg();
-	is_dir();
-	is_ind();
+	int		cntr;
+	int		reg_val;
+
+	if (arg[0] != 'r')
+		return (0);
+	cntr = 1;
+	while (ft_isdigit(arg[cntr]))
+		++cntr;
+	if (arg[cntr] != '\0' || cntr == 1)
+		return (0);
+	if (ft_is_int(arg + 1) == 0)
+		return 0;
+	reg_val = ft_atoi(arg + 1);
+	if (reg_val <= 0 || reg_val > REG_NUMBER)
+		return (0);
+	return (1);
+}
+
+int		is_strnum(char *arg, int *cntr, int is_int_start)
+{
+	int		tmp;
+
+	tmp = *cntr;
+	while (ft_isdigit(arg[*cntr]))
+		++(*cntr);
+	if (arg[*cntr] != '\0' || *cntr == tmp)
+		return (0);
+	if (ft_is_int(arg + is_int_start) == 0)
+		return (0);
+	return (1);
+}
+
+int		is_label_valid(char *arg)
+{
+	int		cntr;
+
+	cntr = -1;
+	while (arg[++cntr])
+		if (is_label_chars(arg[cntr]) == 0)
+			return (0);
+	return (1);
+}
+
+int		is_digits(char *arg)
+{
+	int		cntr;
+
+	cntr = 0;
+	while (ft_isdigit(arg[cntr]))
+		++cntr;
+	if (arg[cntr] != '\0' || cntr == 0)
+		return (0);
+	return (1);
+}
+
+int		is_dir(char *arg)
+{
+	int		cntr;
+
+	if (arg[0] != '%')
+		return (0);
+	if (arg[1] == '+' || arg[1] == '-')
+	{
+		cntr = 2;
+		if (is_strnum(arg, &cntr, 1) == 0)
+			return (0);
+	}
+	if (ft_isdigit(arg[1]))
+	{
+		cntr = 1;
+		if (is_strnum(arg, &cntr, 1) == 0)
+			return (0);
+	}
+	if (arg[1] == LABEL_CHAR)
+	{
+		if (is_label_valid(arg + 2) == 0)
+			return (0);
+	}
+	else if (is_digits(arg + 1) == 0)
+		return (0);
+	return (1);
+}
+
+int		is_ind(char *arg)
+{
+	int		cntr;
+
+	if (arg[0] == '+' || arg[0] == '-')
+	{
+		cntr = 1;
+		if (is_strnum(arg, &cntr, 1) == 0)
+			return (0);
+	}
+	if (ft_isdigit(arg[0]))
+	{
+		cntr = 0;
+		if (is_strnum(arg, &cntr, 0) == 0)
+			return (0);
+	}
+	if (arg[0] == LABEL_CHAR)
+	{
+		if (is_label_valid(arg + 1) == 0)
+			return (0);
+	}
+	else if (is_digits(arg) == 0)
+		return (0);
+	return (1);
+}
+
+int		validate_field(int param_byte, char *arg)
+{
+	if (param_byte == 0)
+		return (0);
+	if (param_byte == 1)
+		if (is_reg(arg) == 0)
+			return (0);
+	if (param_byte == 2)
+		if (is_dir(arg) == 0)
+			return (0);
+	if (param_byte == 3)
+		if (is_reg(arg) == 0 && is_dir(arg) == 0)
+			return (0);
+	if (param_byte == 4)
+		if (is_ind(arg) == 0)
+			return (0);
+	if (param_byte == 5)
+		if (is_ind(arg) == 0 && is_reg(arg) == 0)
+			return (0);
+	if (param_byte == 6)
+		if (is_ind(arg) == 0 && is_dir(arg) == 0)
+			return (0);
+	if (param_byte == 7)
+		if (is_ind(arg) == 0 && is_dir(arg) == 0 && is_reg(arg) == 0)
+			return (0);
+	return (1);
+}
+
+int		is_arg_types_valid(int opcode, int fields_valid, char **arr)
+{
+	int		field_cntr;
+
+	field_cntr = -1;
+	while (++field_cntr < fields_valid)
+		if (validate_field(g_op_tab[opcode].params[field_cntr],
+			arr[field_cntr]) == 0)
+			return (0);
+	return (1);
 }
 
 int		is_args_valid(char *func, char *args)
 {
 	int		cntr;
 	int		field_cntr;
-	int		field_valid;
+	int		fields_valid;
 	int		opcode;
 	char	**arr;
 
 	opcode = is_func_valid(func);
 	arr = ft_strsplit(args, SEPARATOR_CHAR);
 	field_cntr = -1;
-	field_valid = 0;
+	fields_valid = 0;
 	while (++field_cntr < 3)
 		if (g_op_tab[opcode].params[field_cntr] > 0)
-			++field_valid;
+			++fields_valid;
 	cntr = 0;
 	while (arr[cntr])
 		++cntr;
-	if (field_valid != cntr)
+	if (fields_valid != cntr)
 		if (free_return(NULL, arr, cntr) == 0)
 			return (0);
-	is_arg_types_valid(opcode, arr);
+	if (is_arg_types_valid(opcode, fields_valid ,arr) == 0)
+		if (free_return(NULL, arr, cntr) == 0)
+			return (0);
 	return (1);
 }
 
-int		is_func(char *str);
+int		is_func(char *str)
 {
 	int		cntr;
 	char	*str_no_cmmnt;
 	char	**arr;
 
-	str_no_cmmnt = strdup(str, COMMENT_CHAR);
-	arr = split(str_co_cmmnt);
+	str_no_cmmnt = strcdup(str, COMMENT_CHAR);
+	arr = split(str_no_cmmnt);
 	cntr = 0;
 	while (arr[cntr])
 		++cntr;
@@ -145,33 +293,20 @@ int		is_func(char *str);
 	return (1);
 }
 
-/*
-** Dovi's bad pseudo code
-*/
-
-/*
-char	*is_name(char *line, int swtch)
-{
-	if swtch == 0
-	if (strsplit(line)[0] == ".name")
-		if (qoute_count(strsplit(line[1])) == 2)
-			return (strcdup(strsplit[1], """) + 1);
-	if swtch == 1
-		do comment
-	
-}
-*/
-
-/*
 int		main(void)
 {
 	int		read_b;
 	char	*line;
 	int		ans;
 
+	while (1)
+	{
+		read_b = get_next_line(0, &line);
+		ans = is_label(line);
+		printf("is_label returned %d\n", ans);
+	}
 	read_b = get_next_line(0, &line);
-	ans = is_label(line);
-	printf("is_label returned %d\n", ans);
+	ans = is_func(line);
+	printf("is_func returned %d\n", ans);
 	return (0);
 }
-*/
