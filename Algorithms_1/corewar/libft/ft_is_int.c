@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int			ft_is_int(const char *num_adrs)
 {
@@ -18,6 +19,8 @@ int			ft_is_int(const char *num_adrs)
 	int		len;
 	long	num;
 
+	if (num_adrs == NULL)
+		return (0);
 	cntr = 0;
 	if (num_adrs[cntr] == '+' || num_adrs[cntr] == '-')
 		++cntr;
