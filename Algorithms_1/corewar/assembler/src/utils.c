@@ -17,6 +17,7 @@
 ** different endian systems.
 */
 
+/*
 void	write_rev(void x, int size)
 {
 	char	*ptr;
@@ -25,6 +26,7 @@ void	write_rev(void x, int size)
 	while (--size >= 0)
 		write(1, ptr + size, 1);
 }
+*/
 
 void		put2hex(unsigned char num, size_t turn, int fd)
 {

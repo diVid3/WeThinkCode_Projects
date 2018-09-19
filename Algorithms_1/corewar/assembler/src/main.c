@@ -14,12 +14,12 @@
 
 void	quit(t_data *d, int err_msg)
 {
-	(void)err_msg;
 	ft_memdel((void **)(&(d->name)));
 	ft_memdel((void **)(&(d->comment)));
 	input_free_list(d->input);
 	func_free_list(d->func);
-	ft_putstr_fd("ERROR\n", 2);
+	if (err_msg)
+		ft_putstr_fd("ERROR\n", 2);
 	exit(0);
 }
 
@@ -32,5 +32,5 @@ int		main(int ac, char **av)
 	static t_data		d;
 
 	get_input(&d, ac, av);
-	quit(d, 0);
+	quit(&d, 0);
 }

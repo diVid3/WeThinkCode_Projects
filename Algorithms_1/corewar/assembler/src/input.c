@@ -16,7 +16,6 @@ void	save_input(t_data *d, int fd)
 {
 	char		*line;
 	int			read_b;
-	t_input		*tmp;
 
 	read_b = 1;
 	while (read_b)
@@ -63,7 +62,7 @@ void	validate_input(t_data *d)
 		if (!is_name_cmd(tmp->line_ptr) && !is_comment_cmd(tmp->line_ptr) &&
 			!is_comment(tmp->line_ptr) && !is_label(tmp->line_ptr) &&
 			!is_label_func(tmp->line_ptr) && !is_func(tmp->line_ptr))
-			quit(d, 0);
+			quit(d, 1);
 		tmp = tmp->next;
 	}
 }
@@ -84,10 +83,13 @@ void	get_input(t_data *d, int ac, char **av)
 	else
 		fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		quit(d, 2);
+		quit(d, 1);
 	save_input(d, fd);
+	input_print_list(d->input);
 	validate_input(d);
+	get_header(d);
+	printf("name  : %s\n", d->name);
+	printf("cmmnt : %s\n\n", d->comment);
 	validate_labels(d);
-	//get_header(d);
 	//get_ops();
 }

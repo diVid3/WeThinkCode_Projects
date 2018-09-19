@@ -110,30 +110,3 @@ int		is_label_func(char *str)
 	ft_memdel((void **)(&joined_str2));
 	return (1);
 }
-
-int		main(void)
-{
-	int		read_b;
-	char	*line;
-	int		ans;
-
-	//while (1)
-	//{
-	//	read_b = get_next_line(0, &line);
-	//	ans = is_label(line);
-	//	printf("is_label returned %d\n", ans);
-	//}
-	//while (1)
-	//{
-	//	read_b = get_next_line(0, &line);
-	//	ans = is_func(line);
-	//	printf("is_func returned %d\n", ans);
-	//}
-	while (1)
-	{
-		read_b = get_next_line(0, &line);
-		ans = is_label_func(line);
-		printf("is_label_func returned %d\n", ans);
-	}
-	return (0);
-}

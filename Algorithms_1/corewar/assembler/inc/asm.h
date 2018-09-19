@@ -14,6 +14,7 @@
 # define ASM_H
 
 # include <stdio.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 # include "./op.h"
 

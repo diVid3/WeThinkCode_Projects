@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/asm.h"
+
 void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 {
 	t_func		*node;
@@ -21,15 +23,15 @@ void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 	node->args = args;
 	node->label = label;
 	node->index = index;
-	if (*head == NULL)
+	if (*h == NULL)
 	{
 		node->prev = NULL;
 		node->next = NULL;
-		*head = node;
+		*h = node;
 	}
 	else
 	{
-		tmp = *head;
+		tmp = *h;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = node;

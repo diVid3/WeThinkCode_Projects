@@ -24,10 +24,9 @@ int		build_func_node(t_data *d, char *line, int has_lbl)
 
 	arr = split(line);
 	if (has_lbl)
-		func_add_node_end(d->func, arr[1], arr[2], arr[0]);
+		func_add_node_end(&(d->func), arr[1], arr[2], arr[0]);
 	else
-		func_add_node_end(d->func, arr[0], arr[1], NULL);
-	ft_free_matrix((void **)arr);
+		func_add_node_end(&(d->func), arr[0], arr[1], NULL);
 	return (1);
 }
 
@@ -67,11 +66,11 @@ void	switch_reader(t_data *d, t_input **label_node)
 	tmp = (*label_node)->next;
 	while (tmp)
 	{
-		if (is_name_cmd(tmp->line_ptr) || is_comment_cmd(tmp->line) ||
+		if (is_name_cmd(tmp->line_ptr) || is_comment_cmd(tmp->line_ptr) ||
 			is_comment(tmp->line_ptr))
 			tmp = tmp->next;
 		else if (is_label_func(tmp->line_ptr) || is_label(tmp->line_ptr))
-			quit(d, 0);
+			quit(d, 1);
 		else if (is_func(tmp->line_ptr))
 		{
 			swtch = 0;
@@ -81,7 +80,7 @@ void	switch_reader(t_data *d, t_input **label_node)
 		}
 	}
 	if (swtch == 1)
-		quit(d, 0);
+		quit(d, 1);
 }
 
 void	build_func_list(t_data *d)
@@ -91,7 +90,7 @@ void	build_func_list(t_data *d)
 	tmp = d->input;
 	while (tmp)
 	{
-		if (is_name_cmd(tmp->line_ptr) || is_comment_cmd(tmp->line) ||
+		if (is_name_cmd(tmp->line_ptr) || is_comment_cmd(tmp->line_ptr) ||
 			is_comment(tmp->line_ptr))
 			tmp = tmp->next;
 		else if (is_label_func(tmp->line_ptr) &&
