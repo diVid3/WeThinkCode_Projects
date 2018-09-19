@@ -13,7 +13,7 @@
 #include "op.h"
 #include "../libft/libft.h"
 
-void	check(void)
+void	macro_check(void)
 {
 	if (COMMENT_CHAR != '#' || LABEL_CHAR != ':' || DIRECT_CHAR != '%'
 			|| SEPARATOR_CHAR != ',' || REG_NUMBER != 16

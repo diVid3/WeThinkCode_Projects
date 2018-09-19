@@ -39,6 +39,29 @@ void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 	++index;
 }
 
+void		func_print_list(t_func *head)
+{
+	t_func		*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		ft_putstr("index : ");
+		ft_putnbr(tmp->index);
+		ft_putchar('\n');
+		ft_putstr("label : ");
+		ft_putstr(tmp->label);
+		ft_putchar('\n');
+		ft_putstr("func  : ");
+		ft_putstr(tmp->func);
+		ft_putchar('\n');
+		ft_putstr("args  : ");
+		ft_putstr(tmp->args);
+		ft_putchar('\n');
+		tmp = tmp->next;
+	}
+}
+
 void		func_free_list(t_func *head)
 {
 	t_func		*tmp;

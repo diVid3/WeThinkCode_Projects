@@ -20,14 +20,21 @@ CC = clang
 
 FLAGS = -Wall -Wextra -Werror
 
-FILES = main\
-		op\
-		write\
-		input\
-		detection\
+FILES = detection\
 		detection2\
+		detection3\
+		detection4\
+		detection5\
+		input\
+		labels\
+		list_func\
 		list_input\
+		lockdown\
+		main\
+		op\
 		split\
+		strcdup\
+		utils\
 
 CFILES = $(FILES:%=./src/%.c)
 
