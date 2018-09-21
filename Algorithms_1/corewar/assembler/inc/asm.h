@@ -72,6 +72,8 @@ void				input_add_node_end(t_input **head, char *line);
 void				input_free_list(t_input *head);
 void				input_print_list(t_input *input);
 void				macro_check(void);
+void				has_dup_labels(t_data *d);
+void				write_rev(unsigned int x, int size);
 
 int					strclen(char *str);
 int					is_func(char *str);
@@ -87,6 +89,12 @@ int					is_label_valid(char *arg);
 int					is_digits(char *arg);
 int					is_func_valid(char *func);
 int					build_func_node(t_data *d, char *line, int has_lbl);
+int					strjoin_open(char **av);
+int					free_refs(char *str1, char *str2);
+int					has_args_lbl(char *args);
+int					find_label(t_data *d, char *args_ref);
+int					has_val_lbl_refs(t_data *d);
+int					is_name_comm_overlong(t_data *d);
 int					is_reg(char *arg);
 int					is_ind(char *arg);
 int					is_dir(char *arg);
@@ -98,6 +106,7 @@ int					is_func(char *str);
 int					is_label_func(char *str);
 
 char				*strcdup(char *str, char c);
+char				*get_args_lbl(char *args);
 
 char				**split(char *str);
 

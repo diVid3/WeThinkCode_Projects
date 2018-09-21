@@ -33,7 +33,7 @@ int		is_name_cmd(char *str)
 		str[cntr] != 12 && str[cntr] != 13)
 		return (0);
 	iterate_w_space(str, &cntr);
-	if (str[cntr] != '"')
+	if (str[cntr] != '"' || (str[cntr] == '"' && str[cntr + 1] == '"'))
 		return (0);
 	while (str[++cntr] && str[cntr] != '"')
 		;
@@ -43,6 +43,7 @@ int		is_name_cmd(char *str)
 	iterate_w_space(str, &cntr);
 	if (str[cntr] != '\0' && str[cntr] != COMMENT_CHAR)
 		return (0);
+	printf("returns 1\n");
 	return (1);
 }
 
@@ -60,7 +61,7 @@ int		is_comment_cmd(char *str)
 		str[cntr] != 12 && str[cntr] != 13)
 		return (0);
 	iterate_w_space(str, &cntr);
-	if (str[cntr] != '"')
+	if (str[cntr] != '"' || (str[cntr] == '"' && str[cntr + 1] == '"'))
 		return (0);
 	while (str[++cntr] && str[cntr] != '"')
 		;

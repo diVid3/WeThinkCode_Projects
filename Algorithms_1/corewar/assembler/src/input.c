@@ -50,6 +50,8 @@ void	get_header(t_data *d)
 		}
 		tmp = tmp->next;
 	}
+	if (d->read_name == 0 || d->read_comment == 0)
+		quit(d, 1);
 }
 
 void	validate_input(t_data *d)
@@ -67,19 +69,25 @@ void	validate_input(t_data *d)
 	}
 }
 
-void	get_input(t_data *d, int ac, char **av)
+int		strjoin_open(char **av)
 {
 	int		fd;
 	char	*added_ext_str;
 
+	added_ext_str = ft_strjoin(av[1], ".s");
+	fd = open(added_ext_str, O_RDONLY);
+	ft_memdel((void **)(&added_ext_str));
+	return (fd);
+}
+
+void	get_input(t_data *d, int ac, char **av)
+{
+	int		fd;
+
 	if (ac == 1)
 		quit(d, 1);
 	if (has_ext(av[1]) == 0)
-	{
-		added_ext_str = ft_strjoin(av[1], ".s");
-		fd = open(added_ext_str, O_RDONLY);
-		ft_memdel((void **)(&added_ext_str));
-	}
+		fd = strjoin_open(av);
 	else
 		fd = open(av[1], O_RDONLY);
 	if (fd == -1)
@@ -88,8 +96,9 @@ void	get_input(t_data *d, int ac, char **av)
 	input_print_list(d->input);
 	validate_input(d);
 	get_header(d);
-	printf("name  : %s\n", d->name);
-	printf("cmmnt : %s\n\n", d->comment);
+	if (is_name_comm_overlong(d) == 0)
+		quit(d, 1);
+	//printf("name  : %s\n", d->name);
+	//printf("cmmnt : %s\n\n", d->comment);
 	validate_labels(d);
-	//get_ops();
 }

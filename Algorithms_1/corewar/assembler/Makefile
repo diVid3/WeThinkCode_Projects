@@ -18,7 +18,7 @@ NAME = asm
 
 CC = clang
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 
 FILES = detection\
 		detection2\
@@ -35,6 +35,7 @@ FILES = detection\
 		split\
 		strcdup\
 		utils\
+		labels2\
 
 CFILES = $(FILES:%=./src/%.c)
 

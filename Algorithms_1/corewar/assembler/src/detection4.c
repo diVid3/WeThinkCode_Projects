@@ -62,6 +62,8 @@ int		is_digits(char *arg)
 	int		cntr;
 
 	cntr = 0;
+	if ((arg[0] == '+' || arg[0] == '-') && arg[1])
+		++cntr;
 	while (ft_isdigit(arg[cntr]))
 		++cntr;
 	if (arg[cntr] != '\0' || cntr == 0)

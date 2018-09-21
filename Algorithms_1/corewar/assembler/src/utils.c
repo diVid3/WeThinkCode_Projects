@@ -17,8 +17,7 @@
 ** different endian systems.
 */
 
-/*
-void	write_rev(void x, int size)
+void	write_rev(unsigned int x, int size)
 {
 	char	*ptr;
 
@@ -26,9 +25,15 @@ void	write_rev(void x, int size)
 	while (--size >= 0)
 		write(1, ptr + size, 1);
 }
-*/
 
-void		put2hex(unsigned char num, size_t turn, int fd)
+int		free_refs(char *str1, char *str2)
+{
+	ft_memdel((void **)(&str1));
+	ft_memdel((void **)(&str2));
+	return (0);
+}
+
+void	put2hex(unsigned char num, size_t turn, int fd)
 {
 	static char	*hex_val = "0123456789abcdef";
 
@@ -38,7 +43,7 @@ void		put2hex(unsigned char num, size_t turn, int fd)
 	ft_putchar_fd(hex_val[num % 16], fd);
 }
 
-void			ft_put2hex(unsigned char num, int fd)
+void	ft_put2hex(unsigned char num, int fd)
 {
 	if (num == 0)
 		ft_putstr_fd("00", fd);

@@ -27,3 +27,11 @@ int		is_func_valid(char *func)
 			return (cntr);
 	return (0);
 }
+
+int		is_name_comm_overlong(t_data *d)
+{
+	if (ft_strlen(d->name) > PROG_NAME_LENGTH ||
+		ft_strlen(d->comment) > COMMENT_LENGTH)
+		return (0);
+	return (1);
+}

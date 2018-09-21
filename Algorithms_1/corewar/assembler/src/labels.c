@@ -106,5 +106,10 @@ void	build_func_list(t_data *d)
 void	validate_labels(t_data *d)
 {
 	build_func_list(d);
-	func_print_list(d->func);
+	has_dup_labels(d);
+	if (has_val_lbl_refs(d) == 0)
+		quit(d, 1);
+	if (d->func == NULL)
+		quit(d, 1);
+	//func_print_list(d->func);
 }
