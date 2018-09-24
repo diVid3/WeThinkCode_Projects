@@ -13,6 +13,10 @@
 #include "op.h"
 #include "../libft/libft.h"
 
+/*
+** Might need to fix string comparisons.
+*/
+
 void	macro_check(void)
 {
 	if (COMMENT_CHAR != '#' || LABEL_CHAR != ':' || DIRECT_CHAR != '%'

@@ -32,7 +32,11 @@ int		main(int ac, char **av)
 	static t_data		d;
 
 	get_input(&d, ac, av);
-	//do_calcs();
-	//write_data();
+	do_calcs(&d);
+	input_print_list(d.input);
+	printf("name  : %s\n", d.name);
+	printf("cmmnt : %s\n\n", d.comment);
+	func_print_list(d.func);
+	write_data(&d, av);
 	quit(&d, 0);
 }

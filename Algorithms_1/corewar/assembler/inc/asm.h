@@ -31,6 +31,7 @@ typedef struct		s_func
 	char			*args;
 	char			*label;
 	int				index;
+	unsigned int	bytes_req;
 	struct s_func	*next;
 	struct s_func	*prev;
 }					t_func;
@@ -73,7 +74,12 @@ void				input_free_list(t_input *head);
 void				input_print_list(t_input *input);
 void				macro_check(void);
 void				has_dup_labels(t_data *d);
-void				write_rev(unsigned int x, int size);
+void				write_rev_ui(unsigned int x, int size, int fd);
+void				write_rev_us(unsigned short x, int size, int fd);
+void				do_calcs(t_data *d);
+void				calc_byte_reqs(t_data *d);
+void				write_data(t_data *d, char **av);
+void				write_header(t_data *d, int fd);
 
 int					strclen(char *str);
 int					is_func(char *str);
@@ -95,6 +101,7 @@ int					has_args_lbl(char *args);
 int					find_label(t_data *d, char *args_ref);
 int					has_val_lbl_refs(t_data *d);
 int					is_name_comm_overlong(t_data *d);
+int					open_w(char **av);
 int					is_reg(char *arg);
 int					is_ind(char *arg);
 int					is_dir(char *arg);
@@ -107,6 +114,7 @@ int					is_label_func(char *str);
 
 char				*strcdup(char *str, char c);
 char				*get_args_lbl(char *args);
+char				*ft_strndup(const char *s1, size_t len);
 
 char				**split(char *str);
 

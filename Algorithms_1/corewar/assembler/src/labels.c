@@ -111,5 +111,4 @@ void	validate_labels(t_data *d)
 		quit(d, 1);
 	if (d->func == NULL)
 		quit(d, 1);
-	//func_print_list(d->func);
 }

@@ -13,17 +13,29 @@
 #include "../inc/asm.h"
 
 /*
-** This is to simply write a variable of variable size in reverse, useful for
-** different endian systems.
+** Writes 2 bytes in reverse order, i.e. little endian -> big endian.
 */
 
-void	write_rev(unsigned int x, int size)
+void	write_rev_us(unsigned short x, int size, int fd)
 {
 	char	*ptr;
 
 	ptr = (char *)&x;
 	while (--size >= 0)
-		write(1, ptr + size, 1);
+		write(fd, ptr + size, 1);
+}
+
+/*
+** Writes 4 bytes in reverse order, i.e. little endian -> big endian.
+*/
+
+void	write_rev_ui(unsigned int x, int size, int fd)
+{
+	char	*ptr;
+
+	ptr = (char *)&x;
+	while (--size >= 0)
+		write(fd, ptr + size, 1);
 }
 
 int		free_refs(char *str1, char *str2)

@@ -93,12 +93,9 @@ void	get_input(t_data *d, int ac, char **av)
 	if (fd == -1)
 		quit(d, 1);
 	save_input(d, fd);
-	input_print_list(d->input);
 	validate_input(d);
 	get_header(d);
 	if (is_name_comm_overlong(d) == 0)
 		quit(d, 1);
-	//printf("name  : %s\n", d->name);
-	//printf("cmmnt : %s\n\n", d->comment);
 	validate_labels(d);
 }

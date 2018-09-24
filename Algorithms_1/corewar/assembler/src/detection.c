@@ -43,7 +43,6 @@ int		is_name_cmd(char *str)
 	iterate_w_space(str, &cntr);
 	if (str[cntr] != '\0' && str[cntr] != COMMENT_CHAR)
 		return (0);
-	printf("returns 1\n");
 	return (1);
 }
 

@@ -12,6 +12,19 @@
 
 #include "../inc/asm.h"
 
+/*
+static void	link_if_head_null(t_func **h, t_func **node)
+{
+	(*node)->prev = NULL;
+	(*node)->next = NULL;
+	*h = *node;
+}
+
+static void	link_if_head_non_null(t_func **h, t_func **node, t_func **tmp)
+{
+}
+*/
+
 void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 {
 	t_func		*node;
@@ -59,6 +72,9 @@ void		func_print_list(t_func *head)
 		ft_putchar('\n');
 		ft_putstr("args  : ");
 		ft_putstr(tmp->args);
+		ft_putchar('\n');
+		ft_putstr("b_req : ");
+		ft_putnbr(tmp->bytes_req);
 		ft_putchar('\n');
 		tmp = tmp->next;
 	}
