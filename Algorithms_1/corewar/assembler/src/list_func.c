@@ -12,30 +12,15 @@
 
 #include "../inc/asm.h"
 
-/*
-static void	link_if_head_null(t_func **h, t_func **node)
-{
-	(*node)->prev = NULL;
-	(*node)->next = NULL;
-	*h = *node;
-}
-
-static void	link_if_head_non_null(t_func **h, t_func **node, t_func **tmp)
-{
-}
-*/
-
 void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 {
 	t_func		*node;
 	t_func		*tmp;
-	static int	index = 1;
 
 	node = malloc(sizeof(t_func));
-	node->func = func;
-	node->args = args;
-	node->label = label;
-	node->index = index;
+	node->func = ft_strdup(func);
+	node->args = ft_strdup(args);
+	node->label = ft_strdup(label);
 	if (*h == NULL)
 	{
 		node->prev = NULL;
@@ -51,7 +36,6 @@ void		func_add_node_end(t_func **h, char *func, char *args, char *label)
 		node->next = NULL;
 		node->prev = tmp;
 	}
-	++index;
 }
 
 void		func_print_list(t_func *head)
@@ -61,9 +45,6 @@ void		func_print_list(t_func *head)
 	tmp = head;
 	while (tmp)
 	{
-		ft_putstr("index : ");
-		ft_putnbr(tmp->index);
-		ft_putchar('\n');
 		ft_putstr("label : ");
 		ft_putstr(tmp->label);
 		ft_putchar('\n');

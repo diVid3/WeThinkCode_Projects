@@ -31,6 +31,7 @@ int		count_words(char *str)
 
 	cntr = 0;
 	word_count = 0;
+	swtch = 0;
 	while (str[cntr])
 	{
 		if (str[cntr] != ' ' && str[cntr] != 9 && str[cntr] != 11 &&
@@ -100,7 +101,7 @@ char	**split(char *str)
 	word_count = count_words(str);
 	word_first = (*str != ' ' && *str != 9 && *str != 11 &&
 		*str != 12 && *str != 13) ? 1 : 0;
-	ar = malloc(sizeof(char *) * word_count + 1);
+	ar = malloc(sizeof(char *) * (word_count + 1));
 	word_addr = str;
 	cntr = 0;
 	while (cntr < word_count)

@@ -39,6 +39,9 @@ FILES = detection\
 		calc\
 		write\
 		strndup\
+		write2\
+		write3\
+		write4\
 
 CFILES = $(FILES:%=./src/%.c)
 

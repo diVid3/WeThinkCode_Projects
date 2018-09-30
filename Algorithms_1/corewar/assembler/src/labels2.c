@@ -99,7 +99,7 @@ void	has_dup_labels(t_data *d)
 				continue ;
 			}
 			else if (ft_strcmp(label_node->label, tmp->label) == 0)
-				quit(d, 1);
+				quit(d, 9, -1);
 			tmp = tmp->next;
 		}
 		label_node = label_node->next;

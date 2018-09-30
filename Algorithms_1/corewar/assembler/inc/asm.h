@@ -30,24 +30,16 @@ typedef struct		s_func
 	char			*func;
 	char			*args;
 	char			*label;
-	int				index;
 	unsigned int	bytes_req;
 	struct s_func	*next;
 	struct s_func	*prev;
 }					t_func;
 
-/*
-typedef struct		s_label
-{
-	char			*label;
-	struct s_label	*next;
-}					t_label;
-*/
-
 typedef struct		s_data
 {
 	char			*name;
 	char			*comment;
+	char			*output_name;
 	int				read_name;
 	int				read_comment;
 	t_input			*input;
@@ -56,7 +48,9 @@ typedef struct		s_data
 
 extern t_op			g_op_tab[17];
 
-void				quit(t_data *d, int err_msg);
+void				quit(t_data *d, int err_msg, int line_nbr);
+void				print_err_exit(int err_msg, int line_nbr);
+void				print_err_exit_more(int err_msg);
 void				iterate_w_space(char *str, int *cntr);
 void				get_input(t_data *d, int ac, char **av);
 void				save_input(t_data *d, int fd);
@@ -72,7 +66,7 @@ void				func_free_list(t_func *head);
 void				input_add_node_end(t_input **head, char *line);
 void				input_free_list(t_input *head);
 void				input_print_list(t_input *input);
-void				macro_check(void);
+void				macro_check(t_data *d);
 void				has_dup_labels(t_data *d);
 void				write_rev_ui(unsigned int x, int size, int fd);
 void				write_rev_us(unsigned short x, int size, int fd);
@@ -80,6 +74,16 @@ void				do_calcs(t_data *d);
 void				calc_byte_reqs(t_data *d);
 void				write_data(t_data *d, char **av);
 void				write_header(t_data *d, int fd);
+void				write_op(int opcode, int fd);
+void				write_funcs(t_data *d, int fd);
+void				write_num(int nbr, int type_size, int fd);
+void				write_enc(t_func *tmp, int fd);
+void				write_reg(char *reg, int fd);
+void				write_args(t_data *d, t_func *tmp, int fd);
+void				write_label_dir(t_func *tmp, char *arg, int ty_sze, int fd);
+void				write_dir(t_func *tmp, int fd, char *arg);
+void				write_label_ind(t_func *tmp, char *arg, int fd);
+void				write_ind(t_func *tmp, int fd, char *arg);
 
 int					strclen(char *str);
 int					is_func(char *str);
@@ -101,7 +105,9 @@ int					has_args_lbl(char *args);
 int					find_label(t_data *d, char *args_ref);
 int					has_val_lbl_refs(t_data *d);
 int					is_name_comm_overlong(t_data *d);
-int					open_w(char **av);
+int					open_w(t_data *d, char **av);
+int					calc_jump_up(t_func *tmp, char *ref_label);
+int					calc_jump_down(t_func *tmp, char *ref_label);
 int					is_reg(char *arg);
 int					is_ind(char *arg);
 int					is_dir(char *arg);
@@ -117,5 +123,7 @@ char				*get_args_lbl(char *args);
 char				*ft_strndup(const char *s1, size_t len);
 
 char				**split(char *str);
+
+unsigned char		ret_enc_bits(char *field, int field_nr);
 
 #endif

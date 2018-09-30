@@ -10,24 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
-#include "../libft/libft.h"
+#include "../inc/asm.h"
 
-/*
-** Might need to fix string comparisons.
-*/
-
-void	macro_check(void)
+void	macro_check(t_data *d)
 {
-	if (COMMENT_CHAR != '#' || LABEL_CHAR != ':' || DIRECT_CHAR != '%'
-			|| SEPARATOR_CHAR != ',' || REG_NUMBER != 16
-			|| LABEL_CHARS != "abcdefghijklmnopqrstuvwxyz_0123456789"
-			|| NAME_CMD_STRING != ".name" || COMMENT_CMD_STRING != ".comment"
-			|| T_REG != 1 || T_DIR != 2 || T_IND != 4 || COMMENT_LENGTH != 2048
-			|| PROG_NAME_LENGTH != 128 || COREWAR_EXEC_MAGIC != 0xea83f3)
-	{
-		ft_putstr_fd("\e[0;31mPlease don't touch our source code. \
-				Thank you.\n\e[0;37m", 2);
-		exit(0);
-	}
+	if (COMMENT_CHAR != '#' || LABEL_CHAR != ':' || DIRECT_CHAR != '%' ||
+		SEPARATOR_CHAR != ',' || REG_NUMBER != 16 ||
+		ft_strcmp(LABEL_CHARS, "abcdefghijklmnopqrstuvwxyz_0123456789") ||
+		ft_strcmp(NAME_CMD_STRING, ".name") ||
+		ft_strcmp(COMMENT_CMD_STRING, ".comment") ||
+		T_REG != 1 || T_DIR != 2 || T_IND != 4 || COMMENT_LENGTH != 2048 ||
+		PROG_NAME_LENGTH != 128 || COREWAR_EXEC_MAGIC != 0xea83f3)
+		quit(d, 1, -1);
 }

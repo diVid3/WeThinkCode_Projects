@@ -51,7 +51,7 @@ void	get_header(t_data *d)
 		tmp = tmp->next;
 	}
 	if (d->read_name == 0 || d->read_comment == 0)
-		quit(d, 1);
+		quit(d, 5, -1);
 }
 
 void	validate_input(t_data *d)
@@ -64,7 +64,7 @@ void	validate_input(t_data *d)
 		if (!is_name_cmd(tmp->line_ptr) && !is_comment_cmd(tmp->line_ptr) &&
 			!is_comment(tmp->line_ptr) && !is_label(tmp->line_ptr) &&
 			!is_label_func(tmp->line_ptr) && !is_func(tmp->line_ptr))
-			quit(d, 1);
+			quit(d, 4, tmp->line_nbr);
 		tmp = tmp->next;
 	}
 }
@@ -84,18 +84,18 @@ void	get_input(t_data *d, int ac, char **av)
 {
 	int		fd;
 
-	if (ac == 1)
-		quit(d, 1);
+	if (ac == 1 || ac > 2)
+		quit(d, 2, -1);
 	if (has_ext(av[1]) == 0)
 		fd = strjoin_open(av);
 	else
 		fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		quit(d, 1);
+		quit(d, 3, -1);
 	save_input(d, fd);
 	validate_input(d);
 	get_header(d);
 	if (is_name_comm_overlong(d) == 0)
-		quit(d, 1);
+		quit(d, 6, -1);
 	validate_labels(d);
 }

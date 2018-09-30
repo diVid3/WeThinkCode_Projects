@@ -27,6 +27,7 @@ int		build_func_node(t_data *d, char *line, int has_lbl)
 		func_add_node_end(&(d->func), arr[1], arr[2], arr[0]);
 	else
 		func_add_node_end(&(d->func), arr[0], arr[1], NULL);
+	ft_free_matrix((void **)arr);
 	return (1);
 }
 
@@ -70,7 +71,7 @@ void	switch_reader(t_data *d, t_input **label_node)
 			is_comment(tmp->line_ptr))
 			tmp = tmp->next;
 		else if (is_label_func(tmp->line_ptr) || is_label(tmp->line_ptr))
-			quit(d, 1);
+			quit(d, 7, -1);
 		else if (is_func(tmp->line_ptr))
 		{
 			swtch = 0;
@@ -80,7 +81,7 @@ void	switch_reader(t_data *d, t_input **label_node)
 		}
 	}
 	if (swtch == 1)
-		quit(d, 1);
+		quit(d, 8, -1);
 }
 
 void	build_func_list(t_data *d)
@@ -108,7 +109,7 @@ void	validate_labels(t_data *d)
 	build_func_list(d);
 	has_dup_labels(d);
 	if (has_val_lbl_refs(d) == 0)
-		quit(d, 1);
+		quit(d, 10, -1);
 	if (d->func == NULL)
-		quit(d, 1);
+		quit(d, 11, -1);
 }

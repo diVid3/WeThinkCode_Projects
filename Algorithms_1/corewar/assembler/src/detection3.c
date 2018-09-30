@@ -91,11 +91,12 @@ int		is_args_valid(char *func, char *args)
 	while (arr[cntr])
 		++cntr;
 	if (fields_valid != cntr)
-		if (free_return(NULL, arr, cntr) == 0)
+		if (free_return(NULL, arr, cntr) == 1)
 			return (0);
 	if (is_arg_types_valid(opcode, fields_valid ,arr) == 0)
-		if (free_return(NULL, arr, cntr) == 0)
+		if (free_return(NULL, arr, cntr) == 1)
 			return (0);
+	ft_free_matrix((void **)arr);
 	return (1);
 }
 
@@ -111,13 +112,13 @@ int		is_func(char *str)
 	while (arr[cntr])
 		++cntr;
 	if (cntr != 2)
-		if (free_return(str_no_cmmnt, arr, cntr) == 0)
+		if (free_return(str_no_cmmnt, arr, cntr) == 1)
 			return (0);
 	if (is_func_valid(arr[0]) == 0)
-		if (free_return(str_no_cmmnt, arr, cntr) == 0)
+		if (free_return(str_no_cmmnt, arr, cntr) == 1)
 			return (0);
 	if (is_args_valid(arr[0], arr[1]) == 0)
-		if (free_return(str_no_cmmnt, arr, cntr) == 0)
+		if (free_return(str_no_cmmnt, arr, cntr) == 1)
 			return (0);
 	free_return(str_no_cmmnt, arr, cntr);
 	return (1);
