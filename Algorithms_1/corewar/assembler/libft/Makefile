@@ -27,7 +27,7 @@ FILES =	ft_atoi ft_bzero ft_isalnum ft_isalpha ft_isascii\
 		ft_putstr_fd ft_putendl_fd ft_putnbr_fd ft_lstnew\
 		ft_lstadd ft_lstdelone ft_lstdel ft_lstiter ft_lstmap\
 		get_next_line ft_del_matrix ft_count_words ft_alloc_mat_rows\
-		ft_atol ft_is_int ft_free_matrix\
+		ft_atol ft_is_int ft_free_matrix ft_strcdup ft_strndup\
 
 CFILES = $(FILES:=.c)
 

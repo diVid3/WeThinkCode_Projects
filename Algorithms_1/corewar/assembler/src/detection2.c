@@ -57,7 +57,7 @@ int		is_label(char *str)
 	char	*str_no_cmmnt;
 	char	**arr;
 
-	str_no_cmmnt = strcdup(str, COMMENT_CHAR);
+	str_no_cmmnt = ft_strcdup(str, COMMENT_CHAR);
 	arr = split(str_no_cmmnt);
 	cntr = 0;
 	while (arr[cntr])
@@ -86,7 +86,7 @@ int		is_label_func(char *str)
 	char	*joined_str2;
 	char	**arr;
 
-	str_no_cmmnt = strcdup(str, COMMENT_CHAR);
+	str_no_cmmnt = ft_strcdup(str, COMMENT_CHAR);
 	arr = split(str_no_cmmnt);
 	cntr = 0;
 	while (arr[cntr])

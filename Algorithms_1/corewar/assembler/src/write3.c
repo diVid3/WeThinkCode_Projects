@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write3.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egenis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/01 06:31:24 by egenis            #+#    #+#             */
+/*   Updated: 2018/10/01 06:31:26 by egenis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/asm.h"
 
 int				calc_jump_up(t_func *tmp, char *ref_label)
@@ -10,7 +22,7 @@ int				calc_jump_up(t_func *tmp, char *ref_label)
 	tmp2 = tmp;
 	while (tmp2)
 	{
-		if ((norm_label = strcdup(tmp2->label, LABEL_CHAR)) &&
+		if ((norm_label = ft_strcdup(tmp2->label, LABEL_CHAR)) &&
 			ft_strcmp(norm_label, ref_label) == 0)
 		{
 			ft_memdel((void **)(&norm_label));
@@ -35,7 +47,7 @@ int				calc_jump_down(t_func *tmp, char *ref_label)
 	tmp2 = tmp;
 	while (tmp2)
 	{
-		if ((norm_label = strcdup(tmp2->label, LABEL_CHAR)) &&
+		if ((norm_label = ft_strcdup(tmp2->label, LABEL_CHAR)) &&
 			ft_strcmp(norm_label, ref_label) == 0)
 		{
 			ft_memdel((void **)(&norm_label));

@@ -25,7 +25,7 @@ int		is_reg(char *arg)
 	if (arg[cntr] != '\0' || cntr == 1)
 		return (0);
 	if (ft_is_int(arg + 1) == 0)
-		return 0;
+		return (0);
 	reg_val = ft_atoi(arg + 1);
 	if (reg_val <= 0 || reg_val > REG_NUMBER)
 		return (0);

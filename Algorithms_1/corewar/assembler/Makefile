@@ -18,7 +18,7 @@ NAME = asm
 
 CC = clang
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 
 FILES = detection\
 		detection2\
@@ -33,12 +33,10 @@ FILES = detection\
 		main\
 		op\
 		split\
-		strcdup\
 		utils\
 		labels2\
 		calc\
 		write\
-		strndup\
 		write2\
 		write3\
 		write4\
@@ -89,6 +87,7 @@ norm:
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_b*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_c*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_d*.c
+	norminette -R CheckForbiddenSourceHeader ./libft/ft_f*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_i*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_l*.c
 	norminette -R CheckForbiddenSourceHeader ./libft/ft_m*.c

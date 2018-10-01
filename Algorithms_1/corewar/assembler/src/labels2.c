@@ -19,7 +19,7 @@ char	*get_args_lbl(char *args)
 	cntr = 0;
 	while (args[cntr] != LABEL_CHAR)
 		++cntr;
-	return (strcdup(args + cntr + 1, SEPARATOR_CHAR));
+	return (ft_strcdup(args + cntr + 1, SEPARATOR_CHAR));
 }
 
 int		has_args_lbl(char *args)
@@ -46,7 +46,7 @@ int		find_label(t_data *d, char *args_ref)
 	{
 		if (tmp->label)
 		{
-			label_ref = strcdup(tmp->label, LABEL_CHAR);
+			label_ref = ft_strcdup(tmp->label, LABEL_CHAR);
 			if (ft_strcmp(label_ref, args_ref) == 0 &&
 				!free_refs(label_ref, NULL))
 				return (1);

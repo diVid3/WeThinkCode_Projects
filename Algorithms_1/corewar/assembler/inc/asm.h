@@ -118,9 +118,7 @@ int					is_label(char *str);
 int					is_func(char *str);
 int					is_label_func(char *str);
 
-char				*strcdup(char *str, char c);
 char				*get_args_lbl(char *args);
-char				*ft_strndup(const char *s1, size_t len);
 
 char				**split(char *str);
 

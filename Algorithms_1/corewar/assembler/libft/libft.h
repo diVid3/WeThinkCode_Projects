@@ -72,11 +72,12 @@ char				*ft_strstr(const char *haystack, const char *needle);
 char				*ft_strnew(size_t size);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-char				*ft_strsub(char const *s, unsigned int start,
-									size_t len);
+char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				*ft_itoa(int n);
+char				*ft_strcdup(char *str, char c);
+char				*ft_strndup(const char *s1, size_t len);
 
 char				**ft_strsplit(char const *s, char c);
 char				**ft_alloc_mat_rows(size_t rows);

@@ -43,20 +43,20 @@ int		validate_field(int field_byte, char *arg)
 	if (field_byte == 0 || field_byte > 7)
 		return (0);
 	if (field_byte == 1 && is_reg(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 2 && is_dir(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 3 && is_reg(arg) == 0 && is_dir(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 4 && is_ind(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 5 && is_ind(arg) == 0 && is_reg(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 6 && is_ind(arg) == 0 && is_dir(arg) == 0)
-			return (0);
+		return (0);
 	if (field_byte == 7 && is_ind(arg) == 0 && is_dir(arg) == 0 &&
 		is_reg(arg) == 0)
-			return (0);
+		return (0);
 	return (1);
 }
 
@@ -93,7 +93,7 @@ int		is_args_valid(char *func, char *args)
 	if (fields_valid != cntr)
 		if (free_return(NULL, arr, cntr) == 1)
 			return (0);
-	if (is_arg_types_valid(opcode, fields_valid ,arr) == 0)
+	if (is_arg_types_valid(opcode, fields_valid, arr) == 0)
 		if (free_return(NULL, arr, cntr) == 1)
 			return (0);
 	ft_free_matrix((void **)arr);
@@ -106,7 +106,7 @@ int		is_func(char *str)
 	char	*str_no_cmmnt;
 	char	**arr;
 
-	str_no_cmmnt = strcdup(str, COMMENT_CHAR);
+	str_no_cmmnt = ft_strcdup(str, COMMENT_CHAR);
 	arr = split(str_no_cmmnt);
 	cntr = 0;
 	while (arr[cntr])
