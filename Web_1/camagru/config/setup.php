@@ -3,11 +3,11 @@ include("database.php");
 
 function createDB() {
     try {
-        $PDO = new PDO($DB_DSN, $DB_USERNAME, $DB_PASSWORD);
+        $PDO = new PDO("mysql:host=$DB_SERVER", $DB_USERNAME, $DB_PASSWORD);
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $PDO->exec("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME");
-        echo "Created database $DB_DATABASE_NAME" . PHP_EOL;
-        return $PDO;
+        $PDO->query("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME");
+        $PDO = NULL;
+        echo "DB made!\n";
     }
     catch (PDOexception $e) {
         echo "Failed to create database $DB_DATABASE_NAME" . PHP_EOL;
