@@ -8,6 +8,6 @@
     <script src="main.js"></script>
 </head>
 <body>
-    Dovi sucks especially on Mondays.
+    Dovi sucks especially on Mondays. Hello.
 </body>
 </html>
