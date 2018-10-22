@@ -1,7 +1,17 @@
 <?php
-    session_start();
-    include_once ("config/setup.php");
-    createDB();
+session_start();
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+
+if (file_exists('errors.log') == false) {
+    $errorLog = fopen('errors.log', 'w');
+    fclose($errorLog);
+}
+if (file_exists('initialized.txt') == false) {
+    include_once ($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
+    $initFile = fopen('initialized.txt', 'w');
+    fclose($initFile);
+}
 ?>
 <!DOCTYPE html>
 <html>

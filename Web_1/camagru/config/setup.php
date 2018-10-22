@@ -1,46 +1,42 @@
 <?php
-session_start();
-include_once ("database.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 
 function createDB() {
-    global $DB_SERVER;
-    global $DB_USER;
-    global $DB_PASSWORD;
     global $DB_DATABASE_NAME;
-    global $DB_DSN;
 
     try {
-        $PDO = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $PDO = connectDBMS();
         $PDO->query("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME");
         $PDO = NULL;
     }
     catch (PDOexception $e) {
-        $_SESSION['errorMsg'] = 'Failed to create database ' . $DB_DATABASE_NAME . '<br/>';
-        $_SESSION['errorObj'] = serialize($e);
-        //header("Location: ../error.php");
-        header("Location: http://127.0.0.1:8080/camagru/error.php");
-    }
-}
-
-function connectDB() {
-    global $DB_DSN;
-    global $DB_USER;
-    global $DB_PASSWORD;
-    global $DB_DATABASE_NAME;
-
-    try {
-        $PDO = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-        return ($PDO);
-    }
-    catch (PDOexception $e) {
-        $_SESSION['errorMsg'] = 'Failed to connect to database' . $DB_DATABASE_NAME . '<br/>';
-        $_SESSION['errorObj'] = serialize($e);
-        header("Location: ../error.php");
+        error_log($e);
     }
 }
 
 function createUserTable() {
-    $query = "";
+    global $DB_DATABASE_NAME;
+
+    $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+    $query2 = 'CREATE TABLE IF NOT EXISTS `users` (
+        `user_id` INT(4) AUTO_INCREMENT PRIMARY KEY,
+        `username` VARCHAR(16) NOT NULL UNIQUE,
+        `password` VARCHAR(32) NOT NULL,
+        `email` VARCHAR(32) NOT NULL UNIQUE
+    );';
+    try {
+        $PDO = connectDBMS();
+        $PDO->query($query1);
+        $PDO->query($query2);
+        $PDO = NULL;
+    }
+    catch (PDOexecption $e) {
+        error_log($e);
+    }
 }
+
+createDB();
+createUserTable();
 ?>
