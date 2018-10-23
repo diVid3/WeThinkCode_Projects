@@ -5,7 +5,6 @@
 
 body {
     background: white;
-    /* position: absolute; */
 }
 
 p {
@@ -27,7 +26,7 @@ a {
 
 /* flexbox container */
 .float-header {
-    background: #AD7AC5;
+    background: #ad7ac5;
     color: white;
     height: 10%;
     width: 100%;
@@ -44,37 +43,13 @@ a {
 }
 
 /* flexbox items, these items contain div's inside them */
-.box-1 {
+.float-header-box {
     display: flex;
     align-items: center;
 }
 
-.box-2 {
-    display: flex;
-    align-items: center;
+.float-header-box:hover {
+    background-color: #c295d6;
 }
 
-.box-3 {
-    display: flex;
-    align-items: center;
-}
 
-.box-4 {
-    display: flex;
-    align-items: center;
-}
-
-/* #header-text {
-
-} */
-
-/* #rest-body {
-    width: 100%;
-    height: 85%;
-    position: absolute;
-    top: 100px;
-} */
-
-/* #login-form {
-
-} */

@@ -14,7 +14,7 @@ if (file_exists('initialized.txt') == false) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html style="height:100%;">
 <head>
     <meta charset="utf-8" />
     <title>Camagru</title>
@@ -22,7 +22,7 @@ if (file_exists('initialized.txt') == false) {
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 </head>
-<body>
+<body style="height:100%;">
     <div class="float-header">
         <!-- <form action="login.php" method="POST">
             Username:
@@ -31,22 +31,22 @@ if (file_exists('initialized.txt') == false) {
             <input type="text" name="password">
             <input type="submit" name="submit">
         </form> -->
-        <div class="box-1">
+        <div class="float-header-box" onclick="location.href='take_photo.php';" style="cursor: pointer;">
+            <div style="text-align:center;">
+                <a href='take_photo.php'>Take a Photo</a>
+            </div>
+        </div>
+        <div class="float-header-box" onclick="location.href='gallery.php';" style="cursor: pointer;">
             <div style="text-align:center;">
                 <a href='gallery.php'>Gallery</a>
             </div>
         </div>
-        <div class="box-2">
-            <div style="text-align:center;">
-                <a href='sign_up.php'>Take a Photo</a>
-            </div>
-        </div>
-        <div class="box-3">
+        <div class="float-header-box" onclick="location.href='sign_up.php';" style="cursor: pointer;">
             <div style="text-align:center;">
                 <a href='sign_up.php'>Sign Up</a>
             </div>
         </div>
-        <div class="box-4">
+        <div class="float-header-box" onclick="location.href='login.php';" style="cursor: pointer;">
             <div style="text-align:center;">
                 <a href='login.php'>Log In</a>
             </div>
@@ -54,9 +54,11 @@ if (file_exists('initialized.txt') == false) {
     </div>
     <div id="body-push">
     </div>
-    <div style="font-size:500%;">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta laborum perspiciatis aut, quibusdam recusandae eveniet fuga facere eos. Natus esse rem ipsa temporibus, enim earum deleniti officiis culpa qui autem.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias impedit, numquam facilis aliquam magni excepturi veniam fuga at, expedita magnam est vel veritatis eligendi, error dicta eos beatae repellendus ut.
+    <div style="font-size:300%;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta laborum perspiciatis aut, quibusdam recusandae eveniet fuga facere eos. Natus esse rem ipsa temporibus, enim earum deleniti officiis culpa qui autem.</p><br>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias impedit, numquam facilis aliquam magni excepturi veniam fuga at, expedita magnam est vel veritatis eligendi, error dicta eos beatae repellendus ut.</p><br>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias impedit, numquam facilis aliquam magni excepturi veniam fuga at, expedita magnam est vel veritatis eligendi, error dicta eos beatae repellendus ut.</p><br>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias impedit, numquam facilis aliquam magni excepturi veniam fuga at, expedita magnam est vel veritatis eligendi, error dicta eos beatae repellendus ut.</p>
     </div>
 </body>
 </html>
