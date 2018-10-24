@@ -14,3 +14,4 @@
 [24-Oct-2018 04:49:16 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
 [24-Oct-2018 05:44:45 America/Los_Angeles] PHP Notice:  Undefined variable: _SESSION in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/sign_up.php on line 33
 [24-Oct-2018 05:45:20 America/Los_Angeles] PHP Notice:  Undefined variable: _SESSION in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/sign_up.php on line 33
+[24-Oct-2018 11:21:46 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /Users/1humble1/Desktop/MAMP/apache2/htdocs/index.php on line 51

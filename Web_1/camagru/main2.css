@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* The body becomes the flexbox container/parent */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* This works because left 0 and right 0 stretches the
+container which allows flex to do its thing. This
+is also a child to the parent flexbox container */
+.header {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 7.5%;
+    background-color: rgb(177, 73, 177);
+}
+
+.push-content {
+    flex-shrink: 0;
+    height: 7.5%;
+}
+
+/* .content is applied to flexbox children */
+.content {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    margin-bottom: 1%;
+}
+
+/* .footer is applied to flexbox children */
+.footer {
+    flex-shrink: 0;
+    background-color: rgb(177, 73, 177);
+    height: 7.5%;
+    display: flex;
+}
+
+/* making them parent flexboxes as well, by
+using display: flex */
+.header-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* This affects the header box divs which
+actually contain the text */
+.header-box div {
+    flex-grow: 1;
+}
+
+.footer-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.footer-box div {
+    flex-grow: 1;
+}
