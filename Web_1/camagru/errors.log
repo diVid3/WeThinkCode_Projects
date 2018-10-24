@@ -1,0 +1,16 @@
+[24-Oct-2018 04:47:51 America/Los_Angeles] PHP Notice:  A session had already been started - ignoring session_start() in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 51
+[24-Oct-2018 04:47:51 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:47:52 America/Los_Angeles] PHP Notice:  A session had already been started - ignoring session_start() in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 51
+[24-Oct-2018 04:47:52 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:47:52 America/Los_Angeles] PHP Notice:  A session had already been started - ignoring session_start() in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 51
+[24-Oct-2018 04:47:52 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:47:53 America/Los_Angeles] PHP Notice:  A session had already been started - ignoring session_start() in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 51
+[24-Oct-2018 04:47:53 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:48:05 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:48:07 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:49:15 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:49:16 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:49:16 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 04:49:16 America/Los_Angeles] PHP Notice:  Undefined index: loggedIn in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/index.php on line 52
+[24-Oct-2018 05:44:45 America/Los_Angeles] PHP Notice:  Undefined variable: _SESSION in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/sign_up.php on line 33
+[24-Oct-2018 05:45:20 America/Los_Angeles] PHP Notice:  Undefined variable: _SESSION in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/sign_up.php on line 33

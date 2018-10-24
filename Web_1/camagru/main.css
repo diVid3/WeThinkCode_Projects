@@ -3,16 +3,35 @@
     padding: 0;
 }
 
+body, html {
+    height: 100%;
+}
+
 body {
     background: white;
 }
 
 p {
     font-family: Arial, Helvetica, sans-serif;
-    /* font-size: 500%; */
-    /* position: absolute;
-    top: 16%; */
 }
+
+@media screen and (min-width: 768px) {
+    p.responsive {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    p.responsive {
+        font-size: 15px;
+    }
+}
+
+/* @media screen and (max-width: 767px) and (orientation: portrait) {
+    p.responsive {
+        font-size: 30px;
+    }
+} */
 
 a {
     color: inherit;
@@ -20,7 +39,7 @@ a {
 }
 
 #body-push {
-    height: 10%;
+    height: 7.5%;
     width: 100%;
 }
 
@@ -28,16 +47,19 @@ a {
 .float-header {
     background: #ad7ac5;
     color: white;
-    height: 10%;
+    height: 7.5%;
     width: 100%;
     position: fixed;
     margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.85vw;
+    /* font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.85vw; */
     display: flex;
 }
 
-/* div's inside flexbox container, uppermost container */
+/* div's inside flexbox container, uppermost container.
+All divs should grow otherwise text-align center won't work.
+flex-grow is is applied to flexbox items, not the uppermost
+container */
 .float-header div {
     flex-grow: 1;
 }
@@ -52,4 +74,19 @@ a {
     background-color: #c295d6;
 }
 
+.footer {
+    height: 7.5%;
+    width: 100%;
+    background: #ad7ac5;
+    color: white;
+    display: flex;
+}
 
+.footer div {
+    flex-grow: 1;
+}
+
+.footer-box {
+    display: flex;
+    align-items: center;
+}
