@@ -22,28 +22,8 @@ is also a child to the parent flexbox container */
     left: 0;
     right: 0;
     height: 7.5%;
-    background-color: rgb(177, 73, 177);
-}
-
-.push-content {
-    flex-shrink: 0;
-    height: 7.5%;
-}
-
-/* .content is applied to flexbox children */
-.content {
-    flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: auto;
-    margin-bottom: 1%;
-}
-
-/* .footer is applied to flexbox children */
-.footer {
-    flex-shrink: 0;
-    background-color: rgb(177, 73, 177);
-    height: 7.5%;
-    display: flex;
+    background-color: mediumpurple;
+    color: white;
 }
 
 /* making them parent flexboxes as well, by
@@ -60,6 +40,30 @@ actually contain the text */
     flex-grow: 1;
 }
 
+.push-content {
+    flex-shrink: 0;
+    height: 7.5%;
+}
+
+/* .content is applied to flexbox children */
+.content {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    padding-bottom: 0.2%;
+    background-color: #EEEEEE;
+    color: black;
+}
+
+/* .footer is applied to flexbox children */
+.footer {
+    flex-shrink: 0;
+    background-color: mediumpurple;
+    height: 7.5%;
+    display: flex;
+    color: white;
+}
+
 .footer-box {
     flex-grow: 1;
     display: flex;
@@ -68,4 +72,29 @@ actually contain the text */
 
 .footer-box div {
     flex-grow: 1;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media screen and (min-width: 824px) {
+    p {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    p {
+        font-size: 15px;
+    }
+}
+
+.header-box:hover {
+    background-color: rgb(165, 131, 233);
 }
