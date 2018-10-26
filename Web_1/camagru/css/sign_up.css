@@ -56,8 +56,20 @@ for the grid items */
     color: black;
     display: grid;
     grid-template-columns: 25% 50% 25%;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: 8vh 69vh 8vh;
 }
+
+/* .content div {
+    background-color: black;
+} */
+
+/* .content div:nth-child(odd) {
+    background-color: red;
+}
+
+.content div:nth-child(even) {
+    background-color: green;
+} */
 
 .grid-item {
     grid-column-start: auto;
@@ -95,6 +107,7 @@ for the grid items */
 }
 
 .sign_up-item-button {
+    border-radius: 9px;
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -108,6 +121,8 @@ input, input[type="text"] {
     border-bottom-width: 2px;
     padding-bottom: 10px;
  }
+
+
 
 ::placeholder {
     color: rgb(220, 220, 220);

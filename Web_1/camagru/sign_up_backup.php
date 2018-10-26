@@ -53,7 +53,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
-        <form class="grid-item-center" action="login.php" method="POST">
+        <div class="grid-item-center">
             <div class="sign_up-item-first">
             </div>
             <div class="sign_up-items">
@@ -100,16 +100,15 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                 <div style="flex-grow:1;">
                     <input type="text" placeholder="Enter your email...">
                 </div>
-            </div>
-            <input type="submit" name="submit">
-            <!-- <div class="sign_up-item-button" onclick="location.href='#';" style="cursor: pointer;">
+            </div>     
+            <div class="sign_up-item-button" onclick="location.href='#';" style="cursor: pointer;">
                 <div style="flex-grow:1;text-align:center">
                     <p>Sign up</p>
                 </div>
-            </div> -->
+            </div>
             <div class="sign_up-item-last">
             </div>
-        </form>
+        </div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
