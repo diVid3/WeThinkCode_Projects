@@ -45,7 +45,7 @@ if (file_exists('initialized.txt') == false) {
         </div>
         <div class="header-box" onclick="location.href='login.php';" style="cursor: pointer;">
             <div style="text-align:center;">
-                <a href='login.php'><p>Log in</p></a>
+                <a href='login.php'><p>Sign in</p></a>
             </div>
         </div>
     </header>

@@ -55,21 +55,9 @@ for the grid items */
     background-color: #EEEEEE;
     color: black;
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: minmax(10vw, auto) minmax(1px, 500px) minmax(10vw, auto);
     grid-template-rows: 8vh 69vh 8vh;
 }
-
-/* .content div {
-    background-color: black;
-} */
-
-/* .content div:nth-child(odd) {
-    background-color: red;
-}
-
-.content div:nth-child(even) {
-    background-color: green;
-} */
 
 .grid-item {
     grid-column-start: auto;
@@ -80,7 +68,7 @@ for the grid items */
 
 .grid-item-center {
     background-color: white;
-    border-radius: 2%;
+    border-radius: 9px;
     box-shadow:0px 2px 5px #808080;
     padding-left: 5%;
     padding-right: 5%;
@@ -95,7 +83,6 @@ for the grid items */
 .sign_up-items {
     flex-grow: 1;
     display: flex;
-    /* align-items: center; */
 }
 
 .sign_up-item-first {
@@ -113,6 +100,7 @@ for the grid items */
     align-items: center;
     background-color: mediumpurple;
     color: white;
+    cursor: pointer;
 }
 
 input, input[type="text"] {
@@ -121,8 +109,6 @@ input, input[type="text"] {
     border-bottom-width: 2px;
     padding-bottom: 10px;
  }
-
-
 
 ::placeholder {
     color: rgb(220, 220, 220);
@@ -158,23 +144,24 @@ a {
 
 p {
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: 50;
 }
 
 @media screen and (min-width: 824px) {
     p {
-        font-size: 25px;
+        font-size: 20px;
     }
     input, input[type="text"] {
-        font-size: 25px;
+        font-size: 20px;
      }
 }
 
 @media screen and (max-width: 823px) {
     p {
-        font-size: 15px;
+        font-size: 13px;
     }
     input, input[type="text"] {
-        font-size: 15px;
+        font-size: 13px;
      }
 }
 

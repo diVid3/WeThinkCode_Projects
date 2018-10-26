@@ -10,6 +10,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/sign_up.css"/>
+    <script src="sign_up.js"></script>
 </head>
 <body>
     <header class="header">
@@ -35,20 +36,13 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         </div>
         <div class="header-box" onclick="location.href='login.php';" style="cursor: pointer;">
             <div style="text-align:center;">
-                <a href='login.php'><p>Log in</p></a>
+                <a href='login.php'><p>Sign in</p></a>
             </div>
         </div>
     </header>
     <div class="push-content">
     </div>
     <div class="content">
-        <!-- <form action="login.php" method="POST">
-            <p>Username:
-            <input type="text" name="username"></p>
-            <p>Password:</p>
-            <input type="text" name="password">
-            <input type="submit" name="submit">
-        </form> -->
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
@@ -68,7 +62,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items">
                 <div style="flex-grow:1;">
-                    <input type="text" placeholder="Enter your username...">
+                    <input type="text" name="username" required placeholder="Enter your username...">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:center;">
@@ -78,7 +72,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items">
                 <div style="flex-grow:1;">
-                    <input type="text" placeholder="Enter your password...">
+                    <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:center;">
@@ -88,7 +82,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items">
                 <div style="flex-grow:1;">
-                    <input type="text" placeholder="Enter your password...">
+                    <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:center;">
@@ -98,15 +92,14 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items">
                 <div style="flex-grow:1;">
-                    <input type="text" placeholder="Enter your email...">
+                    <input type="text" name="email" required placeholder="Enter your email...">
                 </div>
             </div>
-            <input type="submit" name="submit">
-            <!-- <div class="sign_up-item-button" onclick="location.href='#';" style="cursor: pointer;">
+            <button class="sign_up-item-button" name="name" value="value" type="submit">
                 <div style="flex-grow:1;text-align:center">
                     <p>Sign up</p>
                 </div>
-            </div> -->
+            </button>
             <div class="sign_up-item-last">
             </div>
         </form>
