@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+p.text-margin {
+    margin-top: 0.5%;
+}
+
 html, body {
     height: 100%;
 }
@@ -24,6 +28,7 @@ is also a child to the parent flexbox container */
     height: 7.5%;
     background-color: mediumpurple;
     color: white;
+    border-bottom: 4px solid silver;
 }
 
 /* making them parent flexboxes as well, by
@@ -43,6 +48,7 @@ actually contain the text */
 .push-content {
     flex-shrink: 0;
     height: 7.5%;
+    border-bottom: 4px;
 }
 
 /* .content is applied to flexbox children */
@@ -51,7 +57,7 @@ actually contain the text */
     flex-shrink: 0;
     flex-basis: auto;
     padding-bottom: 0.2%;
-    background-color: #EEEEEE;
+    background: linear-gradient(white, #eee);
     color: black;
 }
 
@@ -62,6 +68,7 @@ actually contain the text */
     height: 7.5%;
     display: flex;
     color: white;
+    /* border-top: 4px solid silver; */
 }
 
 .footer-box {
@@ -84,6 +91,17 @@ p {
     font-weight: 50;
 }
 
+a.click {
+    padding: 1vh 3.5vw 1vh 3.5vw;
+    border-radius: 50px;
+    width: auto;
+}
+
+a.click:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
 @media screen and (min-width: 824px) {
     p {
         font-size: 20px;
@@ -94,8 +112,4 @@ p {
     p {
         font-size: 13px;
     }
-}
-
-.header-box:hover {
-    background-color: rgb(165, 131, 233);
 }

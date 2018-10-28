@@ -14,29 +14,39 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 </head>
 <body>
     <header class="header">
-        <div class="header-box" onclick="location.href='index.php';" style="cursor: pointer;">
-            <div style="text-align:center;">
-                <a href='index.php'><p>Camagru</p></a>
+        <div class="header-box">
+            <div style="text-align:center;display:inline-block;">
+                <a href='index.php' class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
+                    <p>Camagru</p>
+                </a>
             </div>
         </div>
-        <div class="header-box" onclick="location.href='take_photo.php';" style="cursor: pointer;">
-            <div style="text-align:center;">
-                <a href='take_photo.php'><p>Take a pic</p></a>
+        <div class="header-box">
+            <div style="text-align:center;display:inline-block;">
+                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
+                    <p>Take a pic</p>
+                </a>
             </div>
         </div>
-        <div class="header-box" onclick="location.href='gallery.php';" style="cursor: pointer;">
-            <div style="text-align:center;">
-                <a href='gallery.php'><p>Gallery</p></a>
+        <div class="header-box">
+            <div style="text-align:center;display:inline-block;">
+                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
+                    <p>Gallery</p>
+                </a>
             </div>
         </div>
-        <div class="header-box" onclick="location.href='sign_up.php';" style="cursor: pointer;">
-            <div style="text-align:center;">
-                <a href='sign_up.php'><p>Sign up</p></a>
+        <div class="header-box">
+            <div style="text-align:center;display:inline-block;">
+                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
+                    <p>Sign up</p>
+                </a>
             </div>
         </div>
-        <div class="header-box" onclick="location.href='login.php';" style="cursor: pointer;">
-            <div style="text-align:center;">
-                <a href='login.php'><p>Sign in</p></a>
+        <div class="header-box">
+            <div style="text-align:center;display:inline-block;">
+                <a href='login.php' class="click" style="display:inline-block;" onclick="location.href='login.php';" style="cursor:pointer;text-align:center;">
+                    <p>Sign in</p>
+                </a>
             </div>
         </div>
     </header>
@@ -48,60 +58,56 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <form class="grid-item-center" action="login.php" method="POST">
-            <div class="sign_up-item-first">
-            </div>
-            <div class="sign_up-items">
-            <div style="flex-grow:1;">
-                    <p>Sign up</p>
+            <div class="sign_up-items" style="text-align:center;">
+                <div style="display:inline-block;flex-grow:1;">
+                    <p class="sign-up-form">Sign up</p>
                 </div>
             </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
+            <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Username:</p>
                 </div>
             </div>
-            <div class="sign_up-items">
+            <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
                     <input type="text" name="username" required placeholder="Enter your username...">
                 </div>
             </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
+            <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Password:</p>
                 </div>
             </div>
-            <div class="sign_up-items">
+            <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
                     <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
                 </div>
             </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
+            <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Confirm password:</p>
                 </div>
             </div>
-            <div class="sign_up-items">
+            <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
                     <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
                 </div>
             </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
+            <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Email:</p>
                 </div>
             </div>
-            <div class="sign_up-items">
+            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
                     <input type="text" name="email" required placeholder="Enter your email...">
                 </div>
             </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">
-                <div style="flex-grow:1;text-align:center">
+                <div style="flex-grow:1;text-align:center;">
                     <p>Sign up</p>
                 </div>
             </button>
-            <div class="sign_up-item-last">
-            </div>
         </form>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
@@ -111,7 +117,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <footer class="footer">
         <div class="footer-box">
             <div style="text-align:center;">
-                <p>Copyright &copy diVid3 2018</p>
+                <p>Copyright | diVid3 2018</p>
             </div>
         </div>
     </footer>
