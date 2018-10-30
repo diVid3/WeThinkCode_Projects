@@ -1,14 +1,75 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
 .button {
-    background-color: gold;
-    color: black;
-    padding: 20px 40px;
+    background-color: orange;
+    color: white;
     border: 0;
+    width: 50%;
+    height: 10%;
 }
 
 .button:hover {
-    background-color: silver;
+    background-color: darkgray;
 }
 
+/* .modal {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: minmax(10vw, auto) minmax(1px, 400px) minmax(10vw, auto);
+    grid-template-rows: minmax(10vw, auto) minmax(1px, 400px) minmax(10vw, auto);
+}
+
+.modal-content {
+    padding: 2%;
+    background-color: #eee;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+} */
+
 .modal {
-    
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.modal-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-column {
+    flex-grow: 1;
+    text-align: center;
+    background-color: #eee;
+    padding: 10%;
+    margin: 15%;
+    /* setting parent container to position relative */
+    position: relative;
+}
+
+.closeButton {
+    /* setting child item to position absolute */
+    position: absolute;
+    font-size: 30px;
+    top: 5%;
+    right: 5%;
 }
