@@ -13,6 +13,17 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <script src="sign_up.js"></script>
 </head>
 <body>
+    <!-- Modal markup -->
+    <div id="formModal" class="modal">
+        <div id="modalRow" class="modal-row">
+            <div class="modal-column">
+                <p class="modalHeader">Check form</p><br>
+                <p class="errorModal">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt voluptate soluta recusandae perspiciatis amet non quas voluptatum rem corrupti! Eum dolorem asperiores facilis iste, quasi totam obcaecati laboriosam modi deleniti?</p><br>
+                <div id="okButton" class="okButton"><p>ok</p></div>
+            </div>
+        </div>
+    </div>
+    <!-- Normal body -->
     <header class="header">
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
