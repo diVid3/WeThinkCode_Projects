@@ -10,7 +10,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/sign_up.css"/>
-    <script src="sign_up.js"></script>
+    <!-- <script src="sign_up.js"></script> -->
 </head>
 <body>
     <!-- Modal markup -->
@@ -68,7 +68,8 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
-        <form class="grid-item-center" action="login.php" method="POST">
+        <!-- <form class="grid-item-center" action="login.php" method="POST"> -->
+        <form class="grid-item-center" id="signupForm">
             <div class="sign_up-items" style="text-align:center;">
                 <div style="display:inline-block;flex-grow:1;">
                     <p class="sign-up-form">Sign up</p>
@@ -81,7 +82,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <input type="text" name="username" required placeholder="Enter your username...">
+                    <input type="text" name="username" required placeholder="Enter your username..." id="signupFormUsername">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -91,7 +92,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
+                    <input type="password" name="password" minlength="7" required placeholder="Enter your password..." id="signupFormPassword">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -101,7 +102,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <input type="password" name="password" minlength="8" required placeholder="Enter your password...">
+                    <input type="password" name="password" minlength="7" required placeholder="Enter your password..." id="signupFormConfirmPassword">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -111,10 +112,11 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
-                    <input type="text" name="email" required placeholder="Enter your email...">
+                    <input type="email" name="email" required placeholder="Enter your email..." id="signupFormEmail">
                 </div>
             </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">
+            <!-- <button class="sign_up-item-button" name="name" value="value" type="submit" id="signupFormSubmitButton"> -->
                 <div style="flex-grow:1;text-align:center;">
                     <p>Sign up</p>
                 </div>
@@ -132,5 +134,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
         </div>
     </footer>
+    <!-- JS source here -->
+    <script src="sign_up.js"></script>
 </body>
 </html>

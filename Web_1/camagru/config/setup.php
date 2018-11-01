@@ -21,7 +21,7 @@ function createUserTable() {
 
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
     $query2 = 'CREATE TABLE IF NOT EXISTS `users` (
-        `user_id` INT(4) AUTO_INCREMENT PRIMARY KEY,
+        `user_id` VARCHAR(64) PRIMARY KEY,
         `username` VARCHAR(16) NOT NULL UNIQUE,
         `password` VARCHAR(32) NOT NULL,
         `email` VARCHAR(32) NOT NULL UNIQUE
@@ -39,4 +39,7 @@ function createUserTable() {
 
 createDB();
 createUserTable();
+
+// Might need to add the ability to drop database and reconstruct.
+
 ?>

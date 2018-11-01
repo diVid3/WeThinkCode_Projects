@@ -25,10 +25,11 @@ is also a child to the parent flexbox container */
     position: fixed;
     left: 0;
     right: 0;
-    height: 7.5%;
+    height: 7%;
     background-color: mediumpurple;
     color: white;
     border-bottom: 4px solid silver;
+    box-shadow:0px 2px 3px #808080;
 }
 
 /* making them parent flexboxes as well, by
@@ -65,10 +66,10 @@ actually contain the text */
 .footer {
     flex-shrink: 0;
     background-color: mediumpurple;
-    height: 7.5%;
+    height: 7%;
     display: flex;
     color: white;
-    /* border-top: 4px solid silver; */
+    border-top: 4px solid silver;
 }
 
 .footer-box {
