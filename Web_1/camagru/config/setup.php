@@ -21,10 +21,12 @@ function createUserTable() {
 
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
     $query2 = 'CREATE TABLE IF NOT EXISTS `users` (
-        `user_id` VARCHAR(64) PRIMARY KEY,
-        `username` VARCHAR(16) NOT NULL UNIQUE,
-        `password` VARCHAR(32) NOT NULL,
-        `email` VARCHAR(32) NOT NULL UNIQUE
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `username` VARCHAR(32) NOT NULL UNIQUE,
+        `password` VARCHAR(60) NOT NULL,
+        `email` VARCHAR(32) NOT NULL UNIQUE,
+        `verify_hash` VARCHAR(64) NOT NULL UNIQUE,
+        `verified` TINYINT(1) NOT NULL
     );';
     try {
         $PDO = connectDBMS();

@@ -115,7 +115,7 @@ input, input[type="text"] {
     width: 99%;
     border-width: 0px;
     border-bottom-width: 2px;
-    padding-bottom: 8px;
+    padding-bottom: 2%;
  }
 
 ::placeholder {

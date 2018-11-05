@@ -53,7 +53,7 @@ if (file_exists('initialized.txt') == false) {
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='login.php' class="click" style="display:inline-block;" onclick="location.href='login.php';" style="cursor:pointer;text-align:center;">
+                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
                     <p>Sign in</p>
                 </a>
             </div>
