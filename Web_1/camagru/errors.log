@@ -1,0 +1,4 @@
+[06-Nov-2018 02:19:04 America/Los_Angeles] PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'verified' cannot be null in /goinfre/egenis/Desktop/MAMP/apache2/htdocs/verify.php:38
+Stack trace:
+#0 /goinfre/egenis/Desktop/MAMP/apache2/htdocs/verify.php(38): PDOStatement->execute(Array)
+#1 {main}

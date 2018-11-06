@@ -19,7 +19,7 @@ if (file_exists('initialized.txt') == false) {
     <meta charset="utf-8" />
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/index.css"/>
 </head>
 <body>
     <header class="header">
@@ -30,30 +30,31 @@ if (file_exists('initialized.txt') == false) {
                 </a>
             </div>
         </div>
-        <div class="header-box" onclick="location.href='take_photo.php';" style="cursor: pointer;">
+        <div class="header-box">
+        <!-- <div class="header-box" onclick="location.href='php/take_photo.php';" style="cursor: pointer;"> -->
             <div style="text-align:center;display:inline-block;">
-                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
+                <a href='php/take_photo.php' class="click" style="display:inline-block" onclick="location.href='php/take_photo.php';" style="cursor:pointer;text-align:center;">
                     <p>Take a pic</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
+                <a href='php/gallery.php' class="click" style="display:inline-block" onclick="location.href='php/gallery.php';" style="cursor:pointer;text-align:center;">
                     <p>Gallery</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
+                <a href='php/sign_up.php' class="click" style="display:inline-block;" onclick="location.href='php/sign_up.php';" style="cursor:pointer;text-align:center;">
                     <p>Sign up</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
+                <a href='php/sign_in.php' class="click" style="display:inline-block;" onclick="location.href='php/sign_in.php';" style="cursor:pointer;text-align:center;">
                     <p>Sign in</p>
                 </a>
             </div>
@@ -71,5 +72,6 @@ if (file_exists('initialized.txt') == false) {
             </div>
         </div>
     </footer>
+    <script src="js/index.js"></script>
 </body>
 </html>

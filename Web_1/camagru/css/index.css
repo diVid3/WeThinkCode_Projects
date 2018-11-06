@@ -114,3 +114,76 @@ a.click:hover {
         font-size: 13px;
     }
 }
+
+/* Modal CSS */
+
+.modal {
+    display: none;
+    /* display: flex; */
+    z-index: 1;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+}
+
+.modal-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-column {
+    flex-grow: 1;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    /* setting parent container to position relative */
+    overflow: auto;
+    border-radius: 9px;
+    border: 2px solid mediumpurple;
+    box-shadow:0px 2px 5px #3a3a3a;
+}
+
+.modalHeader {
+    background-color: mediumpurple;
+    color: white;
+    border-radius: 9px;
+    padding: 10px;
+}
+
+.okButton {
+    background-color: mediumpurple;
+    color: white;
+    border-radius: 9px;
+    padding: 10px;
+    margin: 0% 35%;
+    cursor: pointer;
+}
+
+.okButton:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
+/* Could fuse this, but nah */
+
+@media screen and (min-width: 824px) {
+    .modal-column {
+        margin: 15% 37.5%;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .modal-column {
+        margin: 15% 15%;
+    }
+}
+
+.errorModal {
+    color: black;
+    border-radius: 9px;
+    padding: 2%;
+}
