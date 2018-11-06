@@ -68,9 +68,9 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <form class="grid-item-center" id="signinForm">
-            <!-- <div class="sign_up-items" style="text-align:center;">
+            <div class="sign_up-items" style="text-align:center;">
                 <div style="display:inline-block;flex-grow:1;">
-                    <p class="sign-up-form">Sign up</p>
+                    <p class="sign-up-form">Sign in</p>
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -95,6 +95,26 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
                 <div style="flex-grow:1;padding-bottom:3px;">
+                    <p></p>
+                </div>
+            </div>
+            <div class="sign_up-items" style="align-items:center;">
+                <div style="flex-grow:1;">
+                    <!-- <input type="password" name="password" placeholder="Enter your password..." id="signupFormConfirmPassword"> -->
+                </div>
+            </div>
+            <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
+                    <p></p>
+                </div>
+            </div>
+            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
+                <div style="flex-grow:1;">
+                    <!-- <input type="text" name="email" placeholder="Enter your email..." id="signupFormEmail"> -->
+                </div>
+            </div>
+            <!-- <div class="sign_up-items" style="align-items:flex-end;">
+                <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Confirm password:</p>
                 </div>
             </div>
@@ -102,8 +122,8 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                 <div style="flex-grow:1;">
                     <input type="password" name="password" placeholder="Enter your password..." id="signupFormConfirmPassword">
                 </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
+            </div> -->
+            <!-- <div class="sign_up-items" style="align-items:flex-end;">
                 <div style="flex-grow:1;padding-bottom:3px;">
                     <p>Email:</p>
                 </div>
@@ -112,12 +132,12 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                 <div style="flex-grow:1;">
                     <input type="text" name="email" placeholder="Enter your email..." id="signupFormEmail">
                 </div>
-            </div>
+            </div> -->
             <button class="sign_up-item-button" name="name" value="value" type="submit">
                 <div style="flex-grow:1;text-align:center;">
-                    <p>Sign up</p>
+                    <p>Sign in</p>
                 </div>
-            </button> -->
+            </button>
         </form>
         <div class="grid-item"></div>
         <div class="grid-item"></div>

@@ -5,7 +5,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 
 // If any part is lacking, exit.
 if ((isset($_GET['email']) == true && empty($_GET['email']) == false && isset($_GET['verify_hash']) == true && empty($_GET['verify_hash']) == false) == false) {
-    echo "Unauthorized access" . '<br>'; // Beter to redirect
+    echo "Unauthorized Access - Go away." . '<br>';
     exit;
 }
 
@@ -18,8 +18,8 @@ try {
     $stmt = $PDO->prepare($query2);
     $stmt->execute([$_GET['email'], $_GET['verify_hash']]);
     if ($stmt->rowCount() == 0) {
-        // Need to redirect with error.
-        // echo 'Invalid verification link' . '<br>';
+        header("Location: http://127.0.0.1:8080/index.php?verify=fail");
+        exit;
     }
 }
 catch (PDOexception $e) {
@@ -37,5 +37,6 @@ catch (PDOexception $e) {
 }
 
 // Need to redirect here upon success.
-
+header("Location: http://127.0.0.1:8080/index.php?verify=success");
+exit;
 ?>

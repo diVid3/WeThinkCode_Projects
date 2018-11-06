@@ -112,9 +112,7 @@ $message = 'Thank you for signing up to Camagru! To complete your registration, 
 Please click on this link:
 http://127.0.0.1:8080/verify.php?email=' . $signupFormEmail . '&verify_hash=' . $verify_hash;
 
-// $headers = 'noreply@camagru' . "\r\n";
 mail($to, $subject, $message);
-
 
 // Notifiy modal.
 

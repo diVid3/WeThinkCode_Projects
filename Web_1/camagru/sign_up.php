@@ -136,6 +136,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         </div>
     </footer>
     <!-- JS source here -->
-    <script src="sign_up.js"></script>
+    <script src="js/sign_up.js"></script>
 </body>
 </html>

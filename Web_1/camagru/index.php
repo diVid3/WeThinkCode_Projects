@@ -22,6 +22,17 @@ if (file_exists('initialized.txt') == false) {
     <link rel="stylesheet" type="text/css" media="screen" href="css/index.css"/>
 </head>
 <body>
+    <!-- Modal markup -->
+    <div id="formModal" class="modal">
+        <div id="modalRow" class="modal-row">
+            <div class="modal-column">
+                <p class="modalHeader" id="modalHeader">Double-check form</p><br>
+                <p class="errorModal" id="modalText"></p><br>
+                <div id="okButton" class="okButton"><p>ok</p></div>
+            </div>
+        </div>
+    </div>
+    <!-- Normal body -->
     <header class="header">
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
@@ -31,30 +42,30 @@ if (file_exists('initialized.txt') == false) {
             </div>
         </div>
         <div class="header-box">
-        <!-- <div class="header-box" onclick="location.href='php/take_photo.php';" style="cursor: pointer;"> -->
+        <!-- <div class="header-box" onclick="location.href='take_photo.php';" style="cursor: pointer;"> -->
             <div style="text-align:center;display:inline-block;">
-                <a href='php/take_photo.php' class="click" style="display:inline-block" onclick="location.href='php/take_photo.php';" style="cursor:pointer;text-align:center;">
+                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
                     <p>Take a pic</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='php/gallery.php' class="click" style="display:inline-block" onclick="location.href='php/gallery.php';" style="cursor:pointer;text-align:center;">
+                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
                     <p>Gallery</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='php/sign_up.php' class="click" style="display:inline-block;" onclick="location.href='php/sign_up.php';" style="cursor:pointer;text-align:center;">
+                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
                     <p>Sign up</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='php/sign_in.php' class="click" style="display:inline-block;" onclick="location.href='php/sign_in.php';" style="cursor:pointer;text-align:center;">
+                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
                     <p>Sign in</p>
                 </a>
             </div>

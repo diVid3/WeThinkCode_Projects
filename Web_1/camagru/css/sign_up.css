@@ -104,6 +104,7 @@ for the grid items */
     background-color: mediumpurple;
     color: white;
     cursor: pointer;
+    max-height: 55.156px;
 }
 
 .sign_up-item-button:hover {
@@ -193,7 +194,6 @@ p.sign-up-form {
 
 .modal {
     display: none;
-    /* display: flex; */
     z-index: 1;
     position: fixed;
     height: 100%;
