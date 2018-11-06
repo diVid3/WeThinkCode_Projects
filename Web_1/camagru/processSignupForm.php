@@ -107,15 +107,13 @@ catch (PDOexception $e) {
 
 $to = $signupFormEmail;
 $subject = 'Camagru | Verification';
-$message = '
-
-Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
+$message = 'Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
 
 Please click on this link:
 http://127.0.0.1:8080/verify.php?email=' . $signupFormEmail . '&verify_hash=' . $verify_hash;
 
-$headers = 'noreply@camagru' . "\r\n";
-mail($to, $subject, $message, $headers);
+// $headers = 'noreply@camagru' . "\r\n";
+mail($to, $subject, $message);
 
 
 // Notifiy modal.
