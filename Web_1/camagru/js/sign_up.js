@@ -75,24 +75,17 @@ function openModal(returnArr, formModal) {
 
     // Logic - Modal - Passwords.
 
-    // if (returnArr['passwordTooLong'] == 1) {
-    //     document.getElementById('modalText').innerHTML = 'Password too long, maximum 32 characters.';
-    //     formModal.style.display = 'flex';
-    // }
     if (returnArr['passwordTooShort'] == 1) {
         document.getElementById('modalText').innerHTML = 'Password too short, minimum 7 characters.';
         formModal.style.display = 'flex';
     }
-    // if (returnArr['passwordNotLegalCharFound'] == 1) {
-    //     document.getElementById('modalText').innerHTML = 'Password contains illegal characters.';
-    //     formModal.style.display = 'flex';
-    // }
     if (returnArr['passwordMatch'] == 0) {
         document.getElementById('modalText').innerHTML = 'Passwords do not match.';
         formModal.style.display = 'flex';
     }
 
     // Logic - Modal - Email.
+
     if (returnArr['emailTooLong'] == 1) {
         document.getElementById('modalText').innerHTML = 'Email address too long, maximum 32 characters.';
         formModal.style.display = 'flex';

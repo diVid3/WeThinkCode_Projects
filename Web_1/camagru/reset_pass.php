@@ -128,7 +128,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
-                    <input type="text" name="email" placeholder="Enter your email..." id="resetPassFormToken">
+                    <input type="text" name="token" placeholder="Enter your email..." id="resetPassFormToken">
                 </div>
             </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">
