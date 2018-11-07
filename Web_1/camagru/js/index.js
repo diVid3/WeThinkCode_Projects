@@ -34,6 +34,7 @@ window.onload = function() {
     }
 
     var verifyState = parseGetParameters('verify');
+    var resetPassState = parseGetParameters('resetPass');
 
     if (verifyState == 'success') {
         document.getElementById('modalHeader').innerHTML = 'Verification success';
@@ -45,4 +46,11 @@ window.onload = function() {
         document.getElementById('modalText').innerHTML = 'Invalid verification code.';
         formModal.style.display = 'flex';
     }
+
+    if (resetPassState == 'fail') {
+        document.getElementById('modalHeader').innerHTML = 'Reset password failure';
+        document.getElementById('modalText').innerHTML = 'Invalid password reset code.';
+        formModal.style.display = 'flex';
+    }
+
 }

@@ -21,7 +21,6 @@ function postSignupForm(e) {
     // Need to add exception checks here.
     xhr.onload = function() {
         var returnArr = JSON.parse(this.responseText);
-        // console.log(returnArr);
         var formModal = document.getElementById('formModal');
         var modalCloseButton = document.getElementById('okButton');
         var modalRow = document.getElementById('modalRow');

@@ -80,7 +80,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <!-- <input type="text" name="username" minlength="4" maxlength="16" required placeholder="Enter your username..." id="signupFormUsername"> -->
                     <input type="text" name="username" placeholder="Enter your username..." id="signupFormUsername">
                 </div>
             </div>
@@ -91,7 +90,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <!-- <input type="password" name="password" minlength="7" maxlength="32" required placeholder="Enter your password..." id="signupFormPassword"> -->
                     <input type="password" name="password" placeholder="Enter your password..." id="signupFormPassword">
                 </div>
             </div>
@@ -102,7 +100,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <!-- <input type="password" name="password" minlength="7" maxlength="32" required placeholder="Enter your password..." id="signupFormConfirmPassword"> -->
                     <input type="password" name="password" placeholder="Enter your password..." id="signupFormConfirmPassword">
                 </div>
             </div>
@@ -113,7 +110,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
-                    <!-- <input type="email" name="email" minlength="3" maxlength="32" required placeholder="Enter your email..." id="signupFormEmail"> -->
                     <input type="text" name="email" placeholder="Enter your email..." id="signupFormEmail">
                 </div>
             </div>

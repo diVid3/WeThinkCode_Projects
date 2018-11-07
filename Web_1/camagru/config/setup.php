@@ -26,6 +26,7 @@ function createUserTable() {
         `password` VARCHAR(60) NOT NULL,
         `email` VARCHAR(32) NOT NULL UNIQUE,
         `verify_hash` VARCHAR(64) NOT NULL UNIQUE,
+        `reset_hash` VARCHAR(64) UNIQUE,
         `verified` TINYINT(1) NOT NULL
     );';
     try {

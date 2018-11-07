@@ -2,6 +2,24 @@
 session_start();
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+
+// Checking if email and verify_hash exists.
+// try {
+//     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+//     $query2 = 'SELECT * FROM `users` WHERE `email` = ? AND `reset_hash` = ?';
+//     $PDO = connectDBMS();
+//     $PDO->query($query1);
+//     $stmt = $PDO->prepare($query2);
+//     $stmt->execute([$_GET['email'], $_GET['reset_hash']]);
+// }
+// catch (PDOexception $e) {
+//     error_log($e);
+// }
+// if ($stmt->rowCount() == 0) {
+//     header("Location: http://127.0.0.1:8080/index.php?resetPass=fail");
+//     $PDO = NULL;
+//     exit;
+// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,14 +27,14 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <meta charset="utf-8" />
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/sign_in.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset_pass.css"/>
 </head>
 <body>
     <!-- Modal markup -->
     <div id="formModal" class="modal">
         <div id="modalRow" class="modal-row">
             <div class="modal-column">
-                <p class="modalHeader" id="modalHeader">Double-check form</p><br>
+                <p class="modalHeader" id="modalHeader">Password reset email sent</p><br>
                 <p class="errorModal" id="modalText"></p><br>
                 <div id="okButton" class="okButton"><p>ok</p></div>
             </div>
@@ -67,10 +85,10 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
-        <form class="grid-item-center" id="signinForm">
+        <form class="grid-item-center" id="resetPassForm">
             <div class="sign_up-items" style="text-align:center;">
                 <div style="display:inline-block;flex-grow:1;">
-                    <p class="sign-up-form" id="formHeader">Sign in</p>
+                    <p class="sign-up-form">Reset password</p>
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -80,7 +98,7 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <input type="text" name="username" placeholder="Enter your username..." id="signinFormUsername">
+                    <input type="text" name="username" placeholder="Enter your username..." id="resetPassFormUsername">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
@@ -90,40 +108,32 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
-                    <input type="password" name="password" placeholder="Enter your password..." id="signinFormPassword">
+                    <input type="password" name="password" placeholder="Enter your password..." id="resetPassFormPassword">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
                 <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
+                    <p>Confirm password:</p>
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:center;">
                 <div style="flex-grow:1;">
+                    <input type="password" name="password" placeholder="Enter your password..." id="resetPassFormConfirmPassword">
                 </div>
             </div>
             <div class="sign_up-items" style="align-items:flex-end;">
                 <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
+                    <p>Token:</p>
                 </div>
             </div>
-            <div class="sign_up-items" style="align-items:center;">
+            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="flex-direction:column;align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <p style="color:#4285F4;cursor:pointer;" onclick="location.href='forgot_pass.php'">Forgot password?</p>
+                    <input type="text" name="email" placeholder="Enter your email..." id="resetPassFormToken">
                 </div>
             </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">
                 <div style="flex-grow:1;text-align:center;">
-                    <p>Sign in</p>
+                    <p>Reset password</p>
                 </div>
             </button>
         </form>
@@ -140,6 +150,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         </div>
     </footer>
     <!-- JS source here -->
-    <script src="js/sign_in.js"></script>
+    <script src="js/forgot_pass.js"></script>
 </body>
 </html>
