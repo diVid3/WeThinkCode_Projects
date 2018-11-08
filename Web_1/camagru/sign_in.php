@@ -23,43 +23,12 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
         </div>
     </div>
     <!-- Normal body -->
-    <header class="header">
-        <div class="header-box">
-            <div style="text-align:center;display:inline-block;">
-                <a href='index.php' class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
-                    <p>Camagru</p>
-                </a>
-            </div>
-        </div>
-        <div class="header-box">
-            <div style="text-align:center;display:inline-block;">
-                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
-                    <p>Take a pic</p>
-                </a>
-            </div>
-        </div>
-        <div class="header-box">
-            <div style="text-align:center;display:inline-block;">
-                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
-                    <p>Gallery</p>
-                </a>
-            </div>
-        </div>
-        <div class="header-box">
-            <div style="text-align:center;display:inline-block;">
-                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign up</p>
-                </a>
-            </div>
-        </div>
-        <div class="header-box">
-            <div style="text-align:center;display:inline-block;">
-                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign in</p>
-                </a>
-            </div>
-        </div>
-    </header>
+    <?php
+        if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false)
+            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_in.html');
+        else
+            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_out.html');
+    ?>
     <div class="push-content">
     </div>
     <div class="content">

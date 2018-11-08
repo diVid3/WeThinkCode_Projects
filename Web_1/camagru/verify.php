@@ -23,7 +23,6 @@ catch (PDOexception $e) {
 }
 if ($stmt->rowCount() == 0) {
     header("Location: http://127.0.0.1:8080/index.php?verify=fail");
-    $PDO = NULL;
     exit;
 }
 
@@ -39,6 +38,5 @@ catch (PDOexception $e) {
 
 // Need to redirect here upon success.
 header("Location: http://127.0.0.1:8080/index.php?verify=success");
-$PDO = NULL;
 exit;
 ?>

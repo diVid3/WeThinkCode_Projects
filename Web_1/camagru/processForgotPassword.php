@@ -26,7 +26,6 @@ catch (PDOexception $e) {
 if ($stmt->rowCount() == 0) {
     $json = ['usernameNotRegistered' => 1];
     echo json_encode($json);
-    $PDO = NULL;
     exit;
 }
 
@@ -69,5 +68,4 @@ mail($to, $subject, $message);
 $json = ['forgotPasswordEmailSent' => 1];
 echo json_encode($json);
 
-$PDO = NULL;
 ?>

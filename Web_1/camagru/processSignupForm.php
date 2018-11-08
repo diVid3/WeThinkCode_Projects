@@ -45,7 +45,6 @@ catch (PDOexception $e) {
 if ($stmt->rowCount() > 0) {
     $json = ['usernameTaken' => 1];
     echo json_encode($json);
-    $PDO = NULL;
     exit;
 }
 
@@ -85,7 +84,6 @@ catch (PDOexception $e) {
 if ($stmt->rowCount() > 0) {
     $json = ['emailTaken' => 1];
     echo json_encode($json);
-    $PDO = NULL;
     exit;
 }
 
@@ -119,5 +117,4 @@ mail($to, $subject, $message);
 $json = ['accountCreated' => 1];
 echo json_encode($json);
 
-$PDO = NULL;
 ?>

@@ -43,18 +43,6 @@ function forgotPassword(e) {
 // Need to change this modal logic for username.
 
 function openModal(returnArr, formModal) {
-    // if (returnArr['emailTooLong'] == 1) {
-    //     document.getElementById('modalText').innerHTML = 'The email address too long, maximum 32 characters.';
-    //     formModal.style.display = 'flex';
-    // }
-    // if (returnArr['emailNotValid'] == 1) {
-    //     document.getElementById('modalText').innerHTML = 'The email address is not valid';
-    //     formModal.style.display = 'flex';
-    // }
-    // if (returnArr['emailNotRegistered'] == 1) {
-    //     document.getElementById('modalText').innerHTML = 'The email address you\'ve entered has not been registered';
-    //     formModal.style.display = 'flex';
-    // }
     if (returnArr['usernameSpecCharFound'] == 1) {
         document.getElementById('modalHeader').innerHTML = 'Double-check form';
         document.getElementById('modalText').innerHTML = 'Username contains special characters.';

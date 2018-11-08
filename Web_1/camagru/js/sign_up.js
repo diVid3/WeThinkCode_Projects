@@ -1,7 +1,7 @@
-document.getElementById('signupForm').addEventListener('submit', postSignupForm);
+document.getElementById('signupForm').addEventListener('submit', postSignUpForm);
 
 // Need a much cleaner way of splitting these.
-function postSignupForm(e) {
+function postSignUpForm(e) {
     e.preventDefault();
 
     var signupFormUsername = document.getElementById('signupFormUsername').value;

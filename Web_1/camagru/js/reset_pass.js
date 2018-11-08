@@ -52,26 +52,42 @@ function openModal(returnArr, formModal) {
     // Logic - Modal - Username.
 
     if (returnArr['usernameSpecCharFound'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Double-check form';
         document.getElementById('modalText').innerHTML = 'Username contains special characters.';
+        formModal.style.display = 'flex';
+    }
+    if (returnArr['usernameNotRegistered'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Double-check form';
+        document.getElementById('modalText').innerHTML = 'Username is invalid.';
         formModal.style.display = 'flex';
     }
 
     // Logic - Modal - Passwords.
 
     if (returnArr['passwordTooShort'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Double-check form';
         document.getElementById('modalText').innerHTML = 'Password too short, minimum 7 characters.';
         formModal.style.display = 'flex';
     }
     if (returnArr['passwordMatch'] == 0) {
+        document.getElementById('modalHeader').innerHTML = 'Double-check form';
         document.getElementById('modalText').innerHTML = 'Passwords do not match.';
+        formModal.style.display = 'flex';
+    }
+
+    // Logic - Modal - Token.
+
+    if (returnArr['tokenInvalid'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Double-check form';
+        document.getElementById('modalText').innerHTML = 'The token you entered is invalid';
         formModal.style.display = 'flex';
     }
 
     // Logic - Modal - Password reset successful.
 
-    if (returnArr['accountCreated'] == 1) {
-        document.getElementById('modalHeader').innerHTML = 'Account created';
-        document.getElementById('modalText').innerHTML = 'To verify your account, follow the instructions in the message sent your email address.';
+    if (returnArr['passResetSuccessful'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Password reset successful';
+        document.getElementById('modalText').innerHTML = 'Your password has been reset successfully. You may now sign in.';
         formModal.style.display = 'flex';
     }
 }
