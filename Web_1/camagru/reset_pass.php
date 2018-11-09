@@ -2,24 +2,6 @@
 session_start();
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
-
-// Checking if email and verify_hash exists.
-// try {
-//     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-//     $query2 = 'SELECT * FROM `users` WHERE `email` = ? AND `reset_hash` = ?';
-//     $PDO = connectDBMS();
-//     $PDO->query($query1);
-//     $stmt = $PDO->prepare($query2);
-//     $stmt->execute([$_GET['email'], $_GET['reset_hash']]);
-// }
-// catch (PDOexception $e) {
-//     error_log($e);
-// }
-// if ($stmt->rowCount() == 0) {
-//     header("Location: http://127.0.0.1:8080/index.php?resetPass=fail");
-//     $PDO = NULL;
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,36 +26,36 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <header class="header">
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='index.php' class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
-                    <p>Camagru</p>
+                <a href='index.php' id="nav1href" class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav1text">Camagru</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
-                    <p>Take a pic</p>
+                <a href='take_photo.php' id="nav2href" class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav2text">Take a pic</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
-                    <p>Gallery</p>
+                <a href='gallery.php' id="nav3href" class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav3text">Gallery</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign up</p>
+                <a href='sign_up.php' id="nav4href" class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav4text">Sign up</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign in</p>
+                <a href='sign_in.php' id="nav5href" class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav5text">Sign in</p>
                 </a>
             </div>
         </div>

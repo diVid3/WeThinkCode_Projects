@@ -113,6 +113,16 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                     <input type="text" name="email" placeholder="Enter your email..." id="signupFormEmail">
                 </div>
             </div>
+            <div class="sign_up-items" style="align-items:center;">
+                <div style="flex-grow:1;padding-bottom:3px;">
+                    <p>Email notifications:</p>
+                </div>
+            </div>
+            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
+                <div style="flex-grow:1;">
+                    <input type="checkbox" name="notification" id="signupFormNotification">
+                </div>
+            </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">
                 <div style="flex-grow:1;text-align:center;">
                     <p>Sign up</p>

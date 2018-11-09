@@ -7,6 +7,7 @@ $signupFormUsername = trim($_POST['signupFormUsername']);
 $signupFormPassword = trim($_POST['signupFormPassword']);
 $signupFormConfirmPassword = trim($_POST['signupFormConfirmPassword']);
 $signupFormEmail = trim($_POST['signupFormEmail']);
+$signupFormNotification = trim($_POST['signupFormNotification']);
 
 // Username checks.
 
@@ -87,15 +88,22 @@ if ($stmt->rowCount() > 0) {
     exit;
 }
 
+// Notification checks.
+
+if ($signupFormNotification == 'true') 
+    $signupFormNotificationValue = 1;
+else
+    $signupFormNotificationValue = 0;
+
 // Account creation.
 
 try {
     $hash = password_hash($signupFormPassword, PASSWORD_BCRYPT, ['cost' => 11]);
     $verify_hash = bin2hex(random_bytes(32));
     $verified = 0;
-    $query2 = 'INSERT INTO `users` (`username`, `password`, `email`, `verify_hash`, `verified`) VALUES (?,?,?,?,?)';
+    $query2 = 'INSERT INTO `users` (`username`, `password`, `email`, `notification`, `verify_hash`, `verified`) VALUES (?,?,?,?,?,?)';
     $stmt = $PDO->prepare($query2);
-    $stmt->execute([$signupFormUsername, $hash, $signupFormEmail, $verify_hash, $verified]);
+    $stmt->execute([$signupFormUsername, $hash, $signupFormEmail, $signupFormNotificationValue, $verify_hash, $verified]);
 }
 catch (PDOexception $e) {
     error_log($e);

@@ -26,36 +26,36 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <header class="header">
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='index.php' class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
-                    <p>Camagru</p>
+                <a href='index.php' id="nav1href" class="click" style="display:inline-block" onclick="location.href='index.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav1text">Camagru</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='take_photo.php' class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
-                    <p>Take a pic</p>
+                <a href='take_photo.php' id="nav2href" class="click" style="display:inline-block" onclick="location.href='take_photo.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav2text">Take a pic</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='gallery.php' class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
-                    <p>Gallery</p>
+                <a href='gallery.php' id="nav3href" class="click" style="display:inline-block" onclick="location.href='gallery.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav3text">Gallery</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_up.php' class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign up</p>
+                <a href='sign_up.php' id="nav4href" class="click" style="display:inline-block;" onclick="location.href='sign_up.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav4text">Sign up</p>
                 </a>
             </div>
         </div>
         <div class="header-box">
             <div style="text-align:center;display:inline-block;">
-                <a href='sign_in.php' class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
-                    <p>Sign in</p>
+                <a href='sign_in.php' id="nav5href" class="click" style="display:inline-block;" onclick="location.href='sign_in.php';" style="cursor:pointer;text-align:center;">
+                    <p id="nav5text">Sign in</p>
                 </a>
             </div>
         </div>
@@ -83,16 +83,6 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                     <input type="text" name="username" placeholder="Enter your username..." id="forgotPasswordFormUsername">
                 </div>
             </div>
-            <!-- <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Email:</p> 
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="email" placeholder="Enter your email..." id="forgotPasswordFormEmail">
-                </div>
-            </div> -->
             <div class="sign_up-items" style="align-items:flex-end;">
                 <div style="flex-grow:1;padding-bottom:3px;">
                     <p></p>

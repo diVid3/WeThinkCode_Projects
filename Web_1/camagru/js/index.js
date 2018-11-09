@@ -9,7 +9,10 @@ window.onload = function() {
     function closeModal() {
         formModal.style.display = 'none';
         document.getElementById('modalHeader').innerHTML = 'Verification failure';
-
+        if (signinState != null) {
+            console.log('does not get in here');
+            window.location.assign('http://127.0.0.1:8080/index.php');
+        }
     }
     function clickOutsideModal(e) {
         if (e.target == formModal) {
@@ -35,6 +38,7 @@ window.onload = function() {
 
     var verifyState = parseGetParameters('verify');
     var resetPassState = parseGetParameters('resetPass');
+    var signinState = parseGetParameters('signin');
 
     if (verifyState == 'success') {
         document.getElementById('modalHeader').innerHTML = 'Verification success';
@@ -53,4 +57,10 @@ window.onload = function() {
         formModal.style.display = 'flex';
     }
 
+    if (signinState == 'success') {
+        var signinUsername = parseGetParameters('username');
+        document.getElementById('modalHeader').innerHTML = 'Successfully signed in';
+        document.getElementById('modalText').innerHTML = 'Welcome ' + signinUsername + '.';
+        formModal.style.display = 'flex';
+    }
 }

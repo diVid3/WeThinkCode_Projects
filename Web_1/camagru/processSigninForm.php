@@ -63,7 +63,13 @@ if ($userVerified == 0) {
 
 // Setting $_SESSION variables.
 
+$query1 = 'SELECT * FROM `users` WHERE `username` = ?';
+$stmt = $PDO->prepare($query1);
+$stmt->execute([$signinFormUsername]);
+$rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
+$userEmail = $rowArr['email'];
 $_SESSION['username'] = $signinFormUsername;
+$_SESSION['email'] = $userEmail;
 $_SESSION['password'] = $signinFormPassword;
 
 // Notify successful sign in.

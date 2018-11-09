@@ -3,7 +3,6 @@ session_start();
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 
-// $forgotPasswordFormEmail = trim($_POST['forgotPasswordFormEmail']);
 $forgotPasswordFormUsername = trim($_POST['forgotPasswordFormUsername']);
 
 if (preg_match('/\W+/', $forgotPasswordFormUsername) === 1) {

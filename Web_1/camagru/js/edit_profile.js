@@ -1,27 +1,27 @@
-document.getElementById('signupForm').addEventListener('submit', postSignUpForm);
+document.getElementById('editProfileForm').addEventListener('submit', postEditProfileForm);
 
 // Need a much cleaner way of splitting these.
-function postSignUpForm(e) {
+function postEditProfileForm(e) {
     e.preventDefault();
 
-    var signupFormUsername = document.getElementById('signupFormUsername').value;
-    var signupFormPassword = document.getElementById('signupFormPassword').value;
-    var signupFormConfirmPassword = document.getElementById('signupFormConfirmPassword').value;
-    var signupFormEmail = document.getElementById('signupFormEmail').value;
-    var signupFormNotification = document.getElementById('signupFormNotification').checked;
+    var editProfileFormUsername = document.getElementById('editProfileFormUsername').value;
+    var editProfileFormPassword = document.getElementById('editProfileFormPassword').value;
+    var editProfileFormConfirmPassword = document.getElementById('editProfileFormConfirmPassword').value;
+    var editProfileFormEmail = document.getElementById('editProfileFormEmail').value;
+    var editProfileFormNotification = document.getElementById('editProfileFormNotification').checked;
 
-    var keyVal1 = "signupFormUsername=" + signupFormUsername;
-    var keyVal2 = "signupFormPassword=" + signupFormPassword;
-    var keyVal3 = "signupFormConfirmPassword=" + signupFormConfirmPassword;
-    var keyVal4 = "signupFormEmail=" + signupFormEmail;
-    if (signupFormNotification == true)
-        var keyVal5 = "signupFormNotification=true";
+    var keyVal1 = "editProfileFormUsername=" + editProfileFormUsername;
+    var keyVal2 = "editProfileFormPassword=" + editProfileFormPassword;
+    var keyVal3 = "editProfileFormConfirmPassword=" + editProfileFormConfirmPassword;
+    var keyVal4 = "editProfileFormEmail=" + editProfileFormEmail;
+    if (editProfileFormNotification == true)
+        var keyVal5 = "editProfileFormNotification=true";
     else
-        var keyVal5 = "signupFormNotification=false";
+        var keyVal5 = "editProfileFormNotification=false";
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'processSignupForm.php', true);
+    xhr.open('POST', 'processEditProfile.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     // Need to add exception checks here.
     xhr.onload = function() {
@@ -104,11 +104,11 @@ function openModal(returnArr, formModal) {
         formModal.style.display = 'flex';
     }
 
-    // Logic - Modal - Account created.
+    // Logic - Modal - Profile edited.
 
-    if (returnArr['accountCreated'] == 1) {
-        document.getElementById('modalHeader').innerHTML = 'Account created';
-        document.getElementById('modalText').innerHTML = 'To verify your account, follow the instructions in the message sent your email address.';
+    if (returnArr['editedProfile'] == 1) {
+        document.getElementById('modalHeader').innerHTML = 'Edited profile';
+        document.getElementById('modalText').innerHTML = 'You have successfully edited your profile, make sure to keep your details safe.';
         formModal.style.display = 'flex';
     }
 }

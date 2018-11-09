@@ -73,14 +73,16 @@ function openModal(returnArr, formModal) {
     // Logic - Modal - Sign in.
 
     if (returnArr['successfulSignin'] == 1) {
-        document.getElementById('nav4href').href = "edit_profile.php";
-        document.getElementById('nav4text').setAttribute('onclick', "location.href='edit_profile.php';");
-        document.getElementById('nav4text').innerHTML = "Edit profile";
-        document.getElementById('nav5href').href = "sign_out.php";
-        document.getElementById('nav5text').setAttribute('onclick', "location.href='sign_out.php';");
-        document.getElementById('nav5text').innerHTML = "Sign out";
-        document.getElementById('modalHeader').innerHTML = 'Successfully signed in';
-        document.getElementById('modalText').innerHTML = 'Welcome ' + returnArr['username'] + '.';
-        formModal.style.display = 'flex';
+        // document.getElementById('nav4href').href = "edit_profile.php";
+        // document.getElementById('nav4text').setAttribute('onclick', "location.href='edit_profile.php';");
+        // document.getElementById('nav4text').innerHTML = "Edit profile";
+        // document.getElementById('nav5href').href = "sign_out.php";
+        // document.getElementById('nav5text').setAttribute('onclick', "location.href='sign_out.php';");
+        // document.getElementById('nav5text').innerHTML = "Sign out";
+        // document.getElementById('modalHeader').innerHTML = 'Successfully signed in';
+        // document.getElementById('modalText').innerHTML = 'Welcome ' + returnArr['username'] + '.';
+        // formModal.style.display = 'flex';
+        var username = returnArr['username'];
+        window.location = "http://127.0.0.1:8080/index.php?signin=success&username=" + username;
     }
 }

@@ -25,6 +25,7 @@ function createUserTable() {
         `username` VARCHAR(32) NOT NULL UNIQUE,
         `password` VARCHAR(60) NOT NULL,
         `email` VARCHAR(32) NOT NULL UNIQUE,
+        `notification` TINYINT(1) NOT NULL,
         `verify_hash` VARCHAR(64) NOT NULL UNIQUE,
         `reset_hash` VARCHAR(64) UNIQUE,
         `verified` TINYINT(1) NOT NULL
