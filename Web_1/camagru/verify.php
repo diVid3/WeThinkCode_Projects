@@ -1,7 +1,8 @@
 <?php
 session_start();
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 
 // If any part is lacking, exit.
 if ((isset($_GET['email']) == true && empty($_GET['email']) == false && isset($_GET['verify_hash']) == true && empty($_GET['verify_hash']) == false) == false) {

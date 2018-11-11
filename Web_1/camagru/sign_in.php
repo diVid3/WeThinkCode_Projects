@@ -1,7 +1,8 @@
 <?php
 session_start();
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,9 +26,9 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
     <!-- Normal body -->
     <?php
         if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false)
-            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_in.html');
+            require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_in.html');
         else
-            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_out.html');
+            require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_out.html');
     ?>
     <div class="push-content">
     </div>

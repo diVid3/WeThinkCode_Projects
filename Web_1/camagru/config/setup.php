@@ -1,7 +1,7 @@
 <?php
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 
 function createDB() {
     global $DB_DATABASE_NAME;

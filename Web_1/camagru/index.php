@@ -1,17 +1,18 @@
 <?php
 session_start();
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 
-if (file_exists('errors.log') == false) {
-    $errorLog = fopen('errors.log', 'w');
-    fclose($errorLog);
-}
-if (file_exists('initialized.txt') == false) {
-    include_once ($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
-    $initFile = fopen('initialized.txt', 'w');
-    fclose($initFile);
-}
+// if (file_exists('errors.log') == false) {
+//     $errorLog = fopen('errors.log', 'w');
+//     fclose($errorLog);
+// }
+// if (file_exists('initialized.txt') == false) {
+//     require_once ($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
+//     $initFile = fopen('initialized.txt', 'w');
+//     fclose($initFile);
+// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,9 +36,9 @@ if (file_exists('initialized.txt') == false) {
     <!-- Normal body -->
     <?php
         if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false)
-            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_in.html');
+            require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_in.html');
         else
-            include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_out.html');
+            require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/header_sign_out.html');
     ?>
     <div class="push-content">
     </div>

@@ -1,6 +1,6 @@
 <?php
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
 
 function connectDBMS() {
     global $DB_DSN;

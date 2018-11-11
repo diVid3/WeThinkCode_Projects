@@ -3,10 +3,6 @@
     padding: 0;
 }
 
-p.text-margin {
-    margin: 0.5% 0.5% 0.5% 0.5%;
-}
-
 html, body {
     height: 100%;
 }
@@ -52,14 +48,84 @@ actually contain the text */
     border-bottom: 4px;
 }
 
-/* .content is applied to flexbox children */
+/* .content is applied to flexbox children.
+This class will also serve as the container
+for the grid items */
 .content {
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: auto;
-    padding-bottom: 0.2%;
     background: linear-gradient(white, #eee);
     color: black;
+    /* display: grid;
+    grid-template-columns: minmax(10vw, auto) minmax(1px, 500px) minmax(10vw, auto);
+    grid-template-rows: 8vh 69vh 8vh; */
+    /* grid-template-rows: 8vh 69vh 8vh; */
+}
+
+.grid-item {
+    grid-column-start: auto;
+    grid-column-end: auto;
+    grid-row-start: auto;
+    grid-row-end: auto;
+}
+
+.grid-item-center {
+    background-color: white;
+    border-radius: 9px;
+    box-shadow:0px 2px 5px #808080;
+    padding: 2%;
+    /* grid-column-start: auto;
+    grid-column-end: auto;
+    grid-row-start: auto;
+    grid-row-end: auto; */
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.sign_up-items {
+    flex-grow: 1;
+    display: flex;
+}
+
+.sign_up-item-first {
+    flex-grow: 1.25;
+}
+
+.sign_up-item-last {
+    flex-grow: 1.25;
+}
+
+.sign_up-item-button {
+    border-radius: 9px;
+    border: none;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: mediumpurple;
+    color: white;
+    cursor: pointer;
+    max-height: 55.156px;
+}
+
+.sign_up-item-button:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
+input, input[type="text"] {
+    width: 99%;
+    border-width: 0px;
+    border-bottom-width: 2px;
+    padding-bottom: 2%;
+ }
+
+::placeholder {
+    color: rgb(220, 220, 220);
+}
+
+ textarea:focus, input:focus{
+    outline: none;
 }
 
 /* .footer is applied to flexbox children */
@@ -87,7 +153,7 @@ a {
     text-decoration: none;
 }
 
-p {
+p, h2 {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 50;
 }
@@ -107,19 +173,28 @@ a.click:hover {
     p {
         font-size: 20px;
     }
+    input, input[type="text"] {
+        font-size: 20px;
+     }
 }
 
 @media screen and (max-width: 823px) {
     p {
         font-size: 13px;
     }
+    input, input[type="text"] {
+        font-size: 13px;
+     }
+}
+
+p.sign-up-form {
+    font-weight: bold;
 }
 
 /* Modal CSS */
 
 .modal {
-    display: none;
-    /* display: flex; */
+    display: flex;
     z-index: 1;
     position: fixed;
     height: 100%;

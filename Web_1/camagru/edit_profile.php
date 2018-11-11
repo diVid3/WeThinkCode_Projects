@@ -1,7 +1,8 @@
 <?php
 session_start();
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false) {
     header('HTTP/1.1 403 Forbidden');
     exit;
@@ -13,7 +14,7 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <meta charset="utf-8" />
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/sign_up.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/edit_profile.css"/>
 </head>
 <body>
     <!-- Modal markup -->

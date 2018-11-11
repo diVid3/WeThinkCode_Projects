@@ -10,15 +10,15 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
     <meta charset="utf-8" />
     <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/forgot_pass.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/take_photo_sign_in.css"/>
 </head>
 <body>
     <!-- Modal markup -->
     <div id="formModal" class="modal">
         <div id="modalRow" class="modal-row">
             <div class="modal-column">
-                <p class="modalHeader" id="modalHeader">Password reset email sent</p><br>
-                <p class="errorModal" id="modalText"></p><br>
+                <p class="modalHeader" id="modalHeader">Please sign in</p><br>
+                <p class="errorModal" id="modalText"> You need to be signed in to take a picture.</p><br>
                 <div id="okButton" class="okButton"><p>ok</p></div>
             </div>
         </div>
@@ -64,67 +64,6 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
     <div class="push-content">
     </div>
     <div class="content">
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <form class="grid-item-center" id="forgotPasswordForm">
-            <div class="sign_up-items" style="text-align:center;">
-                <div style="display:inline-block;flex-grow:1;">
-                    <p class="sign-up-form" id="formHeader">Request reset</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Username:</p> 
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="username" placeholder="Enter your username..." id="forgotPasswordFormUsername">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p></p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                </div>
-            </div>
-            <div class="sign_up-items" style="flex-direction:column;align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                </div>
-            </div>
-            <button class="sign_up-item-button" name="name" value="value" type="submit">
-                <div style="flex-grow:1;text-align:center;">
-                    <p>Request reset</p>
-                </div>
-            </button>
-        </form>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
     </div>
     <footer class="footer">
         <div class="footer-box">
@@ -134,6 +73,6 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
         </div>
     </footer>
     <!-- JS source here -->
-    <script src="js/forgot_pass.js"></script>
+    <script src="js/take_photo_sign_in.js"></script>
 </body>
 </html>
