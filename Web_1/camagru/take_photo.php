@@ -68,6 +68,28 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="push-content">
     </div>
     <div class="content">
+        <div class="content-flex-child">
+            <video id="video" style="flex-grow: 1; width: 50%;">Stream not active</video>
+        </div>
+        <select id="stickers">
+            <option value="img/none.png"></option>
+            <option value="img/daway.png"></option>
+            <option value="img/heartbreak.png"></option>
+            <option value="img/lips.png"></option>
+            <option value="img/unicorn.png"></option>
+        </select>
+        <div class="content-flex-child">
+            <button id="takePicButton" style="flex-grow: 1;">Take pic</button>
+        </div>
+        <div class="content-flex-child">
+            <canvas id="canvas" style="flex-grow: 1; width: 50%;"></canvas>
+        </div>
+        <div class="content-flex-child">
+            <button id="saveButton" style="flex-grow: 1;">Save pic</button>
+        </div>
+        <div class="content-flex-child">
+            <div id="picture" style="flex-grow: 1;"></div>
+        </div>
         <!-- <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div>
