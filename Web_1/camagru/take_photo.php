@@ -68,33 +68,41 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="push-content">
     </div>
     <div class="content">
-        <div class="content-flex-child">
+        <div class="content-flex-child" id="videoDiv">
             <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
         </div>
-        <select id="stickers">
-            <option value="img/none.png">None</option>
-            <option value="img/daway.png">daway</option>
-            <option value="img/heartbreak.png">heartbreak</option>
-            <option value="img/minecraft.png">minecraft</option>
-            <option value="img/unicorn.png">unicorn</option>
-        </select>
+        <div class="content-flex-child" id="canvasDiv" style="position:relative;">
+            <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
+            <img id="sticker" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;">
+        </div>
+        <div class="content-flex-child">
+            <select id="stickers">
+                <option value="img/none.png">None</option>
+                <option value="img/daway.png">daway</option>
+                <option value="img/heartbreak.png">heartbreak</option>
+                <option value="img/minecraft.png">minecraft</option>
+                <option value="img/unicorn.png">unicorn</option>
+            </select>
+        </div>
         <div class="content-flex-child">
             <button id="takePicButton" style="flex-grow: 1;">Take pic</button>
+        </div>
+        <div class="content-flex-child">
+            <button id="clearButton" style="flex-grow: 1;">Clear</button>
         </div>
         <!-- <form enctype="multipart/form-data" action="uploadPic.php" method="post">
             <input id="uploadButton" type="file">
             <input type="submit" value="uploadedImage" name="submit">
         </form> -->
-        <div class="content-flex-child">
-            <!-- <button id="uploadButton" style="flex-grow: 1;">Upload pic</button> -->
-            <input type="file" id="uploadFile">
+        <div class="content-flex-child" style="text-align:center;">
+            <!-- <input type="file" id="uploadFile" style="flex-grow: 1; width:5%;"> -->
+            <label class="custom-file-upload">
+                <input type="file"/>
+                    Custom Upload
+            </label>
         </div>
         <div class="content-flex-child">
             <button id="saveButton" style="flex-grow: 1;">Save pic</button>
-        </div>
-        <div class="content-flex-child" style="position:relative;">
-            <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
-            <img id="sticker" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;">
         </div>
         <div class="content-flex-child">
             <div id="picture" style="flex-grow: 1;"></div>

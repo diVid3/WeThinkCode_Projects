@@ -201,6 +201,10 @@ p.sign-up-form {
     font-weight: bold;
 }
 
+input[type="file"] {
+    display: none;
+}
+
 /* Modal CSS */
 
 .modal {
