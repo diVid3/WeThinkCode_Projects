@@ -3,7 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
-if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false) {
+if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['username'])) {
     header("Location: http://127.0.0.1:8080/take_photo_sign_in.php");
     exit;
 }
@@ -69,23 +69,32 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     </div>
     <div class="content">
         <div class="content-flex-child">
-            <video id="video" style="flex-grow: 1; width: 50%;">Stream not active</video>
+            <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
         </div>
         <select id="stickers">
-            <option value="img/none.png"></option>
-            <option value="img/daway.png"></option>
-            <option value="img/heartbreak.png"></option>
-            <option value="img/lips.png"></option>
-            <option value="img/unicorn.png"></option>
+            <option value="img/none.png">None</option>
+            <option value="img/daway.png">daway</option>
+            <option value="img/heartbreak.png">heartbreak</option>
+            <option value="img/minecraft.png">minecraft</option>
+            <option value="img/unicorn.png">unicorn</option>
         </select>
         <div class="content-flex-child">
             <button id="takePicButton" style="flex-grow: 1;">Take pic</button>
         </div>
+        <!-- <form enctype="multipart/form-data" action="uploadPic.php" method="post">
+            <input id="uploadButton" type="file">
+            <input type="submit" value="uploadedImage" name="submit">
+        </form> -->
         <div class="content-flex-child">
-            <canvas id="canvas" style="flex-grow: 1; width: 50%;"></canvas>
+            <!-- <button id="uploadButton" style="flex-grow: 1;">Upload pic</button> -->
+            <input type="file" id="uploadFile">
         </div>
         <div class="content-flex-child">
             <button id="saveButton" style="flex-grow: 1;">Save pic</button>
+        </div>
+        <div class="content-flex-child" style="position:relative;">
+            <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
+            <img id="sticker" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;">
         </div>
         <div class="content-flex-child">
             <div id="picture" style="flex-grow: 1;"></div>

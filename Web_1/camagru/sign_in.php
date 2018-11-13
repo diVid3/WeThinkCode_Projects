@@ -6,6 +6,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 if (isset($_SESSION['username']) == true && isset($_SESSION['password']) == true) {
     unset($_SESSION['username']);
     unset($_SESSION['password']);
+    unset($_SESSION['email']);
     header("Location: 127.0.0.1:8080/sign_in.php");
 }
 ?>

@@ -7,8 +7,16 @@ var canvas = document.getElementById('canvas');
 var picture = document.getElementById('picture');
 var takePicButton = document.getElementById('takePicButton');
 var saveButton = document.getElementById('saveButton');
+var stickerSelect = document.getElementById('stickers');
+var sticker = document.getElementById('sticker');
+var uploadFile = document.getElementById('uploadFile');
 
 var takePicButtonClicks = 0;
+// Need to add var for uploadClicks.
+
+// Images to merge.
+var imgEncoded;
+var stickerPath;
 
 // Start webcam.
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -49,8 +57,22 @@ saveButton.addEventListener('click', function(e) {
     if (takePicButtonClicks == 0)
         return;
     var imgURL = canvas.toDataURL('image/png');
-    var img = imgURL.split(',')[1];
+    imgEncoded = imgURL.split(',')[1];
     console.log(img);
 })
 
+// Change stickers upon selection.
+stickerSelect.addEventListener('change', function(e) {
+    // console.log('select activated');
+    // console.log(e.target.value);
+    sticker.src = e.target.value;
+    stickerPath = e.target.value;
+    e.preventDefault();
+})
 
+uploadFile.addEventListener('change', function(e) {
+    console.log(uploadFile.files[0]);
+    e.preventDefault();
+})
+
+// Need to add clear button.
