@@ -8,16 +8,19 @@ var picture = document.getElementById('picture');
 var takePicButton = document.getElementById('takePicButton');
 var saveButton = document.getElementById('saveButton');
 var stickerSelect = document.getElementById('stickers');
-var sticker = document.getElementById('sticker');
-// var uploadFile = document.getElementById('uploadFile');
+var sticker1 = document.getElementById('sticker1');
+var sticker2 = document.getElementById('sticker2');
 var clearButton = document.getElementById('clearButton');
+var uploadButton = document.getElementById('uploadButton');
 
 var takePicButtonClicks = 0;
 // Need to add var for uploadClicks.
+var uploadClicks = 0;
 
-// Images to merge.
+// Variables for image merging.
 var imgEncoded;
-var stickerPath;
+var stickerPath = 'img/none.png';
+var stickerEncoded;
 
 // Set canvas display to none initially.
 document.getElementById('canvasDiv').style.display = "none";
@@ -58,28 +61,37 @@ takePicButton.addEventListener('click', function(e) {
     e.preventDefault();
 });
 
-// Need AJAX to request processSavePicture.php.
+// Need AJAX to request processSavePicture.php. Need priority logic when pic taken + uploaded.
 saveButton.addEventListener('click', function(e) {
-    if (takePicButtonClicks == 0)
+    if (takePicButtonClicks == 0 && uploadClicks == 0) {
+        // Need error logic for modal in case no img to merge.
         return;
+    }
     var imgURL = canvas.toDataURL('image/png');
     imgEncoded = imgURL.split(',')[1];
-    console.log(img);
+    var keyVal1 = 'imgEncoded=' + imgEncoded;
+    var keyVal2 = 'stickerPath=' + stickerPath;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'processSavePicture.php');
+    xhr.send(keyVal1 + '&' + keyVal2);
 })
 
 // Change stickers upon selection.
 stickerSelect.addEventListener('change', function(e) {
-    // console.log('select activated');
-    // console.log(e.target.value);
-    sticker.src = e.target.value;
+    sticker1.src = e.target.value;
+    sticker2.src = e.target.value;
     stickerPath = e.target.value;
+    console.log(e.target.value);
     e.preventDefault();
 })
 
-// uploadFile.addEventListener('change', function(e) {
-//     console.log(uploadFile.files[0]);
-//     e.preventDefault();
-// })
+// Logic for selecting image to upload. FileReader class is used here.
+uploadButton.addEventListener('change', function(e) {
+    uploadClicks++;
+    console.log(uploadButton.files[0]);
+    console.log(uploadClicks);
+    e.preventDefault();
+})
 
 // Clears the taken picture.
 clearButton.addEventListener('click', function(e) {

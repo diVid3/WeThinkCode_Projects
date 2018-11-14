@@ -3,7 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
-if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false) {
+if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['username'])) {
     header("Location: http://127.0.0.1:8080/take_photo_sign_in.php");
     exit;
 }
@@ -68,13 +68,16 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="push-content">
     </div>
     <div class="content">
-        <div class="content-flex-child" id="videoDiv" style="position:relative;">
-            <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
-            <img id="sticker1" src="img/none.png" style="position:absolute;width:39%;height:50%;left:30.5%;">
+        <div class="content-flex-child" id="videoDiv">
+            <video id="video" style="flex-grow:1;width:50%;position:relative;">
+                Stream not active
+                <img id="sticker1" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;z-index:1;">
+            </video>
         </div>
-        <div class="content-flex-child" id="canvasDiv" style="position:relative;">
-            <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
-            <img id="sticker2" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;">
+        <div class="content-flex-child" id="canvasDiv">
+            <canvas id="canvas" style="flex-grow:1;width:50%;position:relative;">
+                <img id="sticker2" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;z-index:1;">
+            </canvas>
         </div>
         <div class="content-flex-child">
             <select id="stickers">
@@ -97,9 +100,9 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
         </form> -->
         <div class="content-flex-child" style="text-align:center;">
             <!-- <input type="file" id="uploadFile" style="flex-grow: 1; width:5%;"> -->
-            <label id="uploadButtonContainer">
-                <input type="file" id="uploadButton"/>
-                    Upload pic
+            <label class="custom-file-upload">
+                <input type="file"/>
+                    Custom Upload
             </label>
         </div>
         <div class="content-flex-child">
