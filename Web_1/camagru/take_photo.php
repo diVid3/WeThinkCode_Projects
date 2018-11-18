@@ -21,8 +21,8 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div id="formModal" class="modal">
         <div id="modalRow" class="modal-row">
             <div class="modal-column">
-                <p class="modalHeader" id="modalHeader">Double-check form</p><br>
-                <p class="errorModal" id="modalText"></p><br>
+                <p class="modalHeader" id="modalHeader">Get a pic first</p><br>
+                <p class="errorModal" id="modalText">You need to either take a pic first or upload a png image before attempting to save it.</p><br>
                 <div id="okButton" class="okButton"><p>ok</p></div>
             </div>
         </div>

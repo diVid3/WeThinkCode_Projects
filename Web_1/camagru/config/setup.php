@@ -41,8 +41,31 @@ function createUserTable() {
     }
 }
 
+function createPictureTable() {
+    global $DB_DATABASE_NAME;
+
+    $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+    $query2 = 'CREATE TABLE IF NOT EXISTS `pictures` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `username` VARCHAR(32) NOT NULL UNIQUE,
+        `comments` LONGTEXT,
+        `likes` LONGTEXT,
+        `picture` LONGTEXT NOT NULL
+    );';
+    try {
+        $PDO = connectDBMS();
+        $PDO->query($query1);
+        $PDO->query($query2);
+        $PDO = NULL;
+    }
+    catch (PDOexecption $e) {
+        error_log($e);
+    }
+}
+
 createDB();
 createUserTable();
+createPictureTable();
 
 // Might need to add the ability to drop database and reconstruct.
 

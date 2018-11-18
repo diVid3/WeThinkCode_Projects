@@ -1,3 +1,4 @@
+// General globals.
 var width = 500;
 var height = 0;
 var streaming = false;
@@ -14,13 +15,37 @@ var clearButton = document.getElementById('clearButton');
 var uploadButton = document.getElementById('uploadButton');
 
 var takePicButtonClicks = 0;
-// Need to add var for uploadClicks.
-var uploadClicks = 0;
+// var uploadClicks = 0;
 
 // Variables for image merging.
-var imgEncoded;
+var imgURL;
 var stickerPath = 'img/none.png';
 var stickerEncoded;
+var formData;
+
+// Modal hooks and logic.
+var formModal = document.getElementById('formModal');
+var modalCloseButton = document.getElementById('okButton');
+var modalRow = document.getElementById('modalRow');
+modalCloseButton.addEventListener('click', closeModal);
+window.addEventListener('click', clickOutsideModal);
+function closeModal() {
+    formModal.style.display = 'none';
+    document.getElementById('modalHeader').innerHTML = 'Get a pic first';
+    document.getElementById('modalText').innerHTML = 'You need to either take a pic first or upload a png image before attempting to save it.';
+}
+function clickOutsideModal(e) {
+    if (e.target == formModal) {
+        formModal.style.display = 'none';
+        document.getElementById('modalHeader').innerHTML = 'Get a pic first';
+        document.getElementById('modalText').innerHTML = 'You need to either take a pic first or upload a png image before attempting to save it.';
+    }
+    if (e.target == modalRow) {
+        formModal.style.display = 'none';
+        document.getElementById('modalHeader').innerHTML = 'Get a pic first';
+        document.getElementById('modalText').innerHTML = 'You need to either take a pic first or upload a png image before attempting to save it.';
+    }
+}
 
 // Set canvas display to none initially.
 document.getElementById('canvasDiv').style.display = "none";
@@ -63,17 +88,57 @@ takePicButton.addEventListener('click', function(e) {
 
 // Need AJAX to request processSavePicture.php. Need priority logic when pic taken + uploaded.
 saveButton.addEventListener('click', function(e) {
-    if (takePicButtonClicks == 0 && uploadClicks == 0) {
-        // Need error logic for modal in case no img to merge.
-        return;
+    if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
+        formModal.style.display = 'flex';
+    else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
+        formData = new FormData();
+        formData.append('formData', 'true');
+        formData.append('stickerPath', stickerPath);
+        formData.append('uploadPicture', uploadButton.files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'processSavePicture.php', true);
+        xhr.onload = function() {
+            var returnArr = JSON.parse(this.responseText);
+            if (returnArr['creationSuccess'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['creationError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['uploadError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
+                formModal.style.display = 'flex';
+            }
+        }
+        xhr.send(formData);
     }
-    var imgURL = canvas.toDataURL('image/png');
-    imgEncoded = imgURL.split(',')[1];
-    var keyVal1 = 'imgEncoded=' + imgEncoded;
-    var keyVal2 = 'stickerPath=' + stickerPath;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'processSavePicture.php');
-    xhr.send(keyVal1 + '&' + keyVal2);
+    else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
+        var imgURL = canvas.toDataURL('image/png');
+        var keyVal1 = 'imgURL=' + imgURL;
+        var keyVal2 = 'stickerPath=' + stickerPath;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'processSavePicture.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            var returnArr = JSON.parse(this.responseText);
+            if (returnArr['creationSuccess'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['creationError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+                formModal.style.display = 'flex';
+            }
+        }
+        xhr.send(keyVal1 + '&' + keyVal2);
+    }
 })
 
 // Change stickers upon selection.
@@ -85,11 +150,11 @@ stickerSelect.addEventListener('change', function(e) {
     e.preventDefault();
 })
 
-// Logic for selecting image to upload. FileReader class is used here.
+// Upload logic.
 uploadButton.addEventListener('change', function(e) {
-    uploadClicks++;
+    // uploadClicks++;
     console.log(uploadButton.files[0]);
-    console.log(uploadClicks);
+    // console.log(uploadClicks);
     e.preventDefault();
 })
 
@@ -97,5 +162,10 @@ uploadButton.addEventListener('change', function(e) {
 clearButton.addEventListener('click', function(e) {
     document.getElementById('videoDiv').style.display = "flex";
     document.getElementById('canvasDiv').style.display = "none";
-    e.preventDefault();
+    // Test to see what appears when no file selected for upload.
+    // if (typeof uploadButton.files[0] != 'undefined')
+    //     console.log("uploadButton.files[0] has been defined.");
+    // else
+    //     console.log("uploadButton.files[0] has not been defined.");
+    // e.preventDefault();
 })
