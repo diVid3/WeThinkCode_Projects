@@ -50,7 +50,7 @@ if ($stmt->rowCount() > 0) {
     exit;
 }
 
-// Password checks.
+// Password checks. Need to add mix case check.
 
 if (strlen($signupFormPassword) < 7 == true) {
     $json = ['passwordTooShort' => 1];

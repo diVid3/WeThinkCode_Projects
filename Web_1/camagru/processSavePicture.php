@@ -23,13 +23,28 @@ if (isset($_POST['imgURL']) == true && isset($_POST['stickerPath']) == true) {
         imagedestroy($picture);
         imagedestroy($sticker);
         unlink('picture.png');
-        $json = ['creationSuccess' => 1];
-        echo json_encode($json);
     }
     catch (Exception $e) {
         error_log($e);
     }
-    // Need to add to db here.
+    try {
+        $username = $_SESSION['username'];
+        $type = pathinfo('fused.png', PATHINFO_EXTENSION);
+        $data = file_get_contents('fused.png');
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        unlink('fused.png');
+        $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+        $query2 = 'INSERT INTO `pictures` (`username`, `picture`) VALUES (?,?)';
+        $PDO = connectDBMS();
+        $PDO->query($query1);
+        $stmt = $PDO->prepare($query2);
+        $stmt->execute([$username, $base64]);
+    }
+    catch (PDOexception $e) {
+        error_log($e);
+    }
+    $json = ['creationSuccess' => 1];
+    echo json_encode($json);
 }
 else if (isset($_POST['formData']) == true && isset($_POST['stickerPath']) == true &&
     isset($_FILES['uploadPicture']) == true) {
@@ -62,14 +77,29 @@ else if (isset($_POST['formData']) == true && isset($_POST['stickerPath']) == tr
         imagepng($pictureUploaded, 'fused.png');
         imagedestroy($pictureUploaded);
         imagedestroy($sticker);
-        $json = ['creationSuccess' => 1];
-        echo json_encode($json);
         unlink($dest);
     }
     catch (Exception $e) {
         error_log($e);
     }
-    // Need to add to db here.
+    try {
+        $username = $_SESSION['username'];
+        $type = pathinfo('fused.png', PATHINFO_EXTENSION);
+        $data = file_get_contents('fused.png');
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        unlink('fused.png');
+        $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+        $query2 = 'INSERT INTO `pictures` (`username`, `picture`) VALUES (?,?)';
+        $PDO = connectDBMS();
+        $PDO->query($query1);
+        $stmt = $PDO->prepare($query2);
+        $stmt->execute([$username, $base64]);
+    }
+    catch (PDOexception $e) {
+        error_log($e);
+    }
+    $json = ['creationSuccess' => 1];
+    echo json_encode($json);
 }
 else {
     $json = ['creationError' => 1];

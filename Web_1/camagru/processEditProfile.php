@@ -117,6 +117,17 @@ catch (PDOexception $e) {
     error_log($e);
 }
 
+// Migrating picture ownership.
+
+try {
+    $query1 = 'UPDATE `pictures` SET `username` = ? WHERE `username` = ?';
+    $stmt = $PDO->prepare($query1);
+    $stmt->execute([$editProfileFormUsername, $_SESSION['username']]);
+}
+catch (PDOexception $e) {
+    error_log($e);
+}
+
 // Updating session.
 
 $_SESSION['username'] = $editProfileFormUsername;

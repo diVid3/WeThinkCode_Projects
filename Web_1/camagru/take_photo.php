@@ -70,19 +70,22 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="content">
         <div class="content-flex-child" id="videoDiv" style="position:relative;">
             <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
-            <img id="sticker1" src="img/none.png" style="position:absolute;width:39%;height:50%;left:30.5%;">
+            <!-- <img id="sticker1" src="img/none.png" style="position:absolute;width:39%;height:50%;left:30.5%;"> -->
+            <img id="sticker1" src="img/none.png" style="position:absolute;width:78.25%;height:87.46%;left:10.85%;">
+            <img id="sticker3" src="img/none.png" style="position:absolute;width:78.25%;height:87.46%;left:10.85%;">
         </div>
         <div class="content-flex-child" id="canvasDiv" style="position:relative;">
             <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
-            <img id="sticker2" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;">
+            <!-- <img id="sticker2" src="img/none.png" style="position:absolute;width:50%;height:50%;left:25%;"> -->
+            <img id="sticker2" src="img/none.png" style="position:absolute;width:100%;height:87.46%;left:0%;">
         </div>
         <div class="content-flex-child">
             <select id="stickers">
-                <option value="img/none.png">None</option>
+                <option value="img/none.png" selected="selected">None</option>
                 <option value="img/daway.png">daway</option>
                 <option value="img/heartbreak.png">heartbreak</option>
                 <option value="img/minecraft.png">minecraft</option>
-                <option value="img/unicorn.png">unicorn</option>
+                <option value="img/cod4.png">cod4</option>
             </select>
         </div>
         <div class="content-flex-child">
