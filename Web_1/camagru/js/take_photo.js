@@ -17,13 +17,28 @@ var uploadButton = document.getElementById('uploadButton');
 
 var takePicButtonClicks = 0;
 
-sticker1.src = 'img/none.png';
-sticker2.src = 'img/none.png';
-sticker3.src = 'img/none.png';
+// sticker1.src = 'img/none.png';
+// sticker2.src = 'img/none.png';
+
+var stickerChangeCount = 0;
+var stickerChangeImageId = 0;
+
+// Sticker paths. 2, 4, 6, 8 correspond with stickerChangeImageId for canvas.
+var sticker2Path;
+var sticker4Path;
+var sticker6Path;
+var sticker8Path;
+
+// key value pairs.
+var keyVal1;
+var keyVal2;
+var keyVal3;
+var keyVal4;
+var keyVal5;
 
 // Variables for image merging.
-var imgURL;
-var stickerPath = 'img/none.png';
+// var imgURL;
+// var stickerPath = 'img/none.png';
 var stickerEncoded;
 var formData;
 
@@ -91,66 +106,122 @@ takePicButton.addEventListener('click', function(e) {
 });
 
 // Need AJAX to request processSavePicture.php.
+// saveButton.addEventListener('click', function(e) {
+//     if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
+//         formModal.style.display = 'flex';
+    // else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
+//         formData = new FormData();
+//         formData.append('formData', 'true');
+//         formData.append('stickerPath', stickerPath);
+//         formData.append('uploadPicture', uploadButton.files[0]);
+//         var xhr = new XMLHttpRequest();
+//         xhr.open('POST', 'processSavePicture.php', true);
+//         xhr.onload = function() {
+//             var returnArr = JSON.parse(this.responseText);
+//             if (returnArr['creationSuccess'] == 1) {
+//                 document.getElementById('modalHeader').innerHTML = 'Notice';
+//                 document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+//                 formModal.style.display = 'flex';
+//             }
+//             if (returnArr['creationError'] == 1) {
+//                 document.getElementById('modalHeader').innerHTML = 'Notice';
+//                 document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+//                 formModal.style.display = 'flex';
+//             }
+//             if (returnArr['uploadError'] == 1) {
+//                 document.getElementById('modalHeader').innerHTML = 'Notice';
+//                 document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
+//                 formModal.style.display = 'flex';
+//             }
+//         }
+//         xhr.send(formData);
+//     }
+    // else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
+        // var imgURL = canvas.toDataURL('image/png');
+        // var keyVal1 = 'imgURL=' + imgURL;
+        // var keyVal2 = 'stickerPath=' + stickerPath;
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', 'processSavePicture.php', true);
+        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        // xhr.onload = function() {
+        //     var returnArr = JSON.parse(this.responseText);
+        //     if (returnArr['creationSuccess'] == 1) {
+        //         document.getElementById('modalHeader').innerHTML = 'Notice';
+        //         document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+        //         formModal.style.display = 'flex';
+        //     }
+        //     if (returnArr['creationError'] == 1) {
+        //         document.getElementById('modalHeader').innerHTML = 'Notice';
+        //         document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+        //         formModal.style.display = 'flex';
+        //     }
+        // }
+        // xhr.send(keyVal1 + '&' + keyVal2);
+//     }
+// });
+
+
 saveButton.addEventListener('click', function(e) {
     if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
         formModal.style.display = 'flex';
     else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
-        formData = new FormData();
-        formData.append('formData', 'true');
-        formData.append('stickerPath', stickerPath);
-        formData.append('uploadPicture', uploadButton.files[0]);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'processSavePicture.php', true);
-        xhr.onload = function() {
-            var returnArr = JSON.parse(this.responseText);
-            if (returnArr['creationSuccess'] == 1) {
-                document.getElementById('modalHeader').innerHTML = 'Notice';
-                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
-                formModal.style.display = 'flex';
-            }
-            if (returnArr['creationError'] == 1) {
-                document.getElementById('modalHeader').innerHTML = 'Notice';
-                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
-                formModal.style.display = 'flex';
-            }
-            if (returnArr['uploadError'] == 1) {
-                document.getElementById('modalHeader').innerHTML = 'Notice';
-                document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
-                formModal.style.display = 'flex';
-            }
-        }
-        xhr.send(formData);
+
     }
     else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
-        var imgURL = canvas.toDataURL('image/png');
-        var keyVal1 = 'imgURL=' + imgURL;
-        var keyVal2 = 'stickerPath=' + stickerPath;
+        var keyVal1 = 'imgURL=' + canvas.toDataURL('image/png');
+        if (document.getElementById('sticker2') !== null)
+            var keyVal2 = 'sticker2=' + sticker2Path;
+        if (document.getElementById('sticker4') !== null)
+            var keyVal3 = 'sticker4=' + sticker4Path;
+        if (document.getElementById('sticker6') !== null)
+            var keyVal4 = 'sticker6=' + sticker6Path;
+        if (document.getElementById('sticker8') !== null)
+            var keyVal5 = 'sticker8=' + sticker8Path;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'processSavePicture.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            var returnArr = JSON.parse(this.responseText);
-            if (returnArr['creationSuccess'] == 1) {
-                document.getElementById('modalHeader').innerHTML = 'Notice';
-                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
-                formModal.style.display = 'flex';
-            }
-            if (returnArr['creationError'] == 1) {
-                document.getElementById('modalHeader').innerHTML = 'Notice';
-                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
-                formModal.style.display = 'flex';
-            }
-        }
-        xhr.send(keyVal1 + '&' + keyVal2);
+        var stringToSend = keyVal1 + '&' + 'sticker2=img/none.png';
+        if (document.getElementById('sticker2') !== null)
+            stringToSend = keyVal1 + '&' + keyVal2;
+        if (document.getElementById('sticker4') !== null)
+            stringToSend = keyVal1 + '&' + keyVal2 + '&' + keyVal3;
+        if (document.getElementById('sticker6') !== null)
+            stringToSend = keyVal1 + '&' + keyVal2 + '&' + keyVal3 + '&' + keyVal4;
+        if (document.getElementById('sticker8') !== null)
+            stringToSend = keyVal1 + '&' + keyVal2 + '&' + keyVal3 + '&' + keyVal4 + '&' + keyVal5;
+        xhr.send(stringToSend);
     }
 });
 
-// Change stickers upon selection.
+// Change stickers upon selection. Need to create and add img elements when change happens.
 stickerSelect.addEventListener('change', function(e) {
-    sticker1.src = e.target.value;
-    sticker2.src = e.target.value;
-    sticker3.src = e.target.value;
-    stickerPath = e.target.value;
+    stickerChangeCount++;
+    if (stickerChangeCount > 4)
+        return;
+    // Adding sticker to video.
+    stickerChangeImageId++;
+    let newStickerVideo = document.createElement('img');
+    newStickerVideo.setAttribute('id', 'sticker' + stickerChangeImageId);
+    newStickerVideo.setAttribute('style', 'position:absolute;width:78.25%;height:87.46%;left:10.85%;');
+    newStickerVideo.src = e.target.value;
+    document.getElementById('videoDiv').appendChild(newStickerVideo);
+    // Adding sticker to canvas.
+    stickerChangeImageId++;
+    let newStickerCanvas = document.createElement('img');
+    newStickerCanvas.setAttribute('id', 'sticker' + stickerChangeImageId);
+    newStickerCanvas.setAttribute('style', 'position:absolute;width:100%;height:87.46%;left:0%;');
+    newStickerCanvas.src = e.target.value;
+    document.getElementById('canvasDiv').appendChild(newStickerCanvas);
+    if (stickerChangeCount == 1)
+        sticker2Path = e.target.value;
+    if (stickerChangeCount == 2)
+        sticker4Path = e.target.value;
+    if (stickerChangeCount == 3)
+        sticker6Path = e.target.value;
+    if (stickerChangeCount == 4)
+        sticker8Path = e.target.value;
+    // sticker1.src = e.target.value;
+    // sticker2.src = e.target.value;
+    // stickerPath = e.target.value;/
     e.preventDefault();
 });
 
@@ -163,8 +234,19 @@ uploadButton.addEventListener('change', function(e) {
 clearButton.addEventListener('click', function(e) {
     takePicButtonClicks = 0;
     uploadButton.files[0] = 'undefined';
-    sticker1.src = 'img/none.png';
-    sticker2.src = 'img/none.png';
+    for (var cntr = 1; cntr <= 8; cntr++) {
+        let stickerTag = document.getElementById('sticker' + cntr);
+        if (stickerTag !== null)
+            stickerTag.remove();
+    }
+    stickerChangeCount = 0;
+    stickerChangeImageId = 0;
+    sticker2Path = undefined;
+    sticker4Path = undefined;
+    sticker6Path = undefined;
+    sticker8Path = undefined;
+    // sticker1.src = 'img/none.png';
+    // sticker2.src = 'img/none.png';
     document.getElementById('videoDiv').style.display = "flex";
     document.getElementById('canvasDiv').style.display = "none";
 });
