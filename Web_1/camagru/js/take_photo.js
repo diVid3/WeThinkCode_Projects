@@ -17,9 +17,6 @@ var uploadButton = document.getElementById('uploadButton');
 
 var takePicButtonClicks = 0;
 
-// sticker1.src = 'img/none.png';
-// sticker2.src = 'img/none.png';
-
 var stickerChangeCount = 0;
 var stickerChangeImageId = 0;
 
@@ -28,13 +25,6 @@ var sticker2Path;
 var sticker4Path;
 var sticker6Path;
 var sticker8Path;
-
-// key value pairs.
-var keyVal1;
-var keyVal2;
-var keyVal3;
-var keyVal4;
-var keyVal5;
 
 // Variables for image merging.
 // var imgURL;
@@ -105,67 +95,45 @@ takePicButton.addEventListener('click', function(e) {
     e.preventDefault();
 });
 
-// Need AJAX to request processSavePicture.php.
-// saveButton.addEventListener('click', function(e) {
-//     if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
-//         formModal.style.display = 'flex';
-    // else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
-//         formData = new FormData();
-//         formData.append('formData', 'true');
-//         formData.append('stickerPath', stickerPath);
-//         formData.append('uploadPicture', uploadButton.files[0]);
-//         var xhr = new XMLHttpRequest();
-//         xhr.open('POST', 'processSavePicture.php', true);
-//         xhr.onload = function() {
-//             var returnArr = JSON.parse(this.responseText);
-//             if (returnArr['creationSuccess'] == 1) {
-//                 document.getElementById('modalHeader').innerHTML = 'Notice';
-//                 document.getElementById('modalText').innerHTML = 'Picture successfully created.';
-//                 formModal.style.display = 'flex';
-//             }
-//             if (returnArr['creationError'] == 1) {
-//                 document.getElementById('modalHeader').innerHTML = 'Notice';
-//                 document.getElementById('modalText').innerHTML = 'Failed to create picture.';
-//                 formModal.style.display = 'flex';
-//             }
-//             if (returnArr['uploadError'] == 1) {
-//                 document.getElementById('modalHeader').innerHTML = 'Notice';
-//                 document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
-//                 formModal.style.display = 'flex';
-//             }
-//         }
-//         xhr.send(formData);
-//     }
-    // else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
-        // var imgURL = canvas.toDataURL('image/png');
-        // var keyVal1 = 'imgURL=' + imgURL;
-        // var keyVal2 = 'stickerPath=' + stickerPath;
-        // var xhr = new XMLHttpRequest();
-        // xhr.open('POST', 'processSavePicture.php', true);
-        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        // xhr.onload = function() {
-        //     var returnArr = JSON.parse(this.responseText);
-        //     if (returnArr['creationSuccess'] == 1) {
-        //         document.getElementById('modalHeader').innerHTML = 'Notice';
-        //         document.getElementById('modalText').innerHTML = 'Picture successfully created.';
-        //         formModal.style.display = 'flex';
-        //     }
-        //     if (returnArr['creationError'] == 1) {
-        //         document.getElementById('modalHeader').innerHTML = 'Notice';
-        //         document.getElementById('modalText').innerHTML = 'Failed to create picture.';
-        //         formModal.style.display = 'flex';
-        //     }
-        // }
-        // xhr.send(keyVal1 + '&' + keyVal2);
-//     }
-// });
-
-
+// Button calls script to merge and save merged picture to database.
 saveButton.addEventListener('click', function(e) {
     if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
         formModal.style.display = 'flex';
     else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
-
+        formData = new FormData();
+        formData.append('formData', 'true');
+        if (document.getElementById('sticker2') !== null)
+            formData.append('sticker2', sticker2Path);
+        else
+            formData.append('sticker2', 'img/none.png');
+        if (document.getElementById('sticker4') !== null)
+            formData.append('sticker4', sticker4Path);
+        if (document.getElementById('sticker6') !== null)
+            formData.append('sticker6', sticker6Path);
+        if (document.getElementById('sticker8') !== null)
+            formData.append('sticker8', sticker8Path);
+        formData.append('uploadPicture', uploadButton.files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'processSavePicture.php', true);
+        xhr.onload = function() {
+            var returnArr = JSON.parse(this.responseText);
+            if (returnArr['creationSuccess'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['creationError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['uploadError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
+                formModal.style.display = 'flex';
+            }
+        }
+        xhr.send(formData);
     }
     else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
         var keyVal1 = 'imgURL=' + canvas.toDataURL('image/png');
@@ -179,6 +147,20 @@ saveButton.addEventListener('click', function(e) {
             var keyVal5 = 'sticker8=' + sticker8Path;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'processSavePicture.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            var returnArr = JSON.parse(this.responseText);
+            if (returnArr['creationSuccess'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Picture successfully created.';
+                formModal.style.display = 'flex';
+            }
+            if (returnArr['creationError'] == 1) {
+                document.getElementById('modalHeader').innerHTML = 'Notice';
+                document.getElementById('modalText').innerHTML = 'Failed to create picture.';
+                formModal.style.display = 'flex';
+            }
+        }
         var stringToSend = keyVal1 + '&' + 'sticker2=img/none.png';
         if (document.getElementById('sticker2') !== null)
             stringToSend = keyVal1 + '&' + keyVal2;
@@ -190,6 +172,7 @@ saveButton.addEventListener('click', function(e) {
             stringToSend = keyVal1 + '&' + keyVal2 + '&' + keyVal3 + '&' + keyVal4 + '&' + keyVal5;
         xhr.send(stringToSend);
     }
+    e.preventDefault();
 });
 
 // Change stickers upon selection. Need to create and add img elements when change happens.
@@ -219,9 +202,6 @@ stickerSelect.addEventListener('change', function(e) {
         sticker6Path = e.target.value;
     if (stickerChangeCount == 4)
         sticker8Path = e.target.value;
-    // sticker1.src = e.target.value;
-    // sticker2.src = e.target.value;
-    // stickerPath = e.target.value;/
     e.preventDefault();
 });
 
@@ -245,8 +225,7 @@ clearButton.addEventListener('click', function(e) {
     sticker4Path = undefined;
     sticker6Path = undefined;
     sticker8Path = undefined;
-    // sticker1.src = 'img/none.png';
-    // sticker2.src = 'img/none.png';
     document.getElementById('videoDiv').style.display = "flex";
     document.getElementById('canvasDiv').style.display = "none";
+    e.preventDefault();
 });
