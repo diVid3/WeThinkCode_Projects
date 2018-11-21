@@ -37,7 +37,7 @@ function storeFusedPicture() {
         $type = pathinfo('fused.png', PATHINFO_EXTENSION);
         $data = file_get_contents('fused.png');
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        unlink('fused.png');
+        // unlink('fused.png');
         $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
         $query2 = 'INSERT INTO `pictures` (`username`, `picture`) VALUES (?,?)';
         $PDO = connectDBMS();
@@ -149,6 +149,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker8']);
         storeFusedPicture();
+        // unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true && isset($_POST['sticker4']) == true &&
     isset($_POST['sticker6']) == true) {
@@ -165,6 +166,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker6']);
         storeFusedPicture();
+        // unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true && isset($_POST['sticker4']) == true) {
         $type = pathinfo($picture['name'], PATHINFO_EXTENSION);
@@ -176,6 +178,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker4']);
         storeFusedPicture();
+        // unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true) {
         $type = pathinfo($picture['name'], PATHINFO_EXTENSION);
@@ -183,6 +186,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker2']);
         storeFusedPicture();
+        // unlink($picture['name']);
     }
 }
 

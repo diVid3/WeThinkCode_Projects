@@ -178,8 +178,11 @@ saveButton.addEventListener('click', function(e) {
 // Change stickers upon selection. Need to create and add img elements when change happens.
 stickerSelect.addEventListener('change', function(e) {
     stickerChangeCount++;
-    if (stickerChangeCount > 4)
+    if (stickerChangeCount > 4) {
+        if (e.target.value == 'img/none.png')
+            clearPicture(0);
         return;
+    }
     // Adding sticker to video.
     stickerChangeImageId++;
     let newStickerVideo = document.createElement('img');
@@ -202,6 +205,8 @@ stickerSelect.addEventListener('change', function(e) {
         sticker6Path = e.target.value;
     if (stickerChangeCount == 4)
         sticker8Path = e.target.value;
+    if (e.target.value == 'img/none.png')
+        clearPicture(0);
     e.preventDefault();
 });
 
@@ -210,8 +215,9 @@ uploadButton.addEventListener('change', function(e) {
     e.preventDefault();
 });
 
-// Clears the taken picture.
-clearButton.addEventListener('click', function(e) {
+
+// Clears the taken picture. If mode is 0, it will not reset the video/canvas elements.
+function clearPicture(mode) {
     takePicButtonClicks = 0;
     uploadButton.files[0] = 'undefined';
     for (var cntr = 1; cntr <= 8; cntr++) {
@@ -225,7 +231,10 @@ clearButton.addEventListener('click', function(e) {
     sticker4Path = undefined;
     sticker6Path = undefined;
     sticker8Path = undefined;
+    if (mode == 0)
+        return;
     document.getElementById('videoDiv').style.display = "flex";
     document.getElementById('canvasDiv').style.display = "none";
-    e.preventDefault();
-});
+}
+
+clearButton.addEventListener('click', clearPicture);
