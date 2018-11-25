@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
 $signinFormUsername = trim($_POST['signinFormUsername']);
 $signinFormPassword = trim($_POST['signinFormPassword']);
@@ -68,10 +69,10 @@ $query1 = 'SELECT * FROM `users` WHERE `username` = ?';
 $stmt = $PDO->prepare($query1);
 $stmt->execute([$signinFormUsername]);
 $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
-$userEmail = $rowArr['email'];
 $_SESSION['username'] = $signinFormUsername;
-$_SESSION['email'] = $userEmail;
+$_SESSION['email'] = $rowArr['email'];
 $_SESSION['password'] = $signinFormPassword;
+$_SESSION['notification'] = $rowArr['notification'];
 
 // Notify successful sign in.
 

@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,79 +33,57 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
     ?>
     <div class="push-content">
     </div>
-    <div class="content">
-        <!-- <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item-center"></div> -->
-        <!-- <form class="grid-item-center" id="editProfileForm">
-            <div class="sign_up-items" style="text-align:center;">
-                <div style="display:inline-block;flex-grow:1;">
-                    <p class="sign-up-form">Edit profile</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New username:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="username" placeholder="Enter your username..." id="editProfileFormUsername">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New password:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="password" name="password" placeholder="Enter your password..." id="editProfileFormPassword">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Confirm password:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="password" name="password" placeholder="Enter your password..." id="editProfileFormConfirmPassword">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New email:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="email" placeholder="Enter your email..." id="editProfileFormEmail">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Email notifications:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="checkbox" name="notification" id="editProfileFormNotification">
-                </div>
-            </div>
-            <button class="sign_up-item-button" name="name" value="value" type="submit">
-                <div style="flex-grow:1;text-align:center;">
-                    <p>Edit profile</p>
-                </div>
-            </button>
-        </form> -->
-        <!-- <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div> -->
-    </div>
+    <?php
+    echo '<div class="content">';
+        echo '<div class="galleryWrapper">';
+            try {
+                $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+                $query2 = 'SELECT * FROM `pictures`';
+                $PDO = connectDBMS();
+                $PDO->query($query1);
+                $stmt = $PDO->prepare($query2);
+                $stmt->execute();
+                $rowCount = $stmt->rowCount(); // Number of pictures in pictures table.
+            }
+            catch (PDOexception $e) {
+                error_log($e);
+                exit;
+            }
+            $resultsPerPage = 10; // Results of pictures to display per page.
+            if (isset($_GET['page']) == false)
+                $page = 1;
+            else
+                $page = $_GET['page'];
+            $numberOfPages = ceil($rowCount / $resultsPerPage);
+            if ($page > $numberOfPages || $page < 0)
+                $page = 1;
+            try {
+                $startLimitNumber = ($page - 1) * $resultsPerPage;
+                $query2 = 'SELECT * FROM `pictures` ORDER BY `id` DESC LIMIT ' . $startLimitNumber . ',' . $resultsPerPage . ';';
+                $stmt = $PDO->prepare($query2);
+                $stmt->execute();
+                $rowArr = $stmt->fetchAll(PDO::FETCH_ASSOC); // Associative array of pictures.
+            }
+            catch (PDOexception $e) {
+                error_log($e);
+                exit;
+            }
+            foreach($rowArr as $row) {
+                $pictureID = $row['id'];
+                $encodedPicture = $row['picture'];
+                echo '<div>';
+                echo '<img src="' . $encodedPicture . '" ' . 'class="galleryPicture" ' . 'id="galleryPic' . $pictureID . '" ' . '/>';
+                // echo '<img src="' . $encodedPicture . '" ' . 'class="userPicture" ' . 'id="userPic' . $pictureID . '" ' . 'onclick="delUserPic(this)" ' . '/>';
+                echo '</div>';
+            }
+        echo '</div>';
+    echo '</div>';
+    echo '<div style="text-align: center;padding: 10px;background-color: #eee;">';
+    $pathToThisPage = catPathToString('gallery.php');
+    for ($page = 1; $page <= $numberOfPages; $page++)
+        echo '<a href="' . $pathToThisPage . '?page=' . $page . '" ' . 'class="pageLink"' . '>' . '<p style="display: inline-block;margin-left: 10px;margin-right: 10px;">' . $page . '</p>' . '</a>';
+    echo '</div>';
+    ?>
     <footer class="footer">
         <div class="footer-box">
             <div style="text-align:center;">

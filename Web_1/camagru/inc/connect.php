@@ -16,4 +16,12 @@ function connectDBMS() {
         error_log($e);
     }
 }
+
+// Function concatenates current path to current script with given string.
+function catPathToString($fileString) {
+    $URL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $arr = explode("/", $URL);
+    $arr = array_slice($arr, 0, sizeof($arr) - 1);
+    return (implode ("/", $arr) . '/' . $fileString);
+}
 ?>

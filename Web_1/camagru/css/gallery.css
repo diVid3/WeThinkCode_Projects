@@ -57,6 +57,7 @@ for the grid items */
     flex-basis: auto;
     background: linear-gradient(white, #eee);
     color: black;
+    padding: 20px;
     /* display: grid;
     grid-template-columns: minmax(10vw, auto) minmax(1px, 500px) minmax(10vw, auto);
     grid-template-rows: 8vh 69vh 8vh; */
@@ -156,6 +157,10 @@ a {
 p, h2 {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 50;
+}
+
+p.text-margin {
+    margin: 0.5%;
 }
 
 a.click {
@@ -262,3 +267,41 @@ p.sign-up-form {
     border-radius: 9px;
     padding: 2%;
 }
+
+/* Gallery picture CSS */
+
+.galleryWrapper {
+    display: grid;
+    grid-auto-rows: minmax(150px, auto);
+    /* grid-auto-columns: minmax(150px, auto); */
+    justify-items: center;
+    grid-gap: 20px;
+}
+
+@media screen and (min-width: 824px) {
+    .galleryWrapper {
+        grid-template-columns: 1fr 1fr;
+    }
+    .galleryPicture {
+        width: 500px;
+        /* width: minmax(auto, 500px); */
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .galleryWrapper {
+        grid-template-columns: 1fr;
+    }
+    .galleryPicture {
+        width: 250px;
+    }
+}
+
+a.pageLink:visited {
+    color: #5086EC;
+}
+
+/* .galleryWrapper > div > img {
+    max-height: 100%;
+    max-width: 100%;
+} */

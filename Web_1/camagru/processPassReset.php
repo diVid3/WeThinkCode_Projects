@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
 $resetPassFormUsername = trim($_POST['resetPassFormUsername']);
 $resetPassFormPassword = trim($_POST['resetPassFormPassword']);
@@ -38,6 +39,11 @@ if ($stmt->rowCount() == 0) {
 
 if (strlen($resetPassFormPassword) < 7 == true) {
     $json = ['passwordTooShort' => 1];
+    echo json_encode($json);
+    exit;
+}
+if (preg_match('/[A-Z]/', $resetPassFormPassword) === 0) {
+    $json = ['passwordNoMix' => 1];
     echo json_encode($json);
     exit;
 }

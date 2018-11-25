@@ -27,10 +27,11 @@ var sticker6Path;
 var sticker8Path;
 
 // Variables for image merging.
-// var imgURL;
-// var stickerPath = 'img/none.png';
 var stickerEncoded;
 var formData;
+
+// Variable to keep track of upload state change.
+var uploadChange = 0;
 
 // Modal hooks and logic.
 var formModal = document.getElementById('formModal');
@@ -97,9 +98,9 @@ takePicButton.addEventListener('click', function(e) {
 
 // Button calls script to merge and save merged picture to database.
 saveButton.addEventListener('click', function(e) {
-    if (takePicButtonClicks == 0 && typeof uploadButton.files[0] == 'undefined')
+    if (takePicButtonClicks == 0 && uploadChange == 0)
         formModal.style.display = 'flex';
-    else if (takePicButtonClicks >= 0 && typeof uploadButton.files[0] != 'undefined') {
+    else if (takePicButtonClicks >= 0 && uploadChange == 1) {
         formData = new FormData();
         formData.append('formData', 'true');
         if (document.getElementById('sticker2') !== null)
@@ -115,8 +116,9 @@ saveButton.addEventListener('click', function(e) {
         formData.append('uploadPicture', uploadButton.files[0]);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'processSavePicture.php', true);
+        var returnArr;
         xhr.onload = function() {
-            var returnArr = JSON.parse(this.responseText);
+            returnArr = JSON.parse(this.responseText);
             if (returnArr['creationSuccess'] == 1) {
                 document.getElementById('modalHeader').innerHTML = 'Notice';
                 document.getElementById('modalText').innerHTML = 'Picture successfully created.';
@@ -132,10 +134,13 @@ saveButton.addEventListener('click', function(e) {
                 document.getElementById('modalText').innerHTML = returnArr['uploadErrorMsg'];
                 formModal.style.display = 'flex';
             }
+            if (returnArr['doneSavingPic'] == 1)
+                updateUserGallery();
         }
         xhr.send(formData);
+        clearPicture();
     }
-    else if (takePicButtonClicks > 0 && typeof uploadButton.files[0] == 'undefined') {
+    else if (takePicButtonClicks > 0 && uploadChange == 0) {
         var keyVal1 = 'imgURL=' + canvas.toDataURL('image/png');
         if (document.getElementById('sticker2') !== null)
             var keyVal2 = 'sticker2=' + sticker2Path;
@@ -148,8 +153,9 @@ saveButton.addEventListener('click', function(e) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'processSavePicture.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        var returnArr;
         xhr.onload = function() {
-            var returnArr = JSON.parse(this.responseText);
+            returnArr = JSON.parse(this.responseText);
             if (returnArr['creationSuccess'] == 1) {
                 document.getElementById('modalHeader').innerHTML = 'Notice';
                 document.getElementById('modalText').innerHTML = 'Picture successfully created.';
@@ -160,6 +166,8 @@ saveButton.addEventListener('click', function(e) {
                 document.getElementById('modalText').innerHTML = 'Failed to create picture.';
                 formModal.style.display = 'flex';
             }
+            if (returnArr['doneSavingPic'] == 1)
+                updateUserGallery();
         }
         var stringToSend = keyVal1 + '&' + 'sticker2=img/none.png';
         if (document.getElementById('sticker2') !== null)
@@ -171,6 +179,7 @@ saveButton.addEventListener('click', function(e) {
         if (document.getElementById('sticker8') !== null)
             stringToSend = keyVal1 + '&' + keyVal2 + '&' + keyVal3 + '&' + keyVal4 + '&' + keyVal5;
         xhr.send(stringToSend);
+        clearPicture();
     }
     e.preventDefault();
 });
@@ -211,15 +220,15 @@ stickerSelect.addEventListener('change', function(e) {
 });
 
 // Upload logic.
-uploadButton.addEventListener('change', function(e) {
-    e.preventDefault();
-});
-
+uploadButton.onchange = function() {
+    uploadChange = 1;
+}
 
 // Clears the taken picture. If mode is 0, it will not reset the video/canvas elements.
 function clearPicture(mode) {
     takePicButtonClicks = 0;
-    uploadButton.files[0] = 'undefined';
+    uploadChange = 0;
+    uploadButton.value = '';
     for (var cntr = 1; cntr <= 8; cntr++) {
         let stickerTag = document.getElementById('sticker' + cntr);
         if (stickerTag !== null)
@@ -238,3 +247,47 @@ function clearPicture(mode) {
 }
 
 clearButton.addEventListener('click', clearPicture);
+
+// Function to update DOM when picture was saved to DB.
+function updateUserGallery() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'processUpdateUserGallery.php', true);
+    xhr.onload = function() {
+        var returnArr = JSON.parse(this.responseText);
+        if (returnArr['updateUserGalleryFail'] == 1) {
+            document.getElementById('modalHeader').innerHTML = 'Notice';
+            document.getElementById('modalText').innerHTML = 'Async update to user gallery failed.';
+            formModal.style.display = 'flex';
+        }
+        if (returnArr['gotNewestPic'] == 1) {
+            let newUserPicture = document.createElement('img');
+            newUserPicture.setAttribute('src', returnArr['encodedPicture']);
+            newUserPicture.setAttribute('class', 'userPicture');
+            newUserPicture.setAttribute('id', 'userPic' + returnArr['pictureID']);
+            newUserPicture.setAttribute('onclick', 'delUserPic(this)');
+            document.getElementById('userPictureGallery1').appendChild(newUserPicture);
+        }
+    }
+    xhr.send();
+}
+
+// Function to delete user picture from DOM and DB. Activates on click.
+function delUserPic(element) {
+    var string = element.id;
+    var arr = string.split('userPic');
+    var pictureID = arr[1];
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'processUpdateUserGalleryRem.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        var returnArr = JSON.parse(this.responseText);
+        if (returnArr['updateUserGalleryRemFail'] == 1) {
+            document.getElementById('modalHeader').innerHTML = 'Notice';
+            document.getElementById('modalText').innerHTML = 'Async update to user gallery failed.';
+            formModal.style.display = 'flex';
+        }
+        if (returnArr['deletedPicture'] == 1)
+            element.parentNode.removeChild(element);
+    }
+    xhr.send('pictureID=' + pictureID);
+}

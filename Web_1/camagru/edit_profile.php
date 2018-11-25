@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false) {
     header('HTTP/1.1 403 Forbidden');
     exit;

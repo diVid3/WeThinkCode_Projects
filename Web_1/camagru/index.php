@@ -3,16 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
-
-// if (file_exists('errors.log') == false) {
-//     $errorLog = fopen('errors.log', 'w');
-//     fclose($errorLog);
-// }
-// if (file_exists('initialized.txt') == false) {
-//     require_once ($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
-//     $initFile = fopen('initialized.txt', 'w');
-//     fclose($initFile);
-// }
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 ?>
 <!DOCTYPE html>
 <html>

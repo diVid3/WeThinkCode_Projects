@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false &&
     isset($_SESSION['email']) == false)
     exit;
@@ -34,17 +35,19 @@ function storeFusedPicture() {
     global $DB_DATABASE_NAME;
     try {
         $username = $_SESSION['username'];
+        $email = $_SESSION['email'];
+        $notification = $_SESSION['notification'];
         $type = pathinfo('fused.png', PATHINFO_EXTENSION);
         $data = file_get_contents('fused.png');
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        // unlink('fused.png');
+        unlink('fused.png');
         $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-        $query2 = 'INSERT INTO `pictures` (`username`, `picture`) VALUES (?,?)';
+        $query2 = 'INSERT INTO `pictures` (`username`, `email`, `notification`, `picture`) VALUES (?,?,?,?)';
         $PDO = connectDBMS();
         $PDO->query($query1);
         $stmt = $PDO->prepare($query2);
-        $stmt->execute([$username, $base64]);
-        $json = ['creationSuccess' => 1];
+        $stmt->execute([$username, $email, $notification, $base64]);
+        $json = ['creationSuccess' => 1, 'doneSavingPic' => 1];
         echo json_encode($json);
     }
     catch (PDOexception $e) {
@@ -106,7 +109,6 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $valid = array(IMAGETYPE_PNG);
         $picture = $_FILES['uploadPicture'];
         $dest = $_SERVER['DOCUMENT_ROOT'] . '/' . $picture['name'];
-        // $stickerPath = $_POST['stickerPath'];
         $imageInfo = @getimagesize($picture['tmp_name']);
         if (!$imageInfo || !is_array($imageInfo)) {
             $json = ['uploadError' => 1, 'uploadErrorMsg' => 'The only image type that\'s supported is .png'];
@@ -149,7 +151,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker8']);
         storeFusedPicture();
-        // unlink($picture['name']);
+        unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true && isset($_POST['sticker4']) == true &&
     isset($_POST['sticker6']) == true) {
@@ -166,7 +168,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker6']);
         storeFusedPicture();
-        // unlink($picture['name']);
+        unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true && isset($_POST['sticker4']) == true) {
         $type = pathinfo($picture['name'], PATHINFO_EXTENSION);
@@ -178,7 +180,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker4']);
         storeFusedPicture();
-        // unlink($picture['name']);
+        unlink($picture['name']);
     }
     else if (isset($_POST['sticker2']) == true) {
         $type = pathinfo($picture['name'], PATHINFO_EXTENSION);
@@ -186,70 +188,7 @@ else if (isset($_POST['formData']) == true && isset($_FILES['uploadPicture']) ==
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         mergePictures($base64, $_POST['sticker2']);
         storeFusedPicture();
-        // unlink($picture['name']);
+        unlink($picture['name']);
     }
-}
-
-/*
-
-// This executes when a picture has been uploaded instead of a pic taken.
-else if (isset($_POST['formData']) == true && isset($_POST['stickerPath']) == true &&
-    isset($_FILES['uploadPicture']) == true) {
-    try {
-        $valid = array(IMAGETYPE_PNG);
-        $picture = $_FILES['uploadPicture'];
-        $dest = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $picture['name'];
-        $stickerPath = $_POST['stickerPath'];
-        $imageInfo = @getimagesize($picture['tmp_name']);
-        // File checks before file move.
-        if (!$imageInfo || !is_array($imageInfo)) {
-            $json = ['uploadError' => 1, 'uploadErrorMsg' => 'The only image type that\'s supported is .png'];
-            echo json_encode($json);
-            exit;
-        }
-        if (!isset($imageInfo[2]) || !in_array($imageInfo[2], $valid) || !is_readable($picture['tmp_name'])) {
-            $json = ['uploadError' => 1, 'uploadErrorMsg' => 'Invalid format or image is not readable'];
-            echo json_encode($json);
-            exit;
-        }
-        if (!move_uploaded_file($picture['tmp_name'], $dest)) {
-            $json = ['uploadError' => 1, 'uploadErrorMsg' => 'Error in uploading file'];
-            echo json_encode($json);
-            exit;
-        }
-        $pictureUploaded = imagecreatefrompng($_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $picture['name']);
-        $sticker = imagecreatefrompng($stickerPath);
-        imagecolortransparent($sticker, imagecolorat($sticker, 0, 0));
-        imagecopymerge($pictureUploaded, $sticker, 0, 0, 0, 0, imagesx($sticker), imagesx($sticker), 100);
-        imagepng($pictureUploaded, 'fused.png');
-        imagedestroy($pictureUploaded);
-        imagedestroy($sticker);
-        unlink($dest);
-    }
-    catch (Exception $e) {
-        error_log($e);
-    }
-    try {
-        $username = $_SESSION['username'];
-        $type = pathinfo('fused.png', PATHINFO_EXTENSION);
-        $data = file_get_contents('fused.png');
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        unlink('fused.png');
-        $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-        $query2 = 'INSERT INTO `pictures` (`username`, `picture`) VALUES (?,?)';
-        $PDO = connectDBMS();
-        $PDO->query($query1);
-        $stmt = $PDO->prepare($query2);
-        $stmt->execute([$username, $base64]);
-    }
-    catch (PDOexception $e) {
-        error_log($e);
-    }
-    $json = ['creationSuccess' => 1];
-    echo json_encode($json);
-}
-else {
-    $json = ['creationError' => 1];
-    echo json_encode($json);
 }
 ?>

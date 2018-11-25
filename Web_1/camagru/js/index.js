@@ -10,8 +10,8 @@ window.onload = function() {
         formModal.style.display = 'none';
         document.getElementById('modalHeader').innerHTML = 'Verification failure';
         if (signinState != null) {
-            console.log('does not get in here');
-            window.location.assign('http://127.0.0.1:8080/index.php');
+            window.location.assign(catPathToString('index.php'));
+            // window.location.assign('http://127.0.0.1:8080/index.php');
         }
     }
     function clickOutsideModal(e) {
@@ -64,3 +64,12 @@ window.onload = function() {
         formModal.style.display = 'flex';
     }
 }
+
+// Remember that this is relative to the file the browser is viewing.
+function catPathToString(string) {
+    var the_arr = window.location.href.split('/');
+    the_arr.pop();
+    return(the_arr.join('/') + '/' + string);
+}
+
+// console.log(catPathToString('derp.php'));

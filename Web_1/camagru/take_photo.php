@@ -3,8 +3,10 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false) {
-    header("Location: http://127.0.0.1:8080/take_photo_sign_in.php");
+    header('Location: ' . catPathToString('take_photo_sign_in.php'));
+    // header("Location: http://127.0.0.1:8080/take_photo_sign_in.php");
     exit;
 }
 ?>
@@ -179,6 +181,27 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div> -->
+        <div class="userPictureGallery" id="userPictureGallery1">
+            <?php
+                try {
+                    $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
+                    $query2 = 'SELECT `id`, `picture` FROM `pictures` WHERE `username` = ?';
+                    $PDO = connectDBMS();
+                    $PDO->query($query1);
+                    $stmt = $PDO->prepare($query2);
+                    $stmt->execute([$_SESSION['username']]);
+                    $rowArr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch (PDOexception $e) {
+                    error_log($e);
+                }
+                foreach($rowArr as $row) {
+                    $pictureID = $row['id'];
+                    $encodedPicture = $row['picture'];
+                    echo '<img src="' . $encodedPicture . '" ' . 'class="userPicture" ' . 'id="userPic' . $pictureID . '" ' . 'onclick="delUserPic(this)" ' . '/>';
+                }
+            ?>
+        </div>
     </div>
     <footer class="footer">
         <div class="footer-box">

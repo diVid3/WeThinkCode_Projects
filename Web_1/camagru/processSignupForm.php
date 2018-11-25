@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
 $signupFormUsername = trim($_POST['signupFormUsername']);
 $signupFormPassword = trim($_POST['signupFormPassword']);
@@ -54,6 +55,11 @@ if ($stmt->rowCount() > 0) {
 
 if (strlen($signupFormPassword) < 7 == true) {
     $json = ['passwordTooShort' => 1];
+    echo json_encode($json);
+    exit;
+}
+if (preg_match('/[A-Z]/', $signupFormPassword) === 0) {
+    $json = ['passwordNoMix' => 1];
     echo json_encode($json);
     exit;
 }
@@ -113,11 +119,18 @@ catch (PDOexception $e) {
 // Send verification email.
 
 $to = $signupFormEmail;
+// $subject = 'Camagru | Verification';
+// $message = 'Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
+
+// Please click on this link:
+// http://127.0.0.1:8080/verify.php?email=' . $signupFormEmail . '&verify_hash=' . $verify_hash;
+
 $subject = 'Camagru | Verification';
+$verifyLink = catPathToString('verify.php?email=') . $signupFormEmail . '&verify_hash=' . $verify_hash;
 $message = 'Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
 
 Please click on this link:
-http://127.0.0.1:8080/verify.php?email=' . $signupFormEmail . '&verify_hash=' . $verify_hash;
+' . $verifyLink;
 
 mail($to, $subject, $message);
 

@@ -9,5 +9,6 @@ if (isset($_SESSION['username']) == true && isset($_SESSION['password']) == true
     unset($_SESSION['password']);
     unset($_SESSION['email']);
 }
-header("Location: http://127.0.0.1:8080/index.php");
+header('Location: ' . catPathToString('index.php'));
+// header("Location: http://127.0.0.1:8080/index.php");
 ?>

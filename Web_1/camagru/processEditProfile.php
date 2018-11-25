@@ -3,6 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false)
     exit;
 
@@ -61,6 +62,11 @@ if ($editProfileFormUsername != $_SESSION['username']) {
 
 if (strlen($editProfileFormPassword) < 7 == true) {
     $json = ['passwordTooShort' => 1];
+    echo json_encode($json);
+    exit;
+}
+if (preg_match('/[A-Z]/', $editProfileFormPassword) === 0) {
+    $json = ['passwordNoMix' => 1];
     echo json_encode($json);
     exit;
 }

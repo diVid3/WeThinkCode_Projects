@@ -83,6 +83,14 @@ function openModal(returnArr, formModal) {
         // document.getElementById('modalText').innerHTML = 'Welcome ' + returnArr['username'] + '.';
         // formModal.style.display = 'flex';
         var username = returnArr['username'];
-        window.location = "http://127.0.0.1:8080/index.php?signin=success&username=" + username;
+        window.location = catPathToString('index.php?signin=success&username=') + username;
+        // window.location = "http://127.0.0.1:8080/index.php?signin=success&username=" + username;
     }
+}
+
+// Remember that this is relative to the file the browser is viewing.
+function catPathToString(string) {
+    var the_arr = window.location.href.split('/');
+    the_arr.pop();
+    return(the_arr.join('/') + '/' + string);
 }

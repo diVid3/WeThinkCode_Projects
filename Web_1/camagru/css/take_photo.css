@@ -280,3 +280,30 @@ input[type="file"] {
     border-radius: 9px;
     padding: 2%;
 }
+
+/* User gallery css */
+
+.userPictureGallery {
+    margin: 10px;
+    width: 30em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.userPicture {
+    padding: 10px;
+}
+
+@media screen and (min-width: 824px) {
+    .userPicture {
+        width: 200px;
+        height: 112px;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .userPicture {
+        width: 125px;
+        height: 70px;
+    }
+}

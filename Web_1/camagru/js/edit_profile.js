@@ -84,6 +84,10 @@ function openModal(returnArr, formModal) {
         document.getElementById('modalText').innerHTML = 'Password too short, minimum 7 characters.';
         formModal.style.display = 'flex';
     }
+    if (returnArr['passwordNoMix'] == 1) {
+        document.getElementById('modalText').innerHTML = 'Password(s) not mixed case.';
+        formModal.style.display = 'flex';
+    }
     if (returnArr['passwordMatch'] == 0) {
         document.getElementById('modalText').innerHTML = 'Passwords do not match.';
         formModal.style.display = 'flex';

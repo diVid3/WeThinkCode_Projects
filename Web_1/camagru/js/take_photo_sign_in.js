@@ -7,7 +7,8 @@ window.addEventListener('click', clickOutsideModal);
 
 function closeModal() {
     formModal.style.display = 'none';
-    window.location = "http://127.0.0.1:8080/sign_in.php";
+    window.location = catPathToString('sign_in.php');
+    // window.location = "http://127.0.0.1:8080/sign_in.php";
 }
 
 function clickOutsideModal(e) {
@@ -17,5 +18,13 @@ function clickOutsideModal(e) {
     if (e.target == modalRow) {
         formModal.style.display = 'none';
     }
-    window.location = "http://127.0.0.1:8080/sign_in.php";
+    window.location = catPathToString('sign_in.php');
+    // window.location = "http://127.0.0.1:8080/sign_in.php";
+}
+
+// Remember that this is relative to the file the browser is viewing.
+function catPathToString(string) {
+    var the_arr = window.location.href.split('/');
+    the_arr.pop();
+    return(the_arr.join('/') + '/' + string);
 }

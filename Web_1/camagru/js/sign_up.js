@@ -81,7 +81,11 @@ function openModal(returnArr, formModal) {
     // Logic - Modal - Passwords.
 
     if (returnArr['passwordTooShort'] == 1) {
-        document.getElementById('modalText').innerHTML = 'Password too short, minimum 7 characters.';
+        document.getElementById('modalText').innerHTML = 'Password(s) too short, minimum 7 characters.';
+        formModal.style.display = 'flex';
+    }
+    if (returnArr['passwordNoMix'] == 1) {
+        document.getElementById('modalText').innerHTML = 'Password(s) not mixed case.';
         formModal.style.display = 'flex';
     }
     if (returnArr['passwordMatch'] == 0) {

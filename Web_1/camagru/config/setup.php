@@ -48,6 +48,8 @@ function createPictureTable() {
     $query2 = 'CREATE TABLE IF NOT EXISTS `pictures` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `username` VARCHAR(32) NOT NULL,
+        `email` VARCHAR(32) NOT NULL,
+        `notification` TINYINT(1) NOT NULL,
         `comments` LONGTEXT,
         `likes` LONGTEXT,
         `picture` LONGTEXT NOT NULL
