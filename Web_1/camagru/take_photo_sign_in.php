@@ -18,9 +18,18 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
     <div id="formModal" class="modal">
         <div id="modalRow" class="modal-row">
             <div class="modal-column">
-                <p class="modalHeader" id="modalHeader">Please sign in</p><br>
-                <p class="errorModal" id="modalText"> You need to be signed in to take a picture.</p><br>
-                <div id="okButton" class="okButton"><p>ok</p></div>
+                <?php
+                if (isset($_GET['comment']) == true) {
+                    echo '<p class="modalHeader" id="modalHeader">Please sign in</p><br>';
+                    echo '<p class="errorModal" id="modalText"> You need to be signed in to comment or like pictures.</p><br>';
+                    echo '<div id="okButton" class="okButton"><p>ok</p></div>';
+                }
+                else {
+                    echo '<p class="modalHeader" id="modalHeader">Please sign in</p><br>';
+                    echo '<p class="errorModal" id="modalText"> You need to be signed in to take a picture.</p><br>';
+                    echo '<div id="okButton" class="okButton"><p>ok</p></div>';
+                }
+                ?>
             </div>
         </div>
     </div>

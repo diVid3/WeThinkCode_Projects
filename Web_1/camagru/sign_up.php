@@ -4,6 +4,19 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
+
+if (isset($_SESSION['username']) == true && isset($_SESSION['password']) == true &&
+isset($_SESSION['email']) == true && isset($_SESSION['notification']) == true) {
+    header('Location: ' . catPathToString('sign_out.php'));
+}
+
+// if (isset($_SESSION['username']) == true && isset($_SESSION['password']) == true) {
+//     unset($_SESSION['username']);
+//     unset($_SESSION['password']);
+//     unset($_SESSION['email']);
+//     header("Location: 127.0.0.1:8080/sign_in.php");
+//     header('Location: ' . catPathToString('sign_in.php'));
+// }
 ?>
 <!DOCTYPE html>
 <html>

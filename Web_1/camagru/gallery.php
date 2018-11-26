@@ -55,7 +55,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
             else
                 $page = $_GET['page'];
             $numberOfPages = ceil($rowCount / $resultsPerPage);
-            if ($page > $numberOfPages || $page < 0)
+            if ($page > $numberOfPages || $page <= 0)
                 $page = 1;
             try {
                 $startLimitNumber = ($page - 1) * $resultsPerPage;
@@ -72,8 +72,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
                 $pictureID = $row['id'];
                 $encodedPicture = $row['picture'];
                 echo '<div>';
-                echo '<img src="' . $encodedPicture . '" ' . 'class="galleryPicture" ' . 'id="galleryPic' . $pictureID . '" ' . '/>';
-                // echo '<img src="' . $encodedPicture . '" ' . 'class="userPicture" ' . 'id="userPic' . $pictureID . '" ' . 'onclick="delUserPic(this)" ' . '/>';
+                echo '<img src="' . $encodedPicture . '" ' . 'class="galleryPicture" ' . 'id="galleryPic' . $pictureID . '" ' . 'onclick="commentPicture(this)" ' . '/>';
                 echo '</div>';
             }
         echo '</div>';

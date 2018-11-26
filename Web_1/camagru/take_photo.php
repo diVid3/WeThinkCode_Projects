@@ -4,11 +4,16 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
-if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false) {
+
+if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false &&
+isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false) {
     header('Location: ' . catPathToString('take_photo_sign_in.php'));
-    // header("Location: http://127.0.0.1:8080/take_photo_sign_in.php");
     exit;
 }
+// if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false) {
+//     header('Location: ' . catPathToString('take_photo_sign_in.php'));
+//     exit;
+// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -181,6 +186,7 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"></div> -->
+        <p>Click on a thumbnail to delete a picture</p>
         <div class="userPictureGallery" id="userPictureGallery1">
             <?php
                 try {
