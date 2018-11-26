@@ -69,9 +69,9 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="push-content">
     </div>
     <div class="content">
-        <div class="content-flex-child">
-            <!-- Need to move php tags otherwise multiple DB connections -->
-            <?php
+        <?php
+            echo '<div class="content-flex-child">';
+            // Need to move php tags otherwise multiple DB connections
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
@@ -113,54 +113,16 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
                 echo '<div>';
                 echo '<img src="' . $encodedPicture . '" ' . 'class="commentPicture">'; 
                 echo '</div>';
-            ?>
-        </div>
-        <div class="content-flex-child">
-            <!-- Need to let JS ajax the like -->
-            <button style="flex-grow: 1;" onclick="addLikeToPic(this, $pictureID); this.onclick=null;">Like</button>
-        </div>
-        <div class="content-flex-child">
-            <?php
+            echo '</div>';
+            echo '<div class="content-flex-child">';
+                // Need to let JS ajax the like
+                echo '<button style="flex-grow: 1;" onclick="addLikeToPic(this, ' . $pictureID . '); this.onclick=null;">Like</button>';
+            echo '</div>';
+            echo '<div class="content-flex-child">';
+                // Insert content here.
                 
-            ?>
-        </div>
-        <div class="content-flex-child">hi</div>
-        <div class="content-flex-child">hi</div>
-        <div class="content-flex-child">hi</div>
-        <div class="content-flex-child">hi</div>
-        <!-- <div class="content-flex-child" id="videoDiv" style="position:relative;">
-            <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
-        </div>
-        <div class="content-flex-child" id="canvasDiv" style="position:relative;">
-            <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
-        </div>
-        <div class="content-flex-child">
-            <select id="stickers">
-                <option value="img/none.png">None</option>
-                <option value="img/daway.png">daway</option>
-                <option value="img/heartbreak.png">heartbreak</option>
-                <option value="img/minecraft.png">minecraft</option>
-                <option value="img/cod4.png">cod4</option>
-            </select>
-        </div>
-        <div class="content-flex-child">
-            <button id="takePicButton" style="flex-grow: 1;">Take pic</button>
-        </div>
-        <div class="content-flex-child">
-            <button id="clearButton" style="flex-grow: 1;">Clear</button>
-        </div>
-        <div class="content-flex-child" style="text-align:center;">
-            <label id="uploadButtonContainer">
-                <input type="file" id="uploadButton"/>
-                    Upload pic
-            </label>
-        </div>
-        <div class="content-flex-child">
-            <button id="saveButton" style="flex-grow: 1;">Save pic</button>
-        </div>
-        <div class="content-flex-child">
-            <div id="picture" style="flex-grow: 1;"></div>
-        </div> -->
+            echo '</div>';
+        ?>
     </div>
     <footer class="footer">
         <div class="footer-box">

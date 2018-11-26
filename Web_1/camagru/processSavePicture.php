@@ -37,16 +37,22 @@ function storeFusedPicture() {
         $username = $_SESSION['username'];
         $email = $_SESSION['email'];
         $notification = $_SESSION['notification'];
+        // $commentsArr = [['dummyUsername', 'dummyComment']];
+        $commentsArr = [['', '']];
+        $comments = serialize($commentsArr);
+        // $likesArr = ['dummyUsername'];
+        $likesArr = [''];
+        $likes = serialize($likesArr);
         $type = pathinfo('fused.png', PATHINFO_EXTENSION);
         $data = file_get_contents('fused.png');
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         unlink('fused.png');
         $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-        $query2 = 'INSERT INTO `pictures` (`username`, `email`, `notification`, `picture`) VALUES (?,?,?,?)';
+        $query2 = 'INSERT INTO `pictures` (`username`, `email`, `notification`, `comments`, `likes`, `picture`) VALUES (?,?,?,?,?,?)';
         $PDO = connectDBMS();
         $PDO->query($query1);
         $stmt = $PDO->prepare($query2);
-        $stmt->execute([$username, $email, $notification, $base64]);
+        $stmt->execute([$username, $email, $notification, $comments, $likes, $base64]);
         $json = ['creationSuccess' => 1, 'doneSavingPic' => 1];
         echo json_encode($json);
     }
