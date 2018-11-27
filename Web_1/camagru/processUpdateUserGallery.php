@@ -5,6 +5,9 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
+if (isset($_SESSION['username']) == false)
+    exit;
+
 try {
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
     $query2 = 'SELECT `id`, `picture` FROM `pictures` WHERE `username` = ? ORDER BY `id` DESC LIMIT 1';

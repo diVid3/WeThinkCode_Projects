@@ -4,8 +4,9 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
-if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false &&
-    isset($_SESSION['email']) == false)
+
+if (isset($_SESSION['username']) == false || isset($_SESSION['password']) == false ||
+isset($_SESSION['email']) == false || isset($_SESSION['notification']) == false)
     exit;
 
 // Function to merge a picture with a sticker, writes to file. $imgURL is a base64 string.

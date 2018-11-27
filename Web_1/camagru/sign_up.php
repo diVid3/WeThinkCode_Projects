@@ -10,13 +10,6 @@ isset($_SESSION['email']) == true && isset($_SESSION['notification']) == true) {
     header('Location: ' . catPathToString('sign_out.php'));
 }
 
-// if (isset($_SESSION['username']) == true && isset($_SESSION['password']) == true) {
-//     unset($_SESSION['username']);
-//     unset($_SESSION['password']);
-//     unset($_SESSION['email']);
-//     header("Location: 127.0.0.1:8080/sign_in.php");
-//     header('Location: ' . catPathToString('sign_in.php'));
-// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -126,16 +119,6 @@ isset($_SESSION['email']) == true && isset($_SESSION['notification']) == true) {
             <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
                 <div style="flex-grow:1;">
                     <input type="text" name="email" placeholder="Enter your email..." id="signupFormEmail">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Email notifications:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="checkbox" name="notification" id="signupFormNotification">
                 </div>
             </div>
             <button class="sign_up-item-button" name="name" value="value" type="submit">

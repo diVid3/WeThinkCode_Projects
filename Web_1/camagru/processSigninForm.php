@@ -5,6 +5,9 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
+if (isset($_POST['signinFormUsername']) == false || isset($_POST['signinFormPassword']) == false)
+    exit;
+
 $signinFormUsername = trim($_POST['signinFormUsername']);
 $signinFormPassword = trim($_POST['signinFormPassword']);
 

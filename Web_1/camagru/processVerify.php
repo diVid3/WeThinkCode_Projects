@@ -6,10 +6,9 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
 // If any part is lacking, exit.
-if ((isset($_GET['email']) == true && empty($_GET['email']) == false && isset($_GET['verify_hash']) == true && empty($_GET['verify_hash']) == false) == false) {
-    echo "Unauthorized Access - Go away." . '<br>';
+if ((isset($_GET['email']) == true && empty($_GET['email']) == false &&
+isset($_GET['verify_hash']) == true && empty($_GET['verify_hash']) == false) == false)
     exit;
-}
 
 // Checking if email and verify_hash exists.
 try {
@@ -25,7 +24,6 @@ catch (PDOexception $e) {
 }
 if ($stmt->rowCount() == 0) {
     header('Location: ' . catPathToString('index.php?verify=fail'));
-    // header("Location: http://127.0.0.1:8080/index.php?verify=fail");
     exit;
 }
 
@@ -41,6 +39,5 @@ catch (PDOexception $e) {
 
 // Need to redirect here upon success.
 header('Location: ' . catPathToString('index.php?verify=success'));
-// header("Location: http://127.0.0.1:8080/index.php?verify=success");
 exit;
 ?>

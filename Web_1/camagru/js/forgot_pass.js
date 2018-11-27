@@ -11,7 +11,6 @@ function forgotPassword(e) {
 
     xhr.open('POST', 'processForgotPassword.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // Need to add exception checks here.
     xhr.onload = function() {
         var returnArr = JSON.parse(this.responseText);
         var formModal = document.getElementById('formModal');

@@ -81,29 +81,26 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
                     $pictureID = $_GET['pictureID'];
                 else {
                     header('Location: ' . catPathToString('gallery.php'));
-                    // error_log('comment.php - pictureID invalid.');
                     exit;
                 }
                 if ($pictureID <= 0) {
                     header('Location: ' . catPathToString('gallery.php'));
-                    // header('Location: ' . catPathToString('pageDoesNotExist.html'));
                     exit;
                 }
 
                 try { 
                     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-                    $query2 = 'SELECT `picture` FROM `pictures` WHERE `id` = ?';
+                    $query2 = 'SELECT * FROM `pictures` WHERE `id` = ?';
                     $PDO = connectDBMS();
                     $PDO->query($query1);
                     $stmt = $PDO->prepare($query2);
                     $stmt->execute([$pictureID]);
                     if ($stmt->rowCount() == 0) {
                         header('Location: ' . catPathToString('gallery.php'));
-                        // header('Location: ' . catPathToString('pageDoesNotExist.php'));
                         exit;
                     }
-                    $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $encodedPicture = $rowArr['picture'];
+                    $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $encodedPicture = $table[0]['picture'];
                 }
                 catch (PDOexception $e) {
                     error_log($e);
@@ -115,12 +112,14 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
                 echo '</div>';
             echo '</div>';
             echo '<div class="content-flex-child">';
-                // Need to let JS ajax the like
-                echo '<button style="flex-grow: 1;" onclick="addLikeToPic(this, ' . $pictureID . '); this.onclick=null;">Like</button>';
+                // Need to let JS ajax the like.
+                // Add number of likes here.
+                $likesArr = unserialize($table[0]['likes']);
+                $likes = count($likesArr);
+                echo '<p id="picNumLikes">' . ($likes - 1) . '</p>';
             echo '</div>';
             echo '<div class="content-flex-child">';
-                // Insert content here.
-                
+                echo '<button style="flex-grow: 1;" onclick="addLikeToPic(this, ' . $pictureID . '); this.onclick=null;">Like</button>';
             echo '</div>';
         ?>
     </div>

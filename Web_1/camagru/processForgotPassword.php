@@ -5,6 +5,9 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
+if (isset($_POST['forgotPasswordFormUsername']) == false)
+    exit;
+
 $forgotPasswordFormUsername = trim($_POST['forgotPasswordFormUsername']);
 
 if (preg_match('/\W+/', $forgotPasswordFormUsername) === 1) {
@@ -54,13 +57,6 @@ $forgotPasswordFormEmail = $rowArr['email'];
 
 $to = $forgotPasswordFormEmail;
 $subject = 'Camagru | Reset Password';
-// $message = 'A password reset for the Camagru account connected to this email address has been requested, please click the link below to reset your password. You\'ll need to enter your username as well as the token that is supplied in this email. If this was not you, you can safely ignore this message.
-
-// Link to password reset page:
-// http://127.0.0.1:8080/reset_pass.php
-
-// The reset token:
-// ' . $reset_hash;
 
 $passwordResetPagePath = catPathToString('reset_pass.php');
 $message = 'A password reset for the Camagru account connected to this email address has been requested, please click the link below to reset your password. You\'ll need to enter your username as well as the token that is supplied in this email. If this was not you, you can safely ignore this message.

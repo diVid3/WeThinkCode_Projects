@@ -5,6 +5,10 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
+if (isset($_POST['resetPassFormUsername']) == false || isset($_POST['resetPassFormPassword']) == false || 
+isset($_POST['resetPassFormConfirmPassword']) == false || isset($_POST['resetPassFormToken']) == false)
+    exit;
+
 $resetPassFormUsername = trim($_POST['resetPassFormUsername']);
 $resetPassFormPassword = trim($_POST['resetPassFormPassword']);
 $resetPassFormConfirmPassword = trim($_POST['resetPassFormConfirmPassword']);

@@ -10,10 +10,6 @@ isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false)
     header('Location: ' . catPathToString('take_photo_sign_in.php'));
     exit;
 }
-// if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false) {
-//     header('Location: ' . catPathToString('take_photo_sign_in.php'));
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -77,11 +73,9 @@ isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false)
     <div class="content">
         <div class="content-flex-child" id="videoDiv" style="position:relative;">
             <video id="video" style="flex-grow:1;width:50%;">Stream not active</video>
-            <!-- <img id="sticker1" src="img/none.png" style="position:absolute;width:78.25%;height:87.46%;left:10.85%;"> -->
         </div>
         <div class="content-flex-child" id="canvasDiv" style="position:relative;">
             <canvas id="canvas" style="flex-grow:1;width:50%;"></canvas>
-            <!-- <img id="sticker2" src="img/none.png" style="position:absolute;width:100%;height:87.46%;left:0%;"> -->
         </div>
         <div class="content-flex-child">
             <select id="stickers">
@@ -98,12 +92,7 @@ isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false)
         <div class="content-flex-child">
             <button id="clearButton" style="flex-grow: 1;">Clear</button>
         </div>
-        <!-- <form enctype="multipart/form-data" action="uploadPic.php" method="post">
-            <input id="uploadButton" type="file">
-            <input type="submit" value="uploadedImage" name="submit">
-        </form> -->
         <div class="content-flex-child" style="text-align:center;">
-            <!-- <input type="file" id="uploadFile" style="flex-grow: 1; width:5%;"> -->
             <label id="uploadButtonContainer">
                 <input type="file" id="uploadButton"/>
                     Upload pic
@@ -115,78 +104,7 @@ isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false)
         <div class="content-flex-child">
             <div id="picture" style="flex-grow: 1;"></div>
         </div>
-        <!-- <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item-center"></div> -->
-        <!-- <form class="grid-item-center" id="editProfileForm">
-            <div class="sign_up-items" style="text-align:center;">
-                <div style="display:inline-block;flex-grow:1;">
-                    <p class="sign-up-form">Edit profile</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New username:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="username" placeholder="Enter your username..." id="editProfileFormUsername">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New password:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="password" name="password" placeholder="Enter your password..." id="editProfileFormPassword">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Confirm password:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;">
-                    <input type="password" name="password" placeholder="Enter your password..." id="editProfileFormConfirmPassword">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:flex-end;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>New email:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="text" name="email" placeholder="Enter your email..." id="editProfileFormEmail">
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;">
-                <div style="flex-grow:1;padding-bottom:3px;">
-                    <p>Email notifications:</p>
-                </div>
-            </div>
-            <div class="sign_up-items" style="align-items:center;padding-bottom:4%;">
-                <div style="flex-grow:1;">
-                    <input type="checkbox" name="notification" id="editProfileFormNotification">
-                </div>
-            </div>
-            <button class="sign_up-item-button" name="name" value="value" type="submit">
-                <div style="flex-grow:1;text-align:center;">
-                    <p>Edit profile</p>
-                </div>
-            </button>
-        </form> -->
-        <!-- <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div> -->
-        <p>Click on a thumbnail to delete a picture</p>
+        <p>Click on a thumbnail to delete a picture if it exists</p>
         <div class="userPictureGallery" id="userPictureGallery1">
             <?php
                 try {

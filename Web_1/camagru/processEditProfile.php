@@ -5,14 +5,14 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
-if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false &&
-isset($_SESSION['email']) == false && isset($_SESSION['notification']) == false) {
-    // header('Location: ' . catPathToString('sign_out.php'));
+if (isset($_SESSION['username']) == false || isset($_SESSION['password']) == false ||
+isset($_SESSION['email']) == false || isset($_SESSION['notification']) == false)
     exit;
-}
 
-// if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == false && isset($_SESSION['email']) == false)
-//     exit;
+if (isset($_POST['editProfileFormUsername']) == false || isset($_POST['editProfileFormPassword']) == false || 
+isset($_POST['editProfileFormConfirmPassword']) == false || isset($_POST['editProfileFormEmail']) == false ||
+isset($_POST['editProfileFormNotification']) == false)
+    exit;
 
 $editProfileFormUsername = trim($_POST['editProfileFormUsername']);
 $editProfileFormPassword = trim($_POST['editProfileFormPassword']);

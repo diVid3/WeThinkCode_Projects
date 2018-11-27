@@ -5,11 +5,14 @@ require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/usercheck.php');
 
+if (isset($_POST['signupFormUsername']) == false || isset($_POST['signupFormPassword']) == false || 
+isset($_POST['signupFormConfirmPassword']) == false || isset($_POST['signupFormEmail']) == false)
+    exit;
+
 $signupFormUsername = trim($_POST['signupFormUsername']);
 $signupFormPassword = trim($_POST['signupFormPassword']);
 $signupFormConfirmPassword = trim($_POST['signupFormConfirmPassword']);
 $signupFormEmail = trim($_POST['signupFormEmail']);
-$signupFormNotification = trim($_POST['signupFormNotification']);
 
 // Username checks.
 
@@ -95,14 +98,11 @@ if ($stmt->rowCount() > 0) {
     exit;
 }
 
-// Notification checks.
+// Notification email value defaults to 1.
 
-if ($signupFormNotification == 'true') 
-    $signupFormNotificationValue = 1;
-else
-    $signupFormNotificationValue = 0;
+$signupFormNotificationValue = 1;
 
-// Account creation.
+// Creating DB entry for profile.
 
 try {
     $hash = password_hash($signupFormPassword, PASSWORD_BCRYPT, ['cost' => 11]);
@@ -119,14 +119,9 @@ catch (PDOexception $e) {
 // Send verification email.
 
 $to = $signupFormEmail;
-// $subject = 'Camagru | Verification';
-// $message = 'Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
-
-// Please click on this link:
-// http://127.0.0.1:8080/verify.php?email=' . $signupFormEmail . '&verify_hash=' . $verify_hash;
 
 $subject = 'Camagru | Verification';
-$verifyLink = catPathToString('verify.php?email=') . $signupFormEmail . '&verify_hash=' . $verify_hash;
+$verifyLink = catPathToString('processVerify.php?email=') . $signupFormEmail . '&verify_hash=' . $verify_hash;
 $message = 'Thank you for signing up to Camagru! To complete your registration, just click on the link below to activate your account.
 
 Please click on this link:

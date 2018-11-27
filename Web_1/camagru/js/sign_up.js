@@ -8,16 +8,11 @@ function postSignUpForm(e) {
     var signupFormPassword = document.getElementById('signupFormPassword').value;
     var signupFormConfirmPassword = document.getElementById('signupFormConfirmPassword').value;
     var signupFormEmail = document.getElementById('signupFormEmail').value;
-    var signupFormNotification = document.getElementById('signupFormNotification').checked;
 
     var keyVal1 = "signupFormUsername=" + signupFormUsername;
     var keyVal2 = "signupFormPassword=" + signupFormPassword;
     var keyVal3 = "signupFormConfirmPassword=" + signupFormConfirmPassword;
     var keyVal4 = "signupFormEmail=" + signupFormEmail;
-    if (signupFormNotification == true)
-        var keyVal5 = "signupFormNotification=true";
-    else
-        var keyVal5 = "signupFormNotification=false";
 
     var xhr = new XMLHttpRequest();
 
@@ -49,7 +44,7 @@ function postSignUpForm(e) {
         }
         openModal(returnArr, formModal);
     }
-    xhr.send(keyVal1 + "&" + keyVal2 + "&" + keyVal3 + "&" + keyVal4 + "&" + keyVal5);
+    xhr.send(keyVal1 + "&" + keyVal2 + "&" + keyVal3 + "&" + keyVal4);
 }
 
 // This function will open a modal based upon specific conditions.
