@@ -39,7 +39,7 @@ function storeFusedPicture() {
         $email = $_SESSION['email'];
         $notification = $_SESSION['notification'];
         // $commentsArr = [['dummyUsername', 'dummyComment']];
-        $commentsArr = [['', '']];
+        $commentsArr = [['dummyName', 'dummyComment']];
         $comments = serialize($commentsArr);
         // $likesArr = ['dummyUsername'];
         $likesArr = [''];

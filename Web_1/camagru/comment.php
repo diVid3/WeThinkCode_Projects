@@ -108,18 +108,35 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
                 }
 
                 echo '<div>';
-                echo '<img src="' . $encodedPicture . '" ' . 'class="commentPicture">'; 
+                    echo '<img src="' . $encodedPicture . '" ' . 'class="commentPicture">'; 
                 echo '</div>';
             echo '</div>';
             echo '<div class="content-flex-child">';
-                // Need to let JS ajax the like.
-                // Add number of likes here.
                 $likesArr = unserialize($table[0]['likes']);
                 $likes = count($likesArr);
                 echo '<p id="picNumLikes">' . ($likes - 1) . '</p>';
             echo '</div>';
             echo '<div class="content-flex-child">';
                 echo '<button style="flex-grow: 1;" onclick="addLikeToPic(this, ' . $pictureID . '); this.onclick=null;">Like</button>';
+            echo '</div>';
+            $commentsArr = unserialize($table[0]['comments']);
+            echo '<div>';
+                // Generate comments here.
+                echo '<table>';
+                    echo '<tr>';
+                        echo '<th><p>Username</p></th>';
+                        echo '<th><p>Comment</p></th>';
+                    echo '</tr>';
+                    foreach ($commentsArr as $element) {
+                        echo '<tr>';
+                        echo '<th><p>' . $element[0] . '</p></th>';
+                        echo '<th><p>' . $element[1] . '</p></th>';
+                        echo '</tr>';
+                    }
+                echo '</table>';
+            echo '</div>';
+            echo '<div>';
+                // Do comment box here.
             echo '</div>';
         ?>
     </div>

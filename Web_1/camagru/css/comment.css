@@ -280,3 +280,23 @@ input[type="file"] {
     border-radius: 9px;
     padding: 2%;
 }
+
+/* commentPicture syling */
+
+.commentPicture {
+    width: 100%;
+}
+
+/* Table styling */
+
+table, th, td {
+    border: 1px solid black;
+ }
+
+table {
+    margin: 10px;
+}
+
+th, td {
+    padding: 10px;
+}
