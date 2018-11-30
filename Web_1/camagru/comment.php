@@ -129,14 +129,21 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
                     echo '</tr>';
                     foreach ($commentsArr as $element) {
                         echo '<tr>';
-                        echo '<th><p>' . $element[0] . '</p></th>';
-                        echo '<th><p>' . $element[1] . '</p></th>';
+                        echo '<th><p>' . htmlspecialchars($element[0]) . '</p></th>';
+                        echo '<th><p>' . htmlspecialchars($element[1]) . '</p></th>';
                         echo '</tr>';
                     }
                 echo '</table>';
             echo '</div>';
             echo '<div>';
                 // Do comment box here.
+                echo '<form action="/action_page.php" id="usrform">';
+                    echo '<p>Username: </p><input type="text" name="usrname">';
+                    echo '<input type="submit">';
+                echo '</form>';
+                echo '<br>';
+                echo '<textarea rows="4" cols="50" name="comment" form="usrform">';
+                echo 'Enter text here...</textarea>';
             echo '</div>';
         ?>
     </div>
