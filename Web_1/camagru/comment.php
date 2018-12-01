@@ -122,28 +122,30 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
             $commentsArr = unserialize($table[0]['comments']);
             echo '<div>';
                 // Generate comments here.
-                echo '<table>';
+                echo '<table id="commentTable">';
                     echo '<tr>';
-                        echo '<th><p>Username</p></th>';
-                        echo '<th><p>Comment</p></th>';
+                        echo '<th><p>Username:</p></th>';
+                        echo '<th><p>Comment:</p></th>';
                     echo '</tr>';
+                    $dummyCommentSkip = 0;
                     foreach ($commentsArr as $element) {
+                        if ($dummyCommentSkip == 0) {
+                            $dummyCommentSkip++;
+                            continue;
+                        }
                         echo '<tr>';
-                        echo '<th><p>' . htmlspecialchars($element[0]) . '</p></th>';
-                        echo '<th><p>' . htmlspecialchars($element[1]) . '</p></th>';
+                        echo '<td><p>' . htmlspecialchars($element[0]) . '</p></td>';
+                        echo '<td><p>' . htmlspecialchars($element[1]) . '</p></td>';
                         echo '</tr>';
                     }
                 echo '</table>';
             echo '</div>';
             echo '<div>';
-                // Do comment box here.
-                echo '<form action="/action_page.php" id="usrform">';
-                    echo '<p>Username: </p><input type="text" name="usrname">';
-                    echo '<input type="submit">';
+                echo '<input id="commentBox" placeholder="Comment here...">';
+                echo '<form id="usrform">';
+                    echo '<input type="submit" onclick="addCommentToPic(event, this, ' . '\'' . $_SESSION['username'] . '\'' . ', ' . $pictureID . ');">';
                 echo '</form>';
                 echo '<br>';
-                echo '<textarea rows="4" cols="50" name="comment" form="usrform">';
-                echo 'Enter text here...</textarea>';
             echo '</div>';
         ?>
     </div>

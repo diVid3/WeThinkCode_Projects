@@ -9,15 +9,23 @@ if (isset($_SESSION['username']) == false || isset($_SESSION['password']) == fal
 isset($_SESSION['email']) == false || isset($_SESSION['notification']) == false)
     exit;
 
-if (isset($_POST['addLikeToPic']) == false || isset($_POST['pictureID']) == false)
+if (isset($_POST['commentBoxUsernameValue']) == false || isset($_POST['commentBoxValue']) == false ||
+isset($_POST['pictureID']) == false)
     exit;
 
 $pictureID = $_POST['pictureID'];
-$username = $_SESSION['username'];
+$commentBoxUsernameValue = $_POST['commentBoxUsernameValue'];
+$commentBoxValue = $_POST['commentBoxValue'];
+
+if ($commentBoxUsernameValue === '' || $commentBoxValue === '') {
+    $json = ['updateComments' => 0];
+    echo json_encode($json);
+    exit;
+}
 
 try {
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-    $query2 = 'SELECT `likes` FROM `pictures` WHERE `id` = ?';
+    $query2 = 'SELECT `comments` FROM `pictures` WHERE `id` = ?';
     $PDO = connectDBMS();
     $PDO->query($query1);
     $stmt = $PDO->prepare($query2);
@@ -29,29 +37,26 @@ catch (PDOexception $e) {
     exit;
 }
 
-$likesArr = unserialize($rowArr['likes']);
+$commentsArr = unserialize($rowArr['comments']);
 
-if (in_array($username, $likesArr) == true) {
-    $json = ['updateLikes' => 0];
-    echo json_encode($json);
-    exit;
-}
+$newComment = [$commentBoxUsernameValue, $commentBoxValue];
+$commentsArr[] = $newComment;
 
-$likesArr[] = $username;
-$serializedLikesArr = serialize($likesArr);
+$serializedCommentsArr = serialize($commentsArr);
 
 try {
-    $query2 = 'UPDATE `pictures` SET `likes` = ? WHERE `id` = ?';
+    $query2 = 'UPDATE `pictures` SET `comments` = ? WHERE `id` = ?';
     $stmt = $PDO->prepare($query2);
-    $stmt->execute([$serializedLikesArr, $pictureID]);
+    $stmt->execute([$serializedCommentsArr, $pictureID]);
 }
 catch (PDOexception $e) {
     error_log($e);
     exit;
 }
 
-// Need to send Email notification here.
+// Need to send email notification here.
 
-$json = ['updateLikes' => 1];
+$json = ['updateComments' => 1];
 echo json_encode($json);
+
 ?>

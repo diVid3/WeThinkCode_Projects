@@ -281,22 +281,30 @@ input[type="file"] {
     padding: 2%;
 }
 
-/* commentPicture syling */
+/* CommentPicture syling */
 
 .commentPicture {
     width: 100%;
 }
 
-/* Table styling */
+/* Comment box styling */
 
-table, th, td {
-    border: 1px solid black;
- }
+#commentBox {
+    width: 100%;
+}
+
+/* Table styling */
 
 table {
     margin: 10px;
 }
 
-th, td {
+th {
+    padding: 10px;
+}
+
+td {
+    text-align: center;
+    background-color: white;
     padding: 10px;
 }
