@@ -8,7 +8,8 @@ function createDB() {
 
     try {
         $PDO = connectDBMS();
-        $PDO->query("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME CHARACTER SET UTF8mb4 COLLATE utf8mb4_bin");
+        // $PDO->query("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME CHARACTER SET UTF8mb4 COLLATE utf8mb4_bin");
+        $PDO->query("CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME CHARACTER SET utf8mb4");
         $PDO = NULL;
     }
     catch (PDOexception $e) {

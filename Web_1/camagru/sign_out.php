@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_id() == '' || isset($_SESSION) == false) {
+    session_start();
+}
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
