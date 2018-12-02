@@ -25,19 +25,20 @@ if ($commentBoxUsernameValue === '' || $commentBoxValue === '') {
 
 try {
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-    $query2 = 'SELECT `comments` FROM `pictures` WHERE `id` = ?';
+    $query2 = 'SELECT * FROM `pictures` WHERE `id` = ?';
     $PDO = connectDBMS();
     $PDO->query($query1);
     $stmt = $PDO->prepare($query2);
     $stmt->execute([$pictureID]);
-    $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
+    // $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
+    $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 catch (PDOexception $e) {
     error_log($e);
     exit;
 }
 
-$commentsArr = unserialize($rowArr['comments']);
+$commentsArr = unserialize($table[0]['comments']);
 
 $newComment = [$commentBoxUsernameValue, $commentBoxValue];
 $commentsArr[] = $newComment;
@@ -54,7 +55,25 @@ catch (PDOexception $e) {
     exit;
 }
 
-// Need to send email notification here.
+// Checking if email notifications are enabled. If so, sending email notification.
+
+try {
+    $query2 = 'SELECT `notification` FROM `users` WHERE `username` = ?';
+    $stmt = $PDO->prepare($query2);
+    $stmt->execute([$table[0]['username']]);
+    $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+catch (PDOexception $e) {
+    error_log($e);
+    exit;
+}
+
+if ($rowArr['notification'] == 1) {
+    $to = $table[0]['email'];
+    $subject = 'Camagru | Comment Notification';
+    $message = 'You received a comment on one of your pictures!';
+    mail($to, $subject, $message);
+}
 
 $json = ['updateComments' => 1];
 echo json_encode($json);

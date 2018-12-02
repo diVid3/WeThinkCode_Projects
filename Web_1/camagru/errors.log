@@ -1,9 +1,0 @@
-[01-Dec-2018 11:31:19 America/Los_Angeles] PDOException: SQLSTATE[HY000]: General error: 1366 Incorrect string value: '\xF0\x9F\x98\x81";...' for column 'comments' at row 1 in /Users/1humble1/Desktop/MAMP/apache2/htdocs/processComments.php:50
-Stack trace:
-#0 /Users/1humble1/Desktop/MAMP/apache2/htdocs/processComments.php(50): PDOStatement->execute(Array)
-#1 {main}
-[01-Dec-2018 11:37:36 America/Los_Angeles] PHP Notice:  A session had already been started - ignoring session_start() in /Users/1humble1/Desktop/MAMP/apache2/htdocs/sign_out.php on line 2
-[01-Dec-2018 11:46:26 America/Los_Angeles] PDOException: SQLSTATE[HY000]: General error: 1366 Incorrect string value: '\xF0\x9F\x98\x81";...' for column 'comments' at row 1 in /Users/1humble1/Desktop/MAMP/apache2/htdocs/processComments.php:50
-Stack trace:
-#0 /Users/1humble1/Desktop/MAMP/apache2/htdocs/processComments.php(50): PDOStatement->execute(Array)
-#1 {main}
