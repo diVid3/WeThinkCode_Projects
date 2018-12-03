@@ -12,22 +12,40 @@ isset($_SESSION['email']) == false || isset($_SESSION['notification']) == false)
 if (isset($_POST['addLikeToPic']) == false || isset($_POST['pictureID']) == false)
     exit;
 
-$pictureID = $_POST['pictureID'];
-$username = $_SESSION['username'];
+// Getting DB username because emoji's force case insensitivity on DB. Volvo plez fix.
 
 try {
     $query1 = 'USE ' . $DB_DATABASE_NAME . ';';
-    $query2 = 'SELECT * FROM `pictures` WHERE `id` = ?';
+    $query2 = 'SELECT `username` FROM `users` WHERE `username` = ?';
     $PDO = connectDBMS();
     $PDO->query($query1);
     $stmt = $PDO->prepare($query2);
+    $stmt->execute([$_SESSION['username']]);
+    $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+catch (PDOexception $e) {
+    error_log($e);
+    exit;
+}
+
+$pictureID = $_POST['pictureID'];
+$username = $rowArr['username'];
+
+try {
+    $query2 = 'SELECT * FROM `pictures` WHERE `id` = ?';
+    $stmt = $PDO->prepare($query2);
     $stmt->execute([$pictureID]);
-    // $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
     $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 }
 catch (PDOexception $e) {
     error_log($e);
+    exit;
+}
+
+if ($stmt->rowCount() == 0) {
+    $json = ['noPicID' => 1];
+    echo json_encode($json);
     exit;
 }
 

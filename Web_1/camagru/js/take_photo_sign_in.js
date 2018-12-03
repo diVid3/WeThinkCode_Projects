@@ -8,7 +8,6 @@ window.addEventListener('click', clickOutsideModal);
 function closeModal() {
     formModal.style.display = 'none';
     window.location = catPathToString('sign_in.php');
-    // window.location = "http://127.0.0.1:8080/sign_in.php";
 }
 
 function clickOutsideModal(e) {
@@ -19,7 +18,6 @@ function clickOutsideModal(e) {
         formModal.style.display = 'none';
     }
     window.location = catPathToString('sign_in.php');
-    // window.location = "http://127.0.0.1:8080/sign_in.php";
 }
 
 // Remember that this is relative to the file the browser is viewing.

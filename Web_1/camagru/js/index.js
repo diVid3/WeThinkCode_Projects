@@ -11,7 +11,6 @@ window.onload = function() {
         document.getElementById('modalHeader').innerHTML = 'Verification failure';
         if (signinState != null) {
             window.location.assign(catPathToString('index.php'));
-            // window.location.assign('http://127.0.0.1:8080/index.php');
         }
     }
     function clickOutsideModal(e) {

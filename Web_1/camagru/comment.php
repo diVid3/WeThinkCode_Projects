@@ -71,7 +71,6 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
     <div class="content">
         <?php
             echo '<div class="content-flex-child">';
-            // Need to move php tags otherwise multiple DB connections
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/errors.php');
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/connect.php');
                 require_once ($_SERVER['DOCUMENT_ROOT'] . '/inc/initialize.php');
@@ -121,7 +120,6 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
             echo '</div>';
             $commentsArr = unserialize($table[0]['comments']);
             echo '<div>';
-                // Generate comments here.
                 echo '<table id="commentTable">';
                     echo '<tr>';
                         echo '<th><p>Username:</p></th>';
@@ -143,7 +141,7 @@ if (isset($_SESSION['username']) == false && isset($_SESSION['password']) == fal
             echo '<div>';
                 echo '<input id="commentBox" placeholder="Comment here...">';
                 echo '<form id="usrform">';
-                    echo '<input type="submit" onclick="addCommentToPic(event, this, ' . '\'' . $_SESSION['username'] . '\'' . ', ' . $pictureID . ');">';
+                    echo '<input type="submit" onclick="addCommentToPic(event, ' . $pictureID . ');">';
                 echo '</form>';
                 echo '<br>';
             echo '</div>';
