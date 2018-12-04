@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* The body becomes the flexbox container/parent */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* This works because left 0 and right 0 stretches the
+container which allows flex to do its thing. This
+is also a child to the parent flexbox container */
+.header {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 7%;
+    background-color: mediumpurple;
+    color: white;
+    border-bottom: 4px solid silver;
+    box-shadow:0px 2px 3px #808080;
+}
+
+/* making them parent flexboxes as well, by
+using display: flex */
+.header-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* This affects the header box divs which
+actually contain the text */
+.header-box div {
+    flex-grow: 1;
+}
+
+.push-content {
+    flex-shrink: 0;
+    height: 7.5%;
+    border-bottom: 4px;
+}
+
+/* .content is applied to flexbox children.
+This class will also serve as the container
+for the grid items */
+.content {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    background: linear-gradient(white, #eee);
+    color: black;
+    /* display: grid;
+    grid-template-columns: minmax(10vw, auto) minmax(1px, 500px) minmax(10vw, auto);
+    grid-template-rows: 8vh 69vh 8vh; */
+    /* grid-template-rows: 8vh 69vh 8vh; */
+}
+
+.grid-item {
+    grid-column-start: auto;
+    grid-column-end: auto;
+    grid-row-start: auto;
+    grid-row-end: auto;
+}
+
+.grid-item-center {
+    background-color: white;
+    border-radius: 9px;
+    box-shadow:0px 2px 5px #808080;
+    padding: 2%;
+    /* grid-column-start: auto;
+    grid-column-end: auto;
+    grid-row-start: auto;
+    grid-row-end: auto; */
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.sign_up-items {
+    flex-grow: 1;
+    display: flex;
+}
+
+.sign_up-item-first {
+    flex-grow: 1.25;
+}
+
+.sign_up-item-last {
+    flex-grow: 1.25;
+}
+
+.sign_up-item-button {
+    border-radius: 9px;
+    border: none;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: mediumpurple;
+    color: white;
+    cursor: pointer;
+    max-height: 55.156px;
+}
+
+.sign_up-item-button:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
+input, input[type="text"] {
+    width: 99%;
+    border-width: 0px;
+    border-bottom-width: 2px;
+    padding-bottom: 2%;
+ }
+
+::placeholder {
+    color: rgb(220, 220, 220);
+}
+
+ textarea:focus, input:focus{
+    outline: none;
+}
+
+/* .footer is applied to flexbox children */
+.footer {
+    flex-shrink: 0;
+    background-color: mediumpurple;
+    height: 7%;
+    display: flex;
+    color: white;
+    border-top: 4px solid silver;
+}
+
+.footer-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.footer-box div {
+    flex-grow: 1;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p, h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 50;
+}
+
+a.click {
+    padding: 1vh 3.5vw 1vh 3.5vw;
+    border-radius: 50px;
+    width: auto;
+}
+
+a.click:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
+@media screen and (min-width: 824px) {
+    p {
+        font-size: 20px;
+    }
+    input, input[type="text"] {
+        font-size: 20px;
+     }
+}
+
+@media screen and (max-width: 823px) {
+    p {
+        font-size: 13px;
+    }
+    input, input[type="text"] {
+        font-size: 13px;
+     }
+}
+
+p.sign-up-form {
+    font-weight: bold;
+}
+
+/* Modal CSS */
+
+.modal {
+    display: flex;
+    z-index: 1;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+}
+
+.modal-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-column {
+    flex-grow: 1;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    /* setting parent container to position relative */
+    overflow: auto;
+    border-radius: 9px;
+    border: 2px solid mediumpurple;
+    box-shadow:0px 2px 5px #3a3a3a;
+}
+
+.modalHeader {
+    background-color: mediumpurple;
+    color: white;
+    border-radius: 9px;
+    padding: 10px;
+}
+
+.okButton {
+    background-color: mediumpurple;
+    color: white;
+    border-radius: 9px;
+    padding: 10px;
+    margin: 0% 35%;
+    cursor: pointer;
+}
+
+.okButton:hover {
+    background: linear-gradient(white, #eee);
+    color: black;
+}
+
+/* Could fuse this, but nah */
+
+@media screen and (min-width: 824px) {
+    .modal-column {
+        margin: 15% 37.5%;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .modal-column {
+        margin: 15% 15%;
+    }
+}
+
+.errorModal {
+    color: black;
+    border-radius: 9px;
+    padding: 2%;
+}
