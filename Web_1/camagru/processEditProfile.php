@@ -58,11 +58,6 @@ if ($editProfileFormUsername != $_SESSION['username']) {
     catch (PDOexception $e) {
         error_log($e);
     }
-    if ($stmt->rowCount() > 0) {
-        $json = ['usernameTaken' => 1];
-        echo json_encode($json);
-        exit;
-    }
 }
 
 // Password checks.
@@ -103,11 +98,6 @@ if ($editProfileFormEmail != $_SESSION['email']) {
     }
     catch (PDOexception $e) {
         error_log($e);
-    }
-    if ($stmt->rowCount() > 0) {
-        $json = ['emailTaken' => 1];
-        echo json_encode($json);
-        exit;
     }
 }
 
