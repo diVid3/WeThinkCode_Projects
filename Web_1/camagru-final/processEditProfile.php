@@ -49,14 +49,21 @@ if (array_key_exists(0, $usernameArr) == true && array_key_exists(1, $usernameAr
     echo json_encode($json);
     exit;
 }
-if ($editProfileFormUsername != $_SESSION['username']) {
-    try {
-        $query2 = 'SELECT * FROM `users` WHERE `username` = ?';
-        $stmt = $PDO->prepare($query2);
-        $stmt->execute([$editProfileFormUsername]);
-    }
-    catch (PDOexception $e) {
-        error_log($e);
+try {
+    $query2 = 'SELECT * FROM `users` WHERE `username` = ?';
+    $stmt = $PDO->prepare($query2);
+    $stmt->execute([$editProfileFormUsername]);
+}
+catch (PDOexception $e) {
+    error_log($e);
+}
+if ($stmt->rowCount() > 0) {
+    $loweredUsernameFromSession = strtolower($_SESSION['username']);
+    $loweredUsernameFromEditForm = strtolower($editProfileFormUsername);
+    if ($loweredUsernameFromSession != $loweredUsernameFromEditForm) {
+        $json = ['usernameTaken' => 1];
+        echo json_encode($json);
+        exit;
     }
 }
 
@@ -90,14 +97,21 @@ if (filter_var($editProfileFormEmail, FILTER_VALIDATE_EMAIL) == false) {
     echo json_encode($json);
     exit;
 }
-if ($editProfileFormEmail != $_SESSION['email']) {
-    try {
-        $query2 = 'SELECT * FROM `users` WHERE `email` = ?';
-        $stmt = $PDO->prepare($query2);
-        $stmt->execute([$editProfileFormEmail]);
-    }
-    catch (PDOexception $e) {
-        error_log($e);
+try {
+    $query2 = 'SELECT * FROM `users` WHERE `email` = ?';
+    $stmt = $PDO->prepare($query2);
+    $stmt->execute([$editProfileFormUsername]);
+}
+catch (PDOexception $e) {
+    error_log($e);
+}
+if ($stmt->rowCount() > 0) {
+    $loweredEmailFromSession = strtolower($_SESSION['email']);
+    $loweredEmailFromEditForm = strtolower($editProfileFormEmail);
+    if ($loweredEmailFromSession != $loweredEmailFromEditForm) {
+        $json = ['emailTaken' => 1];
+        echo json_encode($json);
+        exit;
     }
 }
 
@@ -136,6 +150,7 @@ catch (PDOexception $e) {
 $_SESSION['username'] = $editProfileFormUsername;
 $_SESSION['email'] = $editProfileFormEmail;
 $_SESSION['password'] = $hash;
+$_SESSION['notification'] = $editProfileFormNotificationValue;
 
 // Notify modal.
 

@@ -72,13 +72,13 @@ $query1 = 'SELECT * FROM `users` WHERE `username` = ?';
 $stmt = $PDO->prepare($query1);
 $stmt->execute([$signinFormUsername]);
 $rowArr = $stmt->fetch(PDO::FETCH_ASSOC);
-$_SESSION['username'] = $signinFormUsername;
+$_SESSION['username'] = $rowArr['username'];
 $_SESSION['email'] = $rowArr['email'];
 $_SESSION['password'] = $signinFormPassword;
 $_SESSION['notification'] = $rowArr['notification'];
 
 // Notify successful sign in.
 
-$json = ['successfulSignin' => 1, 'username' => $signinFormUsername];
+$json = ['successfulSignin' => 1, 'username' => $rowArr['username']];
 echo json_encode($json);
 ?>
