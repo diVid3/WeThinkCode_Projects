@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,9 @@ export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   registerUser(user) {
     let regHeader = new HttpHeaders;
@@ -48,6 +49,14 @@ export class AuthService {
   loadToken() {
     const token = localStorage.getItem('user_jwt');
     this.authToken = token;
+  }
+
+  // This does not account for expired tokens, for that you'd use { JwtModule } from '@auth0/angular-jwt'
+  // in conjuction with isTokenExpired() from the same module's service. However, if you want to avoid
+  // that module from attempting to send tokens with requests automatically, you can just create an
+  // HTTP interceptor which will redirect the user upon receiving any 401 Unauthorized errors.
+  loggedIn() {
+    return !!localStorage.getItem('user_jwt');
   }
 
   // 'id_token is the default path JWT uses. Need to stringify as localStorage can only store strings.
