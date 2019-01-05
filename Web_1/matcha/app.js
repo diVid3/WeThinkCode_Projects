@@ -3,23 +3,37 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-const mongoose = require('mongoose');
-const config = require('./config/database');
+// const mongoose = require('mongoose');
+// const mongoClient = require('mongodb').MongoClient;
+// const config = require('./config/database');
 
 // Connects to database. When not using mongoose, you can store your db 
 // connection in the app.locals variable to access it throughout the app.
-mongoose.connect(config.database, {useNewUrlParser: true});
-mongoose.connection.on('connected', () => {
-    console.log(`Connected to database ${config.database}`);
-});
-mongoose.connection.on('error', (err) => {
-    console.log(`Database error: ${err}`);
-});
+
+// mongoose.connect(config.database, {useNewUrlParser: true});
+// mongoose.connection.on('connected', () => {
+//     console.log(`Connected to database ${config.database}`);
+// });
+// mongoose.connection.on('error', (err) => {
+//     console.log(`Database error: ${err}`);
+// });
 
 const app = express();
 
+const mongocon = require('./config/mongocon');
+
+// mongoClient.connect(config.database, { useNewUrlParser: true }, (err, client) => {
+//     if (err) console.log(`Database error: ${err}`);
+//     app.locals.db = client.db('matcha');
+//     console.log('app.locals.db is: ' + app.locals.db);
+//     app.locals.db.collection('users').findOne({"username": "evert"}, (err, user) => {
+//         console.log(user);
+//     });
+//     console.log(`Connected to database ${config.database}`);
+// });
+
 // Bringing in and executing router calls in routes/users.
-const users = require('./routes/users');
+// const users = require('./routes/users');
 
 const port = 3000;
 
@@ -48,12 +62,13 @@ app.use(passport.initialize());
 // custom code.
 app.use(passport.session());
 
-// Self-invoking with a passed variable.
-require('./config/passport')(passport);
+// Self-invoking with a passed variable. This is an exported method from
+// config/passport.js.
+// require('./config/passport')(passport);
 
 // This will let routes entered as localhost:3000/users/* be handled by the
 // users router. The users constant here is an express router instance.
-app.use('/users', users);
+// app.use('/users', users);
 
 app.get('/', (req, res) => {
     res.send('Invalid Endpoint.');
@@ -64,10 +79,35 @@ app.get('/', (req, res) => {
 // on the backend (here) goes to the front end app, which will be hosted on the
 // same port after the angular app has been built and exported to the public
 // folder, the front end entry file is as of now public/index.html.
-app.get('*', (req, res) => { 
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+
+// app.get('*', (req, res) => { 
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// });
+
+// All modules that are required here need the DB connection to be established
+// first in order to have access to the _db variable obtained from the getDB
+// function.
+mongocon.connectToServer((connectedToDb) => {
+    if (!connectedToDb) return false;
+
+    // At this point, the DB connection has been established.
+
+    // Bringing in and executing router calls in routes/users.
+    const users = require('./routes/users');
+
+    // This will let routes entered as localhost:3000/users/* be handled by the
+    // users router. The users constant here is an express router instance.
+    app.use('/users', users);
+
+    // Self-invoking with a passed variable. This is an exported method from
+    // config/passport.js.
+    require('./config/passport')(passport);
+
+    app.listen(port, () => {
+        console.log(`Started server on port ${port}`);
+    });
 });
 
-app.listen(port, () => {
-    console.log(`Started server on port ${port}`)
-});
+// app.listen(port, () => {
+//     console.log(`Started server on port ${port}`);
+// });

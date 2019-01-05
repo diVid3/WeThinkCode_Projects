@@ -20,10 +20,18 @@ module.exports = function (passport) {
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
 
         // user here represents a mongoose query object. However
-        // returning done can be done by any method.
+        // returning done can be done by any method. For instance,
+        // as long as the payload ID results in a hit in the DB,
+        // authentication is done. There is a MAJOR problem here,
+        // this method requires res.app object, only available on
+        // routes.
+        console.log(jwt_payload);
         User.getUserById(jwt_payload._id, (err, user) => {
+            console.log(jwt_payload._id);
+            console.log(`\n\n\n`);
+            console.log(`user is: ${user}`);
             if (err) return done(err, false);
-            if (user) return done(null, user);
+            if (user) return done(null, user); // user is a document.
             else return done(null, false);
         });
     }));
