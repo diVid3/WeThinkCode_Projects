@@ -19,30 +19,14 @@ router.post('/register', (req, res, next) => {
 
     // User.addUser(req.app.locals.db, newUser, (errMsg) => {
     User.addUser(newUser, (errMsg) => {
-        if (err) {
+        if (errMsg) {
             let errObj = { success: false, msg: errMsg }
+            console.log(errObj);
             res.json(errObj);
         }
         else res.json({success: true, msg: 'User registered.'});
     });
 });
-
-// The mongoose model instance prototype utilized here.
-// router.post('/register', (req, res, next) => {
-//     let newUser = new User({
-//         name: req.body.name,
-//         email: req.body.email, 
-//         username: req.body.username,
-//         password: req.body.password
-//     });
-
-    // Method exported from models/user.js. Arguments passed
-    // in originates from mongoose's .save method.
-//     User.addUser(newUser, (err, user) => {
-//         if (err) { res.json({success: false, msg: 'Failed to register user.'}); }
-//         else { res.json({success: true, msg: 'User registered.'}); }
-//     });
-// });
 
 // Client authentication is required so that they may
 // aquire a token to unlock protected routes.

@@ -1,34 +1,6 @@
-// const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-// const config = require('../config/database');
 const mongocon = require('../config/mongocon');
 const ObjectID = require('mongodb').ObjectID;
-
-// User schema.
-// const UserSchema = mongoose.Schema({
-//     name: {
-//         type: String
-//     },
-//     email: {
-//         type: String,
-//         required: true
-//     },
-//     username: {
-//         type: String,
-//         required: true
-//     },
-//     password: {
-//         type: String,
-//         required: true
-//     }
-// });
-
-// The above schema is not exported. The schema is used in conjunction with the
-// mongoose.model() method as to return a model associated with the name given
-// in this case 'derp'. The name is only used as an identifier for mongoose.
-
-// User is only set here for conveniece.
-// const User = module.exports = mongoose.model('derp', UserSchema);
 
 // The result will be passed to the callback by .findById.
 // .findById returns a mongoose query object.
@@ -41,10 +13,6 @@ const ObjectID = require('mongodb').ObjectID;
 module.exports.getUserById = (id, callback) => {
     let db = mongocon.getDb();
     console.log(`getUserById's passed in id is: ${id}`);
-
-    // The passed in id is incorrect, instead of just being the id
-    // string, it should be: ObjectId("5c2aa3bb3980573cc5fa167e"),
-    // not: "5c2aa3bb3980573cc5fa167e".
 
     db.collection('users').findOne({"_id": new ObjectID(id)}, callback);
 }
