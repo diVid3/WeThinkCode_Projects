@@ -12,6 +12,8 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
   
+  // This simply checks if a user is logged in/has a token.
+  // This is used in app-routing.module.ts to secure routes.
   canActivate() {
     if (this.authService.loggedIn()) {
       return true;

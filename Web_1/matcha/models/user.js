@@ -42,6 +42,8 @@ module.exports.addUser = (newUser, callback) => {
         return false;
     }
 
+    // Not checking for err here, bad habit, but meh.
+    // Could also restructure but meh.
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             newUser.password = hash;

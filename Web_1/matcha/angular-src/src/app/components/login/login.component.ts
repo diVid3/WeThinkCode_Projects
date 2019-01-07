@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-// import { RelayCompInfoService } from '../../services/relay-comp-info.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private flashMessageService: FlashMessagesService,
-    // private relayCompInfoService: RelayCompInfoService) { }
     ) {}
 
   ngOnInit() {
@@ -30,10 +28,9 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     }
-
+    
     this.authService.authenticateUser(user).subscribe(data => {
       if ((<any>data).success) {
-        // this.relayCompInfoService.showNavbarLogin(false);
         this.authService.storeUserData((<any>data).token, (<any>data).user);
         this.flashMessageService.show('You are now logged in!', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/dashboard']);

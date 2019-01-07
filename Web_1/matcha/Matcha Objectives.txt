@@ -1,5 +1,3 @@
-The matcha project pdf is absolute trash.
-
 Registration {
     properties:
         First Name,
