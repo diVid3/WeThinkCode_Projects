@@ -14,16 +14,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 // Services.
 import { AuthService } from './services/auth.service';
 import { ValidateService } from './services/validate.service';
-import { RelayCompInfoService } from './services/relay-comp-info.service';
 
 // Guards.
 import { AuthGuard } from './guards/auth.guard';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,8 @@ import { AuthGuard } from './guards/auth.guard';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +41,7 @@ import { AuthGuard } from './guards/auth.guard';
     FlashMessagesModule.forRoot(),
     HttpClientModule,
   ],
-  providers: [ValidateService, AuthService, RelayCompInfoService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

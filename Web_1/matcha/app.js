@@ -45,12 +45,12 @@ mongocon.connectToServer((connectedToDb) => {
         res.send('Invalid Endpoint.');
     });
 
-    // Bringing in and executing router calls in routes/users.
-    const users = require('./routes/users');
+    // Bringing in and executing router calls in routes/user.
+    const user = require('./routes/user');
 
-    // This will let routes entered as localhost:3000/users/* be handled by the
-    // users router. The users constant here is an express router instance.
-    app.use('/users', users);
+    // This will let routes entered as localhost:3000/user/* be handled by the
+    // user router. The user constant here is an express router instance.
+    app.use('/user', user);
 
     // Self-invoking with a passed variable. This is an exported method from
     // config/passport.js.

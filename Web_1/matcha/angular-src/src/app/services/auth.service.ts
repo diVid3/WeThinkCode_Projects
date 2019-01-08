@@ -19,7 +19,7 @@ export class AuthService {
   registerUser(user) {
     let regHeader = new HttpHeaders;
     regHeader.set('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/register', user, {headers: regHeader});
+    return this.http.post('http://localhost:3000/user/register', user, {headers: regHeader});
   }
 
   // This returns an observable that needs to be subscribed to, which is done in onLoginSubmit()
@@ -27,7 +27,7 @@ export class AuthService {
   authenticateUser(user) {
     let authHeader = new HttpHeaders;
     authHeader.set('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/authenticate', user, {headers: authHeader});
+    return this.http.post('http://localhost:3000/user/authenticate', user, {headers: authHeader});
   }
 
   // Token needs to be send along here, because protected route on backend, hence loadToken().
@@ -50,7 +50,7 @@ export class AuthService {
       })
     };
 
-    return this.http.get('http://localhost:3000/users/profile', httpOptions);
+    return this.http.get('http://localhost:3000/user/profile', httpOptions);
   }
 
   // Used to retrieve the token from localStorage. Called from getProfile() above.

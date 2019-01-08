@@ -49,13 +49,17 @@ export class RegisterComponent implements OnInit {
     // of which .success is not a native property.
     this.authService.registerUser(user).subscribe(data => {
       if ((<any>data).success) {
-        this.flashMessagesService.show('You are now registered and can log in.', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessagesService.show((<any>data).msg, {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
+        return true;
       }
-      else {
-        this.flashMessagesService.show('Something went wrong.', {cssClass: 'alert-danger', timeout: 3000});
+      else if (!((<any>data).success)) {
+        this.flashMessagesService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
+        return false;
       }
+      this.flashMessagesService.show('Oops! Something went wrong, sorry about that :(', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
     });
   }
 }
