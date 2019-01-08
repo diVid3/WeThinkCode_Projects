@@ -27,7 +27,9 @@ module.exports.addUser = (newUser, callback) => {
   // Not checking for err here, bad habit, but meh.
   // Could also restructure but meh.
   bcrypt.genSalt(10, (err, salt) => {
+    if (err) { callback(1, 'Oops! Something went wrong.'); return false }
     bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) { callback(1, 'Oops! Something went wrong.'); return false }
       newUser.password = hash;
       db.collection('users').insertOne(newUser, (insertErr, res) => {
         if (insertErr) {
@@ -41,7 +43,8 @@ module.exports.addUser = (newUser, callback) => {
 }
 
 // This function is used by the authentication route in routes/users.js.
-module.exports.comparePassword = function (candidatePassword, actualHashedPw, callback) {
+module.exports.comparePassword = function (candidatePassword, actualHashedPw,
+callback) {
   bcrypt.compare(candidatePassword, actualHashedPw, (err, isMatch) => {
     if (err) throw err;
     callback(null, isMatch);

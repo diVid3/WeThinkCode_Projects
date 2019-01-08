@@ -20,19 +20,15 @@ const config = require('../config/database');
 // authentication is done.
 
 module.exports = function (passport) {
-    let opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    opts.secretOrKey = config.secret;
+  let opts = {};
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+  opts.secretOrKey = config.secret;
 
-    passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-        console.log(jwt_payload);
-        User.getUserById(jwt_payload._id, (err, user) => {
-            console.log(jwt_payload._id);
-            console.log(`\n\n\n`);
-            console.log(`user is: ${user}`);
-            if (err) return done(err, false);
-            if (user) return done(null, user); // user is a document.
-            else return done(null, false);
-        });
-    }));
+  passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+    User.getUserById(jwt_payload._id, (err, user) => {
+      if (err) return done(err, false);
+      if (user) return done(null, user); // user is a document.
+      else return done(null, false);
+    });
+  }));
 }

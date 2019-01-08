@@ -28,12 +28,12 @@ const userController = require('../controllers/user');
 // });
 
 router.post('/register', (req, res, next) => {
-  userController(req).then((obj) => {
+  userController.registerUser(req).then((obj) => {
     res.json(obj)
   })
-  .catch((msg) => {
-    // res.json(obj);
-    console.log(msg);
+  .catch((errObj) => {
+    res.json(errObj.frontRes);
+    console.log(errObj.detailedString);
   });
 });
 
@@ -81,7 +81,8 @@ router.post('/authenticate', (req, res, next) => {
 // 
 // You can instead set the passport strategy straight in app.js. That will re-
 // quire the getUserById method in the users model.
-router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.get('/profile', passport.authenticate('jwt', {session: false}),
+(req, res, next) => {
   res.json({user: req.user});
 });
 
