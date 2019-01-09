@@ -4,38 +4,12 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
-// User here is the mongoose model instance exported from models/user. User
-// will also include the methods exported from /models/user. These User methods
-// will need to be replaced/changed.
 const User = require('../models/user');
 const userController = require('../controllers/user');
 
-// router.post('/register', (req, res, next) => {
-//     let newUser = {
-//         name: req.body.name,
-//         email: req.body.email,
-//         username: req.body.username,
-//         password: req.body.password
-//     };
+// Routes
 
-//     User.addUser(newUser, (err, errMsg) => {
-//         if (err === 1) {
-//             let errObj = { success: false, msg: errMsg }
-//             res.json(errObj);
-//         }
-//         else res.json({success: true, msg: 'User registered.'});
-//     });
-// });
-
-router.post('/register', (req, res, next) => {
-  userController.registerUser(req).then((obj) => {
-    res.json(obj)
-  })
-  .catch((errObj) => {
-    res.json(errObj.frontRes);
-    console.log(errObj.detailedString);
-  });
-});
+router.post('/register', userController.registerUser);
 
 // Client authentication is required so that they may
 // aquire a token to unlock protected routes.
