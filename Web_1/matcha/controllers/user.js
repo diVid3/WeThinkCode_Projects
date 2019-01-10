@@ -37,8 +37,8 @@ module.exports.registerUser = async (req, res, next) => {
     userModel.getDocByEmail(newUser.email)
   ])
   .then((values) => {
-    if (values[0]) { exitOnDupUsername = 1; }
-    else if (values[1]) { exitOnDupEmail = 1; }
+    if (values[0]) return (exitOnDupUsername = 1)
+    else if (values[1]) return (exitOnDupEmail = 1)
   })
   .catch((error) => {
     console.log(error);
