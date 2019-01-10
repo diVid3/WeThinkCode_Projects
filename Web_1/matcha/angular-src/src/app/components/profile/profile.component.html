@@ -1,8 +1,13 @@
 <!-- Checking if user is true before displaying content. -->
 <div *ngIf="user">
-  <h2 class="page-header">{{user.name}}</h2>
-  <ul class="list-group">
-    <li class="list-group-item">Username: {{user.username}}</li>
-    <li class="list-group-item">Email: {{user.email}}</li>
-  </ul>
+  <div class="container" style="max-width: 700px;">
+    <h2 class="page-header">{{ user.username }}</h2>
+    <ul class="list-group">
+      <li class="list-group-item">First Name: {{ user.firstName }}</li>
+      <li class="list-group-item">Last Name: {{ user.lastName }}</li>
+      <li class="list-group-item">Age: {{ user.age }}</li>
+      <li class="list-group-item">Gender: {{ user.gender }}</li>
+      <li class="list-group-item">Email: {{ user.email }}</li>
+    </ul>
+  </div>
 </div>

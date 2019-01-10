@@ -9,19 +9,27 @@ const config = require('../config/database');
 // ------------------------------------------------------------------------ //
 
 function hasAllRegisterProperties(req) {
-  if (req.body.name == null || req.body.email == null ||
-  req.body.username == null || req.body.password == null ||
-  req.body.name == '' || req.body.email == '' ||
-  req.body.username == '' || req.body.password == '')
+  if (
+  req.body.firstName == null || req.body.lastName == null ||
+  req.body.username == null || req.body.age == null ||
+  req.body.gender == null ||
+  req.body.email == null || req.body.password == null ||
+  req.body.firstName == '' || req.body.lastName == '' ||
+  req.body.username == '' || req.body.age == '' ||
+  req.body.gender == '' ||
+  req.body.email == '' || req.body.password == '')
     return true;
   return false;
 }
 
 module.exports.registerUser = async (req, res, next) => {
   let newUser = {
-    name: req.body.name,
-    email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     username: req.body.username,
+    age: req.body.age,
+    gender: req.body.gender,
+    email: req.body.email,
     password: req.body.password
   }
   let userExists = 'Username already exists. Please try another one.';

@@ -13,8 +13,8 @@ export class RegisterComponent implements OnInit {
 
   firstName: string;
   lastName: string;
-  // name: string;
   username: string;
+  age: string;
   gender: string = 'Male';
   email: string;
   password: string;
@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
       firstName: this.firstName,
       lastName: this.lastName,
       username: this.username,
+      age: this.age,
       gender: this.gender,
       email: this.email,
       password: this.password

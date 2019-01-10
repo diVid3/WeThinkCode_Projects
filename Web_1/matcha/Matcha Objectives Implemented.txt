@@ -2,8 +2,10 @@ Registration {
     properties:
         First Name,
         Last Name,
-        // Gender,
         Username,
+        // Age,
+        // Gender,
+        // Location,
         Email,
         Password
     

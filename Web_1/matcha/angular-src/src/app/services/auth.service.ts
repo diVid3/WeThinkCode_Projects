@@ -39,7 +39,6 @@ export class AuthService {
   // This returns an observable that needs to be subscribed to, which is done in ngOnInit()
   // in profile.component.ts
   getProfile() {
-
     this.loadToken();
 
     // This is the prefered way of setting headers.
