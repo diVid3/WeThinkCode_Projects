@@ -11,8 +11,11 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  name: string;
+  firstName: string;
+  lastName: string;
+  // name: string;
   username: string;
+  gender: string = 'Male';
   email: string;
   password: string;
 
@@ -27,9 +30,12 @@ export class RegisterComponent implements OnInit {
 
   onRegisterSubmit() {
     const user = {
-      name: this.name,
-      email: this.email,
+      // name: this.name,
+      firstName: this.firstName,
+      lastName: this.lastName,
       username: this.username,
+      gender: this.gender,
+      email: this.email,
       password: this.password
     }
 

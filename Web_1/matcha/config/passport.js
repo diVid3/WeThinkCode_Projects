@@ -24,6 +24,8 @@ module.exports = function (passport) {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
   opts.secretOrKey = config.secret;
 
+  // The callback passed here is called when authentication is successful.
+  // You can decide what you want to call done with.
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     User.getUserById(jwt_payload._id, (err, user) => {
       if (err) return done(err, false);

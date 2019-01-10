@@ -1,0 +1,127 @@
+Registration {
+    properties:
+        First Name,
+        Last Name,
+        // Gender,
+        Username,
+        Email,
+        Password
+    
+    Actions:
+        Send Email Verification
+}
+
+Login {
+    properties:
+        Username/Email,
+        Password,
+        Forgot Password
+
+    Actions:
+        Send Forgot Password Email
+}
+
+Own Profile {
+    properties:
+        Modifiable {
+            Gender,
+            Sexual Preference,              // Can leave for profile
+            Biography,                      // Can leave for profile
+            List of interests (tags),       // Can leave for profile
+            Max 5 Pics, incl profile pic    // Can leave for profile
+            GPS Position.                   // Can leave for profile
+        },
+        Like + View History,
+        Fame Rating
+        
+    Actions:
+        Modify modifiable properties.
+        Look at Like + View History.
+}
+
+(Browse should include a suggestion list + search capabilities)
+Browse + Search {
+    properties:
+        Other Profiles
+
+    Actions:
+        Retrieve suggestions that match,
+            geographic area,
+            sexuality,
+            max common tags,
+            max fame rating
+        Sort suggestions,
+            by age,
+            by location,
+            by fame rating,
+            by common interests (tags)
+        Filter suggestions,
+            by age,
+            by location,
+            by fame rating,
+            by common interests (tags)
+        
+        Search (How does that differ from filter???),
+            by age gap,
+            by fame rating gap,
+            by location,
+            by one or multiple interests (tags)
+        Sort the Search,
+            by age,
+            by location,
+            by fame rating,
+            by common interests (tags)
+        Filter the Search
+            by age,
+            by location,
+            by fame rating,
+            by common interests (tags)
+}
+
+Other Profiles {
+    properties:
+        All profile information except email + password,
+
+    Actions:
+        Visiting a profile will show up in their history.
+        If he has atleast one picture "like" another user. (?????).
+        Enable chat by both users liking each other, if either is missing pics,
+            they can't chat.
+        See fame rating (obv).
+        See if user is online or if not, last time online.
+        Report fake account.
+        Block user from showing up in search results.
+        See if they can chat (both need to like eachother).
+        Be able to unlike and break chat capability.
+}
+
+Chat {
+    properties:
+        Messages.
+
+    Actions:
+        Type messages to other user.
+        New messages must show up as new message notifications for other user.
+        New messages you receive must be in view from any page.
+}
+
+Notifications {
+    properties:
+        Received a view.
+        Received a like.
+        Received a message.
+        A liked user liked back.
+        A linked user unliked you.
+        Unread notifications must show up on any page.
+
+    Actions:
+}
+
+Conditions:
+    Chat delay is 10 seconds (real time).
+    Notification delay is 10 seconds (real time).
+
+Needed Knowledge:
+    Send Email - MEAN.
+    Infinite pagination - MEAN.
+    GPS Integration - MEAN.

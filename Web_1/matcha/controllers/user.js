@@ -3,6 +3,10 @@
 // database.
 
 const userModel = require('../models/user');
+const jwt = require('jsonwebtoken');
+const config = require('../config/database');
+
+// ------------------------------------------------------------------------ //
 
 function hasAllRegisterProperties(req) {
   if (req.body.name == null || req.body.email == null ||
@@ -37,8 +41,8 @@ module.exports.registerUser = async (req, res, next) => {
     userModel.getDocByEmail(newUser.email)
   ])
   .then((values) => {
-    if (values[0]) return (exitOnDupUsername = 1)
-    else if (values[1]) return (exitOnDupEmail = 1)
+    if (values[0]) return (exitOnDupUsername = 1);
+    else if (values[1]) return (exitOnDupEmail = 1);
   })
   .catch((error) => {
     console.log(error);
@@ -54,3 +58,50 @@ module.exports.registerUser = async (req, res, next) => {
   userModel.addUserAsync(newUser)
   .then(res.json({ success: true, msg: userRegistered }));
 }
+
+// ------------------------------------------------------------------------ //
+
+module.exports.authenticateUser = async (req, res, next) => {
+  if (req.body.username == '' || req.body.password == '' ||
+  req.body.username == null || req.body.password == null)
+    return res.json({ success: false, msg: 'Please fill in all fields.' });
+
+  const username = req.body.username;
+  const password = req.body.password;
+
+  let user = await userModel.getDocByUsername(username);
+  if (!user) return res.json({success: false, msg: 'User not found.'});
+  let passwordMatch = await userModel.comparePasswordAsync(password,
+    user.password);
+  if (passwordMatch) {
+    let token = jwt.sign(user, config.secret, {expiresIn: 604800});
+    let authUser = { // Can add more profile info here.
+      id: user._id,
+      name: user.name,
+      username: user.username,
+      email: user.email
+    }
+    let resObj = {
+      success: true,
+      token: `JWT ${token}`,
+      user: authUser // Nested.
+    }
+    res.json(resObj); // JSON response is for client profile info.
+  }
+  else return res.json({success: false, msg: 'Incorrect password.'});
+}
+
+// ------------------------------------------------------------------------ //
+
+// Sends back profile info, this was actually stored in the token itself.
+// req.user is set when passport.js calls done(null, user). That user object
+// is retrieved by getUserById() in config/passport.js.
+module.exports.getUserProfile = (req, res, next) => {
+  res.json({user: req.user});
+}
+
+// ------------------------------------------------------------------------ //
+
+
+
+// ------------------------------------------------------------------------ //

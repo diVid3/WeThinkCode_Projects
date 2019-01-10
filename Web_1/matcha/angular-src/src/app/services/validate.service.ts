@@ -9,7 +9,8 @@ export class ValidateService {
 
   // This is called from onRegisterSubmit(). This simply checks if the user filled in all the fields.
   validateRegister(user) {
-    if (user.name == undefined ||
+    if (user.firstName == undefined ||
+      user.lastName == undefined ||
       user.email == undefined ||
       user.username == undefined ||
       user.password == undefined)
