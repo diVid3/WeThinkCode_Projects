@@ -10,9 +10,7 @@ export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor(private http: HttpClient) { }
 
   // This returns an observable that needs to be subscribed to, which is done in onRegisterSubmit()
   // in register.component.ts

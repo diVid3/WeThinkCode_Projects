@@ -3,6 +3,7 @@ import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import { LocateService } from '../../services/locate.service';
 
 @Component({
   selector: 'app-register',
@@ -23,14 +24,15 @@ export class RegisterComponent implements OnInit {
     private validateService: ValidateService, 
     private flashMessagesService: FlashMessagesService,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private locateService: LocateService
+  ) { }
 
   ngOnInit() {
   }
 
   onRegisterSubmit() {
     const user = {
-      // name: this.name,
       firstName: this.firstName,
       lastName: this.lastName,
       username: this.username,
@@ -68,5 +70,7 @@ export class RegisterComponent implements OnInit {
       this.flashMessagesService.show('Oops! Something went wrong, sorry about that :(', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     });
+
+    console.log('This point got reached before the');
   }
 }

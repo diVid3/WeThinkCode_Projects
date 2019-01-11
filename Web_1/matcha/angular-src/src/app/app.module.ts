@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 // Services.
 import { AuthService } from './services/auth.service';
 import { ValidateService } from './services/validate.service';
+import { LocateService } from './services/locate.service';
 
 // Guards.
 import { AuthGuard } from './guards/auth.guard';
@@ -41,7 +42,12 @@ import { FooterComponent } from './components/footer/footer.component';
     FlashMessagesModule.forRoot(),
     HttpClientModule,
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [
+    ValidateService,
+    AuthService,
+    AuthGuard,
+    LocateService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
