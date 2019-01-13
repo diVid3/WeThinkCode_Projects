@@ -12,25 +12,60 @@ function hasAllRegisterProperties(req) {
   if (
   req.body.firstName == null || req.body.lastName == null ||
   req.body.username == null || req.body.age == null ||
-  req.body.gender == null ||
+  req.body.gender == null || req.body.ipinfoLoc == null ||
   req.body.email == null || req.body.password == null ||
   req.body.firstName == '' || req.body.lastName == '' ||
   req.body.username == '' || req.body.age == '' ||
-  req.body.gender == '' ||
+  req.body.gender == '' || req.body.ipinfoLoc == '' ||
   req.body.email == '' || req.body.password == '')
-    return true;
-  return false;
+    return false;
+  return true;
+}
+
+// db.derps.insert(
+//   {
+//     loc: { type: "Point", coordinates: [-73.88, 40.78] },
+//     name: "La Guardia Airport",
+//     category: "Airport"
+//   }
+// );
+
+// Converts the location string from ipinfo.io to a GeoJSON object.
+function ipinfoLocToGeoJSON(ipinfoLocString) {
+  // if (ipinfoLocString == null || ipinfoLocString == '')
+  //   throw new Error('ipinfoLocString was not defined.');
+  // if (typeof ipinfoLocString != "string")
+  //   throw new Error('ipinfoLocString is not a string.');
+  // if (ipinfoLocString.includes(',') == false)
+  //   throw new Error('ipinfoLocString isn\'t formatted correctly.');
+  let numArr = ipinfoLocString.split(',');
+  console.log(numArr);
+  // if (numArr.length != 2)
+  //   throw new Error('ipinfoLocString doesn\'t split correctly.');
+  let longitude = parseFloat(numArr[1]);
+  let latitude = parseFloat(numArr[0]);
+  return ({ type: "Point", coordinates: [longitude, latitude] });
 }
 
 module.exports.registerUser = async (req, res, next) => {
+
+  // Validation checks.
+  if (!hasAllRegisterProperties(req))
+    return res.json({ success: false, msg: fillMsg });
+  
   let newUser = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     username: req.body.username,
     age: req.body.age,
     gender: req.body.gender,
+    sexualPreference: 'bisexual', // Non req.
+    biography: '',                // Non req.
+    tags: [],                     // Non req.
+    ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
     email: req.body.email,
     password: req.body.password
+    // Need to add profile pictures.
   }
   let userExists = 'Username already exists. Please try another one.';
   let emailExists = 'Email already exists. Please try another one.';
@@ -38,10 +73,6 @@ module.exports.registerUser = async (req, res, next) => {
   let userRegistered = 'You\'re registered! You may now login.';
   let exitOnDupUsername = 0;
   let exitOnDupEmail = 0;
-
-  // Validation checks.
-  if (hasAllRegisterProperties(req))
-    return res.json({ success: false, msg: fillMsg });
 
   // Checking if already registered.
   await Promise.all([

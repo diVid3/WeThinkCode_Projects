@@ -9,12 +9,16 @@ export class LocateService {
 
   constructor(private http: HttpClient) { }
 
-  locateUser() {
+  locateUserIpinfo() {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
     return this.http.get('https://ipinfo.io/json', httpOptions)
+  }
+
+  locateUserNav() {
+    
   }
 }

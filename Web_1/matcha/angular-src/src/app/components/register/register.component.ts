@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   username: string;
   age: string;
   gender: string = 'Male';
+  ipinfoLoc: string = 'Fetching ipinfoLoc...';
   email: string;
   password: string;
 
@@ -29,6 +30,9 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.locateService.locateUserIpinfo().subscribe(data => {
+      this.ipinfoLoc = (<any>data).loc;
+    });
   }
 
   onRegisterSubmit() {
@@ -38,19 +42,20 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       age: this.age,
       gender: this.gender,
+      ipinfoLoc: this.ipinfoLoc,
       email: this.email,
       password: this.password
     }
 
     // Validate user fields.
     if (this.validateService.validateRegister(user) == false) {
-       this.flashMessagesService.show('Please fill in all fields.', {cssClass: 'alert-danger', timeout: 3000});
+       this.flashMessagesService.show('Please fill in all fields.', {cssClass: 'alert-danger', timeout: 6000});
        return false;
     }
 
     // Validate user email.
     if (this.validateService.validateEmail(user.email) == false) {
-      this.flashMessagesService.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
+      this.flashMessagesService.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 6000});
       return false;
     }
 
@@ -63,14 +68,15 @@ export class RegisterComponent implements OnInit {
         return true;
       }
       else if (!((<any>data).success)) {
-        this.flashMessagesService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/register']);
+        this.flashMessagesService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 6000});
+        console.log('Where is this point?');
+        // this.router.navigate(['/register']);
         return false;
       }
-      this.flashMessagesService.show('Oops! Something went wrong, sorry about that :(', {cssClass: 'alert-danger', timeout: 3000});
+      this.flashMessagesService.show('Oops! Something went wrong, sorry about that :(', {cssClass: 'alert-danger', timeout: 6000});
       return false;
     });
 
-    console.log('This point got reached before the');
+    console.log('This point got reached before the registerUser() finished.');
   }
 }
