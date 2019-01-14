@@ -8,6 +8,32 @@ const config = require('../config/database');
 
 // ------------------------------------------------------------------------ //
 
+// db.derps.insert(
+//   {
+//     loc: { type: "Point", coordinates: [-73.88, 40.78] },
+//     name: "La Guardia Airport",
+//     category: "Airport"
+//   }
+// );
+
+// Converts the location string from ipinfo.io to a GeoJSON object.
+function ipinfoLocToGeoJSON(ipinfoLocString) {
+  let numArr = ipinfoLocString.split(',');
+  let longitude = parseFloat(numArr[1]);
+  let latitude = parseFloat(numArr[0]);
+  return ({ type: "Point", coordinates: [longitude, latitude] });
+}
+
+// This might not be needed due to angular interpolation.
+function escapeSpecChars(string) {
+  return string
+  // .replace(/&/g, "&amp;")
+  // .replace(/</g, "&lt;")
+  // .replace(/>/g, "&gt;")
+  // .replace(/"/g, "&quot;")
+  // .replace(/'/g, "&#039;");
+}
+
 function hasAllRegisterProperties(req) {
   if (
   req.body.firstName == null || req.body.lastName == null ||
@@ -22,71 +48,134 @@ function hasAllRegisterProperties(req) {
   return true;
 }
 
-// db.derps.insert(
-//   {
-//     loc: { type: "Point", coordinates: [-73.88, 40.78] },
-//     name: "La Guardia Airport",
-//     category: "Airport"
-//   }
-// );
+// signalObj is passed by reference.
+function registerUserInfoValid(req, res, signalObj) {
+  let fillMsg = "Please fill in all input fields.";
+  let invalidTypeMsg = "Your input types are incorrect.";
+  let firstNameTooLong = "First Name is too long.";
+  let firstNameTooShort = "First Name is too short.";
+  let lastNameTooLong = "Last Name is too long.";
+  let lastNameTooShort = "Last Name is too short.";
+  let usernameTooLong = "Username is too long.";
+  let usernameTooShort = "Username is too short.";
+  let usernameNotMixed = "Username must contain digits.";
+  let correctAgeMsg = "You need to be older than 18 to register.";
+  let invalidGenderMsg = "Invalid gender.";
+  let incorrectLocFormat = "ipinfoLocString isn\'t formatted correctly.";
+  let incorrectLocSplit = "ipinfoLocString doesn\'t split correctly.";
+  let emailTooLong = "Entered email is too long";
+  let incorrectEmail = "Entered email is incorrect.";
+  let passwordTooLong = "Entered password is too long";
+  let passwordTooShort = "Entered password is too short";
+  let passwordWeak = "Entered password is weak, try mixing cases, digits and special characters.";
 
-// Converts the location string from ipinfo.io to a GeoJSON object.
-function ipinfoLocToGeoJSON(ipinfoLocString) {
-  // if (ipinfoLocString == null || ipinfoLocString == '')
-  //   throw new Error('ipinfoLocString was not defined.');
-  // if (typeof ipinfoLocString != "string")
-  //   throw new Error('ipinfoLocString is not a string.');
-  // if (ipinfoLocString.includes(',') == false)
-  //   throw new Error('ipinfoLocString isn\'t formatted correctly.');
-  let numArr = ipinfoLocString.split(',');
-  console.log(numArr);
-  // if (numArr.length != 2)
-  //   throw new Error('ipinfoLocString doesn\'t split correctly.');
-  let longitude = parseFloat(numArr[1]);
-  let latitude = parseFloat(numArr[0]);
-  return ({ type: "Point", coordinates: [longitude, latitude] });
-}
-
-function escapeSpecChars(string) {
-  return string
-  .replace(/&/g, "&amp;")
-  .replace(/</g, "&lt;")
-  .replace(/>/g, "&gt;")
-  .replace(/"/g, "&quot;")
-  .replace(/'/g, "&#039;");
-}
-
-function registerUserInfoValid(req) {
-  // Remember to check if all input is received if debugging.
+  // Check if all fields filled in.
   if (hasAllRegisterProperties(req) == false)
-    return false;
+    return res.json({ success: false, msg: fillMsg });
 
+  // Check types.
+  if (
+  typeof req.body.firstName != 'string' ||
+  typeof req.body.lastName != 'string' ||
+  typeof req.body.username != 'string' ||
+  typeof req.body.age != 'number' ||
+  typeof req.body.gender != 'string' ||
+  typeof req.body.ipinfoLoc != 'string' ||
+  typeof req.body.email != 'string' ||
+  typeof req.body.password != 'string')
+    return res.json({ success: false, msg: invalidTypeMsg });
+  
+  let firstNameLength = req.body.firstName.length;
+  let lastNameLength = req.body.lastName.length;
+  let usernameLength = req.body.username.length;
+
+  // Check firstName, lastName and username.
+  if (firstNameLength > 32)
+    return res.json({ success: false, msg: firstNameTooLong });
+  if (firstNameLength < 2)
+    return res.json({ success: false, msg: firstNameTooShort });
+  if (lastNameLength > 32)
+    return res.json({ success: false, msg: lastNameTooLong });
+  if (lastNameLength < 2)
+    return res.json({ success: false, msg: lastNameTooShort });
+  if (usernameLength > 32)
+    return res.json({ success: false, msg: usernameTooLong });
+  if (usernameLength < 2)
+    return res.json({ success: false, msg: usernameTooShort });
+  if (/\d/.test(req.body.username) == false)
+    return res.json({ success: false, msg: usernameNotMixed });
+
+  // Check age.
+  if (req.body.age < 18)
+    return res.json({ success: false, msg: correctAgeMsg });
+
+  // Check gender.
+  if (
+  req.body.gender != 'Male' &&
+  req.body.gender != 'Female' &&
+  req.body.gender != 'Other')
+    return res.json({ success: false, msg: invalidGenderMsg });
+
+  // Check ipinfoLoc
+  if (req.body.ipinfoLoc.includes(',') == false)
+    return res.json({ success: false, msg: incorrectLocFormat });
+  let numArr = req.body.ipinfoLoc.split(',');
+  if (numArr.length != 2)
+    return res.json({ success: false, msg: incorrectLocSplit });
+
+  // Check valid email.
+  if (req.body.email.length > 32)
+    return res.json({ success: false, msg: emailTooLong });
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  console.log(re.test(req.body.email.toLowerCase()));
+  if (re.test(req.body.email.toLowerCase()) == false)
+    return res.json({ success: false, msg: incorrectEmail });
+
+  // Check password strength.
+  let passwordLength = req.body.password.length;
+  if (passwordLength > 1024) // For buffer overflow?
+    return res.json({ success: false, msg: passwordTooLong });
+  if (passwordLength < 7)
+    return res.json({ success: false, msg: passwordTooShort });
+  if (
+  /[a-z]+/.test(req.body.password) == false ||
+  /[A-Z]+/.test(req.body.password) == false ||
+  /[0-9]+/.test(req.body.password) == false ||
+  /[^\[\]${*}()\\+|?<>!@`#,%.&*-]+/.test(req.body.password) == false)
+    return res.json({ success: false, msg: passwordWeak });
+
+  // Signalling that input passed.
+  signalObj.passedInputValidation = true;
 }
 
 module.exports.registerUser = async (req, res, next) => {
-  if (registerUserInfoValid(req) == false)
-    return res.json({ success: false, msg: invalidMsg });
+  let userExists = 'Username already exists. Please try another one.';
+  let emailExists = 'Email already exists. Please try another one.';
+  let userRegistered = 'You\'re registered! You may now login.';
+
+  // Input validation.
+  let signalObj = { passedInputValidation: false }; // Passed by reference.
+  registerUserInfoValid(req, res, signalObj);
+  if (signalObj.passedInputValidation == false)
+    return;
   
+  // Generating user profile.
   let newUser = {
     firstName: escapeSpecChars(req.body.firstName),     // Convert, check length.
     lastName: escapeSpecChars(req.body.lastName),       // Convert, check length.
-    username: escapeSpecChars(req.body.username),       // Convert, check length.
+    username: escapeSpecChars(req.body.username),       // Convert, check length, mix case.
     age: req.body.age,                                  // Check negative num, age fits,
     gender: req.body.gender,
-    sexualPreference: 'bisexual', // Non req. Don't validate on register.
-    biography: '',                // Non req. Don't validate on register.
-    interests: [],                // Non req. Don't validate on register.
-    pictures: [],                 // Non req. Don't validate on register.
-    avatar: [],                   // Non req. Don't validate on register.
+    sexualPreference: 'bisexual',                       // Non req. Don't validate on register.
+    biography: '',                                      // Non req. Don't validate on register.
+    interests: [],                                      // Non req. Don't validate on register.
+    pictures: [],                                       // Non req. Don't validate on register.
+    avatar: [],                                         // Non req. Don't validate on register.
     ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),  // Check using above,
     email: req.body.email,                              // Check if valid email,
     password: req.body.password                         // Check length, mix case,
   }
 
-  let userExists = 'Username already exists. Please try another one.';
-  let emailExists = 'Email already exists. Please try another one.';
-  let invalidMsg = 'Registry failed, bad user input.';
-  let userRegistered = 'You\'re registered! You may now login.';
   let exitOnDupUsername = 0;
   let exitOnDupEmail = 0;
 
@@ -127,17 +216,13 @@ module.exports.authenticateUser = async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  let user = await userModel.getDocByUsername(username);
+  let user = await userModel.getDocByUsername(escapeSpecChars(username));
   if (!user) return res.json({success: false, msg: 'User not found.'});
   let passwordMatch = await userModel.comparePasswordAsync(password,
     user.password);
   if (passwordMatch) {
     let token = jwt.sign(user, config.secret, {expiresIn: 604800});
-    let authUser = { // Can add more profile info here.
-      // id: user._id,
-      // name: user.name,
-      // username: user.username,
-      // email: user.email
+    let authUser = {
       id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
