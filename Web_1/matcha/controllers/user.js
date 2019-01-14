@@ -47,29 +47,45 @@ function ipinfoLocToGeoJSON(ipinfoLocString) {
   return ({ type: "Point", coordinates: [longitude, latitude] });
 }
 
-module.exports.registerUser = async (req, res, next) => {
+function escapeSpecChars(string) {
+  return string
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
+}
 
-  // Validation checks.
-  if (!hasAllRegisterProperties(req))
-    return res.json({ success: false, msg: fillMsg });
+function registerUserInfoValid(req) {
+  // Remember to check if all input is received if debugging.
+  if (hasAllRegisterProperties(req) == false)
+    return false;
+
+}
+
+module.exports.registerUser = async (req, res, next) => {
+  if (registerUserInfoValid(req) == false)
+    return res.json({ success: false, msg: invalidMsg });
   
   let newUser = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    username: req.body.username,
-    age: req.body.age,
+    firstName: escapeSpecChars(req.body.firstName),     // Convert, check length.
+    lastName: escapeSpecChars(req.body.lastName),       // Convert, check length.
+    username: escapeSpecChars(req.body.username),       // Convert, check length.
+    age: req.body.age,                                  // Check negative num, age fits,
     gender: req.body.gender,
-    sexualPreference: 'bisexual', // Non req.
-    biography: '',                // Non req.
-    tags: [],                     // Non req.
-    ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
-    email: req.body.email,
-    password: req.body.password
-    // Need to add profile pictures.
+    sexualPreference: 'bisexual', // Non req. Don't validate on register.
+    biography: '',                // Non req. Don't validate on register.
+    interests: [],                // Non req. Don't validate on register.
+    pictures: [],                 // Non req. Don't validate on register.
+    avatar: [],                   // Non req. Don't validate on register.
+    ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),  // Check using above,
+    email: req.body.email,                              // Check if valid email,
+    password: req.body.password                         // Check length, mix case,
   }
+
   let userExists = 'Username already exists. Please try another one.';
   let emailExists = 'Email already exists. Please try another one.';
-  let fillMsg = 'Please fill in all fields.';
+  let invalidMsg = 'Registry failed, bad user input.';
   let userRegistered = 'You\'re registered! You may now login.';
   let exitOnDupUsername = 0;
   let exitOnDupEmail = 0;
@@ -94,7 +110,10 @@ module.exports.registerUser = async (req, res, next) => {
     return res.json({ success: false, msg: emailExists });
 
   // Registering user.
+  // userModel.addUserAsync(newUser)
+  // .then(res.json({ success: true, msg: userRegistered }));
   userModel.addUserAsync(newUser)
+  .then(userModel.createGeoIndex("ipinfoLoc"))
   .then(res.json({ success: true, msg: userRegistered }));
 }
 
@@ -115,10 +134,22 @@ module.exports.authenticateUser = async (req, res, next) => {
   if (passwordMatch) {
     let token = jwt.sign(user, config.secret, {expiresIn: 604800});
     let authUser = { // Can add more profile info here.
+      // id: user._id,
+      // name: user.name,
+      // username: user.username,
+      // email: user.email
       id: user._id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       username: user.username,
-      email: user.email
+      age: user.age,
+      gender: user.gender,
+      sexualPreference: user.sexualPreference,
+      biography: user.biography,
+      interests: user.interests,
+      pictures: user.pictures,
+      avatar: user.avatar,
+      ipinofLoc: user.ipinfoLoc,
     }
     let resObj = {
       success: true,

@@ -80,12 +80,16 @@ module.exports.comparePasswordAsync = async (plainPw, actualHash) => {
   }
 }
 
-// ------------------------------------------------------------------------ //
-
-// Functions rewritten synchronously.
-
-// module.exports.comparePasswordSync = (plainPw, actualHash) => {
-//   let isMatch = bcrypt.compareSync(plainPw, actualHash);
-// }
+// Function to create a geospatial index after user registration. This
+// uses ComputedPropertyName to enable locName to be used as key.
+module.exports.createGeoIndex = async (locName) => {
+  try {
+    let db = mongocon.getDb();
+    await db.collection('users').createIndex({[locName]: "2dsphere"});
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
 
 // ------------------------------------------------------------------------ //
