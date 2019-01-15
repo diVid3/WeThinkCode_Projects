@@ -1,0 +1,19 @@
+.marginTopBot {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.paddingTopBot {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.paddingLeftRight {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.tagMarginSides {
+  margin-left: 5px;
+  margin-right: 5px;
+}

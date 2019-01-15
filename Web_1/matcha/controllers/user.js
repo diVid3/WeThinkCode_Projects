@@ -165,12 +165,12 @@ module.exports.registerUser = async (req, res, next) => {
     lastName: escapeSpecChars(req.body.lastName),       // Convert, check length.
     username: escapeSpecChars(req.body.username),       // Convert, check length, mix case.
     age: req.body.age,                                  // Check negative num, age fits,
-    gender: req.body.gender,
-    sexualPreference: 'bisexual',                       // Non req. Don't validate on register.
-    biography: '',                                      // Non req. Don't validate on register.
-    interests: [],                                      // Non req. Don't validate on register.
+    gender: req.body.gender,                            // Check if exists.
+    sexualPreference: 'Bisexual',                       // Non req. Don't validate on register.
+    biography: 'I like trains!',                        // Non req. Don't validate on register.
+    interests: ["Matcha"],                              // Non req. Don't validate on register.
     pictures: [],                                       // Non req. Don't validate on register.
-    avatar: [],                                         // Non req. Don't validate on register.
+    avatar: "../../../assets/default-avatar3-small.png",// Non req. Don't validate on register.
     ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),  // Check using above,
     email: req.body.email,                              // Check if valid email,
     password: req.body.password                         // Check length, mix case,

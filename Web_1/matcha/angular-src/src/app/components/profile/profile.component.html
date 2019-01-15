@@ -1,13 +1,65 @@
 <!-- Checking if user is true before displaying content. -->
 <div *ngIf="user">
-  <div class="container" style="max-width: 700px;">
-    <h2 class="page-header">{{ user.username }}</h2>
+  <!-- <div class="container-fluid" style="max-width: 700px; border: 2px solid blue;"> -->
+  <div class="container-fluid">
+    <!-- <h2 class="page-header">{{ user.username }}</h2>
     <ul class="list-group">
       <li class="list-group-item">First Name: {{ user.firstName }}</li>
       <li class="list-group-item">Last Name: {{ user.lastName }}</li>
       <li class="list-group-item">Age: {{ user.age }}</li>
       <li class="list-group-item">Gender: {{ user.gender }}</li>
       <li class="list-group-item">Email: {{ user.email }}</li>
-    </ul>
+    </ul> -->
+    <!-- <div class="row" style="border: 2px solid green;">
+      <div class="col-md-12">
+        <h1 class="page-header">{{ user.username }}</h1>
+      </div> -->
+      <!-- <div class="col-md-12">
+        <h1 class="page-header">{{ user.username }}</h1>
+      </div> -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2 class="page-header text-center">{{ user.username }}</h2>
+      </div>
+      <div class="col-md-8">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+            <img class="avatar rounded-circle img-thumbnail" src="../../../assets/default-avatar3-small.png">
+        </div>
+        <div class="card text-black mb-3 mx-auto">
+          <div class="card-header text-center">Interests</div>
+          <div class="card-body">
+            <div class="text-center">
+              <h4 class="card-title">Tags</h4>
+              <span class="badge badge-secondary tagMarginSides" *ngFor="let interest of user.interests">{{ interest }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card text-black mb-3 mx-auto">
+          <div class="card-header text-center">Biography</div>
+          <div class="card-body">
+            <div class="text-center">
+              {{ user.biography }}
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <ul class="list-group">
+            <li class="list-group-item">{{ user.sexualPreference }}</li>
+            <li class="list-group-item">{{ user.gender }}</li>
+            <li class="list-group-item">{{ user.age }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa possimus voluptatibus odit id ea minima hic consectetur dolore eveniet. In iusto odit recusandae sint ipsa earum molestiae, voluptas aliquid.</div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis asperiores suscipit quasi eveniet? Repudiandae praesentium voluptatem exercitationem aliquid animi laboriosam quaerat? Architecto expedita vitae minus tempora, beatae iste! Eaque, excepturi.</div>
+      </div>
+    </div>
   </div>
 </div>
