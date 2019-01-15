@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
 
   user: Object;
+  long: number;
+  lat: number;
 
   constructor(
     private authService: AuthService,
@@ -22,7 +24,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.user = (<any>profile).user;
-      // console.log(this.user);
+      console.log(this.user);
+      this.long = (<any>this.user).ipinfoLoc.coordinates[0];
+      this.lat = (<any>this.user).ipinfoLoc.coordinates[1];
     },
     err => {
       console.log(err);

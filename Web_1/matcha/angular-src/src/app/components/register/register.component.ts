@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   username: string;
   age: string;
   gender: string = 'Male';
+  sexuality: string = 'Bisexual';
   ipinfoLoc: string = 'Fetching ipinfoLoc...';
   email: string;
   password: string;
@@ -42,6 +43,7 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       age: this.age,
       gender: this.gender,
+      sexuality: this.sexuality,
       ipinfoLoc: this.ipinfoLoc,
       email: this.email,
       password: this.password

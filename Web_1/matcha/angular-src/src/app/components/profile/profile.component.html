@@ -1,25 +1,9 @@
 <!-- Checking if user is true before displaying content. -->
 <div *ngIf="user">
-  <!-- <div class="container-fluid" style="max-width: 700px; border: 2px solid blue;"> -->
   <div class="container-fluid">
-    <!-- <h2 class="page-header">{{ user.username }}</h2>
-    <ul class="list-group">
-      <li class="list-group-item">First Name: {{ user.firstName }}</li>
-      <li class="list-group-item">Last Name: {{ user.lastName }}</li>
-      <li class="list-group-item">Age: {{ user.age }}</li>
-      <li class="list-group-item">Gender: {{ user.gender }}</li>
-      <li class="list-group-item">Email: {{ user.email }}</li>
-    </ul> -->
-    <!-- <div class="row" style="border: 2px solid green;">
-      <div class="col-md-12">
-        <h1 class="page-header">{{ user.username }}</h1>
-      </div> -->
-      <!-- <div class="col-md-12">
-        <h1 class="page-header">{{ user.username }}</h1>
-      </div> -->
     <div class="row">
       <div class="col-md-4">
-        <h2 class="page-header text-center">{{ user.username }}</h2>
+        <h2 class="page-header text-center" style="margin-bottom: 15px;">{{ user.username }}</h2>
       </div>
       <div class="col-md-8">
       </div>
@@ -27,7 +11,16 @@
     <div class="row">
       <div class="col-md-4">
         <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
-            <img class="avatar rounded-circle img-thumbnail" src="../../../assets/default-avatar3-small.png">
+            <!-- <img class="avatar rounded-circle img-thumbnail" src="../../../assets/default-avatar3-small.png"> -->
+            <img class="avatar rounded-circle img-thumbnail" [src]="user.avatar">
+        </div>
+        <div class="card text-black mb-3 mx-auto">
+          <div class="card-header text-center">Fame Rating</div>
+          <div class="card-body">
+            <div class="text-center">
+              {{ user.fameRating }}
+            </div>
+          </div>
         </div>
         <div class="card text-black mb-3 mx-auto">
           <div class="card-header text-center">Interests</div>
@@ -38,6 +31,13 @@
             </div>
           </div>
         </div>
+        <div class="text-center">
+          <ul class="list-group" style="margin-bottom: 16px;">
+            <li class="list-group-item">Age - {{ user.age }}</li>
+            <li class="list-group-item">Gender - {{ user.gender }}</li>
+            <li class="list-group-item">Sexuality - {{ user.sexualPreference }}</li>
+          </ul>
+        </div>
         <div class="card text-black mb-3 mx-auto">
           <div class="card-header text-center">Biography</div>
           <div class="card-body">
@@ -46,20 +46,68 @@
             </div>
           </div>
         </div>
-        <div class="text-center">
-          <ul class="list-group">
-            <li class="list-group-item">{{ user.sexualPreference }}</li>
-            <li class="list-group-item">{{ user.gender }}</li>
-            <li class="list-group-item">{{ user.age }}</li>
-          </ul>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <!-- <img class="img-fluid" src="../../../assets/default-avatar3-small.png"> -->
+              <img class="img-fluid" [src]="user.pictures[0]">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <!-- <img class="img-fluid" src="../../../assets/default-avatar3-small.png"> -->
+              <img class="img-fluid" [src]="user.pictures[1]">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <!-- <img class="img-fluid" src="../../../assets/default-avatar3-small.png"> -->
+              <img class="img-fluid" [src]="user.pictures[2]">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <!-- <img class="img-fluid" src="../../../assets/default-avatar3-small.png"> -->
+              <img class="img-fluid" [src]="user.pictures[3]">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Map here -->
+          <div class="col-md-12 container" fxLayout="column">
+            <div class="map" fxFlex="1 1 100%" #map>
+              <agm-map [style.height.px]="map.offsetHeight" [latitude]="lat" [longitude]="long">
+                <agm-marker [latitude]="lat" [longitude]="long"></agm-marker>
+              </agm-map>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa possimus voluptatibus odit id ea minima hic consectetur dolore eveniet. In iusto odit recusandae sint ipsa earum molestiae, voluptas aliquid.</div>
-      </div>
-      <div class="col-md-4">
-        <div class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis asperiores suscipit quasi eveniet? Repudiandae praesentium voluptatem exercitationem aliquid animi laboriosam quaerat? Architecto expedita vitae minus tempora, beatae iste! Eaque, excepturi.</div>
-      </div>
     </div>
+    <!-- <div class="row">
+      <div class="col-md-4">
+        <div class="text-center">
+          <ul class="list-group" style="margin-bottom: 16px;">
+            <li class="list-group-item">Age - {{ user.age }}</li>
+            <li class="list-group-item">Gender - {{ user.gender }}</li>
+            <li class="list-group-item">Sexuality - {{ user.sexualPreference }}</li>
+          </ul>
+        </div>
+        <div class="card text-black mb-3 mx-auto">
+          <div class="card-header text-center">Biography</div>
+          <div class="card-body">
+            <div class="text-center">
+              {{ user.biography }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+      </div>
+    </div> -->
   </div>
 </div>

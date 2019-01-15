@@ -38,11 +38,13 @@ function hasAllRegisterProperties(req) {
   if (
   req.body.firstName == null || req.body.lastName == null ||
   req.body.username == null || req.body.age == null ||
-  req.body.gender == null || req.body.ipinfoLoc == null ||
+  req.body.gender == null || req.body.sexuality == null ||
+  req.body.ipinfoLoc == null ||
   req.body.email == null || req.body.password == null ||
   req.body.firstName == '' || req.body.lastName == '' ||
   req.body.username == '' || req.body.age == '' ||
-  req.body.gender == '' || req.body.ipinfoLoc == '' ||
+  req.body.gender == ''|| req.body.sexuality == '' ||
+  req.body.ipinfoLoc == '' ||
   req.body.email == '' || req.body.password == '')
     return false;
   return true;
@@ -61,6 +63,7 @@ function registerUserInfoValid(req, res, signalObj) {
   let usernameNotMixed = "Username must contain digits.";
   let correctAgeMsg = "You need to be older than 18 to register.";
   let invalidGenderMsg = "Invalid gender.";
+  let invalidSexuality = "Invalid sexuality.";
   let incorrectLocFormat = "ipinfoLocString isn\'t formatted correctly.";
   let incorrectLocSplit = "ipinfoLocString doesn\'t split correctly.";
   let emailTooLong = "Entered email is too long";
@@ -80,6 +83,7 @@ function registerUserInfoValid(req, res, signalObj) {
   typeof req.body.username != 'string' ||
   typeof req.body.age != 'number' ||
   typeof req.body.gender != 'string' ||
+  typeof req.body.sexuality != 'string' ||
   typeof req.body.ipinfoLoc != 'string' ||
   typeof req.body.email != 'string' ||
   typeof req.body.password != 'string')
@@ -115,6 +119,13 @@ function registerUserInfoValid(req, res, signalObj) {
   req.body.gender != 'Female' &&
   req.body.gender != 'Other')
     return res.json({ success: false, msg: invalidGenderMsg });
+
+  // Check sexuality.
+  if (
+  req.body.sexuality != 'Heterosexual' &&
+  req.body.sexuality != 'Homosexual' &&
+  req.body.sexuality != 'Bisexual')
+    return res.json({ success: false, msg: invalidSexuality });
 
   // Check ipinfoLoc
   if (req.body.ipinfoLoc.includes(',') == false)
@@ -161,19 +172,25 @@ module.exports.registerUser = async (req, res, next) => {
   
   // Generating user profile.
   let newUser = {
-    firstName: escapeSpecChars(req.body.firstName),     // Convert, check length.
-    lastName: escapeSpecChars(req.body.lastName),       // Convert, check length.
-    username: escapeSpecChars(req.body.username),       // Convert, check length, mix case.
-    age: req.body.age,                                  // Check negative num, age fits,
-    gender: req.body.gender,                            // Check if exists.
-    sexualPreference: 'Bisexual',                       // Non req. Don't validate on register.
-    biography: 'I like trains!',                        // Non req. Don't validate on register.
-    interests: ["Matcha"],                              // Non req. Don't validate on register.
-    pictures: [],                                       // Non req. Don't validate on register.
-    avatar: "../../../assets/default-avatar3-small.png",// Non req. Don't validate on register.
-    ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),  // Check using above,
-    email: req.body.email,                              // Check if valid email,
-    password: req.body.password                         // Check length, mix case,
+    firstName: escapeSpecChars(req.body.firstName),
+    lastName: escapeSpecChars(req.body.lastName),
+    username: escapeSpecChars(req.body.username),
+    age: req.body.age,
+    gender: req.body.gender,
+    sexualPreference: req.body.sexuality,
+    biography: 'I like trains!',
+    interests: ["Matcha"],
+    pictures: [
+      "../../../assets/default-avatar3-small.png",
+      "../../../assets/default-avatar3-small.png",
+      "../../../assets/default-avatar3-small.png",
+      "../../../assets/default-avatar3-small.png"
+    ],
+    avatar: "../../../assets/default-avatar3-small.png",
+    ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
+    fameRating: 0,
+    email: req.body.email,
+    password: req.body.password
   }
 
   let exitOnDupUsername = 0;
@@ -235,6 +252,7 @@ module.exports.authenticateUser = async (req, res, next) => {
       pictures: user.pictures,
       avatar: user.avatar,
       ipinofLoc: user.ipinfoLoc,
+      fameRating: user.fameRating
     }
     let resObj = {
       success: true,

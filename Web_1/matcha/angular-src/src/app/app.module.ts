@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 
 // Router Module.
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 // Services.
 import { AuthService } from './services/auth.service';
@@ -34,6 +36,7 @@ import { FooterComponent } from './components/footer/footer.component';
     HomeComponent,
     ProfileComponent,
     FooterComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule,
     FlashMessagesModule.forRoot(),
     HttpClientModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyAvcWB3YZc3t4l8vBxq69yXGMUokRUWazg'})
   ],
   providers: [
     ValidateService,
