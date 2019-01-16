@@ -1,51 +1,45 @@
-<div class="container" style="max-width: 700px;">
-  <h2 class="page-header">Register</h2>
-  <form (submit)="onRegisterSubmit()">
-    <!-- <div class="form-group">
-      <label>First Name</label>
-      <input type="text" [(ngModel)]="firstName" name="firstName" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Last Name</label>
-      <input type="text" [(ngModel)]="lastName" name="lastName" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" [(ngModel)]="username" name="username" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Age</label>
-      <input type="number" [(ngModel)]="age" name="age" class="form-control">
-    </div> -->
-    <div class="form-group">
-      <label for="genderSelect">Gender</label>
-      <select class="form-control" [(ngModel)]="gender" name="gender" id="genderSelect">
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="sexualitySelect">Sexuality</label>
-      <select class="form-control" [(ngModel)]="sexuality" name="sexuality" id="sexualitySelect">
-        <option>Heterosexual</option>
-        <option>Homosexual</option>
-        <option>Bisexual</option>
-      </select>
-    </div>
-    <div class="form-group">
+<!-- Need to add ngIf directive here, for ngOnInit, async -->
+<div *ngIf="user">
+  <div class="container" style="max-width: 700px;">
+    <h2 class="page-header">Edit Profile</h2>
+    <form (submit)="onRegisterSubmit()">
+      <div class="form-group">
+        <label for="genderSelect">Gender</label>
+        <select class="form-control" [(ngModel)]="user.gender" name="user.gender" id="genderSelect">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sexualitySelect">Sexuality</label>
+        <select class="form-control" [(ngModel)]="user.sexualPreference" name="user.sexualPreference" id="sexualitySelect">
+          <option>Heterosexual</option>
+          <option>Homosexual</option>
+          <option>Bisexual</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="biography">Biography</label>
-        <textarea class="form-control" id="biography" rows="5" [(ngModel)]="biography" name="biography">
+        <textarea class="form-control" id="biography" rows="5" [(ngModel)]="user.biography" name="user.biography">
         </textarea>
       </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="text" [(ngModel)]="email" name="email" class="form-control" >
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" [(ngModel)]="password" name="password" class="form-control">
-    </div>
-    <input type="submit" class="btn btn-dark" value="Submit">
-  </form>
+      <label for="interestButtons">Interests</label>
+      <div class="form-group" id="interestButtons">
+        <button id="tag0" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary0" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary0" (click)="toggleInterest($event)">Matcha</button>
+        <button id="tag1" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary1" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary1" (click)="toggleInterest($event)">Sports</button>
+        <button id="tag2" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary2" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary2" (click)="toggleInterest($event)">Art</button>
+        <button id="tag3" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary3" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary3" (click)="toggleInterest($event)">Gaming</button>
+        <button id="tag4" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary4" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary4" (click)="toggleInterest($event)">Traveling</button>
+        <button id="tag5" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary5" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary5" (click)="toggleInterest($event)">Music</button>
+        <button id="tag6" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary6" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary6" (click)="toggleInterest($event)">Cooking</button>
+        <button id="tag7" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary7" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary7" (click)="toggleInterest($event)">Reading</button>
+        <button id="tag8" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary8" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary8" (click)="toggleInterest($event)">Computers</button>
+        <button id="tag9" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary9" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary9" (click)="toggleInterest($event)">Movies</button>
+      </div>
+      <!-- For testing -->
+      <div *ngFor="let interest of user.interests">{{ interest }}</div>
+      <input type="submit" class="btn btn-dark" value="Submit">
+    </form>
+  </div>
 </div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,18 +12,11 @@ export class ProfileComponent implements OnInit {
   long: number;
   lat: number;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {
-    
-  }
+  constructor(private authService: AuthService) { }
 
-  // We're going to display the user profile when the component initializes.
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.user = (<any>profile).user;
-      console.log(this.user);
       this.long = (<any>this.user).ipinfoLoc.coordinates[0];
       this.lat = (<any>this.user).ipinfoLoc.coordinates[1];
     },
