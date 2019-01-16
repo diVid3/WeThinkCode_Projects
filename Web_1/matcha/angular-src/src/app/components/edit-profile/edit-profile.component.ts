@@ -19,26 +19,16 @@ export class EditProfileComponent implements OnInit {
   marginTagButton: boolean = true;
 
   // Button Class Variables.
-  btnSecondary0: boolean = false;
-  btnSecondary1: boolean = false;
-  btnSecondary2: boolean = false;
-  btnSecondary3: boolean = false;
-  btnSecondary4: boolean = false;
-  btnSecondary5: boolean = false;
-  btnSecondary6: boolean = false;
-  btnSecondary7: boolean = false;
-  btnSecondary8: boolean = false;
-  btnSecondary9: boolean = false;
-  btnOutlineSecondary0: boolean = true;
-  btnOutlineSecondary1: boolean = true;
-  btnOutlineSecondary2: boolean = true;
-  btnOutlineSecondary3: boolean = true;
-  btnOutlineSecondary4: boolean = true;
-  btnOutlineSecondary5: boolean = true;
-  btnOutlineSecondary6: boolean = true;
-  btnOutlineSecondary7: boolean = true;
-  btnOutlineSecondary8: boolean = true;
-  btnOutlineSecondary9: boolean = true;
+  btnShow0: boolean;
+  btnShow1: boolean;
+  btnShow2: boolean;
+  btnShow3: boolean;
+  btnShow4: boolean;
+  btnShow5: boolean;
+  btnShow6: boolean;
+  btnShow7: boolean;
+  btnShow8: boolean;
+  btnShow9: boolean;
 
   constructor(private authService: AuthService) { }
 
@@ -48,28 +38,17 @@ export class EditProfileComponent implements OnInit {
       this.long = (<any>this.user).ipinfoLoc.coordinates[0];
       this.lat = (<any>this.user).ipinfoLoc.coordinates[1];
 
-      // Detecting Interest States
-      this.btnSecondary0 = (<any>this.user).interests.includes('Matcha');
-      this.btnSecondary1 = (<any>this.user).interests.includes('Sports');
-      this.btnSecondary2 = (<any>this.user).interests.includes('Art');
-      this.btnSecondary3 = (<any>this.user).interests.includes('Gaming');
-      this.btnSecondary4 = (<any>this.user).interests.includes('Traveling');
-      this.btnSecondary5 = (<any>this.user).interests.includes('Music');
-      this.btnSecondary6 = (<any>this.user).interests.includes('Cooking');
-      this.btnSecondary7 = (<any>this.user).interests.includes('Reading');
-      this.btnSecondary8 = (<any>this.user).interests.includes('Computers');
-      this.btnSecondary9 = (<any>this.user).interests.includes('Movies');
-
-      this.btnOutlineSecondary0 = !this.btnSecondary0;
-      this.btnOutlineSecondary1 = !this.btnSecondary1;
-      this.btnOutlineSecondary2 = !this.btnSecondary2;
-      this.btnOutlineSecondary3 = !this.btnSecondary3;
-      this.btnOutlineSecondary4 = !this.btnSecondary4;
-      this.btnOutlineSecondary5 = !this.btnSecondary5;
-      this.btnOutlineSecondary6 = !this.btnSecondary6;
-      this.btnOutlineSecondary7 = !this.btnSecondary7;
-      this.btnOutlineSecondary8 = !this.btnSecondary8;
-      this.btnOutlineSecondary9 = !this.btnSecondary9;
+      // Detecting Interest/Tag States
+      this.btnShow0 = (<any>this.user).interests.includes('Matcha');
+      this.btnShow1 = (<any>this.user).interests.includes('Sports');
+      this.btnShow2 = (<any>this.user).interests.includes('Art');
+      this.btnShow3 = (<any>this.user).interests.includes('Gaming');
+      this.btnShow4 = (<any>this.user).interests.includes('Traveling');
+      this.btnShow5 = (<any>this.user).interests.includes('Music');
+      this.btnShow6 = (<any>this.user).interests.includes('Cooking');
+      this.btnShow7 = (<any>this.user).interests.includes('Reading');
+      this.btnShow8 = (<any>this.user).interests.includes('Computers');
+      this.btnShow9 = (<any>this.user).interests.includes('Movies');
     },
     err => {
       console.log(err);
@@ -77,93 +56,41 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  // Takes an interest string, e.g 'Matcha'.
-  removeInterest(interest) {
+  removeInterest(interest, btnNum) {
     let stringIndex = (<any>this.user).interests.indexOf(interest);
     (<any>this.user).interests.splice(stringIndex, 1);
-    this.btnSecondary0 = false;
-    this.btnOutlineSecondary0 = true;
+    if (btnNum == "tag0") this.btnShow0 = false;
+    if (btnNum == "tag1") this.btnShow1 = false;
+    if (btnNum == "tag2") this.btnShow2 = false;
+    if (btnNum == "tag3") this.btnShow3 = false;
+    if (btnNum == "tag4") this.btnShow4 = false;
+    if (btnNum == "tag5") this.btnShow5 = false;
+    if (btnNum == "tag6") this.btnShow6 = false;
+    if (btnNum == "tag7") this.btnShow7 = false;
+    if (btnNum == "tag8") this.btnShow8 = false;
+    if (btnNum == "tag9") this.btnShow9 = false;
   }
 
-  // Takes an interest string, e.g 'Matcha'.
-  addInterest(interest) {
+  addInterest(interest, btnNum) {
     (<any>this.user).interests.push(interest);
-    this.btnSecondary0 = true;
-    this.btnOutlineSecondary0 = false;
+    if (btnNum == "tag0") this.btnShow0 = true;
+    if (btnNum == "tag1") this.btnShow1 = true;
+    if (btnNum == "tag2") this.btnShow2 = true;
+    if (btnNum == "tag3") this.btnShow3 = true;
+    if (btnNum == "tag4") this.btnShow4 = true;
+    if (btnNum == "tag5") this.btnShow5 = true;
+    if (btnNum == "tag6") this.btnShow6 = true;
+    if (btnNum == "tag7") this.btnShow7 = true;
+    if (btnNum == "tag8") this.btnShow8 = true;
+    if (btnNum == "tag9") this.btnShow9 = true;
   }
 
-  // toggleInterest(event) {
-  //   console.log(event);
-  //   let interest = event.srcElement.innerHTML;
-  //   if ((<any>this.user).interests.includes(interest))
-  //     this.removeInterest(interest);
-  //   else
-  //     this.addInterest(interest);
-  // }
   toggleInterest(event) {
-    console.log(event);
-    let interestString = event.srcElement.innerHTML;
-    switch (interestString) {
-      case "Matcha":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Sports":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Art":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Gaming":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Traveling":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Music":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Cooking":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Reading":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Computers":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-      case "Movies":
-        if ((<any>this.user).interests.includes(interestString)) {
-          this.removeInterest(interestString)
-        } else {
-          this.addInterest(interestString)
-        }
-    }
+    let interest = event.srcElement.innerHTML;
+    let btnNum = event.srcElement.id;
+    if ((<any>this.user).interests.includes(interest))
+      this.removeInterest(interest, btnNum);
+    else
+      this.addInterest(interest, btnNum);
   }
 }

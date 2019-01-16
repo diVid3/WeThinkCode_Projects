@@ -26,19 +26,19 @@
       </div>
       <label for="interestButtons">Interests</label>
       <div class="form-group" id="interestButtons">
-        <button id="tag0" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary0" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary0" (click)="toggleInterest($event)">Matcha</button>
-        <button id="tag1" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary1" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary1" (click)="toggleInterest($event)">Sports</button>
-        <button id="tag2" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary2" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary2" (click)="toggleInterest($event)">Art</button>
-        <button id="tag3" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary3" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary3" (click)="toggleInterest($event)">Gaming</button>
-        <button id="tag4" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary4" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary4" (click)="toggleInterest($event)">Traveling</button>
-        <button id="tag5" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary5" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary5" (click)="toggleInterest($event)">Music</button>
-        <button id="tag6" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary6" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary6" (click)="toggleInterest($event)">Cooking</button>
-        <button id="tag7" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary7" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary7" (click)="toggleInterest($event)">Reading</button>
-        <button id="tag8" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary8" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary8" (click)="toggleInterest($event)">Computers</button>
-        <button id="tag9" type="button" [class.btn]="btn" [class.btn-secondary]="btnSecondary9" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="btnOutlineSecondary9" (click)="toggleInterest($event)">Movies</button>
+        <button id="tag0" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow0" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow0" (click)="toggleInterest($event)">Matcha</button>
+        <button id="tag1" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow1" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow1" (click)="toggleInterest($event)">Sports</button>
+        <button id="tag2" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow2" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow2" (click)="toggleInterest($event)">Art</button>
+        <button id="tag3" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow3" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow3" (click)="toggleInterest($event)">Gaming</button>
+        <button id="tag4" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow4" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow4" (click)="toggleInterest($event)">Traveling</button>
+        <button id="tag5" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow5" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow5" (click)="toggleInterest($event)">Music</button>
+        <button id="tag6" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow6" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow6" (click)="toggleInterest($event)">Cooking</button>
+        <button id="tag7" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow7" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow7" (click)="toggleInterest($event)">Reading</button>
+        <button id="tag8" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow8" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow8" (click)="toggleInterest($event)">Computers</button>
+        <button id="tag9" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow9" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow9" (click)="toggleInterest($event)">Movies</button>
       </div>
       <!-- For testing -->
-      <div *ngFor="let interest of user.interests">{{ interest }}</div>
+      <!-- <div *ngFor="let interest of user.interests">{{ interest }}</div> -->
       <input type="submit" class="btn btn-dark" value="Submit">
     </form>
   </div>
