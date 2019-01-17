@@ -275,6 +275,26 @@ module.exports.getUserProfile = (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
+module.exports.editUserProfileData = (req, res, next) => {
+  console.log('===== req =====');
+  console.log(req);
+  console.log('===============')
+}
 
+// ------------------------------------------------------------------------ //
+
+module.exports.editUserProfileAvatar = (req, res, next) => {
+  console.log('===== req =====');
+  console.log(req);
+  console.log('===============')
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.editUserProfilePictures = (req, res, next) => {
+  console.log('===== req =====');
+  console.log(req);
+  console.log('===============')
+}
 
 // ------------------------------------------------------------------------ //

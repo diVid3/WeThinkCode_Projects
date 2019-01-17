@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { EditService } from '../../services/edit.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,8 +11,22 @@ export class EditProfileComponent implements OnInit {
 
   user: Object;
 
-  long: number;
-  lat: number;
+  // Previous user location. Will get set to new location upon map click.
+  oldLong: number;
+  oldLat: number;
+
+  // New user location.
+  newLong: number;
+  newLat: number;
+
+  // Which location to use on update submit.
+  useNewLocation: boolean = false;
+
+  // Location specification state.
+  specifyLocation: boolean = false;
+
+  // Variable to keep track of interest array.
+  interestArray: any;
 
   // Interest Button Conditions. This is to circumvent the fact that native
   // classes are not applied in the presence of angular class binding.
@@ -30,15 +45,25 @@ export class EditProfileComponent implements OnInit {
   btnShow8: boolean;
   btnShow9: boolean;
 
-  constructor(private authService: AuthService) { }
+  // File Select Info
+  avatarInfo: any;
+  picturesInfo: any;
+
+  constructor(
+    private authService: AuthService,
+    private editService: EditService
+  ) { }
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.user = (<any>profile).user;
-      this.long = (<any>this.user).ipinfoLoc.coordinates[0];
-      this.lat = (<any>this.user).ipinfoLoc.coordinates[1];
+      console.log(this.user);
+      this.oldLong = (<any>this.user).ipinfoLoc.coordinates[0];
+      this.oldLat = (<any>this.user).ipinfoLoc.coordinates[1];
 
-      // Detecting Interest/Tag States
+      this.interestArray = (<any>this.user).interests;
+
+      // Detecting Interest/Tag States.
       this.btnShow0 = (<any>this.user).interests.includes('Matcha');
       this.btnShow1 = (<any>this.user).interests.includes('Sports');
       this.btnShow2 = (<any>this.user).interests.includes('Art');
@@ -56,6 +81,8 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  // Removes an interest from the interest array and toggles the corresponding
+  // button.
   removeInterest(interest, btnNum) {
     let stringIndex = (<any>this.user).interests.indexOf(interest);
     (<any>this.user).interests.splice(stringIndex, 1);
@@ -71,6 +98,8 @@ export class EditProfileComponent implements OnInit {
     if (btnNum == "tag9") this.btnShow9 = false;
   }
 
+  // Adds an interest to the interest array and toggles the corresponding
+  // button.
   addInterest(interest, btnNum) {
     (<any>this.user).interests.push(interest);
     if (btnNum == "tag0") this.btnShow0 = true;
@@ -85,6 +114,7 @@ export class EditProfileComponent implements OnInit {
     if (btnNum == "tag9") this.btnShow9 = true;
   }
 
+  // Function to toggle interest buttons.
   toggleInterest(event) {
     let interest = event.srcElement.innerHTML;
     let btnNum = event.srcElement.id;
@@ -92,5 +122,59 @@ export class EditProfileComponent implements OnInit {
       this.removeInterest(interest, btnNum);
     else
       this.addInterest(interest, btnNum);
+  }
+
+  selectAvatar(event) {
+    console.log(event);
+    this.avatarInfo = event;
+  }
+
+  selectPictures(event) {
+    console.log(event);
+    this.picturesInfo = event;
+  }
+
+  onLocationKeep() {
+    this.specifyLocation = false;
+    this.useNewLocation = false;
+  }
+
+  onLocationFind() {
+    this.specifyLocation = false;
+    if (!navigator.geolocation) {
+      this.useNewLocation = false;
+      return;
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.newLong = position.coords.longitude;
+      this.newLat = position.coords.latitude;
+      this.useNewLocation = true;
+    },
+    () => { // This triggers on error, e.g. user denied geolocation.
+      this.useNewLocation = false;
+    });
+  }
+
+  // Used to toggle map.
+  onLocationSpecify() {
+    this.specifyLocation = true;
+  }
+
+  onMapClick(event) {
+    this.newLong = event.coords.lng;
+    this.newLat = event.coords.lat;
+    this.useNewLocation = true;
+  }
+
+  // Persists the updated changes to the backend.
+  onUpdateSubmit() {
+    if (this.useNewLocation) {
+      (<any>this.user).ipinfoLoc.coordinates[0] = this.newLong;
+      (<any>this.user).ipinfoLoc.coordinates[1] = this.newLat;
+    }
+    console.log(this.user);
+    this.editService.editProfileData(this.user);
+    // console.log(this.interestArray);
+    // Handles image uploads.
   }
 }

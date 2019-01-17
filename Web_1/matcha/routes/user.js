@@ -27,4 +27,15 @@ router.post('/authenticate', userController.authenticateUser);
 router.get('/profile', passport.authenticate('jwt', {session: false}),
 userController.getUserProfile);
 
+router.post('/editProfileData', passport.authenticate('jwt', {session: false}),
+userController.editUserProfileData);
+
+// Will need to protect this route via passport later.
+router.post('/editProfileAvatar',
+userController.editUserProfileAvatar);
+
+// Will need to protect this route via passport later.
+router.post('/editProfilePictures',
+userController.editUserProfilePictures);
+
 module.exports = router;

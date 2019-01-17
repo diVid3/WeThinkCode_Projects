@@ -2,7 +2,16 @@
 <div *ngIf="user">
   <div class="container" style="max-width: 700px;">
     <h2 class="page-header">Edit Profile</h2>
-    <form (submit)="onRegisterSubmit()">
+    <form (submit)="onUpdateSubmit()">
+      <div class="form-group">
+        <label for="fileInput">Add Profile Picture</label>
+        <input type="file" class="form-control-file" id="fileInput" aria-describedby="fileHelp" accept=".jpg" (change)="selectAvatar($event)">
+      </div>
+      <div class="form-group">
+        <label for="fileInput">Add Pictures</label>
+        <input type="file" class="form-control-file" id="fileInput" aria-describedby="fileHelp" accept=".jpg" (change)="selectPictures($event)" multiple>
+        <small id="fileHelp" class="form-text text-muted">Maximum 4 Pictures.</small>
+      </div>
       <div class="form-group">
         <label for="genderSelect">Gender</label>
         <select class="form-control" [(ngModel)]="user.gender" name="user.gender" id="genderSelect">
@@ -37,9 +46,38 @@
         <button id="tag8" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow8" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow8" (click)="toggleInterest($event)">Computers</button>
         <button id="tag9" type="button" [class.btn]="btn" [class.btn-secondary]="btnShow9" [class.marginTagButton]="marginTagButton" [class.btn-outline-secondary]="!btnShow9" (click)="toggleInterest($event)">Movies</button>
       </div>
-      <!-- For testing -->
-      <!-- <div *ngFor="let interest of user.interests">{{ interest }}</div> -->
-      <input type="submit" class="btn btn-dark" value="Submit">
+      <!-- Radio Buttons -->
+      <label for="radioButtons">Location</label>
+      <fieldset class="form-group" id="radioButtons">
+        <!-- <legend>Radio buttons</legend> -->
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="" (click)="onLocationKeep()">
+            Don't Change My Location
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" (click)="onLocationFind()">
+            Use My Current Location
+          </label>
+        </div>
+        <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" (click)="onLocationSpecify()">
+            I'll Specify My Location
+          </label>
+        </div>
+      </fieldset>
+      <!--  -->
+      <label for="pickMap" *ngIf="specifyLocation">Pick Your Location</label>
+      <div id="pickMap" class="form-group map" fxFlex="1 1 100%" #map *ngIf="specifyLocation">
+        <agm-map [style.height.px]="map.offsetHeight" [latitude]="oldLat" [longitude]="oldLong" (mapClick)="onMapClick($event)">
+          <agm-marker [latitude]="oldLat" [longitude]="oldLong" iconUrl="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></agm-marker>
+          <agm-marker [latitude]="newLat" [longitude]="newLong"></agm-marker>
+        </agm-map>
+      </div>
+      <input type="submit" class="btn btn-dark" value="Update">
     </form>
   </div>
 </div>
