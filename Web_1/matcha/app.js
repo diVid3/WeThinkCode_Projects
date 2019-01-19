@@ -52,6 +52,9 @@ mongocon.connectToServer((connectedToDb) => {
     // user router. The user constant here is an express router instance.
     app.use('/user', user);
 
+    // Statically serving the images folder.
+    app.use(express.static(path.join(__dirname, 'images')));
+
     // Self-invoking with a passed variable. This is an exported method from
     // config/passport.js.
     require('./config/passport')(passport);

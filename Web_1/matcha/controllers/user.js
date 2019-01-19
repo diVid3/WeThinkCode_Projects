@@ -275,26 +275,16 @@ module.exports.getUserProfile = (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
-module.exports.editUserProfileData = (req, res, next) => {
-  console.log('===== req =====');
-  console.log(req);
-  console.log('===============')
-}
+module.exports.editUserProfile = (req, res, next) => {
+  console.log('===== req.body =====');
+  console.log(req.body);
+  console.log('====================')
 
-// ------------------------------------------------------------------------ //
+  console.log('===== req.files =====');
+  console.log(req.files);
+  console.log('=====================')
 
-module.exports.editUserProfileAvatar = (req, res, next) => {
-  console.log('===== req =====');
-  console.log(req);
-  console.log('===============')
-}
-
-// ------------------------------------------------------------------------ //
-
-module.exports.editUserProfilePictures = (req, res, next) => {
-  console.log('===== req =====');
-  console.log(req);
-  console.log('===============')
+  res.send({msg: 'editUserProfile works kinda'});
 }
 
 // ------------------------------------------------------------------------ //

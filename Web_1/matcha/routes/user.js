@@ -2,8 +2,42 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const userController = require('../controllers/user');
+const multer = require('multer');
+const path = require('path');
 
-// Routes
+// ------------------------------------------------------------------------ //
+
+// Configuring multer middleware.
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, '${file.fieldname}' + '-' + Math.random()
+    + path.extname(file.originalname));
+  }
+});
+
+function checkFileType(file, cb) {
+  const fileExtensions = /jpeg|jpg/;
+  const validExtension = fileExtensions.test(path.extname(file.originalname)
+    .toLowerCase());
+  const validMime = fileExtensions.test(file.mimetype);
+  
+  if (validExtension && validMime)
+    return cb(null, true);
+  else
+    return cb('Only .jpeg and .jpg image formats are allowed.');
+}
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    checkFileType(file, cb);
+  }
+});
+
+// ------------------------------------------------------------------------ //
 
 router.post('/register', userController.registerUser);
 
@@ -27,15 +61,13 @@ router.post('/authenticate', userController.authenticateUser);
 router.get('/profile', passport.authenticate('jwt', {session: false}),
 userController.getUserProfile);
 
-router.post('/editProfileData', passport.authenticate('jwt', {session: false}),
-userController.editUserProfileData);
+// Will Need to Use multer here.
+// router.post('/edit', passport.authenticate('jwt', {session: false}),
+// userController.editUserProfile);
 
-// Will need to protect this route via passport later.
-router.post('/editProfileAvatar',
-userController.editUserProfileAvatar);
+router.post('/edit', upload.array('pictures', 5), userController.editUserProfile);
 
-// Will need to protect this route via passport later.
-router.post('/editProfilePictures',
-userController.editUserProfilePictures);
+// router.post('/editProfileData', passport.authenticate('jwt', {session: false}),
+// userController.editUserProfileData);
 
 module.exports = router;

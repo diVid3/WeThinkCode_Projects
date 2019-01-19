@@ -46,8 +46,8 @@ export class EditProfileComponent implements OnInit {
   btnShow9: boolean;
 
   // File Select Info
-  avatarInfo: any;
-  picturesInfo: any;
+  avatarArr: any;
+  pictureArr: any;
 
   constructor(
     private authService: AuthService,
@@ -125,13 +125,11 @@ export class EditProfileComponent implements OnInit {
   }
 
   selectAvatar(event) {
-    console.log(event);
-    this.avatarInfo = event;
+    this.avatarArr = event.target.files;
   }
 
   selectPictures(event) {
-    console.log(event);
-    this.picturesInfo = event;
+    this.pictureArr = event.target.files;
   }
 
   onLocationKeep() {
@@ -172,9 +170,7 @@ export class EditProfileComponent implements OnInit {
       (<any>this.user).ipinfoLoc.coordinates[0] = this.newLong;
       (<any>this.user).ipinfoLoc.coordinates[1] = this.newLat;
     }
-    console.log(this.user);
-    this.editService.editProfileData(this.user);
-    // console.log(this.interestArray);
-    // Handles image uploads.
+    this.editService.editProfile(this.user, this.avatarArr,
+      this.pictureArr).subscribe((obj) => {console.log(obj)});
   }
 }
