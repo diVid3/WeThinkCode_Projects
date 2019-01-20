@@ -1,10 +1,13 @@
 // Basically all code that does not directly interact with the database or views
 // goes into controllers. An example, backend validation before committing to
-// database.
+// database, this is assuming that the validation logic does not include busi-
+// ness logic.
 
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
+const path = require('path');
+const fs = require('fs');
 
 // ------------------------------------------------------------------------ //
 
@@ -215,12 +218,18 @@ module.exports.registerUser = async (req, res, next) => {
   else if (exitOnDupEmail)
     return res.json({ success: false, msg: emailExists });
 
-  // Registering user.
-  // userModel.addUserAsync(newUser)
-  // .then(res.json({ success: true, msg: userRegistered }));
+  // Registering user, also creates a geospatial index if one does not exist.
   userModel.addUserAsync(newUser)
-  .then(userModel.createGeoIndex("ipinfoLoc"))
-  .then(res.json({ success: true, msg: userRegistered }));
+  .then(async () => {
+    let geoIndexCreated = await
+      userModel.getIndexCreatedState('geoIndexCreated');
+    if (geoIndexCreated == false) {
+      await userModel.createGeoIndex("ipinfoLoc");
+      await userModel.addIndexCreatedState('geoIndexCreated');
+      console.log('GeoIndex created!');
+    }
+    res.json({ success: true, msg: userRegistered })
+  });
 }
 
 // ------------------------------------------------------------------------ //
@@ -275,16 +284,121 @@ module.exports.getUserProfile = (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
-module.exports.editUserProfile = (req, res, next) => {
-  console.log('===== req.body =====');
-  console.log(req.body);
-  console.log('====================')
+// This is to check whether all updatedUser info is present. updatedUser is
+// pretty much a new profile form, so same checks.
+function hasAllUpdateProperties(updatedUser) {
+  if (
+    updatedUser.firstName == null || updatedUser.lastName == null ||
+    updatedUser.username == null || updatedUser.age == null ||
+    updatedUser.gender == null || updatedUser.sexualPreference == null ||
+    updatedUser.ipinfoLoc == null ||
+    updatedUser.email == null || updatedUser.password == null ||
+    updatedUser.firstName == '' || updatedUser.lastName == '' ||
+    updatedUser.username == '' || updatedUser.age == '' ||
+    updatedUser.gender == ''|| updatedUser.sexualPreference == '' ||
+    updatedUser.ipinfoLoc == '' ||
+    updatedUser.email == '' || updatedUser.password == '')
+      return false;
+    return true;
+}
 
-  console.log('===== req.files =====');
-  console.log(req.files);
-  console.log('=====================')
+// Checks whether the updated profile input is valid or not.
+function updatedUserInfoValid(updatedUser, res, signalObj) {
+  let fillMsg = "Please fill in all input fields.";
+  let invalidGenderMsg = "Invalid gender.";
+  let invalidSexuality = "Invalid sexuality.";
+  let biographyTooLong = "Your biography is too long";
 
-  res.send({msg: 'editUserProfile works kinda'});
+  // Checking if all fields present.
+  if (hasAllUpdateProperties(updatedUser) == false)
+    return res.json({ success: false, msg: fillMsg });
+
+  // Check gender.
+  if (
+    updatedUser.gender != 'Male' &&
+    updatedUser.gender != 'Female' &&
+    updatedUser.gender != 'Other')
+      return res.json({ success: false, msg: invalidGenderMsg });
+
+  // Check sexuality.
+  if (
+    updatedUser.sexualPreference != 'Heterosexual' &&
+    updatedUser.sexualPreference != 'Homosexual' &&
+    updatedUser.sexualPreference != 'Bisexual')
+      return res.json({ success: false, msg: invalidSexuality });
+
+  // Check biography.
+  if (updatedUser.biography.length > 1024)
+    return res.json({ success: false, msg: biographyTooLong });
+
+  signalObj.passedInputValidation = true;
+}
+
+module.exports.editUserProfile = async (req, res, next) => {
+
+  // console.log('===== req.files =====');
+  // console.log(req.files);
+  // console.log('=====================');
+
+  // let updatedUser = JSON.parse(req.body.updatedUserProfile);
+  // console.log('=============================================================');
+  // console.log(updatedUser);
+  // console.log('=============================================================');
+
+  // Validating updated user profile info. res is used to send back messages
+  // upon failure, signalObj is used to hold the failure state.
+  let signalObj = { passedInputValidation: false };
+  updatedUserInfoValid(updatedUser, res, signalObj);
+  if (signalObj.passedInputValidation == false)
+    return;
+
+  // Updating image paths to point to locally stored images. Also deleting if
+  // need be.
+  let dirnameArr = __dirname.split('/');
+  let dirnameArrLength = dirnameArr.length;
+  let pathToMatcha = '/';
+  for (let i = 1; i < dirnameArrLength - 1; i++)
+    pathToMatcha += (dirnameArr[i] + '/');
+
+  let filesArrLength = req.files.length;
+  if (filesArrLength >= 1) {
+    if (!updatedUser.avatar.includes('../../../')) {
+      let stringArr = updatedUser.avatar.split('/');
+      let delPath = pathToMatcha + 'user_files/' + 'images/' + stringArr[4];
+      fs.unlink(delPath, (err) => {console.log(err)});
+    }
+    updatedUser.avatar = ('http://localhost:3000/' + req.files[0].path).replace('/user_files', '');
+  }
+  if (filesArrLength >= 2)
+    for (let i = 1; i < filesArrLength; i++) {
+      if (!updatedUser.pictures[i - 1].includes('../../../')) {
+        let stringArr = updatedUser.pictures[i - 1].split('/');
+        let delPath = pathToMatcha + 'user_files/' + 'images/' + stringArr[4];
+        fs.unlink(delPath, (err) => {console.log(err)});
+      }
+      updatedUser.pictures[i - 1] = ('http://localhost:3000/'
+      + req.files[i].path).replace('/user_files', '');
+    }
+
+  await userModel.updateUserAsync(
+    { 'username' : updatedUser.username },
+    {
+      $set: {
+        'gender' : updatedUser.gender,
+        'sexualPreference' : updatedUser.sexualPreference,
+        'biography' : updatedUser.biography,
+        'interests' : updatedUser.interests,
+        'ipinfoLoc' : updatedUser.ipinfoLoc,
+        'avatar' : updatedUser.avatar,
+        'pictures' : updatedUser.pictures
+      }
+    }
+  );
+
+  // console.log('************************************************************');
+  // console.log(updatedUser);
+  // console.log('************************************************************');
+  res.json({success: true, msg: 'Profile updated!'});
 }
 
 // ------------------------------------------------------------------------ //

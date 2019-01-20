@@ -53,7 +53,7 @@ mongocon.connectToServer((connectedToDb) => {
     app.use('/user', user);
 
     // Statically serving the images folder.
-    app.use(express.static(path.join(__dirname, 'images')));
+    app.use(express.static(path.join(__dirname, 'user_files')));
 
     // Self-invoking with a passed variable. This is an exported method from
     // config/passport.js.

@@ -70,6 +70,50 @@ module.exports.addUserAsync = async (newUser) => {
   }
 }
 
+// This is used as a reminder of whether the GeoIndex has been created or not.
+module.exports.addIndexCreatedState = async (collection) => {
+  try {
+    let db = mongocon.getDb();
+    await db.collection(collection).insertOne({geoIndexCreated: 1});
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
+// This is simply to test whether the GeoIndex has been created.
+module.exports.getIndexCreatedState = async (collection) => {
+  try {
+    let db = mongocon.getDb();
+    let cursor = await db.collection(collection).find({});
+    return cursor.hasNext();
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
+// This errors out due to _id being litteraly written.
+// module.exports.replaceUpdatedUserAsync = async (criteria, updatedUser) => {
+//   try {
+//     let db = mongocon.getDb();
+//     await db.collection('users').replaceOne(criteria, updatedUser);
+//   }
+//   catch (err) {
+//     throw new Error(err);
+//   }
+// }
+
+module.exports.updateUserAsync = async (criteria, fieldsToUpdate) => {
+  try {
+    let db = mongocon.getDb();
+    await db.collection('users').updateOne(criteria, fieldsToUpdate);
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
 module.exports.comparePasswordAsync = async (plainPw, actualHash) => {
   try {
     let isMatch = await bcrypt.compare(plainPw, actualHash);

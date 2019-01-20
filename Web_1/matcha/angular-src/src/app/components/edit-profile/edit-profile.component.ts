@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { EditService } from '../../services/edit.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,6 +11,7 @@ import { EditService } from '../../services/edit.service';
 export class EditProfileComponent implements OnInit {
 
   user: Object;
+  userRefreshed: Object; // This is to retrieve the current db pictures.
 
   // Previous user location. Will get set to new location upon map click.
   oldLong: number;
@@ -51,13 +53,13 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private editService: EditService
+    private editService: EditService,
+    private flashMessagesService: FlashMessagesService,
   ) { }
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.user = (<any>profile).user;
-      console.log(this.user);
       this.oldLong = (<any>this.user).ipinfoLoc.coordinates[0];
       this.oldLat = (<any>this.user).ipinfoLoc.coordinates[1];
 
@@ -164,13 +166,37 @@ export class EditProfileComponent implements OnInit {
     this.useNewLocation = true;
   }
 
-  // Persists the updated changes to the backend.
+  // Persists the updated changes to the backend. Observables + async/await???
   onUpdateSubmit() {
-    if (this.useNewLocation) {
-      (<any>this.user).ipinfoLoc.coordinates[0] = this.newLong;
-      (<any>this.user).ipinfoLoc.coordinates[1] = this.newLat;
-    }
-    this.editService.editProfile(this.user, this.avatarArr,
-      this.pictureArr).subscribe((obj) => {console.log(obj)});
+    this.authService.getProfile().subscribe(profile => {
+
+      if ((<any>profile).user.avatar)
+        (<any>this.user).avatar = (<any>profile).user.avatar;
+
+      if ((<any>profile).user.pictures)
+        (<any>this.user).pictures = (<any>profile).user.pictures;
+
+      if (this.useNewLocation) {
+        (<any>this.user).ipinfoLoc.coordinates[0] = this.newLong;
+        (<any>this.user).ipinfoLoc.coordinates[1] = this.newLat;
+      }
+
+      console.log(this.user);
+      this.editService.editProfile(this.user, this.avatarArr,
+        this.pictureArr).subscribe(
+          (data) => {
+            // This activates twice??? Observable picks up two events??
+            if ((<any>data).body) {
+              if ((<any>data).body.success == false)
+                this.flashMessagesService.show((<any>data).body.msg,
+                {cssClass: 'alert-danger', timeout: 6000});
+              else if ((<any>data).body.success == true) {
+                this.flashMessagesService.show((<any>data).body.msg,
+                {cssClass: 'alert-success', timeout: 3000});
+              }
+            }
+          }
+        );
+    });
   }
 }

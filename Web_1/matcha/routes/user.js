@@ -4,17 +4,17 @@ const passport = require('passport');
 const userController = require('../controllers/user');
 const multer = require('multer');
 const path = require('path');
+const uuidv4  = require('uuid/v4');
 
 // ------------------------------------------------------------------------ //
 
 // Configuring multer middleware.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'images');
+    cb(null, 'user_files/images');
   },
   filename: (req, file, cb) => {
-    cb(null, '${file.fieldname}' + '-' + Math.random()
-    + path.extname(file.originalname));
+    cb(null, uuidv4() + path.extname(file.originalname));
   }
 });
 
@@ -35,7 +35,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   }
-});
+}).array('pictures', 5);
 
 // ------------------------------------------------------------------------ //
 
@@ -65,7 +65,19 @@ userController.getUserProfile);
 // router.post('/edit', passport.authenticate('jwt', {session: false}),
 // userController.editUserProfile);
 
-router.post('/edit', upload.array('pictures', 5), userController.editUserProfile);
+// router.post('/edit', upload.array('pictures', 5), userController.editUserProfile);
+
+// Need to manually pass req and res to the controller as the calling of next
+// by multer has little effect due to bodyparser only recognizing Content-Type
+// headers, multer uses multipart form data.
+router.post('/edit', (req, res) => {
+  upload(req, res, (err) => {
+    if (err)
+      res.json({ success: false, msg: err });
+    else
+      userController.editUserProfile(req, res);
+  });
+});
 
 // router.post('/editProfileData', passport.authenticate('jwt', {session: false}),
 // userController.editUserProfileData);

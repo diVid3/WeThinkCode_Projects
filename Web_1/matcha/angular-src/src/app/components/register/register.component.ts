@@ -71,14 +71,10 @@ export class RegisterComponent implements OnInit {
       }
       else if (!((<any>data).success)) {
         this.flashMessagesService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 6000});
-        console.log('Where is this point?');
-        // this.router.navigate(['/register']);
         return false;
       }
       this.flashMessagesService.show('Oops! Something went wrong, sorry about that :(', {cssClass: 'alert-danger', timeout: 6000});
       return false;
     });
-
-    console.log('This point got reached before the registerUser() finished.');
   }
 }
