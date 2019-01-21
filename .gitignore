@@ -50,6 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+*.jpg
+*.jpeg
+.DS_Store
 
 node_modules
 .vscode

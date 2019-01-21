@@ -18,6 +18,13 @@ const storage = multer.diskStorage({
   }
 });
 
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    checkFileType(file, cb);
+  }
+}).array('pictures', 5);
+
 function checkFileType(file, cb) {
   const fileExtensions = /jpeg|jpg/;
   const validExtension = fileExtensions.test(path.extname(file.originalname)
@@ -27,21 +34,16 @@ function checkFileType(file, cb) {
   if (validExtension && validMime)
     return cb(null, true);
   else
-    return cb('Only .jpeg and .jpg image formats are allowed.');
+    return cb('Only .jpeg and .jpg images are allowed.');
 }
-
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    checkFileType(file, cb);
-  }
-}).array('pictures', 5);
 
 // ------------------------------------------------------------------------ //
 
 router.post('/register', userController.registerUser);
 
 router.post('/authenticate', userController.authenticateUser);
+
+router.post('/reset', userController.resetPasswordUser);
 
 // passport.authenticate('jwt', {session: false}) is used to protect a route
 // by requiring a client to provide a valid json web token via the authorization

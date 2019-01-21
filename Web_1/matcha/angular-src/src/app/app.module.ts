@@ -26,6 +26,7 @@ import { LocateService } from './services/locate.service';
 // Guards.
 import { AuthGuard } from './guards/auth.guard';
 import { FooterComponent } from './components/footer/footer.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ProfileComponent,
     FooterComponent,
     EditProfileComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

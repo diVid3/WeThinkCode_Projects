@@ -57,10 +57,10 @@ function hasAllRegisterProperties(req) {
 function registerUserInfoValid(req, res, signalObj) {
   let fillMsg = "Please fill in all input fields.";
   let invalidTypeMsg = "Your input types are incorrect.";
-  let firstNameTooLong = "First Name is too long.";
-  let firstNameTooShort = "First Name is too short.";
-  let lastNameTooLong = "Last Name is too long.";
-  let lastNameTooShort = "Last Name is too short.";
+  let firstNameTooLong = "First name is too long.";
+  let firstNameTooShort = "First name is too short.";
+  let lastNameTooLong = "Last name is too long.";
+  let lastNameTooShort = "Last name is too short.";
   let usernameTooLong = "Username is too long.";
   let usernameTooShort = "Username is too short.";
   let usernameNotMixed = "Username must contain digits.";
@@ -141,7 +141,7 @@ function registerUserInfoValid(req, res, signalObj) {
   if (req.body.email.length > 32)
     return res.json({ success: false, msg: emailTooLong });
   let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  console.log(re.test(req.body.email.toLowerCase()));
+  // console.log(re.test(req.body.email.toLowerCase()));
   if (re.test(req.body.email.toLowerCase()) == false)
     return res.json({ success: false, msg: incorrectEmail });
 
@@ -253,6 +253,7 @@ module.exports.authenticateUser = async (req, res, next) => {
       firstName: user.firstName,
       lastName: user.lastName,
       username: user.username,
+      email: user.email,
       age: user.age,
       gender: user.gender,
       sexualPreference: user.sexualPreference,
@@ -305,6 +306,12 @@ function hasAllUpdateProperties(updatedUser) {
 // Checks whether the updated profile input is valid or not.
 function updatedUserInfoValid(updatedUser, res, signalObj) {
   let fillMsg = "Please fill in all input fields.";
+  let firstNameTooLong = "First name is too long.";
+  let firstNameTooShort = "First name is too short.";
+  let lastNameTooLong = "Last name is too long.";
+  let lastNameTooShort = "Last name is too short.";
+  let emailTooLong = "Entered email is too long";
+  let incorrectEmail = "Entered email is incorrect.";
   let invalidGenderMsg = "Invalid gender.";
   let invalidSexuality = "Invalid sexuality.";
   let biographyTooLong = "Your biography is too long";
@@ -312,6 +319,27 @@ function updatedUserInfoValid(updatedUser, res, signalObj) {
   // Checking if all fields present.
   if (hasAllUpdateProperties(updatedUser) == false)
     return res.json({ success: false, msg: fillMsg });
+
+  let firstNameLength = updatedUser.firstName.length;
+  let lastNameLength = updatedUser.lastName.length;
+
+  // Check firstName, lastName and username.
+  if (firstNameLength > 32)
+    return res.json({ success: false, msg: firstNameTooLong });
+  if (firstNameLength < 2)
+    return res.json({ success: false, msg: firstNameTooShort });
+  if (lastNameLength > 32)
+    return res.json({ success: false, msg: lastNameTooLong });
+  if (lastNameLength < 2)
+    return res.json({ success: false, msg: lastNameTooShort });
+
+  // Check valid email.
+  if (updatedUser.email.length > 32)
+    return res.json({ success: false, msg: emailTooLong });
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // console.log(re.test(updatedUser.email.toLowerCase()));
+  if (re.test(updatedUser.email.toLowerCase()) == false)
+    return res.json({ success: false, msg: incorrectEmail });
 
   // Check gender.
   if (
@@ -340,10 +368,12 @@ module.exports.editUserProfile = async (req, res, next) => {
   // console.log(req.files);
   // console.log('=====================');
 
-  // let updatedUser = JSON.parse(req.body.updatedUserProfile);
   // console.log('=============================================================');
   // console.log(updatedUser);
   // console.log('=============================================================');
+
+  let updatedUser = JSON.parse(req.body.updatedUserProfile);
+  console.log(updatedUser);
 
   // Validating updated user profile info. res is used to send back messages
   // upon failure, signalObj is used to hold the failure state.
@@ -384,6 +414,9 @@ module.exports.editUserProfile = async (req, res, next) => {
     { 'username' : updatedUser.username },
     {
       $set: {
+        'firstName' : updatedUser.firstName,
+        'lastName' : updatedUser.lastName,
+        'email' : updatedUser.email,
         'gender' : updatedUser.gender,
         'sexualPreference' : updatedUser.sexualPreference,
         'biography' : updatedUser.biography,
@@ -399,6 +432,14 @@ module.exports.editUserProfile = async (req, res, next) => {
   // console.log(updatedUser);
   // console.log('************************************************************');
   res.json({success: true, msg: 'Profile updated!'});
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.resetPasswordUser = (req, res, next) => {
+  // Need to validate enteredEmail.
+  console.log(req);
+  res.json({success: true, msg: 'Reset email sent, check your mail!'})
 }
 
 // ------------------------------------------------------------------------ //

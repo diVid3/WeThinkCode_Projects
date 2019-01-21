@@ -26,6 +26,9 @@ Login {
 Own Profile {
     properties:
         Modifiable {
+            First Name,
+            Last Name,
+            Email
             Gender,
             Sexual Preference,              // Can leave for profile
             Biography,                      // Can leave for profile

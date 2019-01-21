@@ -28,6 +28,17 @@ export class AuthService {
     return this.http.post('http://localhost:3000/user/authenticate', user, {headers: authHeader});
   }
 
+  resetPasswordUser(emailObj) {
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post('http://localhost:3000/user/reset', emailObj, httpOptions);
+  }
+
   // Token needs to be send along here, because protected route on backend, hence loadToken().
   // This can only be called once a token is available to be retrieved, i.e. after login.
   // This is ridiculous... Setting or appending headers will not result in authentication at

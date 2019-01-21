@@ -22,6 +22,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  onForgotPassword() {
+    // console.log('Forgot password triggered');
+    this.router.navigate(['/forgot']);
+  }
+
   // this originates from ngModel binding.
   onLoginSubmit() {
     const user = {

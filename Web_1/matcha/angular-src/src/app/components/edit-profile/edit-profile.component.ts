@@ -54,7 +54,7 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private editService: EditService,
-    private flashMessagesService: FlashMessagesService,
+    private flashMessagesService: FlashMessagesService
   ) { }
 
   ngOnInit() {
@@ -168,6 +168,11 @@ export class EditProfileComponent implements OnInit {
 
   // Persists the updated changes to the backend. Observables + async/await???
   onUpdateSubmit() {
+    if ((this.pictureArr && this.pictureArr.length > 4) ||
+      (this.avatarArr && this.avatarArr.length > 1)) {
+      this.flashMessagesService.show('Please select less files.', {cssClass: 'alert-danger', timeout: 6000});
+      return;
+    }
     this.authService.getProfile().subscribe(profile => {
 
       if ((<any>profile).user.avatar)
@@ -180,8 +185,7 @@ export class EditProfileComponent implements OnInit {
         (<any>this.user).ipinfoLoc.coordinates[0] = this.newLong;
         (<any>this.user).ipinfoLoc.coordinates[1] = this.newLat;
       }
-
-      console.log(this.user);
+      
       this.editService.editProfile(this.user, this.avatarArr,
         this.pictureArr).subscribe(
           (data) => {
