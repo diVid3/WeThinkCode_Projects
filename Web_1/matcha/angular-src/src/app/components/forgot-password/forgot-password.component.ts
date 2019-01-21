@@ -23,9 +23,18 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
     // this.enteredEmailObj.
-    this.authService.resetPasswordUser({ enteredEmail : this.enteredEmail }).subscribe((data) => {
+    this.authService.resetPasswordUser({ enteredEmail : this.enteredEmail })
+    .subscribe((data) => {
+      // console.log(data);
       // success: false, msg: something
-      console.log(data);
+      if ((<any>data).success == false) {
+        this.flashMessagesService.show((<any>data).msg,
+        {cssClass: 'alert-danger', timeout: 6000});
+      }
+      else if ((<any>data).success == true) {
+        this.flashMessagesService.show((<any>data).msg,
+        {cssClass: 'alert-success', timeout: 3000});
+      }
     });
   }
 

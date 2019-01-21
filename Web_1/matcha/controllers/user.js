@@ -6,8 +6,9 @@
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
-const path = require('path');
+// const path = require('path');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 // ------------------------------------------------------------------------ //
 
@@ -337,7 +338,6 @@ function updatedUserInfoValid(updatedUser, res, signalObj) {
   if (updatedUser.email.length > 32)
     return res.json({ success: false, msg: emailTooLong });
   let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  // console.log(re.test(updatedUser.email.toLowerCase()));
   if (re.test(updatedUser.email.toLowerCase()) == false)
     return res.json({ success: false, msg: incorrectEmail });
 
@@ -373,7 +373,6 @@ module.exports.editUserProfile = async (req, res, next) => {
   // console.log('=============================================================');
 
   let updatedUser = JSON.parse(req.body.updatedUserProfile);
-  console.log(updatedUser);
 
   // Validating updated user profile info. res is used to send back messages
   // upon failure, signalObj is used to hold the failure state.
@@ -436,9 +435,43 @@ module.exports.editUserProfile = async (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
-module.exports.resetPasswordUser = (req, res, next) => {
-  // Need to validate enteredEmail.
-  console.log(req);
+// Setting up a nodemailer transporter.
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: '11smtptest11@gmail.com',
+    pass: '@smtpTest11'
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+module.exports.resetPasswordUser = async (req, res, next) => {
+  let emailTooLong = "Entered email is too long";
+  let incorrectEmail = "Entered email is incorrect.";
+
+  // Check valid email.
+  if (req.body.enteredEmail.length > 32)
+    return res.json({ success: false, msg: emailTooLong });
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (re.test(req.body.enteredEmail.toLowerCase()) == false)
+    return res.json({ success: false, msg: incorrectEmail });
+
+  // Nodemailer options.
+  let mailOptions = {
+    from: '"Matcha" <11smtptest11@gmail.com>',
+    to: `${req.body.enteredEmail}`,
+    subject: "Reset Password | Matcha",
+    text: "Hello world?"
+  };
+
+  let info = await transporter.sendMail(mailOptions);
+
+  console.log(info);
+  
   res.json({success: true, msg: 'Reset email sent, check your mail!'})
 }
 
