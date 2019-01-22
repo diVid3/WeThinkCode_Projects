@@ -9,6 +9,7 @@ const config = require('../config/database');
 // const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const uuidv4  = require('uuid/v4');
 
 // ------------------------------------------------------------------------ //
 
@@ -193,8 +194,11 @@ module.exports.registerUser = async (req, res, next) => {
     avatar: "../../../assets/default-avatar3-small.png",
     ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
     fameRating: 0,
+    resetToken: '',                                 // Used for pw reset.
+    verifyToken: '',                                // Used for verification.
+    verified: 0,                                    // Need to verify.
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
   }
 
   let exitOnDupUsername = 0;
@@ -449,7 +453,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.resetPasswordUser = async (req, res, next) => {
+module.exports.reset = async (req, res, next) => {
   let emailTooLong = "Entered email is too long";
   let incorrectEmail = "Entered email is incorrect.";
 
@@ -460,19 +464,107 @@ module.exports.resetPasswordUser = async (req, res, next) => {
   if (re.test(req.body.enteredEmail.toLowerCase()) == false)
     return res.json({ success: false, msg: incorrectEmail });
 
+  // Check if email exists, if not, don't let user know as that can be used
+  // to find valid emails.
+  let doc = await userModel.getDocByEmail(req.body.enteredEmail);
+  if (!doc) {
+    // Sync not needed.
+    setTimeout(() => {
+      res.json({success: true, msg: 'Reset email sent, check your mail!'});
+    }, 2000);
+    return;
+  }
+
+  // Need to generate token here for identification of user account.
+  let resetToken = uuidv4();
+  await userModel.updateUserAsync(
+    { 'email' : req.body.enteredEmail },
+    {
+      $set: {
+        'resetToken' : resetToken
+      }
+    }
+  );
+
   // Nodemailer options.
   let mailOptions = {
     from: '"Matcha" <11smtptest11@gmail.com>',
     to: `${req.body.enteredEmail}`,
     subject: "Reset Password | Matcha",
-    text: "Hello world?"
+    text: `Please click on this link to reset your password:
+    http://localhost:4200/reset-password/${resetToken}`
   };
 
+  // Need to generate reset token before sending.
   let info = await transporter.sendMail(mailOptions);
 
   console.log(info);
   
-  res.json({success: true, msg: 'Reset email sent, check your mail!'})
+  res.json({success: true, msg: 'Reset email sent, check your mail!'});
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.resetPassword = async (req, res, next) => {
+  // Need to verify if received token is valid by checking against db.
+  // let resetToken = req.body.resetToken;
+  let doc = await userModel.getDocByResetToken(req.body.resetToken);
+  if (!doc) {
+    res.json({success: false, msg: 'Reset token is invalid.'});
+    return;
+  }
+  res.json({success: true, msg: 'Reset token valid.'});
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.updatePassword = async (req, res, next) => {
+  let fillMsg = "Please fill in all input fields.";
+  let passwordTooLong = "Entered password(s) is too long";
+  let passwordTooShort = "Entered password(s) is too short";
+  let passwordWeak = "Entered password(s) is weak, try mixing cases, digits and special characters.";
+  let passwordsNotMatch = "Your passwords do not match.";
+  let passwordResetMsg = "Password reset!, you may now login.";
+
+  let newPassword = req.body.newPassword;
+  let newConfirmedPassword = req.body.newConfirmedPassword;
+  let resetToken = req.body.resetToken;
+
+  if (newPassword == '' || newConfirmedPassword == '' ||
+  newPassword == null || newConfirmedPassword == null) {
+    res.json({ success: false, msg: fillMsg });
+    return;
+  }
+
+  // Check password strength.
+  let passwordLength = newPassword.length;
+  if (passwordLength > 1024) // For buffer overflow?
+    return res.json({ success: false, msg: passwordTooLong });
+  if (passwordLength < 7)
+    return res.json({ success: false, msg: passwordTooShort });
+  if (
+  /[a-z]+/.test(newPassword) == false ||
+  /[A-Z]+/.test(newPassword) == false ||
+  /[0-9]+/.test(newPassword) == false ||
+  /[^\[\]${*}()\\+|?<>!@`#,%.&*-]+/.test(newPassword) == false)
+    return res.json({ success: false, msg: passwordWeak });
+
+  if (newPassword != newConfirmedPassword)
+    return res.json({ success: false, msg: passwordsNotMatch });
+
+  // Need to encrypt password before persisting it.
+  
+  // Updating/resetting user password.
+  await userModel.updateUserAsync(
+    { 'resetToken' : resetToken },
+    {
+      $set: {
+        'password' : newPassword
+      }
+    }
+  );
+
+  res.json({ success: true, msg: passwordResetMsg });
 }
 
 // ------------------------------------------------------------------------ //

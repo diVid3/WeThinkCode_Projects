@@ -43,7 +43,11 @@ router.post('/register', userController.registerUser);
 
 router.post('/authenticate', userController.authenticateUser);
 
-router.post('/reset', userController.resetPasswordUser);
+router.post('/reset', userController.reset);
+
+router.post('/reset-password', userController.resetPassword);
+
+router.post('/update-password', userController.updatePassword);
 
 // passport.authenticate('jwt', {session: false}) is used to protect a route
 // by requiring a client to provide a valid json web token via the authorization
@@ -83,5 +87,12 @@ router.post('/edit', (req, res) => {
 
 // router.post('/editProfileData', passport.authenticate('jwt', {session: false}),
 // userController.editUserProfileData);
+
+///TODO REMOVE
+// router.get('/add', (req, res) => {
+//   if (req.query.token) {
+//     console.log(req.query.token);
+//   }
+// });
 
 module.exports = router;

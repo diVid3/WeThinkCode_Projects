@@ -32,7 +32,6 @@ module.exports.comparePassword = (candidatePassword, actualHashedPw,
 
 // Functions rewritten to return promises via async.
 
-// Used to see if username already exists.
 module.exports.getDocByUsername = async (username) => {
   try {
     let db = mongocon.getDb();
@@ -44,11 +43,21 @@ module.exports.getDocByUsername = async (username) => {
   }
 }
 
-// Used to see if email already exists.
 module.exports.getDocByEmail = async (email) => {
   try {
     let db = mongocon.getDb();
     let doc = await db.collection('users').findOne({email});
+    return doc;
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
+module.exports.getDocByResetToken = async (resetToken) => {
+  try {
+    let db = mongocon.getDb();
+    let doc = await db.collection('users').findOne({resetToken});
     return doc;
   }
   catch (err) {
