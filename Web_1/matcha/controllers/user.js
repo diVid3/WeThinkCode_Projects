@@ -10,6 +10,7 @@ const config = require('../config/database');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const uuidv4  = require('uuid/v4');
+const bcrypt = require('bcryptjs');
 
 // ------------------------------------------------------------------------ //
 
@@ -164,16 +165,40 @@ function registerUserInfoValid(req, res, signalObj) {
   signalObj.passedInputValidation = true;
 }
 
+async function sendVerifyToken(emailAddress, verifyToken) {
+  await userModel.updateUserAsync(
+    { 'email' : emailAddress },
+    {
+      $set: {
+        'verifyToken' : verifyToken
+      }
+    }
+  );
+
+  // Nodemailer options.
+  let mailOptions = {
+    from: '"Matcha" <11smtptest11@gmail.com>',
+    to: `${emailAddress}`,
+    subject: "Verify Account | Matcha",
+    text: `Please click on this link to verify your account:
+    http://localhost:4200/verify/${verifyToken}`
+  };
+  await transporter.sendMail(mailOptions);
+}
+
 module.exports.registerUser = async (req, res, next) => {
   let userExists = 'Username already exists. Please try another one.';
   let emailExists = 'Email already exists. Please try another one.';
-  let userRegistered = 'You\'re registered! You may now login.';
+  let userRegistered = "You\'re registered! To verify your registration, follow the instructions in the email we've sent you.";
 
   // Input validation.
   let signalObj = { passedInputValidation: false }; // Passed by reference.
   registerUserInfoValid(req, res, signalObj);
   if (signalObj.passedInputValidation == false)
     return;
+
+  // Generating token for verifying account.
+  let verifyToken = uuidv4();
   
   // Generating user profile.
   let newUser = {
@@ -195,7 +220,7 @@ module.exports.registerUser = async (req, res, next) => {
     ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
     fameRating: 0,
     resetToken: '',                                 // Used for pw reset.
-    verifyToken: '',                                // Used for verification.
+    verifyToken: verifyToken,                       // Used for verification.
     verified: 0,                                    // Need to verify.
     email: req.body.email,
     password: req.body.password,
@@ -231,10 +256,12 @@ module.exports.registerUser = async (req, res, next) => {
     if (geoIndexCreated == false) {
       await userModel.createGeoIndex("ipinfoLoc");
       await userModel.addIndexCreatedState('geoIndexCreated');
-      console.log('GeoIndex created!');
     }
-    res.json({ success: true, msg: userRegistered })
+    res.json({ success: true, msg: userRegistered });
   });
+
+  // Sync not needed.
+  sendVerifyToken(newUser.email, verifyToken);
 }
 
 // ------------------------------------------------------------------------ //
@@ -247,8 +274,15 @@ module.exports.authenticateUser = async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
+  // Check if user exists.
   let user = await userModel.getDocByUsername(escapeSpecChars(username));
   if (!user) return res.json({success: false, msg: 'User not found.'});
+
+  // Check if user is verified.
+  let userVerified = await userModel.isUserVerified(username);
+  if (!userVerified) return res.json({ success: false, msg: 'User account not verified.' });
+
+  // Check if correct password.
   let passwordMatch = await userModel.comparePasswordAsync(password,
     user.password);
   if (passwordMatch) {
@@ -367,15 +401,6 @@ function updatedUserInfoValid(updatedUser, res, signalObj) {
 }
 
 module.exports.editUserProfile = async (req, res, next) => {
-
-  // console.log('===== req.files =====');
-  // console.log(req.files);
-  // console.log('=====================');
-
-  // console.log('=============================================================');
-  // console.log(updatedUser);
-  // console.log('=============================================================');
-
   let updatedUser = JSON.parse(req.body.updatedUserProfile);
 
   // Validating updated user profile info. res is used to send back messages
@@ -431,9 +456,6 @@ module.exports.editUserProfile = async (req, res, next) => {
     }
   );
 
-  // console.log('************************************************************');
-  // console.log(updatedUser);
-  // console.log('************************************************************');
   res.json({success: true, msg: 'Profile updated!'});
 }
 
@@ -475,7 +497,6 @@ module.exports.reset = async (req, res, next) => {
     return;
   }
 
-  // Need to generate token here for identification of user account.
   let resetToken = uuidv4();
   await userModel.updateUserAsync(
     { 'email' : req.body.enteredEmail },
@@ -495,11 +516,7 @@ module.exports.reset = async (req, res, next) => {
     http://localhost:4200/reset-password/${resetToken}`
   };
 
-  // Need to generate reset token before sending.
-  let info = await transporter.sendMail(mailOptions);
-
-  console.log(info);
-  
+  await transporter.sendMail(mailOptions);
   res.json({success: true, msg: 'Reset email sent, check your mail!'});
 }
 
@@ -524,7 +541,7 @@ module.exports.updatePassword = async (req, res, next) => {
   let passwordTooShort = "Entered password(s) is too short";
   let passwordWeak = "Entered password(s) is weak, try mixing cases, digits and special characters.";
   let passwordsNotMatch = "Your passwords do not match.";
-  let passwordResetMsg = "Password reset!, you may now login.";
+  let passwordResetMsg = "Password reset! You may now login.";
 
   let newPassword = req.body.newPassword;
   let newConfirmedPassword = req.body.newConfirmedPassword;
@@ -553,18 +570,47 @@ module.exports.updatePassword = async (req, res, next) => {
     return res.json({ success: false, msg: passwordsNotMatch });
 
   // Need to encrypt password before persisting it.
+  let salt = bcrypt.genSaltSync(10);
+  let hash = bcrypt.hashSync(newPassword, salt);
   
   // Updating/resetting user password.
   await userModel.updateUserAsync(
     { 'resetToken' : resetToken },
     {
       $set: {
-        'password' : newPassword
+        'password' : hash,
+        'resetToken' : ''
       }
     }
   );
 
   res.json({ success: true, msg: passwordResetMsg });
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.verifyAccount = async (req, res, next) => {
+  let verifyToken = req.body.verifyToken;
+
+  // Need to get doc by verifyToken, check if exists.
+  let doc = await userModel.getDocByVerifyToken(verifyToken);
+  if (!doc) {
+    res.json({success: false, msg: 'Verify token is invalid.'});
+    return;
+  }
+
+  // Updating verified status.
+  await userModel.updateUserAsync(
+    { 'verifyToken' : verifyToken },
+    {
+      $set: {
+        'verified' : 1,
+        'verifyToken' : ''
+      }
+    }
+  );
+
+  res.json({success: true, msg: 'Account verified! You may now login.'});
 }
 
 // ------------------------------------------------------------------------ //

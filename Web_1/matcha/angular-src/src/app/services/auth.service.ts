@@ -51,6 +51,7 @@ export class AuthService {
     return this.http.post('http://localhost:3000/user/update-password', passwordObj, httpOptions);
   }
 
+  // Used to check against db if supplied token is valid. Reset token.
   checkResetTokenUser(tokenObj) {
 
     let httpOptions = {
@@ -60,6 +61,18 @@ export class AuthService {
     };
 
     return this.http.post('http://localhost:3000/user/reset-password', tokenObj, httpOptions);
+  }
+
+  // Used to check against db if supplied token is valid. Verify token.
+  checkVerifyToken(tokenObj) {
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post('http://localhost:3000/user/verify', tokenObj, httpOptions);
   }
 
   // Token needs to be send along here, because protected route on backend, hence loadToken().

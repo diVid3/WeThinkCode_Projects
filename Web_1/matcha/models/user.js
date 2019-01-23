@@ -65,6 +65,30 @@ module.exports.getDocByResetToken = async (resetToken) => {
   }
 }
 
+module.exports.getDocByVerifyToken = async (verifyToken) => {
+  try {
+    let db = mongocon.getDb();
+    let doc = await db.collection('users').findOne({verifyToken});
+    return doc;
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
+module.exports.isUserVerified = async (username) => {
+  try {
+    let db = mongocon.getDb();
+    let doc = await db.collection('users').findOne({username});
+    if (doc.verified == 1)
+      return true;
+    return false;
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
 // Adds a user to the database.
 module.exports.addUserAsync = async (newUser) => {
   try {

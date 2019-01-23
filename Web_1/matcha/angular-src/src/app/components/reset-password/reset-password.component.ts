@@ -27,12 +27,10 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.token = this.activatedRoute.snapshot.paramMap.get('token');
-    console.log(this.token);
 
     // Need to check if the reset token is valid here.
     this.authService.checkResetTokenUser({resetToken: this.token})
     .subscribe((data) => {
-      console.log((<any>data).msg);
       if ((<any>data).success == false) {
         this.flashMessagesService.show((<any>data).msg,
         {cssClass: 'alert-danger', timeout: 6000});
@@ -65,6 +63,7 @@ export class ResetPasswordComponent implements OnInit {
         else if ((<any>data).success == true) {
           this.flashMessagesService.show((<any>data).msg,
           {cssClass: 'alert-success', timeout: 3000});
+          this.router.navigate(['/login']);
         }
         else {
           this.flashMessagesService.show('Oops! Something went wrong.',
