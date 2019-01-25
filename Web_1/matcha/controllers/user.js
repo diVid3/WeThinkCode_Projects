@@ -614,3 +614,37 @@ module.exports.verifyAccount = async (req, res, next) => {
 }
 
 // ------------------------------------------------------------------------ //
+
+/* Need to build query here.
+
+db.users.find(
+  {
+    ipinfoLoc: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [28.0361622, -26.205649599999997]
+        },
+        $minDistance: 1,
+        $maxDistance: 5000
+      }
+    }
+  }
+);
+
+db.users.find(
+  {
+    firstName: "Evert";
+  }
+);
+
+db.users.find(
+  {
+    $and: [
+      {},
+      {}
+    ]
+  }
+);
+
+*/
