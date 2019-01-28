@@ -75,6 +75,18 @@ export class AuthService {
     return this.http.post('http://localhost:3000/user/verify', tokenObj, httpOptions);
   }
 
+  searchUsers(searchObj) {
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+        // Might need to protect backend route with passport, send token.
+      })
+    };
+
+    return this.http.post('http://localhost:3000/user/search', searchObj, httpOptions);
+  }
+
   // Token needs to be send along here, because protected route on backend, hence loadToken().
   // This can only be called once a token is available to be retrieved, i.e. after login.
   // This is ridiculous... Setting or appending headers will not result in authentication at

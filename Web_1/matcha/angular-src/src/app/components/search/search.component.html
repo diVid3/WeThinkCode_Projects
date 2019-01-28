@@ -1,0 +1,96 @@
+<form class="container-fluid" style="max-width: 850px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9" (submit)="onSearchSubmit()">
+  <div class="row" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+    <div class="col-md-12 justify-content-center">
+      <h2>Search</h2>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-3 form-inline justify-content-start">
+      <div style="margin: 10px 0px;">Location (km):</div>
+    </div>
+    <div class="col-md-9 form-inline justify-content-start">
+      <input type="number" class="form-control" [(ngModel)]="locationLow" name="locationLow">
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;">to</div>
+      <input type="number" class="form-control" [(ngModel)]="locationHigh" name="locationHigh">
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-3 form-inline justify-content-start">
+      <div style="margin: 10px 0px;">Fame Rating:</div>
+    </div>
+    <div class="col-md-9 form-inline justify-content-start">
+      <input type="number" class="form-control" [(ngModel)]="fameLow" name="fameLow">
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;">to</div>
+      <input type="number" class="form-control" [(ngModel)]="fameHigh" name="fameHigh">
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+    <div class="col-md-3 form-inline justify-content-start">
+      <div style="margin: 10px 0px;">Age:</div>
+    </div>
+    <div class="col-md-9 form-inline justify-content-start">
+      <input type="number" class="form-control" [(ngModel)]="ageLow" name="ageLow">
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;">to</div>
+      <input type="number" class="form-control" [(ngModel)]="ageHigh" name="ageHigh">
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+    <div class="col-md-3 form-inline justify-content-start">
+      <div style="margin: 10px 0px;">Interests:</div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" [(ngModel)]="matchaChecked" name="matchaChecked">
+        <label class="form-check-label" for="inlineCheckbox1">Matcha</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" [(ngModel)]="sportsChecked" name="sportsChecked">
+        <label class="form-check-label" for="inlineCheckbox2">Sports</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" [(ngModel)]="artChecked" name="artChecked">
+        <label class="form-check-label" for="inlineCheckbox3">Art</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4" [(ngModel)]="gamingChecked" name="gamingChecked">
+        <label class="form-check-label" for="inlineCheckbox4">Gaming</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5" [(ngModel)]="travelingChecked" name="travelingChecked">
+        <label class="form-check-label" for="inlineCheckbox5">Traveling</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6" [(ngModel)]="musicChecked" name="musicChecked">
+        <label class="form-check-label" for="inlineCheckbox6">Music</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7" [(ngModel)]="cookingChecked" name="cookingChecked">
+        <label class="form-check-label" for="inlineCheckbox7">Cooking</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8" [(ngModel)]="readingChecked" name="readingChecked">
+        <label class="form-check-label" for="inlineCheckbox8">Reading</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="option9" [(ngModel)]="computersChecked" name="computersChecked">
+        <label class="form-check-label" for="inlineCheckbox9">Computers</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="option10" [(ngModel)]="moviesChecked" name="moviesChecked">
+        <label class="form-check-label" for="inlineCheckbox10">Movies</label>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 10px;">
+    <input type="submit" class="btn btn-dark" value="Search">
+    <button type="button" class="btn btn-dark mx-sm-3" value="Autofill" (click)="autofill()">Autofill</button>
+    <button type="button" class="btn btn-dark float-right" value="Reset" (click)="resetForm()">Reset</button>
+  </div>
+</form>
+
+<!-- can add another container here for search results -->
+<!-- Need to use *ngFor within an *ngFor here -->

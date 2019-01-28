@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 // getUserById() and getUserByUsername() can't be rewritten asynchronously as
 // they are used elsewhere. Same with comparePassword().
 
-// getUserById is mainly used by passport.js.
+// getUserById is mainly used by passport.js. This does not create a new _id.
 // Don't rewrite.
 module.exports.getUserById = (id, callback) => {
   let db = mongocon.getDb();
@@ -163,6 +163,97 @@ module.exports.createGeoIndex = async (locName) => {
   try {
     let db = mongocon.getDb();
     await db.collection('users').createIndex({[locName]: "2dsphere"});
+  }
+  catch (err) {
+    throw new Error(err);
+  }
+}
+
+// This returns an array of documents. It would be best to use lastSeenId
+// with a limit to implement pagination, but lastSeenId makes use of the
+// Natural order of ObjectId, which can be out of order within a time frame
+// of a second, which could mean that if searching for documents by _id >
+// lastSeenId, one would risk missing documents that fit the bill. Hence, I'll
+// be relying skip + limit for pagination, in theory, performance should be ok
+// as search queries make use of geospatial indexing, which would limit scan
+// size, this is assuming the client won't request a ridiculous location range.
+// Which in the real world, would happen rarely, however, this could be an
+// avenue of attack in order to slow down other legitimate queries. One always
+// limit the location search range, however, this is not an ideal solution.
+// 
+// Apparently, using lastSeenId is fine even though the "natural ascending
+// order" might be broken by sub second entries because the id will still be
+// unique, it will just end up at another point as the user pages through the
+// data.
+module.exports.searchUsers = async (searchObj) => {
+  try {
+    let db = mongocon.getDb();
+
+    // Retrieves all docs since lastSeenId, used for pagination/infinite scroll.
+    if (searchObj.lastSeenId) {
+      var cursor = await db.collection('users').find(
+        {
+          $and: [
+            {
+              ipinfoLoc: {
+                $near: {
+                  $geometry: {
+                    type: "Point",
+                    coordinates: [searchObj.userLong, searchObj.userLat]
+                  },
+                  $minDistance: searchObj.locationLow,
+                  $maxDistance: searchObj.locationHigh
+                }
+              }
+            },
+            {
+              // This should work, here's hoping it does!
+              _id: { $gt: new ObjectID(lastSeenId) }
+            },
+            {
+              $and: [{ fameRating: { $gte: searchObj.fameLow } }, { fameRating: { $lte: searchObj.fameHigh } }]
+            },
+            {
+              $and: [{ age: { $gte: searchObj.ageLow } }, { age: { $lte: searchObj.ageHigh } }]
+            },
+            {
+              interests: { $in: searchObj.interestArr }
+            }
+          ]
+        }
+      ).limit(searchObj.limit);
+    }
+    else {
+      var cursor = await db.collection('users').find(
+        {
+          $and: [
+            {
+              ipinfoLoc: {
+                $near: {
+                  $geometry: {
+                    type: "Point",
+                    coordinates: [searchObj.userLong, searchObj.userLat]
+                  },
+                  $minDistance: searchObj.locationLow,
+                  $maxDistance: searchObj.locationHigh
+                }
+              }
+            },
+            {
+              $and: [{ fameRating: { $gte: searchObj.fameLow } }, { fameRating: { $lte: searchObj.fameHigh } }]
+            },
+            {
+              $and: [{ age: { $gte: searchObj.ageLow } }, { age: { $lte: searchObj.ageHigh } }]
+            },
+            {
+              interests: { $in: searchObj.interestArr }
+            }
+          ]
+        }
+      ).limit(searchObj.limit);
+    }
+
+    return (await cursor.toArray());
   }
   catch (err) {
     throw new Error(err);

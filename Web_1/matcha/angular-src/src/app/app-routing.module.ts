@@ -9,6 +9,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyComponent } from './components/verify/verify.component';
+import { SearchComponent } from './components/search/search.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'edit', component: EditProfileComponent, canActivate: [AuthGuard]},
+  {path: 'search', component: SearchComponent, canActivate: [AuthGuard]},
   {path: 'forgot', component: ForgotPasswordComponent},
   {path: 'reset-password', component: LoginComponent},
   {path: 'reset-password/:token', component: ResetPasswordComponent},

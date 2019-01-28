@@ -29,6 +29,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyComponent } from './components/verify/verify.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { VerifyComponent } from './components/verify/verify.component';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     VerifyComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

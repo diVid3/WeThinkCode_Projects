@@ -141,7 +141,7 @@ function registerUserInfoValid(req, res, signalObj) {
     return res.json({ success: false, msg: incorrectLocSplit });
 
   // Check valid email.
-  if (req.body.email.length > 32)
+  if (req.body.email.length > 64)
     return res.json({ success: false, msg: emailTooLong });
   let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   // console.log(re.test(req.body.email.toLowerCase()));
@@ -300,7 +300,7 @@ module.exports.authenticateUser = async (req, res, next) => {
       interests: user.interests,
       pictures: user.pictures,
       avatar: user.avatar,
-      ipinofLoc: user.ipinfoLoc,
+      ipinfoLoc: user.ipinfoLoc,
       fameRating: user.fameRating
     }
     let resObj = {
@@ -373,7 +373,7 @@ function updatedUserInfoValid(updatedUser, res, signalObj) {
     return res.json({ success: false, msg: lastNameTooShort });
 
   // Check valid email.
-  if (updatedUser.email.length > 32)
+  if (updatedUser.email.length > 64)
     return res.json({ success: false, msg: emailTooLong });
   let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (re.test(updatedUser.email.toLowerCase()) == false)
@@ -468,7 +468,7 @@ let transporter = nodemailer.createTransport({
   secure: false,
   auth: {
     user: '11smtptest11@gmail.com',
-    pass: '@smtpTest11'
+    pass: '@smtpTest123'
   },
   tls: {
     rejectUnauthorized: false
@@ -480,7 +480,7 @@ module.exports.reset = async (req, res, next) => {
   let incorrectEmail = "Entered email is incorrect.";
 
   // Check valid email.
-  if (req.body.enteredEmail.length > 32)
+  if (req.body.enteredEmail.length > 64)
     return res.json({ success: false, msg: emailTooLong });
   let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (re.test(req.body.enteredEmail.toLowerCase()) == false)
@@ -615,6 +615,21 @@ module.exports.verifyAccount = async (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
+module.exports.searchUsers = async (req, res, next) => {
+  let searchObj = req.body;
+  let docArr = await userModel.searchUsers(searchObj);
+  // console.log(docArr);
+  // let docArrString = JSON.stringify(docArr);
+  // console.log(docArrString);
+
+  // Need to validate the search request before calling db.
+  // If values undefined or null, use defaults.
+
+  res.send({success: true, docs: docArr});
+}
+
+// ------------------------------------------------------------------------ //
+
 /* Need to build query here.
 
 db.users.find(
@@ -646,5 +661,92 @@ db.users.find(
     ]
   }
 );
+
+---------------- Test Query ----------------
+Works!
+
+db.users.find(
+  {
+    $and: [
+      {
+        ipinfoLoc: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [28.0361622, -26.205649599999997]
+            },
+            $minDistance: 1,
+            $maxDistance: 5000
+          }
+        }
+      },
+      {
+        firstName: "Evert"
+      }
+    ]
+  }
+)
+
+---------------- Test Query 2 ----------------
+Returns emtpy?
+
+db.users.find(
+  {
+    $and: [
+      {
+        ipinfoLoc: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [28.0361622, -26.205649599999997]
+            },
+            $minDistance: 1,
+            $maxDistance: 5000
+          }
+        }
+      },
+      {
+        $and: [{ fameRating: { $gte: 0 } }, { fameRating: { $lte: 999999 } }]
+      },
+      {
+        $and: [{ age: { $gte: 18 } }, { age: { $lte: 999999 } }]
+      },
+      {
+        interests: { $in: [ "Computers", "Cooking", "Movies" ] }
+      }
+    ]
+  }
+)
+
+---------------- Test Query 3 ----------------
+This works, distance was just too short.
+
+db.users.find(
+  {
+    $and: [
+      {
+        ipinfoLoc: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [28.0361622, -26.205649599999997]
+            },
+            $minDistance: 1,
+            $maxDistance: 100000
+          }
+        }
+      },
+      {
+        $and: [{ fameRating: { $gte: 0 } }, { fameRating: { $lte: 999999 } }]
+      },
+      {
+        $and: [{ age: { $gte: 18 } }, { age: { $lte: 999999 } }]
+      },
+      {
+        interests: { $in: [ "Computers", "Cooking", "Movies", "Matcha", "Outdoors", "Gaming", "Art", "Traveling", "Reading", "Sports" ] }
+      }
+    ]
+  }
+)
 
 */
