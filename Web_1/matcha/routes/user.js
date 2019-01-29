@@ -53,7 +53,16 @@ router.post('/verify', userController.verifyAccount);
 
 router.post('/search', userController.searchUsers);
 
+// Only reachable by postman.
 router.get('/gen-dummies', userController.generateAccounts);
+
+// Need to protect route, but weird bug occurs due to either passport or 
+// sent headers from the front end...
+// 
+// router.get('/requested-profile', passport.authenticate('jwt', {session: false}),
+// userController.returnRequestedProfile)
+
+router.get('/requested-profile',userController.returnRequestedProfile)
 
 // passport.authenticate('jwt', {session: false}) is used to protect a route
 // by requiring a client to provide a valid json web token via the authorization

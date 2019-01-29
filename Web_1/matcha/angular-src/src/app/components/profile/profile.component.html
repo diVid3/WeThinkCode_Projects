@@ -75,7 +75,7 @@
           <!-- Map here -->
           <div class="col-md-12 container" fxLayout="column">
             <div class="map" fxFlex="1 1 100%" #map>
-              <agm-map [style.height.px]="map.offsetHeight" [latitude]="lat" [longitude]="long">
+              <agm-map [zoom]="11" [style.height.px]="map.offsetHeight" [latitude]="lat" [longitude]="long">
                 <agm-marker [latitude]="lat" [longitude]="long"></agm-marker>
               </agm-map>
             </div>

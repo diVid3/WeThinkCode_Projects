@@ -1,9 +1,19 @@
-<form class="container-fluid" style="max-width: 850px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9" (submit)="onSearchSubmit()">
+<form *ngIf="!searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9" (submit)="onSearchSubmit()">
   <div class="row" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #CFD4D9">
     <div class="col-md-12 justify-content-center">
       <h2>Search</h2>
     </div>
   </div>
+  <!-- <div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-3 form-inline justify-content-start">
+      <div style="margin: 10px 0px;"></div>
+    </div>
+    <div class="col-md-9 form-inline justify-content-start">
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;">Low</div>
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;"></div>
+      <div class="mx-auto" style="margin-top: 10px; margin-bottom: 10px;">High</div>
+    </div>
+  </div> -->
   <div class="row" style="margin-bottom: 20px;">
     <div class="col-md-3 form-inline justify-content-start">
       <div style="margin: 10px 0px;">Location (km):</div>
@@ -92,11 +102,16 @@
   </div>
 </form>
 
+<!-- Search Again Button -->
+<div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+    <button type="button" class="btn btn-dark" style="margin-left: 10px;" value="Search Again" (click)="searchAgain()">Re-enter Search</button>
+</div>
+
 <!-- Need to use *ngFor within an *ngFor here -->
 <!-- Should this be in its own component? -->
 <div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
   <div *ngFor="let user of docArr" class="mb-3">
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <a [routerLink]="['/view-profile/', user.username]" class="list-group-item list-group-item-action flex-column align-items-start">
       <button class="btn btn-dark float-right">Like</button>
       <div class="text-center" style="display: inline-block; max-width: 200px; margin-right: 20px;">
         <h5 class="mb-1">{{ user.username }}</h5>

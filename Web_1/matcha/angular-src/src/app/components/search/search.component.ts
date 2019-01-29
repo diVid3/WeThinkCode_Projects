@@ -102,19 +102,25 @@ export class SearchComponent implements OnInit {
       lastSeenId: null
     }
 
-    this.authService.searchUsers(searchObj).subscribe((data) => {
-      console.log(data);
-      this.docArr = (<any>data).docs;
-      console.log(this.docArr);
+    if (searchObj.locationHigh)
+      searchObj.locationHigh = searchObj.locationHigh * 1000;
+    if (searchObj.locationLow)
+      searchObj.locationLow = searchObj.locationLow * 1000;
 
-      this.searchClicked = true;
+    this.authService.searchUsers(searchObj).subscribe((data) => {
+      if ((<any>data).success == true) {
+        this.docArr = (<any>data).docs;
+        this.searchClicked = true;
+      }
+      else
+        this.flashMessageService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 5000});
     });
   }
 
   // Button for testing purposes.
   autofill() {
-    this.locationHigh = 100000;
-    this.locationLow = 1;
+    this.locationHigh = 100;
+    this.locationLow = 0.001;
     this.fameHigh = 999999;
     this.fameLow = 0;
     this.ageHigh = 100;
@@ -152,6 +158,11 @@ export class SearchComponent implements OnInit {
     this.readingChecked = false;
     this.computersChecked = false;
     this.moviesChecked = false;
+  }
+
+  searchAgain() {
+    this.resetForm();
+    this.searchClicked = false;
   }
 
 }

@@ -109,6 +109,27 @@ export class AuthService {
     return this.http.get('http://localhost:3000/user/profile', httpOptions);
   }
 
+  getRequestedProfile(requestedProfileString) {
+
+    // let httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'Authorization': this.authToken
+    //   })
+    // };
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+
+    let url = 'http://localhost:3000/user/requested-profile?username=' +
+      requestedProfileString;
+
+    return this.http.get(url, httpOptions);
+  }
+
   // Used to retrieve the token from localStorage. Called from getProfile() above.
   loadToken() {
     const token = localStorage.getItem('user_jwt');

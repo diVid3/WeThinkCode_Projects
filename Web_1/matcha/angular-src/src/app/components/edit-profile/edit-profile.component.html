@@ -86,7 +86,7 @@
       <!--  -->
       <label for="pickMap" *ngIf="specifyLocation">Pick Your Location</label>
       <div id="pickMap" class="form-group map" fxFlex="1 1 100%" #map *ngIf="specifyLocation">
-        <agm-map [style.height.px]="map.offsetHeight" [latitude]="oldLat" [longitude]="oldLong" (mapClick)="onMapClick($event)">
+        <agm-map [zoom]="11" [style.height.px]="map.offsetHeight" [latitude]="oldLat" [longitude]="oldLong" (mapClick)="onMapClick($event)">
           <agm-marker [latitude]="oldLat" [longitude]="oldLong"></agm-marker>
           <agm-marker [latitude]="newLat" [longitude]="newLong" iconUrl="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></agm-marker>
         </agm-map>

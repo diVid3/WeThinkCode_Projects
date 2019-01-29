@@ -30,6 +30,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { SearchComponent } from './components/search/search.component';
+import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SearchComponent } from './components/search/search.component';
     ResetPasswordComponent,
     VerifyComponent,
     SearchComponent,
+    ViewProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { SearchComponent } from './components/search/search.component';
+import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -24,7 +25,9 @@ const routes: Routes = [
   {path: 'reset-password', component: LoginComponent},
   {path: 'reset-password/:token', component: ResetPasswordComponent},
   {path: 'verify', component: LoginComponent},
-  {path: 'verify/:token', component: VerifyComponent}
+  {path: 'verify/:token', component: VerifyComponent},
+  {path: 'view-profile', component: SearchComponent, canActivate: [AuthGuard]},
+  {path: 'view-profile/:username', component: ViewProfileComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -661,7 +661,7 @@ module.exports.verifyAccount = async (req, res, next) => {
 // Controller to generate dummy accounts. Verified needs to be set to 1.
 module.exports.generateAccounts = async (req, res, next) => {
   if (req.query == undefined || req.query == null ||
-    req.query.amount == undefined || req.query == null)
+    req.query.amount == undefined || req.query.amount == null)
     return res.send("Could not create dummy profiles, missing get parameters.");
 
   let genDummyAmount = parseFloat(req.query.amount);
@@ -877,16 +877,154 @@ module.exports.generateAccounts = async (req, res, next) => {
 // ------------------------------------------------------------------------ //
 
 module.exports.searchUsers = async (req, res, next) => {
+  let missingValues = "You're missing required values.";
+  let notANumber = "An entered value is not a number.";
+  let lastSeendIdBroken = "The lastSeedId is broken.";
+  let interestArrayBroken = "The tag/interest array is not an array.";
+  let interestArrayEmpty = "The tag/interest array is empty.";
+  let interestArrayTooFull = "The tag/interest array has more than 10 values.";
+  let interestArrayValuesBroken = "The tag/interest array values are incorrect";
+  let negativeNumbers = "Can't enter negative values.";
+  let ageLower18 = "The entered age can't be lower than 18.";
+  let locHighCantBeLower = "The higher location value can't be lower than the lower location value.";
+  let fameHighCantBeLower = "The higher fame value can't be lower than the lower fame value.";
+  let ageHighCantBeLower = "The hihger age value can't be lower than the lower age value.";
+
   let searchObj = req.body;
-  let docArr = await userModel.searchUsers(searchObj);
-  // console.log(docArr);
-  // let docArrString = JSON.stringify(docArr);
-  // console.log(docArrString);
 
   // Need to validate the search request before calling db.
   // If values undefined or null, use defaults.
+  console.log(searchObj);
+
+  // Default Search Options.
+  // 
+  // { userLong: 28.040176,
+  //   userLat: -26.205275,
+  //   locationHigh: 100000,
+  //   locationLow: 1,
+  //   fameHigh: 999999,
+  //   fameLow: 0,
+  //   ageHigh: 100,
+  //   ageLow: 18,
+  //   interestArr:
+    //  [ 'Matcha',
+    //    'Sports',
+    //    'Art',
+    //    'Gaming',
+    //    'Traveling',
+    //    'Music',
+    //    'Cooking',
+    //    'Movies',
+    //    'Computers',
+    //    'Reading' ],
+  //   limit: 5,
+  //   lastSeenId: null }
+
+  if (
+  searchObj.fameHigh == null || searchObj.fameHigh == undefined ||
+  searchObj.fameLow == null || searchObj.fameLow == undefined ||
+  searchObj.ageHigh == null || searchObj.ageHigh == undefined ||
+  searchObj.ageLow == null || searchObj.ageLow == undefined ||
+  searchObj.locationHigh == null || searchObj.locationHigh == undefined ||
+  searchObj.locationLow == null || searchObj.locationLow == undefined)
+    return res.json({success: false, msg: missingValues});
+
+  // Setting default search values.
+  if (searchObj.interestArr == null || searchObj.interestArr == undefined)
+    searchObj.interestArr = [ 'Matcha', 'Sports', 'Art', 'Gaming', 'Traveling',
+      'Music', 'Cooking', 'Movies', 'Computers', 'Reading' ];
+  if (searchObj.userLong == null || searchObj.userLong == undefined)
+    searchObj.userLong = 28.040176;
+  if (searchObj.userLat == null || searchObj.userLat == undefined)
+    searchObj.userLat = -26.205275;
+  if (searchObj.limit == null || searchObj.limit == undefined)
+    searchObj.limit = 5;
+  if (searchObj.lastSeenId == undefined)
+    searchObj.lastSeenId = null;
+  if (searchObj.locationHigh == null || searchObj.locationHigh == undefined)
+    searchObj.locationHigh = 100000;
+  if (searchObj.locationLow == null || searchObj.locationLow == undefined)
+    searchObj.locationLow = 1;
+  if (searchObj.fameHigh == null || searchObj.fameHigh == undefined)
+    searchObj.fameHigh = 999999;
+  if (searchObj.fameLow == null || searchObj.fameLow == undefined)
+    searchObj.fameLow = 0;
+  if (searchObj.ageHigh == null || searchObj.ageHigh == undefined)
+    searchObj.ageHigh = 100;
+  if (searchObj.ageLow == null || searchObj.ageLow == undefined)
+    searchObj.ageLow = 18;
+
+  if (
+  typeof searchObj.userLong != "number" ||
+  typeof searchObj.userLat != "number" ||
+  typeof searchObj.locationHigh != "number" ||
+  typeof searchObj.locationLow != "number" ||
+  typeof searchObj.fameHigh != "number" ||
+  typeof searchObj.fameLow != "number" ||
+  typeof searchObj.ageHigh != "number" ||
+  typeof searchObj.ageLow != "number" ||
+  typeof searchObj.limit != "number")
+    return res.json({success: false, msg: notANumber});
+
+  // If searchObj.lastSeenId is truthy, then it can't be null.
+  if (searchObj.lastSeenId && typeof searchObj.lastSeenId != "string")
+    return res.json({success: false, msg: lastSeendIdBroken});
+
+  if (Array.isArray(searchObj.interestArr) == false)
+    return res.json({success: false, msg: interestArrayBroken});
+
+  let arrCount = searchObj.interestArr.length;
+  if (arrCount == 0)
+    return res.json({success: false, msg: interestArrayEmpty});
+  if (arrCount > 10)
+    return res.json({success: false, msg: interestArrayTooFull});
+  
+  // Checking array contents. Could even check for tag matches, but meh.
+  for (let i = 0; i < arrCount; i++) {
+    if (typeof searchObj.interestArr[i] != "string") {
+      return res.json({success: false, msg: interestArrayValuesBroken});
+    }
+  }
+
+  // Check for negative numbers.
+  if (
+  searchObj.locationHigh < 0 || searchObj.locationLow < 0 ||
+  searchObj.fameHigh < 0 || searchObj.fameLow < 0 ||
+  searchObj.ageHigh < 0 || searchObj.ageLow < 0)
+    return res.json({success: false, msg: negativeNumbers});
+
+  if (searchObj.ageHigh < 18 || searchObj.ageLow < 18)
+    return res.json({success: false, msg: ageLower18});
+
+  // Checking for weird value inversion.
+  if (searchObj.locationHigh < searchObj.locationLow)
+    return res.json({success: false, msg: locHighCantBeLower});
+  if (searchObj.fameHigh < searchObj.fameLow)
+    return res.json({success: false, msg: fameHighCantBeLower});
+  if (searchObj.ageHigh < searchObj.ageLow)
+    return res.json({success: false, msg: ageHighCantBeLower});
+
+  let docArr = await userModel.searchUsers(searchObj);
 
   res.json({success: true, docs: docArr});
+}
+
+// ------------------------------------------------------------------------ //
+
+module.exports.returnRequestedProfile = async (req, res, next) => {
+  if (req.query == undefined || req.query == null ||
+    req.query.username == undefined || req.query.username == null)
+    return res.json({
+      success: false, msg: "Could not send requested profile data," +
+        " missing get parameters."
+    });
+
+  let requestedProfileUsername = req.query.username;
+  let user = await userModel.getDocByUsername(requestedProfileUsername);
+  if (user)
+    res.json({success: true, user});
+  else
+    res.json({success: false, msg: "User not found."})
 }
 
 // ------------------------------------------------------------------------ //
