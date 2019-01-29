@@ -92,5 +92,20 @@
   </div>
 </form>
 
-<!-- can add another container here for search results -->
 <!-- Need to use *ngFor within an *ngFor here -->
+<!-- Should this be in its own component? -->
+<div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+  <div *ngFor="let user of docArr" class="mb-3">
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+      <button class="btn btn-dark float-right">Like</button>
+      <div class="text-center" style="display: inline-block; max-width: 200px; margin-right: 20px;">
+        <h5 class="mb-1">{{ user.username }}</h5>
+        <img class="avatar rounded-circle img-thumbnail" [src]="user.avatar" style="margin-top: 10px; margin-bottom: 10px;">
+      </div>
+      <div style="display: inline-block">
+        <p class="mb-1">{{ user.biography }}</p>
+        <small class="text-muted">{{ user.firstName }}</small>
+      </div>
+    </a>
+  </div>
+</div>
