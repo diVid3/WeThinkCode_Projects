@@ -51,7 +51,9 @@ router.post('/update-password', userController.updatePassword);
 
 router.post('/verify', userController.verifyAccount);
 
-router.post('/search', userController.searchUsers)
+router.post('/search', userController.searchUsers);
+
+router.get('/gen-dummies', userController.generateAccounts);
 
 // passport.authenticate('jwt', {session: false}) is used to protect a route
 // by requiring a client to provide a valid json web token via the authorization

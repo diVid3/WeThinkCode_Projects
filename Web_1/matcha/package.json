@@ -12,6 +12,7 @@
     "body-parser": "*",
     "cors": "*",
     "express": "*",
+    "faker": "^4.1.0",
     "jsonwebtoken": "*",
     "mongodb": "*",
     "multer": "^1.4.1",

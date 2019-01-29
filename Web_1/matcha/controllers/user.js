@@ -11,6 +11,7 @@ const fs = require('fs');
 const nodemailer = require('nodemailer');
 const uuidv4  = require('uuid/v4');
 const bcrypt = require('bcryptjs');
+const faker = require('faker');
 
 // ------------------------------------------------------------------------ //
 
@@ -615,6 +616,266 @@ module.exports.verifyAccount = async (req, res, next) => {
 
 // ------------------------------------------------------------------------ //
 
+// firstName: escapeSpecChars(req.body.firstName),
+// lastName: escapeSpecChars(req.body.lastName),
+// username: escapeSpecChars(req.body.username),
+// age: req.body.age,
+// gender: req.body.gender,
+// sexualPreference: req.body.sexuality,
+// biography: 'I like trains!',
+// interests: ["Matcha"],
+// pictures: [
+//   "../../../assets/default-avatar3-small.png",
+//   "../../../assets/default-avatar3-small.png",
+//   "../../../assets/default-avatar3-small.png",
+//   "../../../assets/default-avatar3-small.png"
+// ],
+// avatar: "../../../assets/default-avatar3-small.png",
+// ipinfoLoc: ipinfoLocToGeoJSON(req.body.ipinfoLoc),
+// fameRating: 0,
+// resetToken: '',
+// verifyToken: verifyToken,
+// verified: 0,
+// email: req.body.email,
+// password: req.body.password
+// 
+// WTC: Latitude: -26.205275 | Longitude: 28.040176
+// 
+// Few clicks east:
+//   Latitude: -26.204787 | Longitude: 28.072079    Right increases longitude.
+// Few clicks west:
+//   Latitude: -26.205018 | Longitude: 28.005284    Left decreases longitude.
+// Few clicks north:
+//   Latitude: -26.182329 | Longitude: 28.039179    Up decreases latitude.
+// Few clicks south:
+//   Latitude: -26.228079 | Longitude: 28.04126     Down increases latitude.
+// 
+// ipinfoLoc : {
+// 	type : "Point",
+// 	coordinates : [
+// 		27.986925245748125,
+// 		-26.160563093139757
+// 	]
+// }
+
+// Controller to generate dummy accounts. Verified needs to be set to 1.
+module.exports.generateAccounts = async (req, res, next) => {
+  if (req.query == undefined || req.query == null ||
+    req.query.amount == undefined || req.query == null)
+    return res.send("Could not create dummy profiles, missing get parameters.");
+
+  let genDummyAmount = parseFloat(req.query.amount);
+
+  if (isNaN(genDummyAmount))
+    return res.send("Could not create dummy profiles, passed in dummy amount is not a number.");
+
+  // Loop to generate dummy accounts, one big loop.
+  for (let i = 0; i < genDummyAmount; i++) {
+
+    // Generating a gender.
+    let fakeGender = "Male";
+    let fakeGenderNum = faker.random.number({min: 1, max: 3, precision: 1});
+    if (fakeGenderNum == 1)
+      fakeGender = "Male";
+    if (fakeGenderNum == 2)
+      fakeGender = "Female";
+    if (fakeGenderNum == 3)
+      fakeGender = "Other";
+
+    // Generating a sexual preference.
+    let fakeSexPref = "Heterosexual";
+    let fakeSexPrefNum = faker.random.number({min: 1, max: 3, precision: 1});
+    if (fakeSexPrefNum == 1)
+      fakeSexPref = "Heterosexual";
+    if (fakeSexPrefNum == 2)
+      fakeSexPref = "Homosexual";
+    if (fakeSexPrefNum == 3)
+      fakeSexPref = "Bisexual";
+
+    // Generating fake interest array.
+    let interestList = [
+      "Matcha",
+      "Sports",
+      "Art",
+      "Gaming",
+      "Traveling",
+      "Music",
+      "Cooking",
+      "Reading",
+      "Computers",
+      "Movies"
+    ];
+    let interestAmountNum = faker.random.number({min: 1, max: 10, precision: 1});
+    let fakeInterestArr = [];
+    for (let i = 0; i < interestAmountNum; i++) {
+      let pickInterestNum = faker.random.number({min: 0, max: 9, precision: 1});
+      switch (interestList[pickInterestNum]) {
+        case "Matcha":
+          if (fakeInterestArr.includes("Matcha") == false)
+            fakeInterestArr.push("Matcha");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Sports":
+          if (fakeInterestArr.includes("Sports") == false)
+            fakeInterestArr.push("Sports");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Art":
+          if (fakeInterestArr.includes("Art") == false)
+            fakeInterestArr.push("Art");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Gaming":
+          if (fakeInterestArr.includes("Gaming") == false)
+            fakeInterestArr.push("Gaming");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Traveling":
+          if (fakeInterestArr.includes("Traveling") == false)
+            fakeInterestArr.push("Traveling");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Music":
+          if (fakeInterestArr.includes("Music") == false)
+            fakeInterestArr.push("Music");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Cooking":
+          if (fakeInterestArr.includes("Cooking") == false)
+            fakeInterestArr.push("Cooking");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Reading":
+          if (fakeInterestArr.includes("Reading") == false)
+            fakeInterestArr.push("Reading");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Computers":
+          if (fakeInterestArr.includes("Computers") == false)
+            fakeInterestArr.push("Computers");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        case "Movies":
+          if (fakeInterestArr.includes("Movies") == false)
+            fakeInterestArr.push("Movies");
+          else {
+            i = i - 1;
+            continue;
+          }
+          break;
+        // Don't want default case as each push needs to be unique.
+      }
+    }
+    
+    // Generating fake ipinfoLoc.
+    // Decreasing precision to e.g. 0.1 will increase distances apart.
+    let fakeLong = parseFloat(Number(faker.random.number({
+      min: 28.01, max: 28.1, precision: 0.0000000000000001
+    })).toFixed(15));
+    let fakeLat = parseFloat(Number(faker.random.number({
+      min: -26.1, max: -26.3, precision: 0.0000000000000001
+    })).toFixed(15));
+    let fakeIpinfoLoc = {
+      type: "Point",
+      coordinates: [
+        fakeLong,     // Float.
+        fakeLat       // Float.
+      ]
+    }
+
+    // Creating fakeUser object.
+    let fakeUser = {
+      firstName: await faker.name.firstName(),
+      lastName: await faker.name.lastName(),
+      username: await faker.internet.userName(this.firstName, this.lastName),
+      age: faker.random.number({min: 18, max: 100, precision: 1}),
+      gender: fakeGender,
+      sexualPreference: fakeSexPref,
+      biography: "I'm a fake user but I still like trains!",
+      interests: fakeInterestArr,
+      pictures: [
+        await faker.image.imageUrl(),
+        await faker.image.imageUrl(),
+        await faker.image.imageUrl(),
+        await faker.image.imageUrl()
+      ],
+      avatar: await faker.image.avatar(),
+      ipinfoLoc: fakeIpinfoLoc,
+      fameRating: 0,
+      resetToken: "",
+      verifyToken: "",
+      verified: 1,
+      email: await faker.internet.email(),
+      password: "12345"
+    }
+
+    let exitOnDupUsername = 0;
+    let exitOnDupEmail = 0;
+    
+    // Checking if already registered.
+    await Promise.all([
+      userModel.getDocByUsername(fakeUser.username),
+      userModel.getDocByEmail(fakeUser.email)
+    ])
+    .then((values) => {
+      if (values[0]) return (exitOnDupUsername = 1);
+      else if (values[1]) return (exitOnDupEmail = 1);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    // Skipping if duplicate username or email.
+    if (exitOnDupUsername)
+      continue;
+    else if (exitOnDupEmail)
+      continue;
+
+    // Registering user, also creates a geospatial index if one does not exist.
+    userModel.addUserAsync(fakeUser)
+    .then(async () => {
+      let geoIndexCreated = await
+        userModel.getIndexCreatedState('geoIndexCreated');
+      if (geoIndexCreated == false) {
+        await userModel.createGeoIndex("ipinfoLoc");
+        await userModel.addIndexCreatedState('geoIndexCreated');
+      }
+    });
+    // for-loop ends here.
+  }
+
+  res.send("Dummy accounts made!");
+}
+
+// ------------------------------------------------------------------------ //
+
 module.exports.searchUsers = async (req, res, next) => {
   let searchObj = req.body;
   let docArr = await userModel.searchUsers(searchObj);
@@ -625,7 +886,7 @@ module.exports.searchUsers = async (req, res, next) => {
   // Need to validate the search request before calling db.
   // If values undefined or null, use defaults.
 
-  res.send({success: true, docs: docArr});
+  res.json({success: true, docs: docArr});
 }
 
 // ------------------------------------------------------------------------ //
