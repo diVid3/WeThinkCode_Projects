@@ -888,7 +888,7 @@ module.exports.searchUsers = async (req, res, next) => {
   let ageLower18 = "The entered age can't be lower than 18.";
   let locHighCantBeLower = "The higher location value can't be lower than the lower location value.";
   let fameHighCantBeLower = "The higher fame value can't be lower than the lower fame value.";
-  let ageHighCantBeLower = "The hihger age value can't be lower than the lower age value.";
+  let ageHighCantBeLower = "The higher age value can't be lower than the lower age value.";
 
   let searchObj = req.body;
 
@@ -953,6 +953,8 @@ module.exports.searchUsers = async (req, res, next) => {
     searchObj.ageHigh = 100;
   if (searchObj.ageLow == null || searchObj.ageLow == undefined)
     searchObj.ageLow = 18;
+  if (searchObj.locationLow == 0)
+    searchObj.locationLow = 1;
 
   if (
   typeof searchObj.userLong != "number" ||

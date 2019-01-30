@@ -104,12 +104,13 @@
 
 <!-- Search Again Button -->
 <div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
-    <button type="button" class="btn btn-dark" style="margin-left: 10px;" value="Search Again" (click)="searchAgain()">Re-enter Search</button>
+    <button type="button" class="btn btn-dark" style="margin-left: 10px;" value="Search Again" (click)="searchAgain()">Back</button>
 </div>
 
 <!-- Need to use *ngFor within an *ngFor here -->
 <!-- Should this be in its own component? -->
 <div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
+  <h2 *ngIf="noResults" class="text-center" style="margin-bottom: 20px; color: #acb3b9">No Results.</h2>
   <div *ngFor="let user of docArr" class="mb-3">
     <a [routerLink]="['/view-profile/', user.username]" class="list-group-item list-group-item-action flex-column align-items-start">
       <button class="btn btn-dark float-right">Like</button>
@@ -118,8 +119,9 @@
         <img class="avatar rounded-circle img-thumbnail" [src]="user.avatar" style="margin-top: 10px; margin-bottom: 10px;">
       </div>
       <div style="display: inline-block">
-        <p class="mb-1">{{ user.biography }}</p>
+        <p class="mb-1">"{{ user.biography }}"</p>
         <small class="text-muted">{{ user.firstName }}</small>
+        <small class="text-muted"> {{ user.lastName }}</small>
       </div>
     </a>
   </div>

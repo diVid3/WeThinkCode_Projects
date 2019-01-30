@@ -24,6 +24,7 @@ export class SearchComponent implements OnInit {
 
   public searchClicked: boolean = false;
   public docArr: any;
+  public noResults: boolean;
 
   // Remember location is in km, mongo uses m.
   public locationHigh: number;
@@ -110,6 +111,8 @@ export class SearchComponent implements OnInit {
     this.authService.searchUsers(searchObj).subscribe((data) => {
       if ((<any>data).success == true) {
         this.docArr = (<any>data).docs;
+        if (this.docArr.length == 0)
+          this.noResults = true;
         this.searchClicked = true;
       }
       else
@@ -140,6 +143,7 @@ export class SearchComponent implements OnInit {
 
   resetForm() {
     this.searchClicked = false;
+    this.noResults = false;
 
     this.locationHigh = undefined;
     this.locationLow = undefined;
