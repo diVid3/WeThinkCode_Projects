@@ -25,7 +25,14 @@ export class ViewProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    let loggedInUsername = JSON.parse(localStorage.getItem('user')).username;
     this.requestedProfileString = this.activatedRoute.snapshot.paramMap.get('username');
+
+    if (this.requestedProfileString == loggedInUsername) {
+      this.router.navigate(['/profile']);
+      return;
+    }
+
     this.authService.getRequestedProfile(this.requestedProfileString).subscribe((data) => {
       this.user = (<any>data).user;
       this.long = (<any>this.user).ipinfoLoc.coordinates[0];

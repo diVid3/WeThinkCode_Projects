@@ -185,73 +185,40 @@ module.exports.createGeoIndex = async (locName) => {
 // order" might be broken by sub second entries because the id will still be
 // unique, it will just end up at another point as the user pages through the
 // data.
+// 
+// UPDATE: Nevermind, scratch the above, the search complexity is not kind
+// towards forward paging. Had to resort to using skip.
 module.exports.searchUsers = async (searchObj) => {
   try {
     let db = mongocon.getDb();
 
-    // Retrieves all docs since lastSeenId, used for pagination/infinite scroll.
-    if (searchObj.lastSeenId) {
-      var cursor = await db.collection('users').find(
-        {
-          $and: [
-            {
-              ipinfoLoc: {
-                $near: {
-                  $geometry: {
-                    type: "Point",
-                    coordinates: [searchObj.userLong, searchObj.userLat]
-                  },
-                  $minDistance: searchObj.locationLow,
-                  $maxDistance: searchObj.locationHigh
-                }
+    var cursor = await db.collection('users').find(
+      {
+        $and: [
+          {
+            ipinfoLoc: {
+              $near: {
+                $geometry: {
+                  type: "Point",
+                  coordinates: [searchObj.userLong, searchObj.userLat]
+                },
+                $minDistance: searchObj.locationLow,
+                $maxDistance: searchObj.locationHigh
               }
-            },
-            {
-              // This should work, here's hoping it does!
-              _id: { $gt: new ObjectID(lastSeenId) }
-            },
-            {
-              $and: [{ fameRating: { $gte: searchObj.fameLow } }, { fameRating: { $lte: searchObj.fameHigh } }]
-            },
-            {
-              $and: [{ age: { $gte: searchObj.ageLow } }, { age: { $lte: searchObj.ageHigh } }]
-            },
-            {
-              interests: { $in: searchObj.interestArr }
             }
-          ]
-        }
-      ).limit(searchObj.limit);
-    }
-    else {
-      var cursor = await db.collection('users').find(
-        {
-          $and: [
-            {
-              ipinfoLoc: {
-                $near: {
-                  $geometry: {
-                    type: "Point",
-                    coordinates: [searchObj.userLong, searchObj.userLat]
-                  },
-                  $minDistance: searchObj.locationLow,
-                  $maxDistance: searchObj.locationHigh
-                }
-              }
-            },
-            {
-              $and: [{ fameRating: { $gte: searchObj.fameLow } }, { fameRating: { $lte: searchObj.fameHigh } }]
-            },
-            {
-              $and: [{ age: { $gte: searchObj.ageLow } }, { age: { $lte: searchObj.ageHigh } }]
-            },
-            {
-              interests: { $in: searchObj.interestArr }
-            }
-          ]
-        }
-      ).limit(searchObj.limit);
-    }
+          },
+          {
+            $and: [{ fameRating: { $gte: searchObj.fameLow } }, { fameRating: { $lte: searchObj.fameHigh } }]
+          },
+          {
+            $and: [{ age: { $gte: searchObj.ageLow } }, { age: { $lte: searchObj.ageHigh } }]
+          },
+          {
+            interests: { $in: searchObj.interestArr }
+          }
+        ]
+      }
+    ).sort(searchObj.sort).skip(searchObj.skip).limit(searchObj.limit);
 
     return (await cursor.toArray());
   }

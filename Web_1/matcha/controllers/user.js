@@ -797,7 +797,7 @@ module.exports.generateAccounts = async (req, res, next) => {
     // Generating fake ipinfoLoc.
     // Decreasing precision to e.g. 0.1 will increase distances apart.
     let fakeLong = parseFloat(Number(faker.random.number({
-      min: 28.01, max: 28.1, precision: 0.0000000000000001
+      min: 27.98, max: 28.13, precision: 0.0000000000000001
     })).toFixed(15));
     let fakeLat = parseFloat(Number(faker.random.number({
       min: -26.1, max: -26.3, precision: 0.0000000000000001
@@ -815,7 +815,7 @@ module.exports.generateAccounts = async (req, res, next) => {
       firstName: await faker.name.firstName(),
       lastName: await faker.name.lastName(),
       username: await faker.internet.userName(this.firstName, this.lastName),
-      age: faker.random.number({min: 18, max: 100, precision: 1}),
+      age: faker.random.number({min: 18, max: 45, precision: 1}),
       gender: fakeGender,
       sexualPreference: fakeSexPref,
       biography: "I'm a fake user but I still like trains!",

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -8,7 +8,9 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('intersectionTrigger') intersectionTrigger;
 
   // These are good defaults:
   // public locationHigh: number = 999999;
@@ -25,6 +27,15 @@ export class SearchComponent implements OnInit {
   public searchClicked: boolean = false;
   public docArr: any;
   public noResults: boolean;
+
+  public searchObj: any;
+  public limit: number = 5;
+  public skip: number = 0;                // Total number to skip.
+  public skipIncrement: number = 5;       // Number to increment total skip by.
+  public sort: Object = {};               // e.g. { "_id" : 1 }.
+
+  public sortExpandClicked: boolean = false;
+  public filterExpandClicked: boolean = false;
 
   // Remember location is in km, mongo uses m.
   public locationHigh: number;
@@ -57,25 +68,10 @@ export class SearchComponent implements OnInit {
     this.userLat = this.userData.ipinfoLoc.coordinates[1];
   }
 
-  onSearchSubmit() {
-    // console.log('locationHigh: ' + this.locationHigh);
-    // console.log('locationLow: ' + this.locationLow);
-    // console.log('fameHigh: ' + this.fameHigh);
-    // console.log('fameLow: ' + this.fameLow);
-    // console.log('ageHigh: ' + this.ageHigh);
-    // console.log('ageLow: ' + this.ageLow);
-    // console.log('==================================');
-    // console.log('matchaChecked: ' + this.matchaChecked);
-    // console.log('sportsChecked: ' + this.sportsChecked);
-    // console.log('artChecked: ' + this.artChecked);
-    // console.log('gamingChecked: ' + this.gamingChecked);
-    // console.log('travelingChecked: ' + this.travelingChecked);
-    // console.log('musicChecked: ' + this.musicChecked);
-    // console.log('cookingChecked: ' + this.cookingChecked);
-    // console.log('readingChecked: ' + this.readingChecked);
-    // console.log('computersChecked: ' + this.computersChecked);
-    // console.log('moviesChecked: ' + this.moviesChecked);
+  ngAfterViewInit() {
+  }
 
+  onSearchSubmit() {
     let interestArr = [];
 
     if (this.matchaChecked) interestArr.push('Matcha');
@@ -99,8 +95,9 @@ export class SearchComponent implements OnInit {
       ageHigh: this.ageHigh,
       ageLow: this.ageLow,
       interestArr,
-      limit: 5,
-      lastSeenId: null
+      limit: this.limit,
+      skip: this.skip,
+      sort: this.sort
     }
 
     if (searchObj.locationHigh)
@@ -114,15 +111,64 @@ export class SearchComponent implements OnInit {
         if (this.docArr.length == 0)
           this.noResults = true;
         this.searchClicked = true;
+
+        if (this.noResults == true)
+          return;
+
+        // This ensure that the call stack is cleared before executing, thus
+        // acting as a life-cycle hook? Right after *ngIf inserted DOM elements.
+        setTimeout(() => {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+
+              if (entry.intersectionRatio > 0) {
+                let searchObj = {
+                  userLong: this.userLong,
+                  userLat: this.userLat,
+                  locationHigh: this.locationHigh,
+                  locationLow: this.locationLow,
+                  fameHigh: this.fameHigh,
+                  fameLow: this.fameLow,
+                  ageHigh: this.ageHigh,
+                  ageLow: this.ageLow,
+                  interestArr,
+                  limit: this.limit,
+                  skip: (this.skip += this.skipIncrement),
+                  sort: this.sort,
+                }
+
+                if (searchObj.locationHigh)
+                  searchObj.locationHigh = searchObj.locationHigh * 1000;
+                if (searchObj.locationLow)
+                  searchObj.locationLow = searchObj.locationLow * 1000;
+
+                console.log('Send load request');
+
+                // Might need to throttle request here.
+                this.authService.searchUsers(searchObj).subscribe((data) => {
+                  let tempDocArr = (<any>data).docs;
+                  tempDocArr.forEach((doc) => {
+                    this.docArr.push(doc);
+                  });
+                });
+              }
+
+            });
+
+          }, {});
+          observer.observe(<Element>(this.intersectionTrigger.nativeElement));
+        }, 5);
+
       }
       else
-        this.flashMessageService.show((<any>data).msg, {cssClass: 'alert-danger', timeout: 5000});
+        this.flashMessageService.show((<any>data).msg, {cssClass:
+          'alert-danger', timeout: 5000});
     });
   }
 
   // Button for testing purposes.
   autofill() {
-    this.locationHigh = 100;
+    this.locationHigh = 100000;
     this.locationLow = 0.001;
     this.fameHigh = 999999;
     this.fameLow = 0;
@@ -144,6 +190,7 @@ export class SearchComponent implements OnInit {
   resetForm() {
     this.searchClicked = false;
     this.noResults = false;
+    this.skip = 0;
 
     this.locationHigh = undefined;
     this.locationLow = undefined;
@@ -167,6 +214,40 @@ export class SearchComponent implements OnInit {
   searchAgain() {
     this.resetForm();
     this.searchClicked = false;
+  }
+
+  // profileRedirect(username) {
+  //   let loggedInUser = JSON.parse(localStorage.getItem('user'));
+  //   if (username == loggedInUser.username)
+  //     this.router.navigate(['/profile']);
+  //   else
+  //     this.router.navigate(['/view-profile/', username]);
+  // }
+
+  sortExpand() {
+    this.filterExpandClicked = false;
+
+    if (!this.sortExpandClicked)
+      this.sortExpandClicked = true;
+    else
+      this.sortExpandClicked = false;
+  }
+  
+  filterExpand() {
+    this.sortExpandClicked = false;
+    
+    if (!this.filterExpandClicked)
+      this.filterExpandClicked = true;
+    else
+      this.filterExpandClicked = false;
+  }
+
+  onSortSubmit() {
+    console.log("onSortSubmit clicked!");
+  }
+
+  onFilterSubmit() {
+    console.log("onFilterSubmit clicked!");
   }
 
 }

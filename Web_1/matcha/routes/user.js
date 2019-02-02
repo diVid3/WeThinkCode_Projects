@@ -53,7 +53,7 @@ router.post('/verify', userController.verifyAccount);
 
 router.post('/search', userController.searchUsers);
 
-// Only reachable by postman.
+// Only reachable by postman. use ?amount=(dummyAccountAmount)
 router.get('/gen-dummies', userController.generateAccounts);
 
 // Need to protect route, but weird bug occurs due to either passport or 

@@ -102,19 +102,30 @@
   </div>
 </form>
 
-<!-- Search Again Button -->
+<!-- Search Buttons -->
 <div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
-    <button type="button" class="btn btn-dark" style="margin-left: 10px;" value="Search Again" (click)="searchAgain()">Back</button>
+  <button type="button" class="btn btn-dark" style="margin-left: 10px;" value="Search Again" (click)="searchAgain()">Back</button>
+  <button type="button" class="btn btn-dark float-right" style="margin-left: 10px; margin-right: 10px" (click)="sortExpand()">Sort</button>
+  <button type="button" class="btn btn-dark float-right" style="margin-left: 10px;" (click)="filterExpand()">Filter</button>
 </div>
 
-<!-- Need to use *ngFor within an *ngFor here -->
-<!-- Should this be in its own component? -->
+<!-- Sort Form -->
+<form *ngIf="sortExpandClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9" (submit)="onSortSubmit()">
+  Sort here.
+</form>
+
+<!-- Filter Form -->
+<form *ngIf="filterExpandClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9" (submit)="onFilterSubmit()">
+  Filter here.
+</form>
+
+<!-- Search results -->
 <div *ngIf="searchClicked" class="container-fluid" style="max-width: 850px; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px; border-bottom: 1px solid #CFD4D9">
   <h2 *ngIf="noResults" class="text-center" style="margin-bottom: 20px; color: #acb3b9">No Results.</h2>
   <div *ngFor="let user of docArr" class="mb-3">
-    <a [routerLink]="['/view-profile/', user.username]" class="list-group-item list-group-item-action flex-column align-items-start">
+    <a [routerLink]="['/view-profile/', user.username]" class="list-group-item list-group-item-action flex-column align-items-start" style="cursor: pointer;">
       <button class="btn btn-dark float-right">Like</button>
-      <div class="text-center" style="display: inline-block; max-width: 200px; margin-right: 20px;">
+      <div class="text-center" style="display: inline-block; max-width: 200px; margin-right: 20px; margin-left: 20px;">
         <h5 class="mb-1">{{ user.username }}</h5>
         <img class="avatar rounded-circle img-thumbnail" [src]="user.avatar" style="margin-top: 10px; margin-bottom: 10px;">
       </div>
@@ -125,4 +136,5 @@
       </div>
     </a>
   </div>
+  <div *ngIf="!noResults" #intersectionTrigger></div>
 </div>

@@ -46,7 +46,7 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
     ResetPasswordComponent,
     VerifyComponent,
     SearchComponent,
-    ViewProfileComponent,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,
