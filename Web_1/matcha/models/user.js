@@ -187,7 +187,10 @@ module.exports.createGeoIndex = async (locName) => {
 // data.
 // 
 // UPDATE: Nevermind, scratch the above, the search complexity is not kind
-// towards forward paging. Had to resort to using skip.
+// towards forward paging. Had to resort to using skip. The main reason being
+// that the geospatial index is used for searching, which results in a list
+// of docs from nearest to furthest, irrespective of _id, which is required to
+// be in some order for the lastSeenId method to work.
 module.exports.searchUsers = async (searchObj) => {
   try {
     let db = mongocon.getDb();

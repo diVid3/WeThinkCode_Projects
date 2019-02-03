@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 15px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="margin-bottom: 15px;">
   <a *ngIf="!authService.loggedIn()" class="navbar-brand" [routerLink]="['/']">Matcha</a>
   <a *ngIf="authService.loggedIn()" class="navbar-brand" [routerLink]="['/profile']">Matcha</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

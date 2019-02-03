@@ -27,6 +27,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   public searchClicked: boolean = false;
   public docArr: any;
   public noResults: boolean;
+  
+  public loading: boolean = false;
 
   public searchObj: any;
   public limit: number = 5;
@@ -66,6 +68,22 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.userData = JSON.parse(localStorage.getItem('user'));
     this.userLong = this.userData.ipinfoLoc.coordinates[0];
     this.userLat = this.userData.ipinfoLoc.coordinates[1];
+
+    // Can set variables here if localStorage contains a previous search.
+    // Remember to unserialze them with JSON.parse.
+    let docArrString = localStorage.getItem('searchDocArr');
+    let searchQueryString = localStorage.getItem('searchQuery');
+
+    if (docArrString && searchQueryString) {
+      this.docArr = JSON.parse(docArrString);
+      this.searchClicked = true;
+
+      // Need to set local variables to searchQuery.
+      let searchQuery = JSON.parse(searchQueryString);
+
+      // Setting local variables to stored variables as to enable infinite
+      // scroll.
+    }
   }
 
   ngAfterViewInit() {
@@ -108,6 +126,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.authService.searchUsers(searchObj).subscribe((data) => {
       if ((<any>data).success == true) {
         this.docArr = (<any>data).docs;
+
+        // Storing search query in local storage.
+        let searchObjString = JSON.stringify(searchObj);
+        localStorage.setItem('searchQuery', searchObjString);
+
+        // Storing search results in local storage.
+        let docArrString = JSON.stringify(this.docArr);
+        localStorage.setItem('searchDocArr', docArrString);
+
         if (this.docArr.length == 0)
           this.noResults = true;
         this.searchClicked = true;
@@ -142,22 +169,40 @@ export class SearchComponent implements OnInit, AfterViewInit {
                 if (searchObj.locationLow)
                   searchObj.locationLow = searchObj.locationLow * 1000;
 
-                console.log('Send load request');
+                this.loading = true;
 
-                // Might need to throttle request here.
-                this.authService.searchUsers(searchObj).subscribe((data) => {
-                  let tempDocArr = (<any>data).docs;
-                  tempDocArr.forEach((doc) => {
-                    this.docArr.push(doc);
+                // Throttling request here.
+                setTimeout(() => {
+                  this.authService.searchUsers(searchObj).subscribe((data) => {
+                    if ((<any>data).success == true) {
+                      this.loading = false;
+                      let tempDocArr = (<any>data).docs;
+                      tempDocArr.forEach((doc) => {
+                        this.docArr.push(doc);
+                      });
+
+                      // Storing search query in local storage.
+                      let searchObjString = JSON.stringify(searchObj);
+                      localStorage.setItem('searchQuery', searchObjString);
+
+                      // Storing search results in local storage.
+                      let docArrString = JSON.stringify(this.docArr);
+                      localStorage.setItem('searchDocArr', docArrString);
+                    }
+                    else {
+                      this.loading = false;
+                    }
                   });
-                });
+                }, 500);
+
               }
 
             });
 
           }, {});
+
           observer.observe(<Element>(this.intersectionTrigger.nativeElement));
-        }, 5);
+        }, 50);
 
       }
       else
@@ -191,6 +236,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchClicked = false;
     this.noResults = false;
     this.skip = 0;
+
+    if (localStorage.getItem('searchQuery'))
+      localStorage.removeItem('searchQuery');
+
+    if (localStorage.getItem('searchDocArr'))
+      localStorage.removeItem('searchDocArr');
 
     this.locationHigh = undefined;
     this.locationLow = undefined;
@@ -235,7 +286,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   
   filterExpand() {
     this.sortExpandClicked = false;
-    
+
     if (!this.filterExpandClicked)
       this.filterExpandClicked = true;
     else
