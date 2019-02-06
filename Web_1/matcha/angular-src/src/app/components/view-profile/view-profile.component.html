@@ -49,24 +49,24 @@
         <div class="col-md-8">
           <div class="row">
             <div class="col-md-6">
-              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px; cursor: pointer;" data-toggle="modal" data-target="#myModal" (click)="setModalPictureSrc0()">
                 <img class="img-fluid" [src]="user.pictures[0]">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px; cursor: pointer;" data-toggle="modal" data-target="#myModal" (click)="setModalPictureSrc1()">
                 <img class="img-fluid" [src]="user.pictures[1]">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
-              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px; cursor: pointer;" data-toggle="modal" data-target="#myModal" (click)="setModalPictureSrc2()">
                 <img class="img-fluid" [src]="user.pictures[2]">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px;">
+              <div class="text-center marginTopBot paddingTopBot paddingLeftRight border" style="margin-top: 0px; cursor: pointer;" data-toggle="modal" data-target="#myModal" (click)="setModalPictureSrc3()">
                 <img class="img-fluid" [src]="user.pictures[3]">
               </div>
             </div>
@@ -104,6 +104,29 @@
         <div class="col-md-8">
         </div>
       </div> -->
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header" style="border-bottom: 0px">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <img class="mx-auto d-block" [src]="modalPictureSrc">
+          </div>
+
+          <!-- Modal Spacer -->
+          <div class="modal-header" style="border-bottom: 0px; padding-top: 28px; padding-bottom: 28px;">
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
   
