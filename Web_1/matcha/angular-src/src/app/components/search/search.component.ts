@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -8,7 +8,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('intersectionTrigger') intersectionTrigger;
 
@@ -47,6 +47,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   public ageHigh: number;
   public ageLow: number;
 
+  public interestArr: string[] = [];
+
   public matchaChecked: boolean = false;
   public sportsChecked: boolean = false;
   public artChecked: boolean = false;
@@ -57,6 +59,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   public readingChecked: boolean = false;
   public computersChecked: boolean = false;
   public moviesChecked: boolean = false;
+
+  public searchWindowScrollY: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -83,25 +87,109 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
       // Setting local variables to stored variables as to enable infinite
       // scroll.
+      this.userLong = searchQuery.userLong;
+      this.userLat = searchQuery.userLat;
+      this.locationHigh = searchQuery.locationHigh;
+      this.locationLow = searchQuery.locationLow;
+      this.fameHigh = searchQuery.fameHigh;
+      this.fameLow = searchQuery.fameLow;
+      this.ageHigh = searchQuery.ageHigh;
+      this.ageLow = searchQuery.ageLow;
+      this.interestArr = searchQuery.interestArr;
+      this.limit = searchQuery.limit;
+      this.skip = searchQuery.skip;
+      this.sort = searchQuery.sort;
     }
   }
 
+  ngOnDestroy() {
+    let windowScrollYString = JSON.stringify(this.searchWindowScrollY)
+    localStorage.setItem('searchWindowScrollY', windowScrollYString);
+  }
+
   ngAfterViewInit() {
+    // Adding intersection observer if a search query was saved.
+    let docArrString = localStorage.getItem('searchDocArr');
+    let searchQueryString = localStorage.getItem('searchQuery');
+
+    if (docArrString && searchQueryString) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+
+          if (entry.intersectionRatio > 0) {
+            let searchObj = {
+              userLong: this.userLong,
+              userLat: this.userLat,
+              locationHigh: this.locationHigh,
+              locationLow: this.locationLow,
+              fameHigh: this.fameHigh,
+              fameLow: this.fameLow,
+              ageHigh: this.ageHigh,
+              ageLow: this.ageLow,
+              interestArr: this.interestArr,
+              limit: this.limit,
+              skip: (this.skip += this.skipIncrement),
+              sort: this.sort,
+            }
+
+            this.loading = true;
+
+            // Throttling request here.
+            setTimeout(() => {
+              this.authService.searchUsers(searchObj).subscribe((data) => {
+                if ((<any>data).success == true) {
+                  this.loading = false;
+                  let tempDocArr = (<any>data).docs;
+                  tempDocArr.forEach((doc) => {
+                    this.docArr.push(doc);
+                  });
+
+                  // Storing search query in local storage.
+                  let searchObjString = JSON.stringify(searchObj);
+                  localStorage.setItem('searchQuery', searchObjString);
+
+                  // Storing search results in local storage.
+                  let docArrString = JSON.stringify(this.docArr);
+                  localStorage.setItem('searchDocArr', docArrString);
+                }
+                else {
+                  this.loading = false;
+                }
+              });
+            }, 500);
+
+          }
+
+        });
+
+      }, {});
+
+      observer.observe(<Element>(this.intersectionTrigger.nativeElement));
+    }
+
+    // Resetting the previous vertical scroll position.
+    if (localStorage.getItem('searchWindowScrollY')) {
+      let windowScrollYString = localStorage.getItem('searchWindowScrollY');
+      let windowVerticalScrollTarget = JSON.parse(windowScrollYString);
+      window.scrollTo(0, windowVerticalScrollTarget);
+    }
   }
 
   onSearchSubmit() {
-    let interestArr = [];
 
-    if (this.matchaChecked) interestArr.push('Matcha');
-    if (this.sportsChecked) interestArr.push('Sports');
-    if (this.artChecked) interestArr.push('Art');
-    if (this.gamingChecked) interestArr.push('Gaming');
-    if (this.travelingChecked) interestArr.push('Traveling');
-    if (this.musicChecked) interestArr.push('Music');
-    if (this.cookingChecked) interestArr.push('Cooking');
-    if (this.moviesChecked) interestArr.push('Movies');
-    if (this.computersChecked) interestArr.push('Computers');
-    if (this.readingChecked) interestArr.push('Reading');
+    // Clearing interestArr if it contains elements of last search.
+    if (this.interestArr.length > 0) this.interestArr.length = 0;
+
+    if (this.matchaChecked) this.interestArr.push('Matcha');
+    if (this.sportsChecked) this.interestArr.push('Sports');
+    if (this.artChecked) this.interestArr.push('Art');
+    if (this.gamingChecked) this.interestArr.push('Gaming');
+    if (this.travelingChecked) this.interestArr.push('Traveling');
+    if (this.musicChecked) this.interestArr.push('Music');
+    if (this.cookingChecked) this.interestArr.push('Cooking');
+    if (this.moviesChecked) this.interestArr.push('Movies');
+    if (this.computersChecked) this.interestArr.push('Computers');
+    if (this.readingChecked) this.interestArr.push('Reading');
 
     let searchObj = {
       userLong: this.userLong,
@@ -112,7 +200,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       fameLow: this.fameLow,
       ageHigh: this.ageHigh,
       ageLow: this.ageLow,
-      interestArr,
+      interestArr: this.interestArr,
       limit: this.limit,
       skip: this.skip,
       sort: this.sort
@@ -158,7 +246,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
                   fameLow: this.fameLow,
                   ageHigh: this.ageHigh,
                   ageLow: this.ageLow,
-                  interestArr,
+                  interestArr: this.interestArr,
                   limit: this.limit,
                   skip: (this.skip += this.skipIncrement),
                   sort: this.sort,
@@ -243,6 +331,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('searchDocArr'))
       localStorage.removeItem('searchDocArr');
 
+    if (localStorage.getItem('searchWindowScrollY'))
+      localStorage.removeItem('searchWindowScrollY');
+
     this.locationHigh = undefined;
     this.locationLow = undefined;
     this.fameHigh = undefined;
@@ -266,14 +357,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.resetForm();
     this.searchClicked = false;
   }
-
-  // profileRedirect(username) {
-  //   let loggedInUser = JSON.parse(localStorage.getItem('user'));
-  //   if (username == loggedInUser.username)
-  //     this.router.navigate(['/profile']);
-  //   else
-  //     this.router.navigate(['/view-profile/', username]);
-  // }
 
   sortExpand() {
     this.filterExpandClicked = false;
@@ -299,6 +382,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   onFilterSubmit() {
     console.log("onFilterSubmit clicked!");
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  saveSearchScrollY(event) {
+    this.searchWindowScrollY = window.scrollY;
   }
 
 }

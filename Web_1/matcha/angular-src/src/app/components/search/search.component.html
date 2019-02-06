@@ -139,3 +139,6 @@
   <div *ngIf="!noResults" #intersectionTrigger></div>
   <div *ngIf="loading" class="text-center">Loading...</div>
 </div>
+
+<!-- div to simply call a method when unloading -->
+<div (scroll)="saveSearchScrollY($event)"></div>
