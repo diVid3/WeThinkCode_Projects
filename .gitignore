@@ -53,7 +53,7 @@ dkms.conf
 *.jpg
 *.jpeg
 .DS_Store
-
+*.iml
 .idea
 node_modules
 .vscode
