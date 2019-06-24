@@ -7,9 +7,16 @@ import java.util.LinkedList;
 
 public class Simulator {
 
+  public static void simulate(LinkedList<String> data) throws
+      IOException {
+
+    int simulatorCycles = Integer.parseInt(data.removeLast());
+
+    // TODO: Spawn and simulate.
+  }
+
   public static void main(String[] args) {
 
-    int simulatorCycles;
     LinkedList<String> data;
     CustomFileReader fr = new CustomFileReader();
 
@@ -18,7 +25,8 @@ public class Simulator {
       fr.readData(args[0]);
       fr.validateData();
       data = fr.getData();
-      simulatorCycles = Integer.parseInt(data.removeLast());
+
+      simulate(data);
     }
     catch (
       InvalidInputException |

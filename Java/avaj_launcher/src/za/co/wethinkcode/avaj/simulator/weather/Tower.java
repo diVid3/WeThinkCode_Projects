@@ -2,6 +2,7 @@ package za.co.wethinkcode.avaj.simulator.weather;
 
 import za.co.wethinkcode.avaj.simulator.interfaces.Flyable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO: Make this class abstract.
@@ -24,7 +25,7 @@ public class Tower {
     observers.remove(flyable);
   }
 
-  protected void conditionsChanged() {
+  protected void conditionsChanged() throws IOException {
 
     for (Flyable flyable: observers) {
 
