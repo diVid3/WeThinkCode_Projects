@@ -5,16 +5,10 @@ import za.co.wethinkcode.avaj.simulator.vehicles.Coordinates;
 public class WeatherProvider {
 
   private static WeatherProvider weatherProvider = null;
-  private String[] weather;
+  private static String[] weather = {"SUN", "RAIN", "FOG", "SNOW"};
 
   private WeatherProvider() {
 
-    weather = new String[4];
-
-    weather[0] = "SUN";
-    weather[1] = "RAIN";
-    weather[2] = "FOG";
-    weather[3] = "SNOW";
   }
 
   public static WeatherProvider getProvider() {
@@ -29,8 +23,9 @@ public class WeatherProvider {
 
   public String getCurrentWeather(Coordinates coordinates) {
 
-  // TODO: Take in current flyable coordinates, calc. new weather, return it.
+    int modMe = coordinates.getLongitude() + coordinates.getLatitude() + coordinates.getHeight();
+    int remainder = modMe % 4;
 
-
+    return this.weather[remainder];
   }
 }

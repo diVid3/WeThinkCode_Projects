@@ -18,7 +18,6 @@ public class Simulator {
       fr.readData(args[0]);
       fr.validateData();
       data = fr.getData();
-
       simulatorCycles = Integer.parseInt(data.removeLast());
     }
     catch (
