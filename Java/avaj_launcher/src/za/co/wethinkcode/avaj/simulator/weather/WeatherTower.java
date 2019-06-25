@@ -2,6 +2,8 @@ package za.co.wethinkcode.avaj.simulator.weather;
 
 import za.co.wethinkcode.avaj.simulator.vehicles.Coordinates;
 
+import java.io.IOException;
+
 public class WeatherTower extends Tower {
 
   public WeatherTower() {
@@ -16,7 +18,7 @@ public class WeatherTower extends Tower {
   }
 
   // This is called simulatorCycles amount of times.
-  void changeWeather() {
+  void changeWeather() throws IOException {
 
     // This will let all the flyables update to new weather.
     this.conditionsChanged();
