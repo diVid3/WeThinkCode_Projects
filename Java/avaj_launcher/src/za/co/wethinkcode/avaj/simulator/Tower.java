@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public abstract class Tower {
 
   private ArrayList<Flyable> observers;
+  private ArrayList<Flyable> ObsToBeRemoved;
 
   Tower() {
 
     this.observers = new ArrayList<Flyable>();
+    this.ObsToBeRemoved = new ArrayList<Flyable>();
   }
 
   public void register(Flyable flyable) {
@@ -21,7 +23,7 @@ public abstract class Tower {
 
   public void unregister(Flyable flyable) {
 
-    observers.remove(flyable);
+    this.ObsToBeRemoved.add(flyable);
   }
 
   protected void conditionsChanged() throws IOException {
@@ -30,5 +32,7 @@ public abstract class Tower {
 
       flyable.updateConditions();
     }
+
+    this.observers.removeAll(this.ObsToBeRemoved);
   }
 }
