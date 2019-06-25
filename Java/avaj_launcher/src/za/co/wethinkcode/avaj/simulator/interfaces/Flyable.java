@@ -1,6 +1,6 @@
 package za.co.wethinkcode.avaj.simulator.interfaces;
 
-import za.co.wethinkcode.avaj.simulator.weather.WeatherTower;
+import za.co.wethinkcode.avaj.simulator.WeatherTower;
 
 import java.io.IOException;
 

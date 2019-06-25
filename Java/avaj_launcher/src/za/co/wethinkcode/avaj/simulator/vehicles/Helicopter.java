@@ -1,7 +1,7 @@
 package za.co.wethinkcode.avaj.simulator.vehicles;
 
 import za.co.wethinkcode.avaj.simulator.interfaces.Flyable;
-import za.co.wethinkcode.avaj.simulator.weather.WeatherTower;
+import za.co.wethinkcode.avaj.simulator.WeatherTower;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -73,7 +73,6 @@ public class Helicopter extends Aircraft implements Flyable {
     writer.close();
   }
 
-  // TODO: Call this when after vehicles spawned.
   @Override
   public void registerTower(WeatherTower weatherTower) throws IOException {
 

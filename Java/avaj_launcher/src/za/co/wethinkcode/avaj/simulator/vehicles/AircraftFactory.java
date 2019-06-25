@@ -1,32 +1,32 @@
 package za.co.wethinkcode.avaj.simulator.vehicles;
 
-import za.co.wethinkcode.avaj.simulator.exceptions.InvalidInputException;
 import za.co.wethinkcode.avaj.simulator.interfaces.Flyable;
 
 public abstract class AircraftFactory {
 
-  public static Flyable newAircraft(String type, String name, int longitude, int latitude, int height) throws InvalidInputException {
+  public static Flyable newAircraft(
+      String type,
+      String name,
+      int longitude,
+      int latitude,
+      int height
+  ) {
 
     Coordinates coordinates = new Coordinates(longitude, latitude, height);
-
-    if (
-      !type.equals("Helicopter") &&
-      !type.equals("JetPlane") &&
-      !type.equals("Baloon")
-    ) {
-
-      throw new InvalidInputException("Incorrect aircraft type for spawning, exiting.");
-    }
+    Flyable aircraft = null;
 
     switch (type) {
       case "Helicopter":
-        return new Helicopter(name, coordinates);
+        aircraft = new Helicopter(name, coordinates);
+        break;
       case "JetPlane":
-        return new JetPlane(name, coordinates);
+        aircraft = new JetPlane(name, coordinates);
+        break;
       case "Baloon":
-        return new Baloon(name, coordinates);
+        aircraft = new Baloon(name, coordinates);
+        break;
     }
 
-    return null;
+    return aircraft;
   }
 }

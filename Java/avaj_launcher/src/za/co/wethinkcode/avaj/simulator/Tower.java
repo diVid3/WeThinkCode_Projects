@@ -1,12 +1,11 @@
-package za.co.wethinkcode.avaj.simulator.weather;
+package za.co.wethinkcode.avaj.simulator;
 
 import za.co.wethinkcode.avaj.simulator.interfaces.Flyable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-// TODO: Make this class abstract.
-public class Tower {
+public abstract class Tower {
 
   private ArrayList<Flyable> observers;
 
