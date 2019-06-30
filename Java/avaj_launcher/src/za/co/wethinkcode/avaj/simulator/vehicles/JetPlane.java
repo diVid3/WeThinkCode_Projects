@@ -26,12 +26,6 @@ public class JetPlane extends Aircraft implements Flyable {
 
     File file = new File("simulation.txt");
     FileWriter fw = new FileWriter(file, true);
-
-    if (!file.exists()) {
-
-      file.createNewFile();
-    }
-
     BufferedWriter writer = new BufferedWriter(fw);
 
     String baseString = "JetPlane#" + this.name + "(" + this.id + ")";
@@ -86,12 +80,6 @@ public class JetPlane extends Aircraft implements Flyable {
 
     File file = new File("simulation.txt");
     FileWriter fw = new FileWriter(file, true);
-
-    if (!file.exists()) {
-
-      file.createNewFile();
-    }
-
     BufferedWriter writer = new BufferedWriter(fw);
 
     String baseString = "JetPlane#" + this.name + "(" + this.id + ")";
