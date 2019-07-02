@@ -4,6 +4,7 @@ import za.co.wethinkcode.avaj.simulator.exceptions.InvalidInputException;
 import za.co.wethinkcode.avaj.simulator.interfaces.Flyable;
 import za.co.wethinkcode.avaj.simulator.vehicles.AircraftFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -24,6 +25,15 @@ public class Simulator {
     int height;
 
     Flyable newAircraft;
+
+    File file = new File("simulation.txt");
+
+    if (file.exists()) {
+
+      file.delete();
+    }
+
+    file.createNewFile();
 
     for (int i = 0; i < dataSize; i++) {
 
