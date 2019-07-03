@@ -12,8 +12,6 @@ public class Hero implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  // TODO: Change DB settings to not auto-increment id.
-
   @Id
   @Column(name = "id", unique = true)
   private int id;

@@ -36,10 +36,16 @@ class CustomFileReader {
     String line;
     int listSize;
 
+    if (listClone.size() == 0) {
+
+      throw new InvalidInputException("Input file is empty!");
+    }
+
     line = listClone.removeLast();
     int simulatorCycles = Integer.parseInt(line);
 
     if (simulatorCycles < 0) {
+
       throw new InvalidInputException("Simulator cycles < 0!");
     }
 

@@ -9,10 +9,7 @@
     <class>za.co.wethinkcode.swingy.models.Hero</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-
-      <!-- TODO: Might need to change this to the correct working url -->
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/db_swingy" />
-
       <property name="javax.persistence.jdbc.user" value="dbadmin" />
       <property name="javax.persistence.jdbc.password" value="password1" />
     </properties>
