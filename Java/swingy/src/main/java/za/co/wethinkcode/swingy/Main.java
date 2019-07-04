@@ -1,14 +1,25 @@
 package za.co.wethinkcode.swingy;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import za.co.wethinkcode.swingy.helpers.DbHelper;
 
 public class Main {
 
-  private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("swingy");
-
   public static void main( String[] args ) {
 
-    ENTITY_MANAGER_FACTORY.close();
+    try {
+
+      Connection dbCon = DbHelper.getDbConnection();
+
+      // TODO: Do stuff here.
+
+      dbCon.close();
+    }
+    catch (SQLException e) {
+
+      e.printStackTrace(System.out);
+    }
   }
 }

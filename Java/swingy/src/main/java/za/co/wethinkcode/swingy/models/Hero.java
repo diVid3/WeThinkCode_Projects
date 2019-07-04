@@ -1,49 +1,49 @@
 package za.co.wethinkcode.swingy.models;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "heroes")
+// import javax.persistence.Column;
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
+// import javax.persistence.Table;
+//
+// @Entity
+// @Table(name = "heroes")
 public class Hero implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Id
-  @Column(name = "id", unique = true)
+  // @Id
+  // @Column(name = "id", unique = true)
   private int id;
 
-  @Column(name = "heroName", nullable = false)
+  // @Column(name = "heroName", nullable = false)
   private String heroName;
 
-  @Column(name = "heroClass", nullable = false)
+  // @Column(name = "heroClass", nullable = false)
   private String heroClass;
 
-  @Column(name = "heroLevel", nullable = false)
+  // @Column(name = "heroLevel", nullable = false)
   private int heroLevel;
 
-  @Column(name = "heroExperience", nullable = false)
+  // @Column(name = "heroExperience", nullable = false)
   private int heroExperience;
 
-  @Column(name = "heroAttack", nullable = false)
+  // @Column(name = "heroAttack", nullable = false)
   private int heroAttack;
 
-  @Column(name = "heroDefence", nullable = false)
+  // @Column(name = "heroDefence", nullable = false)
   private int heroDefence;
 
-  @Column(name = "heroHitPoints", nullable = false)
+  // @Column(name = "heroHitPoints", nullable = false)
   private int heroHitPoints;
 
-  @Column(name = "heroWeapon", nullable = false)
+  // @Column(name = "heroWeapon", nullable = false)
   private String heroWeapon;
 
-  @Column(name = "heroArmor", nullable = false)
+  // @Column(name = "heroArmor", nullable = false)
   private String heroArmor;
 
-  @Column(name = "heroHelm", nullable = false)
+  // @Column(name = "heroHelm", nullable = false)
   private String heroHelm;
 
   public int getId() {
