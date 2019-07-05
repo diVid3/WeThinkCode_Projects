@@ -19,9 +19,9 @@ public class DbHelper {
 
     if (dbCon == null) {
 
-      // DriverManager.registerDriver(new JDBC());
-      JDBC con = new JDBC();
+      DriverManager.registerDriver(new JDBC());
       dbCon = DriverManager.getConnection("jdbc:sqlite:sample.db");
+
       System.out.println("SQLite Connection established!");
     }
 
