@@ -15,12 +15,12 @@ public class DbHelper {
   private static Connection dbCon = null;
 
   public static Connection getDbConnection() throws
-    SQLException {
+    SQLException,
+    ClassNotFoundException {
 
     if (dbCon == null) {
 
-      DriverManager.registerDriver(new JDBC());
-      dbCon = DriverManager.getConnection("jdbc:sqlite:sample.db");
+      dbCon = DriverManager.getConnection("jdbc:sqlite:swingy.db");
 
       System.out.println("SQLite Connection established!");
     }
