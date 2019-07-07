@@ -1,5 +1,6 @@
 package za.co.wethinkcode.swingy;
 
+import za.co.wethinkcode.swingy.controllers.Game;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
 
 import java.sql.Connection;
@@ -9,13 +10,15 @@ public class Main {
 
   public static void main( String[] args ) {
 
+    Game game = null;
     Connection dbCon = null;
 
     try {
 
-      dbCon = DbHelper.getDbConnection();
+      dbCon = DbHelper.getSqliteConnection();
+      DbHelper.setUpDatabase(dbCon);
 
-      // TODO: Do more things here.
+      game = new Game(dbCon, args[0]);
     }
     catch (
       SQLException e
