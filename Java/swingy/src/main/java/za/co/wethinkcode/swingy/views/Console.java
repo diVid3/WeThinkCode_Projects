@@ -26,6 +26,12 @@ public class Console {
     System.out.println("\n");
   }
 
+  public static void displayNoHeroes() {
+
+    System.out.println("No heroes saved, create a new one.\n");
+    System.out.println("\n");
+  }
+
   public static void displayHeroes(ResultSet rs) throws SQLException {
 
     while(rs.next()) {

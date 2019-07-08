@@ -63,19 +63,33 @@ public class Game {
       if (input.equals("L")) {
 
         ResultSet rs = DbHelper.getHeroes(this.connection);
+
+        if (!rs.next()) {
+
+          Console.displayNoHeroes();
+          // TODO Create new hero here.
+        }
+
         Console.displayHeroes(rs);
         Console.displayPickHero();
         input = InputHelper.getInput();
 
-        rs = DbHelper.getHero(this.connection, input);
+        while (true) {
 
-        // FIXME: err hello.
-        while(!rs.next()) {
+          if (!InputHelper.hasIllegalChars(input)) {
+            rs = DbHelper.getHero(this.connection, input);
+
+            // TODO: Might need to set another condition if no heroes available.
+            if (rs.next()) {
+              break;
+            }
+          }
 
           Console.displayInvalidInput();
           input = InputHelper.getInput();
-          rs = DbHelper.getHero(this.connection, input);
         }
+
+
       }
       else if (input.equals("N")) {
 
