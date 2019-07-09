@@ -24,7 +24,13 @@ public class Game {
   private List<Enemy> enemies;
   private int mapSize;
 
-  private void startGameConsole() {
+  private void createHeroConsole() {
+
+
+  }
+
+  private void startGameConsole() throws
+    SQLException {
 
     String input;
 
@@ -39,9 +45,19 @@ public class Game {
 
     if (input.equals("L")) {
 
+      ResultSet rs = DbHelper.getHeroes(this.connection);
+
+      // If no heroes to load.
+      if (!rs.next()) {
+
+        // TODO: Call create hero.
+      }
+
+      // TODO: Load hero from pick.
     }
     else if (input.equals("N")) {
 
+      // TODO: Call create hero.
     }
   }
 

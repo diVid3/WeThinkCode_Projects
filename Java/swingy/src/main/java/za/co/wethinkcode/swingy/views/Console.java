@@ -53,4 +53,24 @@ public class Console {
     System.out.println("Pick your hero from the list above by typing in their name:\n");
     System.out.println("\n");
   }
+
+  public static void displayCreateHeroName() {
+
+    System.out.println("Pick a name for your hero:\n");
+    System.out.println("\n");
+  }
+
+  public static void displayCreateHeroClass() {
+
+    System.out.println("Pick a class for you hero:\n");
+    System.out.println("\n");
+  }
+
+  public static void displayHeroTypes() {
+
+    System.out.println("[ W ] - Wizard\n");
+    System.out.println("[ B ] - Barberian\n");
+    System.out.println("[ A ] - Assassin\n");
+    System.out.println("\n");
+  }
 }
