@@ -68,8 +68,8 @@ public class Console {
 
   public static void displayHeroTypes() {
 
-    System.out.println("[ W ] - Wizard\n");
-    System.out.println("[ B ] - Barberian\n");
+    System.out.println("[ O ] - Orc\n");
+    System.out.println("[ B ] - Barbarian\n");
     System.out.println("[ A ] - Assassin\n");
     System.out.println("\n");
   }

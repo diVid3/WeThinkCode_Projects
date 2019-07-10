@@ -11,9 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
@@ -26,7 +24,55 @@ public class Game {
 
   private void createHeroConsole() {
 
+    String input;
+    String newHeroClass;
+    String newHeroName;
+    Hero newHero;
 
+    Console.displayCreateHeroName();
+    input = InputHelper.getInput();
+
+    while (InputHelper.hasIllegalChars(input)) {
+
+      Console.displayInvalidInput();
+      input = InputHelper.getInput();
+    }
+
+    newHeroName = input;
+
+    Console.displayCreateHeroClass();
+    input = InputHelper.getInput();
+
+    while (!input.equals("O") && !input.equals("B") && !input.equals("A")) {
+
+      Console.displayInvalidInput();
+      input = InputHelper.getInput();
+    }
+
+    switch (input) {
+
+      case "O":
+        newHeroClass = "Orc";
+        break;
+      case "B":
+        newHeroClass = "Barbarian";
+        break;
+      default:
+        newHeroClass = "Assassin";
+    }
+
+    newHero = new Hero(
+        newHeroName,
+        newHeroClass,
+        0,
+        0,
+        200,
+        20,
+        500,
+        "Wooden Sword",
+        "Wooden Armor",
+        "Wooden Helm"
+    );
   }
 
   private void startGameConsole() throws

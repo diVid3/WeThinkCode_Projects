@@ -61,28 +61,38 @@ public class Hero implements ViewDisplayable {
   private int OldY;
 
   public Hero(
-    String heroName,
-    String heroClass,
-    int heroLevel,
-    int heroExperience,
-    int heroAttack,
-    int heroDefence,
-    int heroHitPoints,
-    String heroWeapon,
-    String heroArmor,
-    String heroHelm
+    String heroName,    // Independent.
+    String heroClass,   // Independent.
+    int heroLevel,      // Depends on experience.
+    int heroExperience, // Independent.
+    int heroAttack,     // Depends on level and weapon.
+    int heroDefence,    // Depends on armor, is in percentage.
+    int heroHitPoints,  // Depends on level.
+    String heroWeapon,  // Independent, affects heroAttack.
+    String heroArmor,   // Independent, affects heroDefence.
+    String heroHelm     // Independent, affects heroDefence.
   ) {
+
+    double exp;
+    double discriminant;
+    double levelDouble;
 
     this.heroName = heroName;
     this.heroClass = heroClass;
-    this.heroLevel = heroLevel;
+    // this.heroLevel = heroLevel;
     this.heroExperience = heroExperience;
-    this.heroAttack = heroAttack;
-    this.heroDefence = heroDefence;
-    this.heroHitPoints = heroHitPoints;
+    // this.heroAttack = heroAttack;
+    // this.heroDefence = heroDefence;
+    // this.heroHitPoints = heroHitPoints;
     this.heroWeapon = heroWeapon;
     this.heroArmor = heroArmor;
     this.heroHelm = heroHelm;
+
+    exp = this.heroExperience;
+    discriminant = Math.sqrt(2 * (-4000 + (9 * exp)));
+    levelDouble = (-10 + discriminant) / 90;
+
+    this.heroLevel = (int)Math.floor(levelDouble);
 
     int pos = ((heroLevel - 1) * 5 + 10 - (heroLevel % 2)) / 2;
 
@@ -90,8 +100,6 @@ public class Hero implements ViewDisplayable {
     this.y = pos;
     this.OldX = pos;
     this.OldY = pos;
-
-    // TODO: Remove enemies that the hero might spawn on, mark first, then del.
   }
 
   public String getHeroName() {

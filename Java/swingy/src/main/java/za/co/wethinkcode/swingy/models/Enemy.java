@@ -28,6 +28,8 @@ public class Enemy {
 
   public Enemy(int mapSize) {
 
+    int shouldDropLoot;
+
     this.enemyAlive = true;
     this.enemyHitPoints = ThreadLocalRandom.current().nextInt(1, 2500 + 1);
     this.enemyAttackPoints = ThreadLocalRandom.current().nextInt(1, 2500 + 1);
@@ -65,11 +67,19 @@ public class Enemy {
         this.loot = this.generateLoot("Bronze");
         break;
       case 1:
-        this.loot = this.generateLoot("Wood");
+        this.loot = this.generateLoot("Wooden");
         break;
     }
 
-    // TODO: Use mapSize to determine enemy x and y. Allow enemies to overlap.
+    shouldDropLoot = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+
+    if (shouldDropLoot == 1) {
+
+      this.loot = "None";
+    }
+
+    // TODO: Use mapSize to clamp randomness of x and y position generation,
+    // if x and y is in the middle of the map, simply offset by 1, 1.
   }
 
   public int getEnemyHitPoints() {
