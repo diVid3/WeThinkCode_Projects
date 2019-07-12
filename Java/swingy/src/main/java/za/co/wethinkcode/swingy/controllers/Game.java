@@ -22,7 +22,7 @@ public class Game {
   private List<Enemy> enemies;
   private int mapSize;
 
-  private void createHeroConsole() {
+  private void createHeroConsole() throws SQLException {
 
     String input;
     String newHeroClass;
@@ -64,15 +64,22 @@ public class Game {
     newHero = new Hero(
         newHeroName,
         newHeroClass,
-        0,
-        0,
-        200,
-        20,
-        500,
+        450,
         "Wooden Sword",
         "Wooden Armor",
         "Wooden Helm"
     );
+
+    this.hero = newHero;
+
+    DbHelper.addHero(this.connection, newHero);
+
+    Console.displayCreatedHeroSuccessfully();
+  }
+
+  private Hero loadHeroConsole() throws SQLException {
+
+    // TODO: Write SQL query to load * FROM HERO WHERE name = 'blah'
   }
 
   private void startGameConsole() throws
@@ -96,14 +103,17 @@ public class Game {
       // If no heroes to load.
       if (!rs.next()) {
 
-        // TODO: Call create hero.
+        this.createHeroConsole();
       }
+      else {
 
-      // TODO: Load hero from pick.
+        Console.displayHeroes(rs);
+        // TODO: Load hero from pick.
+      }
     }
     else if (input.equals("N")) {
 
-      // TODO: Call create hero.
+      this.createHeroConsole();
     }
   }
 

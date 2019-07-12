@@ -61,16 +61,12 @@ public class Hero implements ViewDisplayable {
   private int OldY;
 
   public Hero(
-    String heroName,    // Independent.
-    String heroClass,   // Independent.
-    int heroLevel,      // Depends on experience.
-    int heroExperience, // Independent.
-    int heroAttack,     // Depends on level and weapon.
-    int heroDefence,    // Depends on armor, is in percentage.
-    int heroHitPoints,  // Depends on level.
-    String heroWeapon,  // Independent, affects heroAttack.
-    String heroArmor,   // Independent, affects heroDefence.
-    String heroHelm     // Independent, affects heroDefence.
+    String heroName,
+    String heroClass,
+    int heroExperience,
+    String heroWeapon,
+    String heroArmor,
+    String heroHelm
   ) {
 
     double exp;
@@ -79,22 +75,78 @@ public class Hero implements ViewDisplayable {
 
     this.heroName = heroName;
     this.heroClass = heroClass;
-    // this.heroLevel = heroLevel;
     this.heroExperience = heroExperience;
-    // this.heroAttack = heroAttack;
-    // this.heroDefence = heroDefence;
-    // this.heroHitPoints = heroHitPoints;
     this.heroWeapon = heroWeapon;
     this.heroArmor = heroArmor;
     this.heroHelm = heroHelm;
 
+    // Start exp should be 450 to reach level 0.
     exp = this.heroExperience;
     discriminant = Math.sqrt(2 * (-4000 + (9 * exp)));
     levelDouble = (-10 + discriminant) / 90;
 
     this.heroLevel = (int)Math.floor(levelDouble);
 
-    int pos = ((heroLevel - 1) * 5 + 10 - (heroLevel % 2)) / 2;
+    switch (heroWeapon) {
+
+      case "Wooden Sword":
+        this.heroAttack = 200;
+        break;
+      case "Bronze Sword":
+        this.heroAttack = 300;
+        break;
+      case "Silver Sword":
+        this.heroAttack = 500;
+        break;
+      case "Gold Sword":
+        this.heroAttack = 800;
+        break;
+      case "Platinum Sword":
+        this.heroAttack = 1200;
+        break;
+    }
+
+    switch (heroArmor) {
+
+      case "Wooden Armor":
+        this.heroDefence = 100;
+        break;
+      case "Bronze Armor":
+        this.heroDefence = 200;
+        break;
+      case "Silver Armor":
+        this.heroDefence = 300;
+        break;
+      case "Gold Armor":
+        this.heroDefence = 400;
+        break;
+      case "Platinum Armor":
+        this.heroDefence = 500;
+        break;
+    }
+
+    switch (heroHelm) {
+
+      case "Wooden Helm":
+        this.heroDefence += 50;
+        break;
+      case "Bronze Helm":
+        this.heroDefence += 100;
+        break;
+      case "Silver Helm":
+        this.heroDefence += 150;
+        break;
+      case "Gold Helm":
+        this.heroDefence += 200;
+        break;
+      case "Platinum Helm":
+        this.heroDefence += 250;
+        break;
+    }
+
+    this.heroHitPoints = (this.heroLevel + 1) * 500 + this.heroDefence;
+
+    int pos = ((this.heroLevel - 1) * 5 + 10 - (this.heroLevel % 2)) / 2;
 
     this.x = pos;
     this.y = pos;

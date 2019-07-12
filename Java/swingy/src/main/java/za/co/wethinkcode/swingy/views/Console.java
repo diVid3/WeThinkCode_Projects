@@ -73,4 +73,11 @@ public class Console {
     System.out.println("[ A ] - Assassin\n");
     System.out.println("\n");
   }
+
+  public static void displayCreatedHeroSuccessfully() {
+
+    System.out.println("You have successfully created your hero.\n");
+    System.out.println("Let the games begin!");
+    System.out.println("\n");
+  }
 }
