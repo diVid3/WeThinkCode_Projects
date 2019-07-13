@@ -30,8 +30,8 @@ public class Game {
     Hero newHero;
 
     Console.displayCreateHeroName();
-    input = InputHelper.getInput();
 
+    input = InputHelper.getInput();
     while (InputHelper.hasIllegalChars(input)) {
 
       Console.displayInvalidInput();
@@ -77,9 +77,35 @@ public class Game {
     Console.displayCreatedHeroSuccessfully();
   }
 
-  private Hero loadHeroConsole() throws SQLException {
+  private void loadHeroConsole(String name) throws SQLException {
 
-    // TODO: Write SQL query to load * FROM HERO WHERE name = 'blah'
+    ResultSet heroRow;
+    String heroName;
+    String heroClass;
+    int heroExperience;
+    String heroWeapon;
+    String heroArmor;
+    String heroHelm;
+
+    heroRow = DbHelper.getHero(this.connection, name);
+
+    heroName = heroRow.getString("heroName");
+    heroClass = heroRow.getString("heroClass");
+    heroExperience = heroRow.getInt("heroExperience");
+    heroWeapon = heroRow.getString("heroWeapon");
+    heroArmor = heroRow.getString("heroArmor");
+    heroHelm = heroRow.getString("heroHelm");
+
+    this.hero = new Hero(
+        heroName,
+        heroClass,
+        heroExperience,
+        heroWeapon,
+        heroArmor,
+        heroHelm
+    );
+
+    Console.displayHeroLoaded();
   }
 
   private void startGameConsole() throws
@@ -108,7 +134,18 @@ public class Game {
       else {
 
         Console.displayHeroes(rs);
-        // TODO: Load hero from pick.
+        Console.displayPickHero();
+
+        input = InputHelper.getInput();
+        while (
+          InputHelper.hasIllegalChars(input) ||
+          !DbHelper.doesHeroExist(this.connection, input)
+        ) {
+
+          input = InputHelper.getInput();
+        }
+
+        this.loadHeroConsole(input);
       }
     }
     else if (input.equals("N")) {
@@ -119,7 +156,9 @@ public class Game {
 
   private void startGameGui() {
 
-
+    // TODO: Maybe implement this, if you feel like it.
+    System.out.println("Let's pretend this is a GUI!\n");
+    System.out.println("\n");
   }
 
   public Game(Connection connection, String viewType) {
@@ -129,6 +168,7 @@ public class Game {
     this.input = new PriorityQueue<String>();
   }
 
+  // This is called first.
   public void startGame() throws
     InvalidInputException,
     SQLException {
@@ -144,82 +184,12 @@ public class Game {
     }
     else if (viewType.equals("gui")) {
 
-      this.startGameGui();
+      throw new InvalidInputException("No GUI logic present. Exiting.");
+
+      // TODO: Maybe enable this at a later stage.
+      // this.startGameGui();
     }
   }
-
-  // public void selectHero() throws
-  //   InvalidInputException,
-  //   SQLException {
-  //
-  //   if (!this.viewType.equals("console") && !this.viewType.equals("gui")) {
-  //
-  //     throw new InvalidInputException("Invalid CLI arguments.");
-  //   }
-  //
-  //   // TODO: Draw view based upon viewType.
-  //   // TODO: Get input.
-  //   // TODO: Get hero, set to non-null.
-  //   // TODO: Save hero if newly created.
-  //   // TODO: Set mapSize. (heroLevel - 1) * 5 + 10 - (heroLevel % 2).
-  //   // TODO: Generate enemies using mapSize.
-  //
-  //   if (viewType.equals("console")) {
-  //
-  //     String input;
-  //
-  //     Console.displaySelectHero();
-  //     input = InputHelper.getInput();
-  //
-  //     while (!input.equals("L") && !input.equals("N")) {
-  //
-  //       Console.displayInvalidInput();
-  //       input = InputHelper.getInput();
-  //     }
-  //
-  //     if (input.equals("L")) {
-  //
-  //       ResultSet rs = DbHelper.getHeroes(this.connection);
-  //
-  //       if (!rs.next()) {
-  //
-  //         Console.displayNoHeroes();
-  //         // TODO Create new hero here.
-  //       }
-  //
-  //       Console.displayHeroes(rs);
-  //       Console.displayPickHero();
-  //       input = InputHelper.getInput();
-  //
-  //       while (true) {
-  //
-  //         if (!InputHelper.hasIllegalChars(input)) {
-  //           rs = DbHelper.getHero(this.connection, input);
-  //
-  //           // TODO: Might need to set another condition if no heroes available.
-  //           if (rs.next()) {
-  //             break;
-  //           }
-  //         }
-  //
-  //         Console.displayInvalidInput();
-  //         input = InputHelper.getInput();
-  //       }
-  //
-  //
-  //     }
-  //     else if (input.equals("N")) {
-  //
-  //       // TODO: Display name, take input.
-  //       // TODO: Display class, take input from list.
-  //       // TODO: Set hero and save to db.
-  //     }
-  //   }
-  //   else if (viewType.equals("gui")) {
-  //
-  //     // TODO: Do something here.
-  //   }
-  // }
 
   public void drawGameView() throws InvalidInputException {
 
@@ -228,7 +198,14 @@ public class Game {
       throw new InvalidInputException("Invalid CLI arguments.");
     }
 
-    // TODO: Draw view here.
+    if (this.viewType.equals("console")) {
+
+      // TODO: Fill this in.
+    }
+    else if (this.viewType.equals("gui")) {
+
+      // TODO: Gui things here.
+    }
   }
 
   public void getGameInput() {

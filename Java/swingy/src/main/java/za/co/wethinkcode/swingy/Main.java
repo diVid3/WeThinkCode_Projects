@@ -1,6 +1,7 @@
 package za.co.wethinkcode.swingy;
 
 import za.co.wethinkcode.swingy.controllers.Game;
+import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
 
 import java.sql.Connection;
@@ -19,9 +20,11 @@ public class Main {
       DbHelper.setUpDatabase(dbCon);
 
       game = new Game(dbCon, args[0]);
+      game.startGame();
     }
     catch (
-      SQLException e
+      SQLException |
+      InvalidInputException e
     ) {
 
       e.printStackTrace(System.out);

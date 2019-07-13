@@ -77,7 +77,14 @@ public class Console {
   public static void displayCreatedHeroSuccessfully() {
 
     System.out.println("You have successfully created your hero.\n");
-    System.out.println("Let the games begin!");
+    System.out.println("Let the games begin!\n");
+    System.out.println("\n");
+  }
+
+  public static void displayHeroLoaded() {
+
+    System.out.println("Your hero was successfully loaded.\n");
+    System.out.println("Let the games begin!\n");
     System.out.println("\n");
   }
 }

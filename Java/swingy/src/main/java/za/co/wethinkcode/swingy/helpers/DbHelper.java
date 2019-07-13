@@ -88,9 +88,7 @@ public class DbHelper {
   public static ResultSet getHeroes(Connection connection) throws SQLException {
 
     Statement statement = connection.createStatement();
-    ResultSet rs = statement.executeQuery("SELECT * FROM heroes;");
-
-    return rs;
+    return statement.executeQuery("SELECT * FROM heroes;");
   }
 
   public static ResultSet getHero(Connection connection, String heroName)
@@ -100,9 +98,21 @@ public class DbHelper {
 
     Statement statement = connection.createStatement();
 
-    ResultSet rs = statement.executeQuery(
-    "SELECT * FROM heroes WHERE heroName LIKE " + heroName + ";");
+    return statement.executeQuery(
+    "SELECT * FROM heroes WHERE heroName LIKE " + heroNameToFind + ";");
+  }
 
-    return rs;
+  public static boolean doesHeroExist(Connection connection, String heroName)
+    throws SQLException {
+
+    ResultSet rs;
+
+    rs = getHero(connection, heroName);
+
+    if (!rs.next()) {
+      return false;
+    }
+
+    return true;
   }
 }
