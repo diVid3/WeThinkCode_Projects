@@ -156,9 +156,7 @@ public class Game {
 
   private void startGameGui() {
 
-    // TODO: Maybe implement this, if you feel like it.
-    System.out.println("Let's pretend this is a GUI!\n");
-    System.out.println("\n");
+    // TODO: Maybe implement this.
   }
 
   public Game(Connection connection, String viewType) {
@@ -191,12 +189,7 @@ public class Game {
     }
   }
 
-  public void drawGameView() throws InvalidInputException {
-
-    if (!this.viewType.equals("console") && !this.viewType.equals("gui")) {
-
-      throw new InvalidInputException("Invalid CLI arguments.");
-    }
+  public void drawGameView() {
 
     if (this.viewType.equals("console")) {
 
@@ -204,7 +197,7 @@ public class Game {
     }
     else if (this.viewType.equals("gui")) {
 
-      // TODO: Gui things here.
+      // TODO: Maybe implement this.
     }
   }
 
@@ -212,6 +205,15 @@ public class Game {
 
     // TODO: Prompt for user input here. this might be skippable depending on
     // whether the view will have key hooks / events, e.g. a gui. Prompt once.
+
+    if (this.viewType.equals("console")) {
+
+      // TODO: Fill this in.
+    }
+    else if (this.viewType.equals("gui")) {
+
+      // TODO: Maybe implement this.
+    }
   }
 
   public void updateGameState() {
