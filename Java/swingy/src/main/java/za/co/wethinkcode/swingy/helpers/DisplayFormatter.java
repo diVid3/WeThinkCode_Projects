@@ -21,6 +21,11 @@ public class DisplayFormatter {
     return ("Experience: " + Integer.toString(heroExperience));
   }
 
+  public static String formatHeroHitPoints(int heroHitPoints) {
+
+    return ("Hit Points: " + Integer.toString(heroHitPoints));
+  }
+
   public static String formatHeroAttack(int heroAttack) {
 
     return ("Attack: " + Integer.toString(heroAttack));

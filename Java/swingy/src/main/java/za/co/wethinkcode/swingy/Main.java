@@ -22,7 +22,14 @@ public class Main {
       game = new Game(dbCon, args[0]);
       game.startGame();
 
-      System.out.println("Good job! Bye now.");
+      while (true) {
+
+        game.drawGameView();
+        if (!game.getGameInput()) break;
+        game.updateGameState();
+      }
+
+      game.farewell();
     }
     catch (
       SQLException |

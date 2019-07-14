@@ -78,8 +78,8 @@ public class Enemy {
       this.loot = "None";
     }
 
-    // TODO: Use mapSize to clamp randomness of x and y position generation,
-    // if x and y is in the middle of the map, simply offset by 1, 1.
+    this.x = ThreadLocalRandom.current().nextInt(0, mapSize);
+    this.y = ThreadLocalRandom.current().nextInt(0, mapSize);
   }
 
   public int getEnemyHitPoints() {

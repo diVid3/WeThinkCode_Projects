@@ -2,6 +2,7 @@ package za.co.wethinkcode.swingy.controllers;
 
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
+import za.co.wethinkcode.swingy.helpers.Debugging;
 import za.co.wethinkcode.swingy.helpers.InputHelper;
 import za.co.wethinkcode.swingy.models.Enemy;
 import za.co.wethinkcode.swingy.models.Hero;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
@@ -20,7 +22,66 @@ public class Game {
   private String viewType;
   private Queue<String> input;
   private List<Enemy> enemies;
-  private int mapSize;
+
+  private boolean canAddEnemy(Enemy newEnemy) {
+
+    int newEnemyX = newEnemy.getX();
+    int newEnemyY = newEnemy.getY();
+    int heroX = this.hero.getX();
+    int heroY = this.hero.getY();
+
+    Enemy enemyToCheckAgainst;
+    int enemyToCheckAgainstX;
+    int enemyToCheckAgainstY;
+
+    if (this.enemies.size() == 0) {
+
+      return true;
+    }
+
+    // TODO: Replace with forEach.
+    for (int i = 0; i < this.enemies.size(); i++) {
+
+      enemyToCheckAgainst = this.enemies.get(i);
+      enemyToCheckAgainstX = enemyToCheckAgainst.getX();
+      enemyToCheckAgainstY = enemyToCheckAgainst.getY();
+
+      if (
+        (newEnemyX == enemyToCheckAgainstX &&
+        newEnemyY == enemyToCheckAgainstY) ||
+        (newEnemyX == heroX &&
+        newEnemyY == heroY)
+      ) {
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private void spawnEnemies() {
+
+    int heroLevel = this.hero.getHeroLevel();
+    int mapSize = (heroLevel - 1) * 5 + 10 - (heroLevel % 2);
+    int enemyAmount = ThreadLocalRandom.current().nextInt(1, heroLevel + 2);
+
+    this.enemies = new LinkedList<>();
+    Enemy newEnemy;
+
+    for (int i = 0; i < enemyAmount; i++) {
+
+      newEnemy = new Enemy(mapSize);
+
+      if (!this.canAddEnemy(newEnemy)) {
+
+        i--;
+        continue;
+      }
+
+      this.enemies.add(newEnemy);
+    }
+  }
 
   private void createHeroConsole() throws SQLException {
 
@@ -179,6 +240,7 @@ public class Game {
     if (viewType.equals("console")) {
 
       this.startGameConsole();
+      this.spawnEnemies();
     }
     else if (viewType.equals("gui")) {
 
@@ -193,7 +255,7 @@ public class Game {
 
     if (this.viewType.equals("console")) {
 
-      // TODO: Fill this in.
+      Debugging.displayEnemyPositionsConsole(this.enemies);
     }
     else if (this.viewType.equals("gui")) {
 
@@ -201,24 +263,41 @@ public class Game {
     }
   }
 
-  public void getGameInput() {
+  public boolean getGameInput() {
 
     // TODO: Prompt for user input here. this might be skippable depending on
     // whether the view will have key hooks / events, e.g. a gui. Prompt once.
 
     if (this.viewType.equals("console")) {
 
-      // TODO: Fill this in.
+      // If input == exit, return false.
+      // TODO: Change this. This is only for testing purposes.
+      return false;
     }
     else if (this.viewType.equals("gui")) {
 
       // TODO: Maybe implement this.
+      // If input == exit, return false.
     }
+
+    return true;
   }
 
   public void updateGameState() {
 
     // TODO: Update game state based upon user input.
     // Check for a viewType switch first.
+  }
+
+  public void farewell() {
+
+    if (this.viewType.equals("console")) {
+
+      System.out.println("Good job! Bye now.");
+    }
+    else if (this.viewType.equals("gui")) {
+
+      // TODO: Maybe implement this.
+    }
   }
 }

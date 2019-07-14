@@ -35,6 +35,7 @@ public class Console {
       System.out.println(rs.getString("heroName") + "");
       System.out.println(DisplayFormatter.formatHeroLevel(rs.getInt("heroLevel")) + "");
       System.out.println(DisplayFormatter.formatHeroExperience(rs.getInt("heroExperience")) + "");
+      System.out.println(DisplayFormatter.formatHeroHitPoints(rs.getInt("heroHitPoints")) + "");
       System.out.println(DisplayFormatter.formatHeroAttack(rs.getInt("heroAttack")) + "");
       System.out.println(DisplayFormatter.formatHeroDefence(rs.getInt("heroDefence")) + "");
       System.out.println(DisplayFormatter.formatHeroWeapon(rs.getString("heroWeapon")) + "");
