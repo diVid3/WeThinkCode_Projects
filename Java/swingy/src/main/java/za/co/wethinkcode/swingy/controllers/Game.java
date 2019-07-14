@@ -22,6 +22,23 @@ public class Game {
   private String viewType;
   private Queue<String> input;
   private List<Enemy> enemies;
+  private int mapSize;
+
+  private void moveHero(String input) {
+
+    switch (input) {
+      
+      // TODO: Fill this in, remember to clamp to mapSize.
+      case "w":
+        break;
+      case "d":
+        break;
+      case "s":
+        break;
+      case "a":
+        break;
+    }
+  }
 
   private boolean canAddEnemy(Enemy newEnemy) {
 
@@ -60,11 +77,9 @@ public class Game {
     return true;
   }
 
-  private void spawnEnemies() {
+  private void spawnEnemies(int mapSize) {
 
-    int heroLevel = this.hero.getHeroLevel();
-    int mapSize = (heroLevel - 1) * 5 + 10 - (heroLevel % 2);
-    int enemyAmount = ThreadLocalRandom.current().nextInt(1, heroLevel + 2);
+    int enemyAmount = ThreadLocalRandom.current().nextInt(1, hero.getHeroLevel() + 2);
 
     this.enemies = new LinkedList<>();
     Enemy newEnemy;
@@ -240,7 +255,8 @@ public class Game {
     if (viewType.equals("console")) {
 
       this.startGameConsole();
-      this.spawnEnemies();
+      this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+      this.spawnEnemies(this.mapSize);
     }
     else if (viewType.equals("gui")) {
 
@@ -255,7 +271,19 @@ public class Game {
 
     if (this.viewType.equals("console")) {
 
-      Debugging.displayEnemyPositionsConsole(this.enemies);
+      Console console = new Console();
+
+      console.displayGameBoard(
+        this.mapSize,
+        this.hero,
+        this.enemies
+      );
+
+      console.displayHeroState(this.hero);
+      Console.displayGameInput();
+
+      // TODO: eh.
+      // Console.displayGameInput(this.hero);
     }
     else if (this.viewType.equals("gui")) {
 
@@ -265,14 +293,33 @@ public class Game {
 
   public boolean getGameInput() {
 
+    String input;
+
     // TODO: Prompt for user input here. this might be skippable depending on
     // whether the view will have key hooks / events, e.g. a gui. Prompt once.
 
     if (this.viewType.equals("console")) {
 
       // If input == exit, return false.
-      // TODO: Change this. This is only for testing purposes.
-      return false;
+      input = InputHelper.getInput();
+      while (
+        !input.equals("w") &&
+        !input.equals("d") &&
+        !input.equals("s") &&
+        !input.equals("a") &&
+        !input.equals("p")
+      ) {
+
+        Console.displayInvalidInput();
+        input = InputHelper.getInput();
+      }
+
+      if (input.equals("p")) {
+
+        return false;
+      }
+
+
     }
     else if (this.viewType.equals("gui")) {
 

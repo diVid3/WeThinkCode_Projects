@@ -1,11 +1,56 @@
 package za.co.wethinkcode.swingy.views;
 
 import za.co.wethinkcode.swingy.helpers.DisplayFormatter;
+import za.co.wethinkcode.swingy.models.Enemy;
+import za.co.wethinkcode.swingy.models.Hero;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Console {
+
+  private int oldMapSize;
+  private char[][] gameBoard;
+
+  private void placeHero(Hero hero) {
+
+    this.gameBoard[hero.getY()][hero.getX()] = 'H';
+  }
+
+  private void placeEnemies(List<Enemy> enemies) {
+
+    int enemyAmount = enemies.size();
+    Enemy enemy;
+
+    for (int i = 0; i < enemyAmount; i++) {
+
+      enemy = enemies.get(i);
+      this.gameBoard[enemy.getY()][enemy.getX()] = 'X';
+    }
+  }
+
+  private void initGameBoard(int mapSize) {
+
+    if (this.gameBoard == null || mapSize != this.oldMapSize) {
+
+      this.gameBoard = new char[mapSize][mapSize];
+      this.oldMapSize = mapSize;
+
+      for (int i = 0; i < mapSize; i++) {
+
+        for (int j = 0; j < mapSize; j++) {
+
+          this.gameBoard[i][j] = '.';
+        }
+      }
+    }
+
+    // for (int i = 0; i < mapSize; i++) {
+    //
+    //   this.gameBoard[i] =
+    // }
+  }
 
   public Console() {
 
@@ -78,5 +123,44 @@ public class Console {
 
     System.out.println("Your hero was successfully loaded.");
     System.out.println("Let the games begin!");
+  }
+
+  public void displayGameBoard(int mapSize, Hero hero, List<Enemy> enemies) {
+
+    this.initGameBoard(mapSize);
+    this.placeEnemies(enemies);
+    this.placeHero(hero);
+
+    System.out.println();
+    for (int i = 0; i < mapSize; i++) {
+
+      for (int j = 0; j < mapSize; j++) {
+
+        System.out.print(this.gameBoard[i][j]);
+        System.out.print("    ");
+      }
+      System.out.println();
+      System.out.println();
+    }
+  }
+
+  public void displayHeroState(Hero hero) {
+
+    System.out.println("Name        - " + hero.getHeroName());
+    System.out.println("Life        - " + hero.getHeroHitPoints());
+    System.out.println("Level       - " + hero.getHeroLevel());
+    System.out.println("Experience  - " + hero.getHeroExperience());
+    System.out.println("Coordinates - " + hero.getX() + ", " + hero.getY());
+    System.out.println();
+  }
+
+  public static void displayGameInput() {
+
+    System.out.println("[ w ] - North");
+    System.out.println("[ d ] - East");
+    System.out.println("[ s ] - South");
+    System.out.println("[ a ] - West");
+    System.out.println("[ p ] - Exit");
+    System.out.println();
   }
 }
