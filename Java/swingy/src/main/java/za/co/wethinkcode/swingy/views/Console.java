@@ -13,78 +13,69 @@ public class Console {
 
   public static void displaySelectHero() {
 
-    System.out.println("\n");
-
-    System.out.println("[ N ] - Create New Hero.\n");
-    System.out.println("[ L ] - Load Hero.\n");
-    System.out.println("\n");
+    System.out.println("[ N ] - Create New Hero.");
+    System.out.println("[ L ] - Load Hero.");
   }
 
   public static void displayInvalidInput() {
 
-    System.out.println("Invalid input, try again.\n");
-    System.out.println("\n");
+    System.out.println("Invalid input, try again.");
   }
 
   public static void displayNoHeroes() {
 
-    System.out.println("No heroes saved, create a new one.\n");
-    System.out.println("\n");
+    System.out.println("No heroes saved, create a new one.");
   }
 
   public static void displayHeroes(ResultSet rs) throws SQLException {
 
-    while(rs.next()) {
+    while (rs.next()) {
 
-      System.out.println(rs.getString("heroName") + "\n");
-      System.out.println(DisplayFormatter.formatHeroLevel(rs.getInt("heroLevel")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroExperience(rs.getInt("heroExperience")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroAttack(rs.getInt("heroAttack")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroDefence(rs.getInt("heroDefence")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroWeapon(rs.getString("heroWeapon")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroArmor(rs.getString("heroArmor")) + "\n");
-      System.out.println(DisplayFormatter.formatHeroHelm(rs.getString("heroHelm")) + "\n");
-      System.out.println("\n");
+      System.out.println("----------------------------------------");
+      System.out.println(rs.getString("heroName") + "");
+      System.out.println(DisplayFormatter.formatHeroLevel(rs.getInt("heroLevel")) + "");
+      System.out.println(DisplayFormatter.formatHeroExperience(rs.getInt("heroExperience")) + "");
+      System.out.println(DisplayFormatter.formatHeroAttack(rs.getInt("heroAttack")) + "");
+      System.out.println(DisplayFormatter.formatHeroDefence(rs.getInt("heroDefence")) + "");
+      System.out.println(DisplayFormatter.formatHeroWeapon(rs.getString("heroWeapon")) + "");
+      System.out.println(DisplayFormatter.formatHeroArmor(rs.getString("heroArmor")) + "");
+      System.out.println(DisplayFormatter.formatHeroHelm(rs.getString("heroHelm")) + "");
     }
+
+    System.out.println("----------------------------------------");
   }
 
   public static void displayPickHero() {
 
-    System.out.println("Pick your hero from the list above by typing in their name:\n");
-    System.out.println("\n");
+    System.out.println("Pick your hero from the list above by typing in their name:");
   }
 
   public static void displayCreateHeroName() {
 
-    System.out.println("Pick a name for your hero:\n");
-    System.out.println("\n");
+    System.out.println("Pick a name for your hero:");
   }
 
   public static void displayCreateHeroClass() {
 
-    System.out.println("Pick a class for you hero:\n");
-    System.out.println("\n");
+    System.out.println("Pick a class for you hero:");
   }
 
   public static void displayHeroTypes() {
 
-    System.out.println("[ O ] - Orc\n");
-    System.out.println("[ B ] - Barbarian\n");
-    System.out.println("[ A ] - Assassin\n");
-    System.out.println("\n");
+    System.out.println("[ O ] - Orc");
+    System.out.println("[ B ] - Barbarian");
+    System.out.println("[ A ] - Assassin");
   }
 
   public static void displayCreatedHeroSuccessfully() {
 
-    System.out.println("You have successfully created your hero.\n");
-    System.out.println("Let the games begin!\n");
-    System.out.println("\n");
+    System.out.println("You have successfully created your hero.");
+    System.out.println("Let the games begin!");
   }
 
   public static void displayHeroLoaded() {
 
-    System.out.println("Your hero was successfully loaded.\n");
-    System.out.println("Let the games begin!\n");
-    System.out.println("\n");
+    System.out.println("Your hero was successfully loaded.");
+    System.out.println("Let the games begin!");
   }
 }

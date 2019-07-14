@@ -13,7 +13,10 @@ public class InputHelper {
 
     Scanner inputScanner = new Scanner(System.in);
 
-    return inputScanner.nextLine();
+    String input = inputScanner.nextLine();
+    // System.out.println("\n");
+
+    return input;
   }
 
   // This validates whether the string passed in is correct in terms of

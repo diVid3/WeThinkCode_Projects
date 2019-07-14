@@ -23,12 +23,12 @@ public class DisplayFormatter {
 
   public static String formatHeroAttack(int heroAttack) {
 
-    return ("Experience: " + Integer.toString(heroAttack));
+    return ("Attack: " + Integer.toString(heroAttack));
   }
 
   public static String formatHeroDefence(int heroDefence) {
 
-    return ("Experience: " + Integer.toString(heroDefence));
+    return ("Defence: " + Integer.toString(heroDefence));
   }
 
   public static String formatHeroWeapon(String heroWeapon) {

@@ -6,11 +6,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Set;
 
 public class DbHelper {
@@ -60,6 +56,7 @@ public class DbHelper {
     }
 
     Statement statement = connection.createStatement();
+
     statement.executeUpdate("INSERT INTO heroes (" +
         "heroName," +
         "heroClass," +
@@ -72,16 +69,16 @@ public class DbHelper {
         "heroArmor," +
         "heroHelm" +
         ") VALUES (" +
-        hero.getHeroName() + "," +
-        hero.getHeroClass() + "," +
+        "'" + hero.getHeroName() + "'" + "," +
+        "'" + hero.getHeroClass() + "'" + "," +
         hero.getHeroLevel() + "," +
         hero.getHeroExperience() + "," +
         hero.getHeroAttack() + "," +
         hero.getHeroDefence() + "," +
         hero.getHeroHitPoints() + "," +
-        hero.getHeroWeapon() + "," +
-        hero.getHeroArmor() + "," +
-        hero.getHeroHelm() + ");"
+        "'" + hero.getHeroWeapon() + "'" + "," +
+        "'" + hero.getHeroArmor() + "'" + "," +
+        "'" + hero.getHeroHelm() + "'" + ");"
     );
   }
 
@@ -91,10 +88,21 @@ public class DbHelper {
     return statement.executeQuery("SELECT * FROM heroes;");
   }
 
+  public static boolean doHeroesExist(Connection connection) throws SQLException {
+
+    ResultSet rs = getHeroes(connection);
+
+    if (!rs.next()) {
+      return false;
+    }
+
+    return true;
+  }
+
   public static ResultSet getHero(Connection connection, String heroName)
     throws SQLException {
 
-    String heroNameToFind = "\'" + heroName + "\'";
+    String heroNameToFind = "'" + heroName + "'";
 
     Statement statement = connection.createStatement();
 

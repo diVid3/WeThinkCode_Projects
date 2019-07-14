@@ -22,8 +22,7 @@ public class Main {
       game = new Game(dbCon, args[0]);
       game.startGame();
 
-      System.out.println("Good job! Bye now.\n");
-      System.out.println("\n");
+      System.out.println("Good job! Bye now.");
     }
     catch (
       SQLException |

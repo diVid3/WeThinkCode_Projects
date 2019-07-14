@@ -40,6 +40,7 @@ public class Game {
 
     newHeroName = input;
 
+    Console.displayHeroTypes();
     Console.displayCreateHeroClass();
     input = InputHelper.getInput();
 
@@ -124,16 +125,14 @@ public class Game {
 
     if (input.equals("L")) {
 
-      ResultSet rs = DbHelper.getHeroes(this.connection);
+      if (!DbHelper.doHeroesExist(this.connection)) {
 
-      // If no heroes to load.
-      if (!rs.next()) {
-
+        Console.displayNoHeroes();
         this.createHeroConsole();
       }
       else {
 
-        Console.displayHeroes(rs);
+        Console.displayHeroes(DbHelper.getHeroes(this.connection));
         Console.displayPickHero();
 
         input = InputHelper.getInput();
@@ -141,7 +140,8 @@ public class Game {
           InputHelper.hasIllegalChars(input) ||
           !DbHelper.doesHeroExist(this.connection, input)
         ) {
-
+          
+          Console.displayInvalidInput();
           input = InputHelper.getInput();
         }
 
