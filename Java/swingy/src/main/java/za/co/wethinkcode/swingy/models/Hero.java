@@ -62,25 +62,6 @@ public class Hero implements ViewDisplayable {
   private int mapSize;
   private List<int[]> oldMovements;
 
-  private boolean canHeroMove() {
-
-    // FIXME: Why is this broken???
-
-    // y's are rows.
-    // x's are columns.
-    if (
-      this.y - 1 < 0 ||
-      this.y + 1 > this.mapSize ||
-      this.x - 1 < 0 ||
-      this.x + 1 > this.mapSize
-    ) {
-
-      return false;
-    }
-
-    return true;
-  }
-
   // This is to store only unique coordinates when clamping movement
   // to mapSize. So by going up, you don't store 0 (x), 5 (y) twice.
   private boolean canAddCurrentCoordinates() {
@@ -303,7 +284,7 @@ public class Hero implements ViewDisplayable {
 
   public void moveUp() {
 
-    if (canHeroMove()) {
+    if (this.y - 1 >= 0) {
 
       this.y -= 1;
       this.storeCoordinates();
@@ -312,7 +293,7 @@ public class Hero implements ViewDisplayable {
 
   public void moveLeft() {
 
-    if (canHeroMove()) {
+    if (this.x - 1 >= 0) {
 
       this.x -= 1;
       this.storeCoordinates();
@@ -321,7 +302,7 @@ public class Hero implements ViewDisplayable {
 
   public void moveDown() {
 
-    if (canHeroMove()) {
+    if (this.y + 1 < mapSize) {
 
       this.y += 1;
       this.storeCoordinates();
@@ -330,7 +311,7 @@ public class Hero implements ViewDisplayable {
 
   public void moveRight() {
 
-    if (canHeroMove()) {
+    if (this.x + 1 < mapSize) {
 
       this.x += 1;
       this.storeCoordinates();

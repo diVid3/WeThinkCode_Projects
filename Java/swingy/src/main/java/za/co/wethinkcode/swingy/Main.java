@@ -25,8 +25,8 @@ public class Main {
       while (true) {
 
         game.drawGameView();
-        if (!game.getGameInput()) break;
-        game.updateGameState();
+        game.getGameInput();
+        if (!game.updateGameState()) break;
       }
 
       game.farewell();

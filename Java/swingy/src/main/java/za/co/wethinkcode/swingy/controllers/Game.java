@@ -24,23 +24,25 @@ public class Game {
   private List<Enemy> enemies;
   private int mapSize;
 
-  private void handleConsoleInput(String input) {
+  private String getConsoleInput() {
 
-    switch (input) {
+    String input;
 
-      case "w":
-        this.hero.moveUp();
-        break;
-      case "d":
-        this.hero.moveRight();
-        break;
-      case "s":
-        this.hero.moveDown();
-        break;
-      case "a":
-        this.hero.moveLeft();
-        break;
+    // If input == exit, return false.
+    input = InputHelper.getInput();
+    while (
+      !input.equals("w") &&
+      !input.equals("d") &&
+      !input.equals("s") &&
+      !input.equals("a") &&
+      !input.equals("p")
+    ) {
+
+      Console.displayInvalidInput();
+      input = InputHelper.getInput();
     }
+
+    return input;
   }
 
   private boolean canAddEnemy(Enemy newEnemy) {
@@ -54,12 +56,11 @@ public class Game {
     int enemyToCheckAgainstX;
     int enemyToCheckAgainstY;
 
-    if (this.enemies.size() == 0) {
+    if (newEnemyX == heroX && newEnemyY == heroY) {
 
-      return true;
+      return false;
     }
 
-    // TODO: Replace with forEach.
     for (int i = 0; i < this.enemies.size(); i++) {
 
       enemyToCheckAgainst = this.enemies.get(i);
@@ -67,10 +68,8 @@ public class Game {
       enemyToCheckAgainstY = enemyToCheckAgainst.getY();
 
       if (
-        (newEnemyX == enemyToCheckAgainstX &&
-        newEnemyY == enemyToCheckAgainstY) ||
-        (newEnemyX == heroX &&
-        newEnemyY == heroY)
+        newEnemyX == enemyToCheckAgainstX &&
+        newEnemyY == enemyToCheckAgainstY
       ) {
 
         return false;
@@ -236,6 +235,10 @@ public class Game {
   private void startGameGui() {
 
     // TODO: Maybe implement this.
+    // This needs to follow the same creation / loading logic as the console,
+    // but using a gui, basically:
+    // N - Create new hero.
+    // L - Load hero, go to create window if no heroes exist.
   }
 
   public Game(Connection connection, String viewType) {
@@ -266,7 +269,9 @@ public class Game {
       throw new InvalidInputException("No GUI logic present. Exiting.");
 
       // TODO: Maybe enable this at a later stage.
-      // this.startGameGui();
+      // this.startGameGui(); <-------------------------- This needs to load or create hero.
+      // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+      // this.spawnEnemies(this.mapSize);
     }
   }
 
@@ -291,27 +296,69 @@ public class Game {
     }
   }
 
-  public boolean getGameInput() {
-
-    String input;
+  public void getGameInput() {
 
     // TODO: Prompt for user input here. this might be skippable depending on
     // whether the view will have key hooks / events, e.g. a gui. Prompt once.
 
     if (this.viewType.equals("console")) {
 
-      // If input == exit, return false.
-      input = InputHelper.getInput();
-      while (
-        !input.equals("w") &&
-        !input.equals("d") &&
-        !input.equals("s") &&
-        !input.equals("a") &&
-        !input.equals("p")
-      ) {
+      this.input.add(this.getConsoleInput());
+    }
+    else if (this.viewType.equals("gui")) {
 
-        Console.displayInvalidInput();
-        input = InputHelper.getInput();
+      // TODO: Maybe implement this.
+      // If input == exit, return false.
+    }
+  }
+
+  public boolean updateGameState() {
+
+    // TODO: Update game state based upon user input.
+    // Check for a viewType switch first.
+    // This needs to be done generically, i.e. independent of view.
+
+    // TODO: Check for object collision.
+    // If collision is found, prompt user to either fight or run.
+    // if fight, calculate fight, signal fight ongoing, after fight,
+    // signal results.
+    //
+    // If run, do 50% chance calc, if run back, run back, if fight,
+    // fight.
+    //
+    // After fight, drop loot, if loot non-none, add better stats, add
+    // to hero, delete enemy by using unique positions, or unique id.
+    //
+    // If collision is found, calculate fight, before calculation, signal
+    // view to output that fight is ongoing, after fight, signal results
+    // of fight.
+    //
+    // If the fight is successful, call drop loot, get loot, delete enemy at
+    // that position, positions are unique.
+    //
+    // If fight fails,
+
+    // TODO: Very important, handle the display case when hero is on enemy.
+    // Could possibly add "Collision" to use input queue.
+
+    String input = this.input.poll();
+
+    if (input != null) {
+
+      switch (input) {
+
+        case "w":
+          this.hero.moveUp();
+          break;
+        case "d":
+          this.hero.moveRight();
+          break;
+        case "s":
+          this.hero.moveDown();
+          break;
+        case "a":
+          this.hero.moveLeft();
+          break;
       }
 
       if (input.equals("p")) {
@@ -319,21 +366,9 @@ public class Game {
         return false;
       }
 
-      this.handleConsoleInput(input);
+      // TODO: Remember to do the switch here.
     }
-    else if (this.viewType.equals("gui")) {
-
-      // TODO: Maybe implement this.
-      // If input == exit, return false.
-    }
-
     return true;
-  }
-
-  public void updateGameState() {
-
-    // TODO: Update game state based upon user input.
-    // Check for a viewType switch first.
   }
 
   public void farewell() {
@@ -345,6 +380,7 @@ public class Game {
     else if (this.viewType.equals("gui")) {
 
       // TODO: Maybe implement this.
+      // Perhaps some final exit screen?
     }
   }
 }
