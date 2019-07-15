@@ -24,18 +24,21 @@ public class Game {
   private List<Enemy> enemies;
   private int mapSize;
 
-  private void moveHero(String input) {
+  private void handleConsoleInput(String input) {
 
     switch (input) {
-      
-      // TODO: Fill this in, remember to clamp to mapSize.
+
       case "w":
+        this.hero.moveUp();
         break;
       case "d":
+        this.hero.moveRight();
         break;
       case "s":
+        this.hero.moveDown();
         break;
       case "a":
+        this.hero.moveLeft();
         break;
     }
   }
@@ -281,9 +284,6 @@ public class Game {
 
       console.displayHeroState(this.hero);
       Console.displayGameInput();
-
-      // TODO: eh.
-      // Console.displayGameInput(this.hero);
     }
     else if (this.viewType.equals("gui")) {
 
@@ -319,7 +319,7 @@ public class Game {
         return false;
       }
 
-
+      this.handleConsoleInput(input);
     }
     else if (this.viewType.equals("gui")) {
 

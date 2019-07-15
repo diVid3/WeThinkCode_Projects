@@ -3,6 +3,8 @@ package za.co.wethinkcode.swingy.models;
 import za.co.wethinkcode.swingy.Interfaces.ViewDisplayable;
 
 import javax.validation.constraints.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Hero implements ViewDisplayable {
 
@@ -57,8 +59,59 @@ public class Hero implements ViewDisplayable {
 
   private int x;
   private int y;
-  private int OldX;
-  private int OldY;
+  private int mapSize;
+  private List<int[]> oldMovements;
+
+  private boolean canHeroMove() {
+
+    // FIXME: Why is this broken???
+
+    // y's are rows.
+    // x's are columns.
+    if (
+      this.y - 1 < 0 ||
+      this.y + 1 > this.mapSize ||
+      this.x - 1 < 0 ||
+      this.x + 1 > this.mapSize
+    ) {
+
+      return false;
+    }
+
+    return true;
+  }
+
+  // This is to store only unique coordinates when clamping movement
+  // to mapSize. So by going up, you don't store 0 (x), 5 (y) twice.
+  private boolean canAddCurrentCoordinates() {
+
+    int listSize = this.oldMovements.size();
+
+    if (listSize > 0) {
+
+      int[] lastCoordinates = this.oldMovements.get(listSize - 1);
+
+      if (lastCoordinates[0] == this.x && lastCoordinates[1] == this.y) {
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private void storeCoordinates() {
+
+    int[] currentCoordinates = new int[2];
+
+    currentCoordinates[0] = this.x;
+    currentCoordinates[1] = this.y;
+
+    if (this.canAddCurrentCoordinates()) {
+
+      this.oldMovements.add(currentCoordinates);
+    }
+  }
 
   public Hero(
     String heroName,
@@ -146,12 +199,15 @@ public class Hero implements ViewDisplayable {
 
     this.heroHitPoints = (this.heroLevel + 1) * 500 + this.heroDefence;
 
-    int pos = ((this.heroLevel - 1) * 5 + 10 - (this.heroLevel % 2)) / 2;
+    this.mapSize = (this.heroLevel - 1) * 5 + 10 - (this.heroLevel % 2);
+
+    int pos = this.mapSize / 2;
 
     this.x = pos;
     this.y = pos;
-    this.OldX = pos;
-    this.OldY = pos;
+
+    this.oldMovements = new LinkedList<>();
+    this.storeCoordinates();
   }
 
   public String getHeroName() {
@@ -202,10 +258,6 @@ public class Hero implements ViewDisplayable {
     return this.y;
   }
 
-  public int getOldX() { return this.OldX; }
-
-  public int getOldY() { return this.OldY; }
-
   public void setHeroName(String heroName) {
     this.heroName = heroName;
   }
@@ -246,15 +298,63 @@ public class Hero implements ViewDisplayable {
     this.heroHelm = heroHelm;
   }
 
-  public void setX(int x) {
+  // x's are rows.
+  // y's are columns.
 
-    this.OldX = this.x;
-    this.x = x;
+  public void moveUp() {
+
+    if (canHeroMove()) {
+
+      this.y -= 1;
+      this.storeCoordinates();
+    }
   }
 
-  public void setY(int y) {
+  public void moveLeft() {
 
-    this.OldY = this.y;
-    this.y = y;
+    if (canHeroMove()) {
+
+      this.x -= 1;
+      this.storeCoordinates();
+    }
+  }
+
+  public void moveDown() {
+
+    if (canHeroMove()) {
+
+      this.y += 1;
+      this.storeCoordinates();
+    }
+  }
+
+  public void moveRight() {
+
+    if (canHeroMove()) {
+
+      this.x += 1;
+      this.storeCoordinates();
+    }
+  }
+
+  // Returns true if successfully moved back.
+  public boolean moveBack() {
+
+    int listSize = this.oldMovements.size();
+
+    if (listSize > 0) {
+
+      int[] oldCoordinates = this.oldMovements.remove(listSize - 1);
+      this.x = oldCoordinates[0];
+      this.y = oldCoordinates[1];
+      return true;
+    }
+
+    return false;
+  }
+
+  public void addExperience(int newExperience) {
+
+    // TODO: Remember to increase mapSize when leveling.
   }
 }
