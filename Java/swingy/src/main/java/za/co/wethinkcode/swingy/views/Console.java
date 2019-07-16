@@ -45,11 +45,6 @@ public class Console {
         }
       }
     }
-
-    // for (int i = 0; i < mapSize; i++) {
-    //
-    //   this.gameBoard[i] =
-    // }
   }
 
   public Console() {
@@ -154,7 +149,7 @@ public class Console {
     System.out.println();
   }
 
-  public static void displayGameInput() {
+  public static void displayGameInputWalking() {
 
     System.out.println("[ w ] - North");
     System.out.println("[ d ] - East");
@@ -162,5 +157,18 @@ public class Console {
     System.out.println("[ a ] - West");
     System.out.println("[ p ] - Exit");
     System.out.println();
+  }
+
+  public static void displayGameInputCollided() {
+
+    System.out.println("You encountered an enemy! Make a choice.");
+    System.out.println();
+    System.out.print("[ f ] - Fight OR ");
+    System.out.println("[ r ] - Run");
+    System.out.println();
+  }
+
+  public static void displayHeroCollided() {
+
   }
 }

@@ -1,6 +1,7 @@
 package za.co.wethinkcode.swingy.helpers;
 
 import za.co.wethinkcode.swingy.models.Enemy;
+import za.co.wethinkcode.swingy.models.Hero;
 
 import java.util.List;
 
@@ -29,5 +30,26 @@ public class EnemyHelpers {
     }
 
     enemies.remove(enemyToDelIndex);
+  }
+
+  public static Enemy findCollidedEnemy(List<Enemy> enemies, Hero hero) {
+
+    int heroX = hero.getX();
+    int heroY = hero.getY();
+
+    Enemy enemy;
+    int listSize = enemies.size();
+
+    for (int i = 0; i < listSize; i++) {
+
+      enemy = enemies.get(i);
+
+      if (enemy.getX() == heroX && enemy.getY() == heroY) {
+
+        return enemy;
+      }
+    }
+
+    return null;
   }
 }

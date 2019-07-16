@@ -23,8 +23,45 @@ public class Game {
   private Queue<String> input;
   private List<Enemy> enemies;
   private int mapSize;
+  private boolean heroCollidedEnemy;
 
-  private String getConsoleInput() {
+  private void calculateFight() {
+
+    int enemyInstantDeath = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+
+
+  }
+
+  private void calculateRun() {
+
+
+  }
+
+  private boolean hasHeroCollidedEnemy() {
+
+    int heroX = this.hero.getX();
+    int heroY = this.hero.getY();
+    int listSize = this.enemies.size();
+
+    Enemy enemyToCheckAgainst;
+
+    for (int i = 0; i < listSize; i++) {
+
+      enemyToCheckAgainst = this.enemies.get(i);
+
+      if (
+        heroX == enemyToCheckAgainst.getX() &&
+        heroY == enemyToCheckAgainst.getY()
+      ) {
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private String getConsoleInputWalking() {
 
     String input;
 
@@ -36,6 +73,23 @@ public class Game {
       !input.equals("s") &&
       !input.equals("a") &&
       !input.equals("p")
+    ) {
+
+      Console.displayInvalidInput();
+      input = InputHelper.getInput();
+    }
+
+    return input;
+  }
+
+  private String getConsoleInputCollided() {
+
+    String input;
+
+    input = InputHelper.getInput();
+    while (
+      !input.equals("f") &&
+      !input.equals("r")
     ) {
 
       Console.displayInvalidInput();
@@ -234,6 +288,9 @@ public class Game {
 
   private void startGameGui() {
 
+
+
+
     // TODO: Maybe implement this.
     // This needs to follow the same creation / loading logic as the console,
     // but using a gui, basically:
@@ -263,15 +320,14 @@ public class Game {
       this.startGameConsole();
       this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
       this.spawnEnemies(this.mapSize);
+      this.heroCollidedEnemy = false;
     }
     else if (viewType.equals("gui")) {
-
       throw new InvalidInputException("No GUI logic present. Exiting.");
 
-      // TODO: Maybe enable this at a later stage.
-      // this.startGameGui(); <-------------------------- This needs to load or create hero.
-      // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
-      // this.spawnEnemies(this.mapSize);
+
+
+
     }
   }
 
@@ -282,17 +338,27 @@ public class Game {
       Console console = new Console();
 
       console.displayGameBoard(
-        this.mapSize,
-        this.hero,
-        this.enemies
+          this.mapSize,
+          this.hero,
+          this.enemies
       );
 
       console.displayHeroState(this.hero);
-      Console.displayGameInput();
+
+      if (!this.heroCollidedEnemy) {
+
+        Console.displayGameInputWalking();
+      }
+      else if (this.heroCollidedEnemy) {
+
+        Console.displayGameInputCollided();
+      }
     }
     else if (this.viewType.equals("gui")) {
 
-      // TODO: Maybe implement this.
+
+
+
     }
   }
 
@@ -303,71 +369,105 @@ public class Game {
 
     if (this.viewType.equals("console")) {
 
-      this.input.add(this.getConsoleInput());
+      if (!this.heroCollidedEnemy) {
+
+        this.input.add(this.getConsoleInputWalking());
+      }
+      else if (this.heroCollidedEnemy) {
+
+        this.input.add(this.getConsoleInputCollided());
+      }
     }
     else if (this.viewType.equals("gui")) {
 
-      // TODO: Maybe implement this.
-      // If input == exit, return false.
+
+
+
     }
   }
 
+
+  // Check for a viewType switch first.
+  // This needs to be done generically, i.e. independent of view.
+  //
+  // If collision is found, prompt user to either fight or run.
+  // if fight, calculate fight, signal fight ongoing, after fight,
+  // signal results.
+  //
+  // If run, do 50% chance calc, if run back, run back, if fight,
+  // fight.
+  //
+  // After fight, drop loot, if loot non-none, add better stats, add
+  // to hero, delete enemy by using unique positions, or unique id.
+  //
+  // If collision is found, calculate fight, before calculation, signal
+  // view to output that fight is ongoing, after fight, signal results
+  // of fight.
+  //
+  // If the fight is successful, call drop loot, get loot, delete enemy at
+  // that position, positions are unique.
+  //
+  // If fight fails,
+  //
   public boolean updateGameState() {
-
-    // TODO: Update game state based upon user input.
-    // Check for a viewType switch first.
-    // This needs to be done generically, i.e. independent of view.
-
-    // TODO: Check for object collision.
-    // If collision is found, prompt user to either fight or run.
-    // if fight, calculate fight, signal fight ongoing, after fight,
-    // signal results.
-    //
-    // If run, do 50% chance calc, if run back, run back, if fight,
-    // fight.
-    //
-    // After fight, drop loot, if loot non-none, add better stats, add
-    // to hero, delete enemy by using unique positions, or unique id.
-    //
-    // If collision is found, calculate fight, before calculation, signal
-    // view to output that fight is ongoing, after fight, signal results
-    // of fight.
-    //
-    // If the fight is successful, call drop loot, get loot, delete enemy at
-    // that position, positions are unique.
-    //
-    // If fight fails,
-
-    // TODO: Very important, handle the display case when hero is on enemy.
-    // Could possibly add "Collision" to use input queue.
 
     String input = this.input.poll();
 
-    if (input != null) {
+    if (!this.heroCollidedEnemy) {
 
-      switch (input) {
+      boolean shouldExit = false;
 
-        case "w":
-          this.hero.moveUp();
-          break;
-        case "d":
-          this.hero.moveRight();
-          break;
-        case "s":
-          this.hero.moveDown();
-          break;
-        case "a":
-          this.hero.moveLeft();
-          break;
+      if (input != null) {
+
+        switch (input) {
+
+          case "w":
+            this.hero.moveUp();
+            break;
+          case "d":
+            this.hero.moveRight();
+            break;
+          case "s":
+            this.hero.moveDown();
+            break;
+          case "a":
+            this.hero.moveLeft();
+            break;
+          case "p":
+            shouldExit = true;
+            break;
+        }
+
+        if (shouldExit) {
+
+          return false;
+        }
+
+        if (this.hasHeroCollidedEnemy()) {
+
+          this.heroCollidedEnemy = true;
+        }
       }
-
-      if (input.equals("p")) {
-
-        return false;
-      }
-
-      // TODO: Remember to do the switch here.
     }
+    else if (this.heroCollidedEnemy) {
+
+      if (input != null) {
+
+        switch (input) {
+
+          // TODO: Remember to set hasHeroCollidedEnemy to false after the enemy has been defeated or when the the hero ran from the enemy.
+          case "f":
+            // TODO: Calculate fight outcome, set the flag to display items / xp gained, display on next non-collide iteration.
+            this.calculateFight();
+            break;
+          case "r":
+            // TODO: Calculate chance to run, if not, fight.
+            this.calculateRun();
+            break;
+        }
+      }
+    }
+
     return true;
   }
 
@@ -379,8 +479,9 @@ public class Game {
     }
     else if (this.viewType.equals("gui")) {
 
-      // TODO: Maybe implement this.
-      // Perhaps some final exit screen?
+
+
+
     }
   }
 }
