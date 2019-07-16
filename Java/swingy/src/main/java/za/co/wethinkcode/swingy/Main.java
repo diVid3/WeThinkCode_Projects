@@ -2,6 +2,7 @@ package za.co.wethinkcode.swingy;
 
 import za.co.wethinkcode.swingy.controllers.Game;
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
+import za.co.wethinkcode.swingy.exceptions.NoEnemyException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
 
 import java.sql.Connection;
@@ -33,7 +34,8 @@ public class Main {
     }
     catch (
       SQLException |
-      InvalidInputException e
+      InvalidInputException |
+      NoEnemyException e
     ) {
 
       e.printStackTrace(System.out);

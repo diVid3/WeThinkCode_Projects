@@ -1,8 +1,10 @@
 package za.co.wethinkcode.swingy.controllers;
 
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
+import za.co.wethinkcode.swingy.exceptions.NoEnemyException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
 import za.co.wethinkcode.swingy.helpers.Debugging;
+import za.co.wethinkcode.swingy.helpers.EnemyHelpers;
 import za.co.wethinkcode.swingy.helpers.InputHelper;
 import za.co.wethinkcode.swingy.models.Enemy;
 import za.co.wethinkcode.swingy.models.Hero;
@@ -25,11 +27,28 @@ public class Game {
   private int mapSize;
   private boolean heroCollidedEnemy;
 
-  private void calculateFight() {
+  private void calculateFight() throws NoEnemyException {
+
+    Enemy enemy = EnemyHelpers.findCollidedEnemy(this.enemies, this.hero);
+
+    if (enemy == null) {
+
+      throw new NoEnemyException("No enemy collided with hero.");
+    }
 
     int enemyInstantDeath = ThreadLocalRandom.current().nextInt(0, 1 + 1);
 
+    if (enemyInstantDeath == 1) {
 
+      EnemyHelpers.deleteEnemy(this.enemies, enemy);
+      return;
+    }
+
+    // TODO: Exchange damage until either < 0, hero starts.
+    while () {
+
+
+    }
   }
 
   private void calculateRun() {
@@ -409,7 +428,7 @@ public class Game {
   //
   // If fight fails,
   //
-  public boolean updateGameState() {
+  public boolean updateGameState() throws NoEnemyException {
 
     String input = this.input.poll();
 
