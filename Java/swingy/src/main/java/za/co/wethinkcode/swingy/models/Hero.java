@@ -95,34 +95,22 @@ public class Hero implements ViewDisplayable {
     }
   }
 
-  public Hero(
-    String heroName,
-    String heroClass,
-    int heroExperience,
-    String heroWeapon,
-    String heroArmor,
-    String heroHelm
-  ) {
+  private void updateHeroLevel() {
 
     double exp;
     double discriminant;
     double levelDouble;
 
-    this.heroName = heroName;
-    this.heroClass = heroClass;
-    this.heroExperience = heroExperience;
-    this.heroWeapon = heroWeapon;
-    this.heroArmor = heroArmor;
-    this.heroHelm = heroHelm;
-
-    // Start exp should be 450 to reach level 0.
     exp = this.heroExperience;
     discriminant = Math.sqrt(2 * (-4000 + (9 * exp)));
     levelDouble = (-10 + discriminant) / 90;
 
     this.heroLevel = (int)Math.floor(levelDouble);
+  }
 
-    switch (heroWeapon) {
+  private void updateHeroHitPoints() {
+
+    switch (this.heroWeapon) {
 
       case "Wooden Sword":
         this.heroAttack = 200;
@@ -141,7 +129,7 @@ public class Hero implements ViewDisplayable {
         break;
     }
 
-    switch (heroArmor) {
+    switch (this.heroArmor) {
 
       case "Wooden Armor":
         this.heroDefence = 100;
@@ -160,7 +148,7 @@ public class Hero implements ViewDisplayable {
         break;
     }
 
-    switch (heroHelm) {
+    switch (this.heroHelm) {
 
       case "Wooden Helm":
         this.heroDefence += 50;
@@ -180,16 +168,78 @@ public class Hero implements ViewDisplayable {
     }
 
     this.heroHitPoints = (this.heroLevel + 1) * 500 + this.heroDefence;
+  }
+
+  private void updateMapSize() {
 
     this.mapSize = (this.heroLevel - 1) * 5 + 10 - (this.heroLevel % 2);
+  }
+
+  private void updateHeroPosition() {
 
     int pos = this.mapSize / 2;
 
     this.x = pos;
     this.y = pos;
+  }
+
+  private void updateOldHeroMovements() {
 
     this.oldMovements = new LinkedList<>();
     this.storeCoordinates();
+  }
+
+  private void addExperience(int newExperience) {
+
+    // TODO: Remember to increase mapSize when leveling.
+
+    this.heroExperience += newExperience;
+  }
+
+  private void addLoot(String loot) {
+
+    if (loot.equals("None")) {
+
+      return;
+    }
+
+    if (loot.contains("Sword")) {
+
+      this.heroWeapon = loot;
+    }
+    else if (loot.contains("Armor")) {
+
+      this.heroArmor = loot;
+    }
+    else if (loot.contains("Helm")) {
+
+      this.heroHelm = loot;
+    }
+
+    // TODO: Might need to recalculate stats.
+  }
+
+  public Hero(
+    String heroName,
+    String heroClass,
+    int heroExperience,
+    String heroWeapon,
+    String heroArmor,
+    String heroHelm
+  ) {
+
+    this.heroName = heroName;
+    this.heroClass = heroClass;
+    this.heroExperience = heroExperience;
+    this.heroWeapon = heroWeapon;
+    this.heroArmor = heroArmor;
+    this.heroHelm = heroHelm;
+
+    this.updateHeroLevel();
+    this.updateHeroHitPoints();
+    this.updateMapSize();
+    this.updateHeroPosition();
+    this.updateOldHeroMovements();
   }
 
   public String getHeroName() {
@@ -340,14 +390,15 @@ public class Hero implements ViewDisplayable {
     return false;
   }
 
-  public void addExperience(int newExperience) {
+  public void takeLootExperience(String loot, int experience) {
 
-    // TODO: Remember to increase mapSize when leveling.
-  }
+    this.addLoot(loot);
+    this.addExperience(experience);
 
-  //
-  public void takeLoot(String loot) {
-
-    // TODO:
+    this.updateHeroLevel();
+    this.updateHeroHitPoints();
+    this.updateMapSize();
+    this.updateHeroPosition();
+    this.updateOldHeroMovements();
   }
 }

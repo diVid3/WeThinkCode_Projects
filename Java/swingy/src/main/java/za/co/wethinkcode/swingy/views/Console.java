@@ -51,6 +51,13 @@ public class Console {
 
   }
 
+  public static void displayGameOver() {
+
+    System.out.println("Game Over!");
+    System.out.println("Thanks for playing!");
+    System.out.println("Now go away.");
+  }
+
   public static void displaySelectHero() {
 
     System.out.println("[ N ] - Create New Hero.");
@@ -168,7 +175,13 @@ public class Console {
     System.out.println();
   }
 
-  public static void displayHeroCollided() {
+  public static void displayExperienceGained(int experience) {
 
+    System.out.println("XP gained - " + experience);
+  }
+
+  public static void displayLootGained(String loot) {
+
+    System.out.println("Loot gained - " + loot);
   }
 }

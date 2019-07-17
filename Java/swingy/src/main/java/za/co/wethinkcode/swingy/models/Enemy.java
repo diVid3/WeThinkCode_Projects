@@ -90,7 +90,35 @@ public class Enemy {
     return this.enemyAttackPoints;
   }
 
-  public String getLoot() {
+  public String getLoot(Hero hero) {
+
+    String heroWeapon = hero.getHeroWeapon();
+    String heroArmor = hero.getHeroArmor();
+    String heroHelm = hero.getHeroHelm();
+
+    // Should make picking up worthy items rarer.
+    if (this.loot.contains("Sword")) {
+
+      if (heroWeapon.equals(this.loot)) {
+
+        this.loot = "None";
+      }
+    }
+    else if (this.loot.contains("Armor")) {
+
+      if (heroArmor.equals(this.loot)) {
+
+        this.loot = "None";
+      }
+    }
+    else if (this.loot.contains("Helm")) {
+
+      if (heroHelm.equals(this.loot)) {
+
+        this.loot = "None";
+      }
+    }
+
     return this.loot;
   }
 
@@ -109,5 +137,10 @@ public class Enemy {
     if (this.enemyHitPoints <= 0) {
       this.enemyAlive = false;
     }
+  }
+
+  public int dropExperience() {
+
+    return (900 * this.enemyLevel);
   }
 }
