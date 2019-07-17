@@ -344,4 +344,10 @@ public class Hero implements ViewDisplayable {
 
     // TODO: Remember to increase mapSize when leveling.
   }
+
+  //
+  public void takeLoot(String loot) {
+
+    // TODO:
+  }
 }

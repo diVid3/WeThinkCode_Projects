@@ -38,10 +38,14 @@ public class Game {
 
     int enemyInstantDeath = ThreadLocalRandom.current().nextInt(0, 1 + 1);
 
-    // TODO: Give player loot + xp when enemy died, signal view.
     if (enemyInstantDeath == 1) {
 
+      // TODO: Give player loot + xp when enemy died, signal view.
+
       EnemyHelpers.deleteEnemy(this.enemies, enemy);
+
+      // TODO: Remember to set heroCollidedEnemy to false.
+
       return;
     }
 
@@ -64,7 +68,11 @@ public class Game {
     }
 
     // TODO: Give player loot + xp when enemy died, signal view.
+    // Use enemy.getLoot(), it returns a loot object, remember to return xp, use hero set xp, remember to level hero.
+
     // TODO: Signal Game Over when the Hero dies.
+
+    // TODO: Remember to set heroCollidedEnemy to false.
   }
 
   private void calculateRun() {
@@ -381,6 +389,8 @@ public class Game {
       console.displayHeroState(this.hero);
 
       if (!this.heroCollidedEnemy) {
+
+        // TODO: Add if-statement here to display loot / xp gained after defeating enemy, check if loot / xp available.
 
         Console.displayGameInputWalking();
       }
