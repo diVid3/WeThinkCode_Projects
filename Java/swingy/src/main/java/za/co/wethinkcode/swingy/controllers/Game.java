@@ -38,17 +38,33 @@ public class Game {
 
     int enemyInstantDeath = ThreadLocalRandom.current().nextInt(0, 1 + 1);
 
+    // TODO: Give player loot + xp when enemy died, signal view.
     if (enemyInstantDeath == 1) {
 
       EnemyHelpers.deleteEnemy(this.enemies, enemy);
       return;
     }
 
-    // TODO: Exchange damage until either < 0, hero starts.
-    while () {
+    // Dangerous??? Dragons here. Careful.
+    while (true) {
 
+      enemy.reduceEnemyHitPoints(this.hero.getHeroAttack());
 
+      if (enemy.getEnemyHitPoints() <= 0) {
+
+        break;
+      }
+
+      this.hero.reduceHeroHitPoints(enemy.getEnemyAttackPoints());
+
+      if (this.hero.getHeroHitPoints() <= 0) {
+
+        break;
+      }
     }
+
+    // TODO: Give player loot + xp when enemy died, signal view.
+    // TODO: Signal Game Over when the Hero dies.
   }
 
   private void calculateRun() {

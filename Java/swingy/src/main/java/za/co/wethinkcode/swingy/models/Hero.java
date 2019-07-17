@@ -24,6 +24,7 @@ public class Hero implements ViewDisplayable {
   @Min(value = 0, message = "heroLevel below 0.")
   private int heroLevel;
 
+  // TODO: Set min to 450.
   // Calculated.
   @NotNull(message = "heroExperience null.")
   @Min(value = 0, message = "heroExperience below 0.")
@@ -277,6 +278,11 @@ public class Hero implements ViewDisplayable {
 
   public void setHeroHelm(String heroHelm) {
     this.heroHelm = heroHelm;
+  }
+
+  public void reduceHeroHitPoints(int hitPoints) {
+
+    this.heroHitPoints -= hitPoints;
   }
 
   // x's are rows.
