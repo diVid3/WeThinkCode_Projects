@@ -337,8 +337,8 @@ public class Hero implements ViewDisplayable {
 
     if (this.y - 1 >= 0) {
 
-      this.y -= 1;
       this.storeCoordinates();
+      this.y -= 1;
     }
   }
 
@@ -346,8 +346,8 @@ public class Hero implements ViewDisplayable {
 
     if (this.x - 1 >= 0) {
 
-      this.x -= 1;
       this.storeCoordinates();
+      this.x -= 1;
     }
   }
 
@@ -355,8 +355,8 @@ public class Hero implements ViewDisplayable {
 
     if (this.y + 1 < mapSize) {
 
-      this.y += 1;
       this.storeCoordinates();
+      this.y += 1;
     }
   }
 
@@ -364,8 +364,8 @@ public class Hero implements ViewDisplayable {
 
     if (this.x + 1 < mapSize) {
 
-      this.x += 1;
       this.storeCoordinates();
+      this.x += 1;
     }
   }
 
@@ -376,15 +376,7 @@ public class Hero implements ViewDisplayable {
 
     if (listSize > 0) {
 
-      // FIXME: This is still broken?
-      // One back would be current position.
-      // FIXME: Add protection when on spawn.
-      int[] oldCoordinates = this.oldMovements.remove(listSize - 2);
-
-      System.out.println("--------ABOUT TO GO BACK--------");
-      System.out.println("X current - " + this.x + ", X new - " + oldCoordinates[0]);
-      System.out.println("Y current - " + this.y + ", Y new - " + oldCoordinates[1]);
-      System.out.println("--------------------------------");
+      int[] oldCoordinates = this.oldMovements.remove(listSize - 1);
 
       this.x = oldCoordinates[0];
       this.y = oldCoordinates[1];
