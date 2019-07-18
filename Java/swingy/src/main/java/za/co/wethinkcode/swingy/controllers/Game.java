@@ -26,6 +26,7 @@ public class Game {
   private Queue<String> input;
   private List<Enemy> enemies;
   private int mapSize;
+  private int oldHeroLevel;
   private boolean heroCollidedEnemy;
   private int experienceGained;
   private String lootGained;
@@ -49,11 +50,15 @@ public class Game {
       this.experienceGained = enemyExperience;
       this.lootGained = enemyLoot;
       this.hero.takeLootExperience(this.lootGained, this.experienceGained);
-      // TODO: If hero leveled, update mapSize, respawn enemies. Use a variable.
-      // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
-      // this.spawnEnemies(this.mapSize);
       this.heroCollidedEnemy = false;
       EnemyHelpers.deleteEnemy(this.enemies, enemy);
+
+      if (this.oldHeroLevel != this.hero.getHeroLevel()) {
+
+        this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+        this.spawnEnemies(this.mapSize);
+      }
+
       return;
     }
 
@@ -71,7 +76,6 @@ public class Game {
 
       if (this.hero.getHeroHitPoints() <= 0) {
 
-        // TODO: Signal Game Over when the Hero dies.
         this.gameOver = true;
         return;
       }
@@ -80,16 +84,28 @@ public class Game {
     this.experienceGained = enemyExperience;
     this.lootGained = enemyLoot;
     this.hero.takeLootExperience(this.lootGained, this.experienceGained);
-    // TODO: If hero leveled, update mapSize, respawn enemies. Use a variable.
-    // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
-    // this.spawnEnemies(this.mapSize);
     this.heroCollidedEnemy = false;
     EnemyHelpers.deleteEnemy(this.enemies, enemy);
+
+    if (this.oldHeroLevel != this.hero.getHeroLevel()) {
+
+      this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+      this.spawnEnemies(this.mapSize);
+    }
   }
 
-  private void calculateRun() {
+  private void calculateRun() throws NoEnemyException {
 
+    int shouldRun = ThreadLocalRandom.current().nextInt(0, 1 + 1);
 
+    if (shouldRun == 1) {
+
+      this.hero.moveBack();
+      this.heroCollidedEnemy = false;
+      return;
+    }
+
+    this.calculateFight();
   }
 
   private boolean hasHeroCollidedEnemy() {
@@ -373,6 +389,7 @@ public class Game {
     if (viewType.equals("console")) {
 
       this.startGameConsole();
+      this.oldHeroLevel = this.hero.getHeroLevel();
       this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
       this.spawnEnemies(this.mapSize);
       this.heroCollidedEnemy = false;
@@ -408,8 +425,6 @@ public class Game {
 
       if (!this.heroCollidedEnemy) {
 
-        // TODO: Add if-statement here to display loot / xp gained after defeating enemy, check if loot / xp available.
-
         if (this.experienceGained != 0) {
 
           Console.displayExperienceGained(this.experienceGained);
@@ -438,9 +453,6 @@ public class Game {
   }
 
   public void getGameInput() {
-
-    // TODO: Prompt for user input here. this might be skippable depending on
-    // whether the view will have key hooks / events, e.g. a gui. Prompt once.
 
     if (this.viewType.equals("console")) {
 
@@ -541,19 +553,6 @@ public class Game {
 
           this.calculateRun();
         }
-
-        // switch (input) {
-        //
-        //   // TODO: Remember to set hasHeroCollidedEnemy to false after the enemy has been defeated or when the the hero ran from the enemy.
-        //   case "f":
-        //     // TODO: Calculate fight outcome, set the flag to display items / xp gained, display on next non-collide iteration.
-        //     this.calculateFight();
-        //     break;
-        //   case "r":
-        //     // TODO: Calculate chance to run, if not, fight.
-        //     this.calculateRun();
-        //     break;
-        // }
       }
     }
 

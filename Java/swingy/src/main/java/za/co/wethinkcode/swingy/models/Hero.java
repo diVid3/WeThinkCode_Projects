@@ -24,7 +24,6 @@ public class Hero implements ViewDisplayable {
   @Min(value = 0, message = "heroLevel below 0.")
   private int heroLevel;
 
-  // TODO: Set min to 450.
   // Calculated.
   @NotNull(message = "heroExperience null.")
   @Min(value = 0, message = "heroExperience below 0.")
@@ -191,8 +190,6 @@ public class Hero implements ViewDisplayable {
 
   private void addExperience(int newExperience) {
 
-    // TODO: Remember to increase mapSize when leveling.
-
     this.heroExperience += newExperience;
   }
 
@@ -215,8 +212,6 @@ public class Hero implements ViewDisplayable {
 
       this.heroHelm = loot;
     }
-
-    // TODO: Might need to recalculate stats.
   }
 
   public Hero(
@@ -375,7 +370,7 @@ public class Hero implements ViewDisplayable {
   }
 
   // Returns true if successfully moved back.
-  public boolean moveBack() {
+  public void moveBack() {
 
     int listSize = this.oldMovements.size();
 
@@ -384,10 +379,7 @@ public class Hero implements ViewDisplayable {
       int[] oldCoordinates = this.oldMovements.remove(listSize - 1);
       this.x = oldCoordinates[0];
       this.y = oldCoordinates[1];
-      return true;
     }
-
-    return false;
   }
 
   public void takeLootExperience(String loot, int experience) {
