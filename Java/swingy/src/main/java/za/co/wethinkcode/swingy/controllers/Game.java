@@ -55,6 +55,7 @@ public class Game {
 
       if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
+        // TODO: Might want to save game here.
         this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
         this.spawnEnemies(this.mapSize);
       }
@@ -89,6 +90,7 @@ public class Game {
 
     if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
+      // TODO: Might want to save game here.
       this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
       this.spawnEnemies(this.mapSize);
     }
@@ -100,6 +102,7 @@ public class Game {
 
     if (shouldRun == 1) {
 
+      // FIXME: This seems broken, plz fix.
       this.hero.moveBack();
       this.heroCollidedEnemy = false;
       return;
@@ -563,7 +566,7 @@ public class Game {
 
     if (this.viewType.equals("console")) {
 
-      System.out.println("Good job! Bye now.");
+      System.out.println("Bye now.");
     }
     else if (this.viewType.equals("gui")) {
 

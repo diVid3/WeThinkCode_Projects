@@ -55,7 +55,6 @@ public class Console {
 
     System.out.println("Game Over!");
     System.out.println("Thanks for playing!");
-    System.out.println("Now go away.");
   }
 
   public static void displaySelectHero() {
@@ -183,5 +182,6 @@ public class Console {
   public static void displayLootGained(String loot) {
 
     System.out.println("Loot gained - " + loot);
+    System.out.println();
   }
 }

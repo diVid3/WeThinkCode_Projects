@@ -376,7 +376,16 @@ public class Hero implements ViewDisplayable {
 
     if (listSize > 0) {
 
-      int[] oldCoordinates = this.oldMovements.remove(listSize - 1);
+      // FIXME: This is still broken?
+      // One back would be current position.
+      // FIXME: Add protection when on spawn.
+      int[] oldCoordinates = this.oldMovements.remove(listSize - 2);
+
+      System.out.println("--------ABOUT TO GO BACK--------");
+      System.out.println("X current - " + this.x + ", X new - " + oldCoordinates[0]);
+      System.out.println("Y current - " + this.y + ", Y new - " + oldCoordinates[1]);
+      System.out.println("--------------------------------");
+
       this.x = oldCoordinates[0];
       this.y = oldCoordinates[1];
     }
