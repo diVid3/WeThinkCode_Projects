@@ -123,4 +123,9 @@ public class DbHelper {
 
     return true;
   }
+
+  public static void saveHero(Connection connection, String heroToSave) {
+
+    // TODO: Implement this.
+  }
 }

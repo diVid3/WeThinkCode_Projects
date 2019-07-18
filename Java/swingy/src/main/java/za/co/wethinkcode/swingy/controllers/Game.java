@@ -102,7 +102,6 @@ public class Game {
 
     if (shouldRun == 1) {
 
-      // FIXME: This seems broken, plz fix.
       this.hero.moveBack();
       this.heroCollidedEnemy = false;
       return;
@@ -400,8 +399,7 @@ public class Game {
     else if (viewType.equals("gui")) {
       throw new InvalidInputException("No GUI logic present. Exiting.");
 
-
-
+      // TODO: Add GUI logic here.
 
     }
   }
