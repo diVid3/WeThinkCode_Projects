@@ -124,8 +124,30 @@ public class DbHelper {
     return true;
   }
 
-  public static void saveHero(Connection connection, String heroToSave) {
+  public static void saveHero(Connection connection, Hero hero) throws SQLException {
 
-    // TODO: Implement this.
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    Validator validator = factory.getValidator();
+
+    Set<ConstraintViolation<Hero>> violations = validator.validate(hero);
+
+    if (violations.size() > 0) {
+
+      throw new SQLException(violations.toString());
+    }
+
+    Statement statement = connection.createStatement();
+
+    statement.execute("UPDATE heroes SET " +
+        "heroLevel = " + hero.getHeroLevel() + ", " +
+        "heroExperience = " + hero.getHeroExperience() + ", " +
+        "heroAttack = " + hero.getHeroAttack() + ", " +
+        "heroDefence = " + hero.getHeroDefence() + ", " +
+        "heroHitPoints = " + hero.getHeroHitPoints() + ", " +
+        "heroWeapon = " + "'" + hero.getHeroWeapon() + "'" + ", " +
+        "heroArmor = " + "'" + hero.getHeroArmor() + "'" + ", " +
+        "heroHelm = " + "'" + hero.getHeroHelm() + "'" +
+        "WHERE heroName LIKE " + "'" + hero.getHeroName() + "'"
+    );
   }
 }

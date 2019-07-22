@@ -31,7 +31,9 @@ public class Game {
   private int experienceGained;
   private String lootGained;
 
-  private void calculateFight() throws NoEnemyException {
+  private void calculateFight() throws
+      NoEnemyException,
+      SQLException {
 
     Enemy enemy = EnemyHelpers.findCollidedEnemy(this.enemies, this.hero);
 
@@ -55,9 +57,9 @@ public class Game {
 
       if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
-        // TODO: Might want to save game here.
         this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
         this.spawnEnemies(this.mapSize);
+        DbHelper.saveHero(connection, this.hero);
       }
 
       return;
@@ -90,13 +92,15 @@ public class Game {
 
     if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
-      // TODO: Might want to save game here.
       this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
       this.spawnEnemies(this.mapSize);
+      DbHelper.saveHero(connection, this.hero);
     }
   }
 
-  private void calculateRun() throws NoEnemyException {
+  private void calculateRun() throws
+      NoEnemyException,
+      SQLException {
 
     int shouldRun = ThreadLocalRandom.current().nextInt(0, 1 + 1);
 
@@ -359,12 +363,14 @@ public class Game {
     }
   }
 
-  private void startGameGui() {
+  private void startGameGui() throws
+      SQLException {
+
+    String input;
 
 
 
-
-    // TODO: Maybe implement this.
+    // TODO: Add GUI logic here.
     // This needs to follow the same creation / loading logic as the console,
     // but using a gui, basically:
     // N - Create new hero.
@@ -397,10 +403,9 @@ public class Game {
       this.heroCollidedEnemy = false;
     }
     else if (viewType.equals("gui")) {
-      throw new InvalidInputException("No GUI logic present. Exiting.");
 
       // TODO: Add GUI logic here.
-
+      this.startGameConsole();
     }
   }
 
@@ -497,7 +502,9 @@ public class Game {
   //
   // If fight fails,
   //
-  public boolean updateGameState() throws NoEnemyException {
+  public boolean updateGameState() throws
+      NoEnemyException,
+      SQLException {
 
     if (this.gameOver) {
 
