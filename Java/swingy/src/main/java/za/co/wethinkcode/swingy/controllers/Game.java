@@ -364,11 +364,11 @@ public class Game {
   }
 
   private void startGameGui() throws
-      SQLException {
+    SQLException {
 
     String input;
 
-
+    
 
     // TODO: Add GUI logic here.
     // This needs to follow the same creation / loading logic as the console,
