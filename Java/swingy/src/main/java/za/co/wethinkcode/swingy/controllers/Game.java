@@ -3,13 +3,12 @@ package za.co.wethinkcode.swingy.controllers;
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
 import za.co.wethinkcode.swingy.exceptions.NoEnemyException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
-import za.co.wethinkcode.swingy.helpers.Debugging;
 import za.co.wethinkcode.swingy.helpers.EnemyHelpers;
 import za.co.wethinkcode.swingy.helpers.InputHelper;
 import za.co.wethinkcode.swingy.models.Enemy;
 import za.co.wethinkcode.swingy.models.Hero;
 import za.co.wethinkcode.swingy.views.Console;
-import za.co.wethinkcode.swingy.views.DriverGUI;
+import za.co.wethinkcode.swingy.views.GuiDriver;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,6 +30,7 @@ public class Game {
   private boolean heroCollidedEnemy;
   private int experienceGained;
   private String lootGained;
+  private GuiDriver guiDriver;
 
   private void calculateFight() throws
       NoEnemyException,
@@ -367,12 +367,11 @@ public class Game {
   private void startGameGui() throws
     SQLException {
 
-    String input;
+    this.guiDriver = new GuiDriver();
 
-    
+    // FIXME: Fix this.
+    // this.guiDriver.refreshWindow(new StartGamePane().panel1);
 
-    // TODO: Add GUI logic here.
-    DriverGUI.startGameGui();
     // This needs to follow the same creation / loading logic as the console,
     // but using a gui, basically:
     // N - Create new hero.
@@ -406,7 +405,6 @@ public class Game {
     }
     else if (viewType.equals("gui")) {
 
-      // TODO: Add DriverGUI logic here.
       this.startGameGui();
     }
   }
