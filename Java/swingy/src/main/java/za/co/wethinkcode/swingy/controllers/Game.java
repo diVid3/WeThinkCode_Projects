@@ -8,6 +8,7 @@ import za.co.wethinkcode.swingy.helpers.InputHelper;
 import za.co.wethinkcode.swingy.models.Enemy;
 import za.co.wethinkcode.swingy.models.Hero;
 import za.co.wethinkcode.swingy.views.Console;
+import za.co.wethinkcode.swingy.views.GUI.GamePanels;
 import za.co.wethinkcode.swingy.views.GuiDriver;
 
 import java.sql.Connection;
@@ -368,8 +369,8 @@ public class Game {
     SQLException {
 
     this.guiDriver = new GuiDriver();
+    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel());
 
-    // FIXME: Fix this.
     // this.guiDriver.refreshWindow(new StartGamePane().panel1);
 
     // This needs to follow the same creation / loading logic as the console,

@@ -35,16 +35,16 @@ public class GuiDriver {
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setLocationRelativeTo(null);
-    frame.setSize(640, 480);
+    // frame.setSize(640, 480);
     frame.setResizable(false);
   }
 
   public void refreshWindow(JPanel panel) {
 
     this.frame.setContentPane(panel);
-    this.frame.pack();
     this.frame.revalidate();
     this.frame.repaint();
+    this.frame.pack();
 
     if (!this.frame.isVisible()) {
 
