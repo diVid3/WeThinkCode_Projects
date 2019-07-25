@@ -35,7 +35,8 @@ public class Main {
     catch (
       SQLException |
       InvalidInputException |
-      NoEnemyException e
+      NoEnemyException |
+      InterruptedException e
     ) {
 
       e.printStackTrace(System.out);

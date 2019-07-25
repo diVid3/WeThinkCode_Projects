@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
@@ -33,6 +35,7 @@ public class Game {
   private int experienceGained;
   private String lootGained;
   private GuiDriver guiDriver;
+  private BlockingQueue<String> blockingQueue;
 
   private void calculateFight() throws
       NoEnemyException,
@@ -368,11 +371,10 @@ public class Game {
   private void startGameGui() throws
     SQLException {
 
-    String[] userInput = new String[1];
-
     this.guiDriver = new GuiDriver();
-    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel(userInput));
+    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel(this.blockingQueue));
 
+    // TODO: Main thread needs to wait here for GUI input.
 
     // This needs to follow the same creation / loading logic as the console,
     // but using a gui, basically:
@@ -385,12 +387,14 @@ public class Game {
     this.connection = connection;
     this.viewType = viewType;
     this.input = new PriorityQueue<String>();
+    this.blockingQueue = new LinkedBlockingDeque<>(1);
   }
 
   // This is called first.
   public void startGame() throws
     InvalidInputException,
-    SQLException {
+    SQLException,
+    InterruptedException {
 
     if (!this.viewType.equals("console") && !this.viewType.equals("gui")) {
 
@@ -409,9 +413,11 @@ public class Game {
 
       this.startGameGui();
 
+      System.out.println("Going to take from the queue!");
 
+      String queueItem1 = this.blockingQueue.take();
 
-      System.out.println("This is going to be a big problem, need to await");
+      System.out.println("Got something from the queue!");
 
       // TODO: Uncomment this after startGameGui is working perfectly.
       // this.oldHeroLevel = this.hero.getHeroLevel();
