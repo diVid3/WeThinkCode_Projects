@@ -24,6 +24,7 @@ public class Game {
   private boolean gameOver = false;
   private Hero hero;
   private String viewType;
+  // TODO: Might need to change to thread safe queue.
   private Queue<String> input;
   private List<Enemy> enemies;
   private int mapSize;
@@ -144,7 +145,6 @@ public class Game {
 
     String input;
 
-    // If input == exit, return false.
     input = InputHelper.getInput();
     while (
       !input.equals("w") &&
@@ -368,10 +368,11 @@ public class Game {
   private void startGameGui() throws
     SQLException {
 
-    this.guiDriver = new GuiDriver();
-    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel());
+    String[] userInput = new String[1];
 
-    // this.guiDriver.refreshWindow(new StartGamePane().panel1);
+    this.guiDriver = new GuiDriver();
+    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel(userInput));
+
 
     // This needs to follow the same creation / loading logic as the console,
     // but using a gui, basically:
@@ -407,6 +408,16 @@ public class Game {
     else if (viewType.equals("gui")) {
 
       this.startGameGui();
+
+
+
+      System.out.println("This is going to be a big problem, need to await");
+
+      // TODO: Uncomment this after startGameGui is working perfectly.
+      // this.oldHeroLevel = this.hero.getHeroLevel();
+      // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+      // this.spawnEnemies(this.mapSize);
+      // this.heroCollidedEnemy = false;
     }
   }
 
@@ -474,9 +485,7 @@ public class Game {
     }
     else if (this.viewType.equals("gui")) {
 
-
-
-
+      // TODO: Await input from GUI here. Act after given.
     }
   }
 
