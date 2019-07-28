@@ -11,10 +11,13 @@ public class InputHelper {
 
   public static String getInput() {
 
+    String input = "";
+
     Scanner inputScanner = new Scanner(System.in);
 
-    String input = inputScanner.nextLine();
-    // System.out.println("\n");
+    if (inputScanner.hasNext()) {
+      input = inputScanner.nextLine();
+    }
 
     return input;
   }
