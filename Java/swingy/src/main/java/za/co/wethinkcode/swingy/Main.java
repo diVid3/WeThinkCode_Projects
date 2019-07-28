@@ -1,6 +1,7 @@
 package za.co.wethinkcode.swingy;
 
 import za.co.wethinkcode.swingy.controllers.Game;
+import za.co.wethinkcode.swingy.exceptions.GuiException;
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
 import za.co.wethinkcode.swingy.exceptions.NoEnemyException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
@@ -36,7 +37,8 @@ public class Main {
       SQLException |
       InvalidInputException |
       NoEnemyException |
-      InterruptedException e
+      InterruptedException |
+      GuiException e
     ) {
 
       e.printStackTrace(System.out);
@@ -49,6 +51,7 @@ public class Main {
       }
       catch (SQLException e) {
 
+        System.out.println(e.getMessage());
         e.printStackTrace(System.out);
       }
     }

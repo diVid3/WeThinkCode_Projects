@@ -184,4 +184,10 @@ public class Console {
     System.out.println("Loot gained - " + loot);
     System.out.println();
   }
+
+  public static void displayGameWon() {
+
+    System.out.println("Congratulations! You Won!");
+    System.out.println();
+  }
 }

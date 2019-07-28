@@ -1,9 +1,11 @@
 package za.co.wethinkcode.swingy.controllers;
 
+import za.co.wethinkcode.swingy.exceptions.GuiException;
 import za.co.wethinkcode.swingy.exceptions.InvalidInputException;
 import za.co.wethinkcode.swingy.exceptions.NoEnemyException;
 import za.co.wethinkcode.swingy.helpers.DbHelper;
 import za.co.wethinkcode.swingy.helpers.EnemyHelpers;
+import za.co.wethinkcode.swingy.helpers.GuiHelpers;
 import za.co.wethinkcode.swingy.helpers.InputHelper;
 import za.co.wethinkcode.swingy.models.Enemy;
 import za.co.wethinkcode.swingy.models.Hero;
@@ -24,9 +26,9 @@ public class Game {
 
   private Connection connection;
   private boolean gameOver = false;
+  private boolean gameWon = false;
   private Hero hero;
   private String viewType;
-  // TODO: Might need to change to thread safe queue.
   private Queue<String> input;
   private List<Enemy> enemies;
   private int mapSize;
@@ -35,7 +37,23 @@ public class Game {
   private int experienceGained;
   private String lootGained;
   private GuiDriver guiDriver;
-  private BlockingQueue<String> blockingQueue;
+  private BlockingQueue<String> guiInputQueue;
+
+  private String getGameStateInfoString() {
+
+    String gameStateInfo;
+
+    // Example string: "Derp|650|0|450|12|12"
+
+    gameStateInfo = this.hero.getHeroName() + "|" +
+        this.hero.getHeroHitPoints() + "|" +
+        this.hero.getHeroLevel() + "|" +
+        this.hero.getHeroExperience() + "|" +
+        this.hero.getX() + "|" +
+        this.hero.getY();
+
+    return gameStateInfo;
+  }
 
   private void calculateFight() throws
       NoEnemyException,
@@ -60,6 +78,13 @@ public class Game {
       this.hero.takeLootExperience(this.lootGained, this.experienceGained);
       this.heroCollidedEnemy = false;
       EnemyHelpers.deleteEnemy(this.enemies, enemy);
+
+      // Remove this condition if you wish to set another winning condition.
+      if (this.hero.getHeroLevel() >= 8) {
+
+        this.gameWon = true;
+        return;
+      }
 
       if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
@@ -95,6 +120,13 @@ public class Game {
     this.hero.takeLootExperience(this.lootGained, this.experienceGained);
     this.heroCollidedEnemy = false;
     EnemyHelpers.deleteEnemy(this.enemies, enemy);
+
+    // Remove this condition if you wish to set another winning condition.
+    if (this.hero.getHeroLevel() >= 8) {
+
+      this.gameWon = true;
+      return;
+    }
 
     if (this.oldHeroLevel != this.hero.getHeroLevel()) {
 
@@ -217,7 +249,8 @@ public class Game {
 
   private void spawnEnemies(int mapSize) {
 
-    int enemyAmount = ThreadLocalRandom.current().nextInt(1, hero.getHeroLevel() + 2);
+    int heroLevel = this.hero.getHeroLevel() + 1;
+    int enemyAmount = heroLevel * heroLevel;
 
     this.enemies = new LinkedList<>();
     Enemy newEnemy;
@@ -246,7 +279,11 @@ public class Game {
     Console.displayCreateHeroName();
 
     input = InputHelper.getInput();
-    while (InputHelper.hasIllegalChars(input)) {
+
+    while (
+      InputHelper.hasIllegalChars(input) ||
+      DbHelper.doesHeroExist(this.connection, input)
+    ) {
 
       Console.displayInvalidInput();
       input = InputHelper.getInput();
@@ -277,12 +314,12 @@ public class Game {
     }
 
     newHero = new Hero(
-        newHeroName,
-        newHeroClass,
-        450,
-        "Wooden Sword",
-        "Wooden Armor",
-        "Wooden Helm"
+      newHeroName,
+      newHeroClass,
+      450,
+      "Wooden Sword",
+      "Wooden Armor",
+      "Wooden Helm"
     );
 
     this.hero = newHero;
@@ -312,12 +349,12 @@ public class Game {
     heroHelm = heroRow.getString("heroHelm");
 
     this.hero = new Hero(
-        heroName,
-        heroClass,
-        heroExperience,
-        heroWeapon,
-        heroArmor,
-        heroHelm
+      heroName,
+      heroClass,
+      heroExperience,
+      heroWeapon,
+      heroArmor,
+      heroHelm
     );
 
     Console.displayHeroLoaded();
@@ -368,18 +405,110 @@ public class Game {
     }
   }
 
+  private void createHeroGui() throws
+    GuiException,
+    SQLException,
+    InterruptedException {
+
+    String queueItem1;
+    String queueItem2;
+    Hero newHero;
+
+    this.guiDriver.refreshWindow(GamePanels.getCreateHeroPanel(
+      this.connection,
+      this.guiInputQueue
+    ));
+
+    queueItem1 = this.guiInputQueue.take();
+    queueItem2 = this.guiInputQueue.take();
+
+    if (queueItem1.equals("Exception")) {
+
+      throw new GuiException(queueItem2);
+    }
+
+    newHero = new Hero(
+      queueItem1,
+      queueItem2,
+      450,
+      "Wooden Sword",
+      "Wooden Armor",
+      "Wooden Helm"
+    );
+
+    this.hero = newHero;
+
+    DbHelper.addHero(this.connection, newHero);
+
+    this.guiDriver.displayCreatedHeroSuccess();
+  }
+
+  private void loadHeroGui(String name) throws SQLException {
+
+    ResultSet heroRow;
+    String heroName;
+    String heroClass;
+    int heroExperience;
+    String heroWeapon;
+    String heroArmor;
+    String heroHelm;
+
+    heroRow = DbHelper.getHero(this.connection, name);
+
+    heroName = heroRow.getString("heroName");
+    heroClass = heroRow.getString("heroClass");
+    heroExperience = heroRow.getInt("heroExperience");
+    heroWeapon = heroRow.getString("heroWeapon");
+    heroArmor = heroRow.getString("heroArmor");
+    heroHelm = heroRow.getString("heroHelm");
+
+    this.hero = new Hero(
+      heroName,
+      heroClass,
+      heroExperience,
+      heroWeapon,
+      heroArmor,
+      heroHelm
+    );
+
+    this.guiDriver.displayLoadedHeroSuccess();
+  }
+
   private void startGameGui() throws
-    SQLException {
+    SQLException,
+    GuiException,
+    InterruptedException {
 
     this.guiDriver = new GuiDriver();
-    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel(this.blockingQueue));
+    this.guiDriver.refreshWindow(GamePanels.getStartGamePanel(this.guiInputQueue));
 
-    // TODO: Main thread needs to wait here for GUI input.
+    String queueItem = this.guiInputQueue.take();
 
-    // This needs to follow the same creation / loading logic as the console,
-    // but using a gui, basically:
-    // N - Create new hero.
-    // L - Load hero, go to create window if no heroes exist.
+    if (queueItem.equals("N")) {
+
+      this.createHeroGui();
+    }
+    else if (queueItem.equals("L")) {
+
+      if (!DbHelper.doHeroesExist(this.connection)) {
+
+        this.createHeroGui();
+      }
+      else {
+
+        this.guiDriver.refreshWindow(GamePanels.getLoadHeroPanel(this.connection, this.guiInputQueue));
+        queueItem = this.guiInputQueue.take();
+        this.loadHeroGui(queueItem);
+      }
+    }
+  }
+
+  private void prepGameState() {
+
+    this.oldHeroLevel = this.hero.getHeroLevel();
+    this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
+    this.spawnEnemies(this.mapSize);
+    this.heroCollidedEnemy = false;
   }
 
   public Game(Connection connection, String viewType) {
@@ -387,13 +516,16 @@ public class Game {
     this.connection = connection;
     this.viewType = viewType;
     this.input = new PriorityQueue<String>();
-    this.blockingQueue = new LinkedBlockingDeque<>(1);
+
+    // This queue receives the input from the gui.
+    this.guiInputQueue = new LinkedBlockingDeque<>(2);
   }
 
   // This is called first.
   public void startGame() throws
     InvalidInputException,
     SQLException,
+    GuiException,
     InterruptedException {
 
     if (!this.viewType.equals("console") && !this.viewType.equals("gui")) {
@@ -404,26 +536,19 @@ public class Game {
     if (viewType.equals("console")) {
 
       this.startGameConsole();
-      this.oldHeroLevel = this.hero.getHeroLevel();
-      this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
-      this.spawnEnemies(this.mapSize);
-      this.heroCollidedEnemy = false;
+      this.prepGameState();
     }
     else if (viewType.equals("gui")) {
 
       this.startGameGui();
+      this.prepGameState();
 
-      System.out.println("Going to take from the queue!");
-
-      String queueItem1 = this.blockingQueue.take();
-
-      System.out.println("Got something from the queue!");
-
-      // TODO: Uncomment this after startGameGui is working perfectly.
-      // this.oldHeroLevel = this.hero.getHeroLevel();
-      // this.mapSize = (hero.getHeroLevel() - 1) * 5 + 10 - (hero.getHeroLevel() % 2);
-      // this.spawnEnemies(this.mapSize);
-      // this.heroCollidedEnemy = false;
+      // This needs to be done after game prep.
+      this.guiDriver.refreshWindow(GamePanels.getGamePlayPanel(
+        this.guiInputQueue,
+        this.getGameStateInfoString(),
+        this.guiDriver.getGameStateLabels()
+      ));
     }
   }
 
@@ -434,6 +559,12 @@ public class Game {
       if (this.gameOver) {
 
         Console.displayGameOver();
+        return;
+      }
+
+      if (this.gameWon) {
+
+        Console.displayGameWon();
         return;
       }
 
@@ -470,59 +601,97 @@ public class Game {
     }
     else if (this.viewType.equals("gui")) {
 
+      if (this.gameOver) {
 
+        this.guiDriver.displayGameOver();
+        return;
+      }
 
+      if (this.gameWon) {
 
+        this.guiDriver.displayGameWon();
+        return;
+      }
+
+      // This is only for debugging reasons.
+      Console console = new Console();
+
+      console.displayGameBoard(
+          this.mapSize,
+          this.hero,
+          this.enemies
+      );
+
+      // Default render.
+      GuiHelpers.assignGameStateLabels(
+        this.guiDriver.getGameStateLabels(),
+        this.getGameStateInfoString()
+      );
+
+      if (!this.heroCollidedEnemy) {
+
+        if (this.experienceGained != 0) {
+
+          this.guiDriver.displayStuffGained("XP gained: " + this.experienceGained);
+          this.experienceGained = 0;
+        }
+
+        if (this.lootGained != null) {
+
+          this.guiDriver.displayStuffGained("Loot gained: " + this.lootGained);
+          this.lootGained = null;
+        }
+      }
+      else if (this.heroCollidedEnemy) {
+
+        int choice = this.guiDriver.displayGuiInputCollided();
+
+        if (choice == 0) {
+
+          this.input.add("r");
+        }
+        else if (choice == 1) {
+
+          this.input.add("f");
+        }
+      }
     }
   }
 
-  public void getGameInput() {
+  // If the gameOver flag is set, this will simply not get input.
+  public void getGameInput() throws InterruptedException {
 
     if (this.viewType.equals("console")) {
 
-      if (!this.heroCollidedEnemy && !this.gameOver) {
+      if (!this.heroCollidedEnemy && !this.gameOver && !this.gameWon) {
 
         this.input.add(this.getConsoleInputWalking());
       }
-      else if (this.heroCollidedEnemy && !this.gameOver) {
+      else if (this.heroCollidedEnemy && !this.gameOver && !this.gameWon) {
 
         this.input.add(this.getConsoleInputCollided());
       }
     }
     else if (this.viewType.equals("gui")) {
 
-      // TODO: Await input from GUI here. Act after given.
+      if (!this.heroCollidedEnemy && !this.gameOver && !this.gameWon) {
+
+        this.input.add(this.guiInputQueue.take());
+      }
+      else if (this.heroCollidedEnemy && !this.gameOver && !this.gameWon) {
+
+        // No need to prompt for input here as the gui input is given
+        // when the JOptionPane is displayed in the drawGameView() method.
+      }
     }
   }
 
-
-  // Check for a viewType switch first.
-  // This needs to be done generically, i.e. independent of view.
-  //
-  // If collision is found, prompt user to either fight or run.
-  // if fight, calculate fight, signal fight ongoing, after fight,
-  // signal results.
-  //
-  // If run, do 50% chance calc, if run back, run back, if fight,
-  // fight.
-  //
-  // After fight, drop loot, if loot non-none, add better stats, add
-  // to hero, delete enemy by using unique positions, or unique id.
-  //
-  // If collision is found, calculate fight, before calculation, signal
-  // view to output that fight is ongoing, after fight, signal results
-  // of fight.
-  //
-  // If the fight is successful, call drop loot, get loot, delete enemy at
-  // that position, positions are unique.
-  //
-  // If fight fails,
-  //
   public boolean updateGameState() throws
-      NoEnemyException,
-      SQLException {
+    NoEnemyException,
+    SQLException {
 
-    if (this.gameOver) {
+    // Game exit condition.
+    if (this.gameOver || this.gameWon) {
 
       return false;
     }
@@ -591,9 +760,7 @@ public class Game {
     }
     else if (this.viewType.equals("gui")) {
 
-
-
-
+      // Not applicable.
     }
   }
 }

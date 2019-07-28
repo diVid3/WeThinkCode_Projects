@@ -23,6 +23,11 @@ public class InputHelper {
   // characters allowed.
   public static boolean hasIllegalChars(String testMe) {
 
+    if (testMe.equals("")) {
+
+      return true;
+    }
+
     return Pattern.matches("[^\\w]+", testMe);
   }
 }
